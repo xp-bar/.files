@@ -1,0 +1,123 @@
+alias retag='ctags -R --PHP-kinds=ct --exclude="/node_modules/" --languages="php"'
+
+#antigen
+alias itheme="antigen theme $1; antigen cleanup -f > /dev/null"
+
+#DB
+alias localdb="clear; mycli -u root -h 127.0.0.1"
+
+#PHPCS
+alias fix="phpcbf --standard=XpBar"
+
+# WEBPACK
+alias hot="npm run hot --env.noMaps"
+alias watch="npm run watch --env.noMaps"
+
+# NAVIGATION
+alias ..="cd ../"
+alias ...="cd ../../"
+alias ....="cd ../../../"
+alias .....="cd ../../../../"
+alias ......="cd ../../../../../"
+alias .......="cd ../../../../../../"
+alias ..d="cd $(dirs -v | grep 1 | sed 's/[0-9]*[[:space:]]*//')"
+alias ...d="cd $(dirs -v | grep 2 | sed 's/[0-9]*[[:space:]]*//')"
+alias ls="ls -FGH"
+alias la="ls -a -FGH"
+alias ld="ls -a -FGH | grep '[\.][*]*.' | NOT ./ | NOT ../"
+alias ll="ls -lh -FGH"
+alias lla="ls -lha -FGHll"
+alias mv="mv -v"
+alias rm="rm -vi"
+alias cp="cp -v"
+alias rn="cp"
+
+# GREP
+alias grepNOT="grep -v"
+alias NOT="grepNOT"
+alias grep="grep --color"
+alias grepp="grep -P --color"
+alias gr='grep'
+
+# CLI SHORTCUTS
+alias comp="composer"
+alias art='php artisan'
+alias artm='art migrate'
+alias artc="art clear-compiled && art cache:clear && art route:clear && art config:clear && comp du && art view:clear"
+alias aql="art queue:listen --tries=3"
+alias arl='php artisan route:list'
+alias aqw="php artisan queue:work --once"
+alias tink="c; art tinker"
+alias c="clear"
+alias bc='bc -l'
+alias now="date '+%I:%M%p, %Y-%m-%d'"
+alias a="atom"
+alias vi="nvim"
+alias vim="nvim"
+alias slack="slack-term"
+alias md="msee"
+
+# HUB
+alias gpr="hub pull-request"
+
+# GIT
+alias rh="git ls-remote --heads origin | gr $(git rev-parse --abbrev-ref HEAD) | sed 's/[[:space:]]*refs[\/A-Za-z\-]*//g'"
+alias master="git checkout master"
+alias st="git status"
+# alias git="hub"
+alias aa="git add ."
+alias a-="git add"
+alias ahunk="git add -p"
+alias stash="git stash"
+alias shunk="git stash -p"
+alias pop="git stash pop"
+alias ci="git commit -m"
+alias co="git checkout"
+alias fe="git fetch origin"
+alias p="git push"
+alias pl="git pull"
+alias mg="git merge"
+alias br="git branch -a"
+alias br-feature="git branch -a | NOT remotes/ | NOT master | NOT staging | grep feature-"
+alias br-bugfix="git branch -a | NOT remotes/ | NOT master | NOT staging | grep bugfix-"
+alias br-merged="git branch --merged | NOT remotes/ | NOT master | NOT staging"
+alias di="git diff"
+alias glog="git log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'"
+alias gfl="git log -p"
+alias cisearch="git log -S"
+alias wwiwo="git diff HEAD^ --name-only"
+
+# VALET
+alias vshare="(valet unsecure; valet share; valet secure) && c"
+
+#shpotify
+alias sp="spotify"
+alias spp="spotify pause"
+alias sppl="spotify play list"
+alias spn="clear && spotify next | grep 'Track:\|Artist:' && sleep 1 && clear"
+alias spst="spotify status | grep 'Track:\|Artist:'"
+
+# browsing
+alias webb="open '/Applications/Vivaldi.app' '$1'"
+alias mineAll="open '/Applications/Vivaldi.app' 'https://github.com/RoomRoster/roomroster.v2/pulls/xp-bar'"
+alias mine="open '/Applications/Vivaldi.app' 'https://github.com/RoomRoster/roomroster.v2/pulls/xp-bar?q=is:open+-review:approved'"
+alias formeAll="open '/Applications/Vivaldi.app' 'https://github.com/RoomRoster/roomroster.v2/pulls/assigned/xp-bar'"
+alias forme="open '/Applications/Vivaldi.app' 'https://github.com/RoomRoster/roomroster.v2/pulls/assigned/xp-bar?q=is:open+-review:approved'"
+
+alias rebash="source ~/.bashrc"
+alias bashrc="atom ~/.dotfiles/"
+alias moon="curl wttr.in/moon"
+
+alias g="yarn install && rm -rf public/js && rm -rf public/css && gulp"
+alias gp="yarn install && rm -rf public/js && rm -rf public/css && gulp --production"
+alias gw='gulp watch'
+alias gwp='rm -rf public/js && rm -rf public/css && gulp watch --production'
+alias deps='composer install && yarn install && rm -rf public/js && rm -rf public/css && gulp'
+
+alias epoch="date +%s"
+
+alias pman='/usr/local/opt/php@7.1/bin/pman'
+
+
+# Tmux
+alias tmuxlayout='tmux list-windows -F "#{window_active} #{window_layout}" | grep "^1" | cut -d " " -f 2 | pbcopy'

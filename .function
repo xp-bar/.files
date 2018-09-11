@@ -1,0 +1,517 @@
+#!/bin/bash
+
+function hide(){
+    tput smcup
+    tput sc
+    tput cup 0 0
+}
+function show(){
+    tput rc;
+    tput rmcup;
+}
+
+function e(){
+    typeset -A dotfiles_that_source=(
+        a alias
+        f function
+        i ignore
+    );
+    for key value in ${(kv)dotfiles_that_source}; do
+        if [[ $1 = $key ]]; then
+            tput sc;
+            tput cuf 2;
+            tput cuu1;
+            echo -e "Editing \e[33m~/.$value\e[0m..."
+            tput rc;
+            sleep 0.2;
+            nvim ~/.$value;
+            source ~/.$value;
+            tput sc;
+            tput cuf 2;
+            tput cuu1;
+            echo -e "Sourced \e[32m~/.$value\e[0m!               "
+            tput rc;
+        fi
+    done
+    typeset -A dotfiles_that_dont_source=(
+        v vimrc
+        t tmux.conf
+        z zshrc
+    );
+    for key value in ${(kv)dotfiles_that_dont_source}; do
+        if [[ $1 = $key ]]; then
+            tput sc;
+            tput cuf 2;
+            tput cuu1;
+            echo -e "Editing \e[33m~/.$value\e[0m..."
+            tput rc;
+            sleep 0.2;
+            nvim ~/.$value;
+            tput sc;
+            tput cuf 2;
+            tput cuu1;
+            echo -e "Edited \e[32m~/.$value\e[0m!                "
+            tput rc;
+        fi
+    done
+}
+
+function isdown(){
+    hide;
+    tput sc;
+    tput cup 5 5;
+    curl $1 -s -f -o /dev/null && echo -e "\e[32m$1 is up!" || echo  -e "\e[31m$1 is down...";
+    read "?";
+    tput rc;
+    show;
+}
+
+fvim(){
+    nvim $(fzf)
+}
+
+# fda - including hidden directories
+fda() {
+  local dir
+  dir=$(find ${1:-.} -type d 2> /dev/null | fzf-tmux +m) && cd "$dir"
+}
+
+fd() {
+  DIR=`find * -maxdepth 2 -type d -print 2> /dev/null | fzf-tmux` \
+    && cd "$DIR"
+}
+
+function calc(){
+    awk "BEGIN { print $* }";
+}
+
+function loader(){
+    COLS=$(tput cols);
+    AMOUNT=${1:-$COLS};
+    AMOUNT=$[$AMOUNT/100*$COLS]
+    c;
+    hide;
+    POS=$[$COLS%2]
+    for i in `seq 0 $[$AMOUNT%$COLS]`;
+        do
+            tput cup $POS $i;
+            echo -e '\u2503';
+            sleep 0.05;
+        done;
+    read "?Done!";
+    show
+}
+
+function fclock() {
+    while true;
+    do
+        clear;
+        date '+%I:%M%p' | figlet -r -f chunky | lolcat;
+        sleep 60;
+    done
+}
+
+function koolaid(){
+    if [[ $(git diff master --name-only) != "" ]] then
+        git diff master --diff-filter=d --name-only | grep -v '.blade.php' | while read IN; do
+            phpcs $IN --colors&;
+        done | sed 's/(phpcs $IN -q --colors)//g' | less
+    else
+        echo -e "\e[34mNo Errors!";
+    fi
+}
+
+function koolfixer(){
+    if [[ $(git diff master --name-only) != "" ]] then
+        git diff master --diff-filter=d --name-only | grep -v '.blade.php' | while read IN; do
+            phpcs $IN --colors & wait;
+            read "response?Would you like to auto-fix? [y/n]"
+            if [[ "$response" =~ ^[Yy]$ ]] then
+                phpcbf $IN&;
+            fi
+        done | sed 's/(phpcs $IN -q --colors)//g';
+    else
+        echo -e "\e[34mNo Errors!";
+    fi
+}
+
+function din(){
+    git --no-pager diff $1 --name-only
+}
+
+function clock(){
+    DEFAULT_FONT="mono9"
+    if [[ $1 == "" ]]; then
+        FONT=$DEFAULT_FONT
+    else
+        FONT=$1
+    fi
+    while true;
+    do
+        clear;
+        date '+%I:%M%p' | toilet -f "$(echo $FONT)" --filter border | lolcat;
+        sleep 60;
+    done
+}
+
+function ting(){
+    if [[ "$1" ]]; then
+        php artisan tinker ting$1.php
+    else
+        php artisan tinker ting.php
+    fi
+}
+
+
+TODOLIST=~/todo-list.md
+function todo(){
+    if  [[ "$@" = *"-u"* ]] || [[ "$@" = *"--ugly"* ]]; then
+        DISPLAY=cat
+    else
+        DISPLAY=msee
+    fi
+    if [[ "$@" != *"--inline"* ]]; then
+        hide
+    fi
+    cp ~/todo-list.md ~/.todo-list.bak >> /dev/null
+    if [[ "$@" = *"-e"* ]] || [[ "$@" = *"--edit"* ]]; then
+        nvim $TODOLIST
+    else
+        if [[ "$@" = *"-a"* ]] || [[ "$@" = *"--add"* ]]; then
+            echo "- "$2 >> ~/todo-list.md
+        fi
+        if [[ "$@" = *"--center"* ]]; then
+            LINES=$(wc -l < $TODOLIST)
+            AVAILABLE=$(tput lines)
+            POS=$[$[$[$AVAILABLE - $[$AVAILABLE % 2]]/2] - $[$[$LINES - $[$LINES % 2]]/2]];
+            tput cup $[$POS] 0
+        fi
+        cat $TODOLIST | $DISPLAY
+        if [[ "$@" != *"--inline"* ]]; then
+            read "?"
+        fi
+    fi
+    if [[ "$@" != *"--inline"* ]]; then
+       show
+    fi
+}
+
+function todoloop(){
+    hide;
+    todo --inline;
+    fswatch -0 $TODOLIST | while read -d "" event
+        do
+            show;
+            hide;
+            todo --inline
+        done
+    show;
+}
+
+todorand(){
+    todo -u --inline | NOT '#' | sed 's/^- //' | gshuf -n 1 | cowsay | lolcat;
+}
+
+# search stack overflow
+function stack() {
+    INPUT=$1
+    read response\?"Search StackOverflow for ${INPUT}? [y/n] "
+    # read -r -P "Search StackOverflow for ${INPUT}? [y/n] " response
+    case "$response" in
+        [yY][eE][sS]|[yY])
+        QUERY="${INPUT//' '/+}"
+        echo "Sweet, let's do it!"
+        sleep 1
+        open '/Applications/Vivaldi.app' 'https://stackoverflow.com/search?q='+$QUERY+'&mixed=0'
+        ;;
+        *)
+        echo "Alright, maybe later then."
+        ;;
+    esac
+}
+
+
+# WEBPACK
+function dev(){
+	COMPONENT=$1
+	if [[ $COMPONENT ]]; then
+		npm run dev -- --env.noMaps --env.component=$COMPONENT
+	else
+		npm run dev -- --env.noMaps
+	fi
+}
+
+# GIT
+
+function pu(){
+    git push -u origin $(git rev-parse --abbrev-ref HEAD);
+}
+
+function brwatch(){
+    c;
+    brstatus --all --inline;
+    fswatch -0 .git/refs/heads/ | while read -d "" event;
+        do
+            c;
+            brstatus --all --inline;
+        done;
+    c;
+}
+
+function brlist(){
+        if [[ "$@" != *"--inline"* ]]; then
+           hide;
+        fi
+        for x in $(br | NOT \* | NOT master | NOT staging | NOT remote);
+            do
+                if [[ "$@" = *"--notes"* ]] && [[ $(git config branch.$x.note) != "" ]]; then
+                    echo -e "$x : \e[31m\e[1m$(git config branch.$x.note)\n\e[0m";
+                elif [[ "$@" = *"--notes"* ]] && [[ "$@" != *"--only"* ]]; then
+                    echo -e "$x\n";
+                elif [[ "$@" = "" ]] || [[ "$@" = *"--inline"* ]]; then
+                    echo -e "$x\n";
+                fi
+        done;
+
+        if [[ "$@" != *"--inline"* ]]; then
+            read "?";
+            show
+        fi
+}
+
+function brnote(){
+    INPUT=$1
+    if [[ $INPUT = --all ]]; then
+        for x in $(git branch -a | grep -v /); do
+            if [[ $(git config branch.$x.note) ]]; then
+                echo -e "\033[0;31m${x} \033[0m";
+                echo -e "$(git config branch.$x.note)\n";
+            fi
+        done;
+    elif [[ $INPUT = --add ]]; then
+        git config branch.$(git symbolic-ref --short HEAD).note "$(git config branch.$(git symbolic-ref --short HEAD).note)
+        $2"
+    else
+        git config branch.$(git symbolic-ref --short HEAD).note $1
+    fi
+}
+
+function brstatus(){
+    INPUT=$1
+    if [[ $INPUT = --all ]]; then
+        if [[ "$@" != *"--inline"* ]]; then
+           hide;
+        fi
+        echo "\n";
+        for x in $(br | NOT master | NOT staging | NOT remote | sed 's/^* //'); do
+            if [[ $(git config branch.$x.ready) = *"waiting"* ]]; then
+                echo -e "${x} \033[0;33m☉ \033[0m\n";
+            elif [[  $(git config branch.$x.ready) = *"ready"* ]]; then
+                echo -e "${x} \033[0;32m✓ \033[0m\n";
+            else
+                echo -e "${x} \033[0;31m✕ \033[0m\n";
+            fi
+        done;
+        if [[ "$@" != *"--inline"* ]]; then
+            show
+            read "?";
+        fi
+        if [[ "$@" = *"--looped"* ]]; then
+            read "?";
+        fi
+    else
+        git config branch.$(git symbolic-ref --short HEAD).ready $1
+    fi
+}
+
+function nuke(){
+    read response\?"Are you sure you want to nuke your changes? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+        git reset HEAD --hard > /dev/null;
+        hide;
+            echo "
+
+
+
+
+
+
+
+
+
+
+
+
+            ";
+            tput sc;
+            # tput cuu1;
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "        {........}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "         {......}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "          {....}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "          {....}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "          {....}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "        {.{....}.}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "     {.{..{....}..}.}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "  {..{..{........}..}..}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "{.{..{...{ BOOM }...}..}.}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "  {..{..{........}..}..}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "   {..{..{......}..}..}";
+            tput cuu1; tput cuu1;
+            sleep 0.05;
+            echo "     {..{..{..}..}..}";
+            tput rc;
+            echo "Now at commit: \e[0;31m$(git rev-parse HEAD)";
+            read "?";
+            show;
+            ;;
+        *)
+            ;;
+    esac
+}
+
+function mkbr(){
+    INPUT=$1
+    git checkout -b ${INPUT}
+    read response\?"Would you like to push ${INPUT} to origin and add origin/${INPUT} as a remote? [y/n] "
+    # read -r "Would you like to push ${INPUT} to origin and add origin/${INPUT} as a remote? [y/n] " responsetwo
+        case "$response" in
+            [yY][eE][sS]|[yY])
+                git push -u origin ${INPUT}
+                ;;
+            *)
+                echo "If you want to later, run pu!"
+                ;;
+        esac
+}
+
+function dbr(){
+    INPUT=$1
+    read response\?"Are you sure you would like to force delete branch ${INPUT}? [y/n] "
+    # read -r "Are you sure you would like to force delete branch ${INPUT}? [y/n] " response
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            echo "Deleting branch...";
+            git branch -D ${INPUT};
+            ;;
+        *)
+            echo "Branch left untouched."
+            ;;
+    esac
+}
+
+# function rnbr(){
+#     INPUT=$1
+#     read -r -p "Are you sure you would like to rename branch ${INPUT}? Make sure no one else is working on it! [y/n] " response
+#     case "$response" in
+#         [yY][eE][sS]|[yY])
+#             git branch -m $(parse_git_branch) ${INPUT};
+#             echo "Renamed branch to ${INPUT}.";
+#             git push origin :$(parse_git_branch) ${INPUT};
+#             git push origin -u ${INPUT};
+#             echo "Pushed branch to remote."
+#             ;;
+#         *)
+#             echo "Branch left untouched."
+#             ;;
+#     esac
+# }
+# export -f rnbr
+
+function brup(){
+    git push origin $1
+    git branch --set-upstream-to=origin/$1 $1
+}
+
+function whic(){
+    git diff $1 --name-only
+}
+
+function diffcount(){
+    git diff $1 --stat | grep "files changed"
+}
+
+function owiwwo(){
+    wwiwo | while read in; do atom $in; done
+}
+
+function openall(){
+    $1 | while read in; do atom $in; done
+}
+
+function lsearch() {
+    git log --grep=$1
+}
+
+function disearch(){
+    git diff $2 --name-only | grep $1 | while read in; do git diff $2 -- $in; done
+}
+
+function prs(){
+    #!/bin/bash
+    # set -x
+    emulate -L bash
+    unset URL;
+    LOGIN="$(git config user.email):"$GITHUB_TOKEN
+    DATE=`date -v-12H +"%Y-%m-%dT%H:%M:%SZ"`
+    # TODAY=`date -v-12H +"%Y-%m-%d"`
+    USER=$GITHUB_USERNAME
+    BASEURL="https://api.github.com/repos/"
+    REPO=$GITHUB_REPO
+    CREATOR="issues?creator="
+    ASSIGNEE="issues?assignee="
+    case "$1" in
+    "given")
+        TITLE="\033[1;37m PULL REQUESTS \033[0;32mCREATED\033[1;37m BY YOU:";
+        URL="$BASEURL$REPO$CREATOR$USER";
+        ;;
+    "assigned")
+        TITLE="\033[1;37m PULL REQUESTS \033[0;31mASSIGNED\033[1;37m TO YOU:";
+        URL=$BASEURL$REPO$ASSIGNEE$USER;
+        ;;
+    *)
+        ;;
+    esac
+    if [[ $URL ]]; then
+        RESULT=$(curl -s -u $LOGIN $URL);
+        LENGTH=$(echo $RESULT | jq '[.]' | jq '[.][][] | length');
+        echo -e "\n --------------------------------- \n $TITLE \n ---------------------------------";
+		echo -e "\033[0;34m $(echo $URL | sed -E 's/(\/repos)//g' | sed -E 's/(api.)//g' | sed 's/\\//g' | sed -E 's/issues/pulls/g')\n";
+        for i in `seq 0 $[$LENGTH - 1]`; do
+            echo -e "\033[0;31m $(echo $RESULT | jq -r '[.]' | jq -r '[.][][]['$i'].title')" &&
+            echo -e "\033[0;32m $(echo $RESULT | jq -r '[.]' | jq -r '[.][][]['$i'].html_url')" &&
+            DATETIME=$(echo $RESULT | jq -r '[.]' | jq -r '[.][][]['$i'].updated_at');
+            DATE=$(expr "$DATETIME" : '\(.*\)T');
+            echo -e "\033[0;34m Updated: $DATE\033[1;37m \n";
+        done
+    fi
+}
+
+mkalias(){
+    if [[ $1 ]]; then
+        echo "alias $1='$2'" >> ~/.extra-aliases
+    fi
+    source ~/.extra-aliases
+}
