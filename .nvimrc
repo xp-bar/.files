@@ -296,11 +296,6 @@ vnoremap <leader><C-f> y :Ack!<Space><C-r>"
 vnoremap <leader><S-f> y :%s/<C-r>"/
 nnoremap <C-f> /
 vnoremap <C-f> y /<C-r>"
-" vnoremap <silent> <C-f> :<C-U>
-"   \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
-"   \gvy/<C-R><C-R>=substitute(
-"   \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
-"   \gV:call setreg('"', old_reg, old_regtype)<CR>
 
 " Twiddle Case Switcher
 function! TwiddleCase(str)
@@ -336,22 +331,30 @@ endfunction
 autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
 autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
 
-" Plugin 'tobyS/pdv'
-" PHP documenter script bound to Control-P
-" autocmd FileType php inoremap <C-m> <ESC>:call PhpDocSingle()<CR>i
-" autocmd FileType php nnoremap <C-m> :call PhpDocSingle()<CR>
-" autocmd FileType php vnoremap <C-m> :call PhpDocRange()<CR>
 
-" Goto Declaration Support in Vim
-" Plugin 'shawncplus/phpcomplete.vim'
-" let g:phpcomplete_mappings = {
-"             \ 'jump_to_def': '<C-]>',
-"             \ 'jump_to_def_split': '<C-W><C-_>',
-"             \ 'jump_to_def_vsplit': '<C-W><C-|>',
-"             \ 'jump_to_def_tabnew': '<C-W><C-[>',
-"             \}
+" Thanks @ian-paterson  https://github.com/ian-paterson
+"
+" goto blade partials
+nnoremap <leader>pg :call GoToPartial()<CR>
 
+function! GoToPartial()
+  normal "lyi'
+  let partial = @l
+  let file = substitute(partial, "\\.", "/", "g")
+  execute "edit resources/views/" . file . ".blade.php"
+endfunction
 
+" Go to vue component
+nnoremap <leader>vg :call GoToVue()<CR>
+
+function! GoToVue()
+  execute "set isk+=-"
+  normal "lyiw
+  execute "set isk-=-"
+  let filename = @l
+  let file = system("find resources/assets/js -name " . filename . ".vue")
+  execute "edit " . file
+endfunction
 
 " #syntax
 " ---------------------------------------------------------------------------
@@ -361,19 +364,8 @@ autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
 "                           ▝▀ ▗▄▘▘ ▘ ▀ ▝▀▘▘ ▘
 " ---------------------------------------------------------------------------
 
-
-" Plugin 'vim-syntastic/syntastic'
-
-" Plugin 'keith/swift.vim'
-
-" Questionably Better Language Support?
-" Plugin 'sheerun/vim-polyglot'
-
 " Better PHP Lang Support
 Plugin 'StanAngeloff/php.vim' 
-
-" Better PHP Folding
-" Plugin 'rayburgemeestre/phpfolding.vim' 
 
 " Javascript
 Plugin 'othree/javascript-libraries-syntax.vim'
