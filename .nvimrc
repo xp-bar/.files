@@ -29,7 +29,6 @@ call vundle#begin()
 
 map <Space> <leader>
 
-
 function! SetupCommandAlias(from, to)
 exec 'cnoreabbrev <expr> '.a:from
     \ .' ((getcmdtype() is# ":" && getcmdline() is# "'.a:from.'")'
@@ -47,7 +46,15 @@ nnoremap <silent><leader>en :split $MYVIMRC<cr>
 
 nnoremap <leader>w :w<cr>
 
+" Splits
+nnoremap <leader>v :vsp<cr>
+nnoremap <leader>n :sp<cr>
+vnoremap <leader>v :vsp<cr>
+vnoremap <leader>n :sp<cr>
+
 nnoremap <silent><leader>q :bd<cr>
+
+" nnoremap <silent><A-,>:vertical resize +5<cr>
 
 iabbrev adn and 
 iabbrev waht what
@@ -55,7 +62,6 @@ iabbrev tehn then
 iabbrev @@ nick@nicholasireland.ca
 iabbrev ccopy Copyright 2018 Nicholas Ireland, all rights reserved.
 iabbrev iff if ()<left>
-iabbrev { {}<left>
 iabbrev \rr\ RoomRoster\
 
 
@@ -67,6 +73,9 @@ autocmd BufWritePre *.html :normal gg=G
 
 " No linewrap html
 autocmd BufNewFile,BufRead *.html setlocal nowrap
+
+" Spellcheck Markdown 
+autocmd BufNewFile,BufRead *.md setlocal spell spelllang=en_us
 
 " No linewrap html
 autocmd BufNewFile,BufRead *.php setlocal nowrap
@@ -93,7 +102,18 @@ vnoremap jk <esc>
 
 
 " Tab commands with leader
-nnoremap <leader>t :tabnew<cr>
+" nnoremap <leader>t :tabnew<cr>
+nnoremap <leader>t :call TypeWriterToggle()<cr>
+
+function! TypeWriterToggle()
+    if &scrolloff ==# "0"
+        :set scrolloff=99
+        :set sidescrolloff=99
+    else
+        :set scrolloff=0
+        :set sidescrolloff=0
+    endif
+endfunction
 
 " Surround word with "'s
 " nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
@@ -111,6 +131,9 @@ nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 " nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
 
+" halve the wait time for multi-key keybinds
+set ttm=25
+
 
 " #ui
 " ---------------------------------------------------------------------------
@@ -127,6 +150,8 @@ let g:startify_bookmarks = [
         \ {'i' : '~/swift/roomroster'},
         \ {'r' : '~/Sites/RoomRoster'},
         \ {'m' : '~/Sites/wp/mdm/wp-content/themes/mdm-reporting'},
+        \ {'v' : '~/.vimrc'},
+        \ {'t' : '~/.tmux.conf'},
         \ ]
 
 let g:startify_lists = [
@@ -150,13 +175,15 @@ let g:startify_custom_header = [
         \ '',
         \]
 
-let g:startify_custom_footer = 
-        \ map(split(system('fortune | cowsay -W 80 -f dragon'), '\n'), '"   ". v:val')
+" let g:startify_custom_footer = 
+"         \ map(split(system('fortune | cowsay -W 80 -f dragon'), '\n'), '"   ". v:val')
 
+let g:startify_custom_footer = ""
+
+nnoremap <leader><C-s> :Startify<cr>
 
 " Sidebar NERDTree
 Plugin 'scrooloose/nerdtree'
-" autocmd vimenter * NERDTree
 noremap <C-\> :NERDTreeToggle<CR>
 noremap <leader>\ :NERDTreeFind<CR>
 
@@ -206,13 +233,22 @@ set autoindent    " align the new line indent with the previous line
 set conceallevel=0
 set ignorecase
 set smartcase
-" set mousefocus
-" set mouse=a
+set mousefocus
+set mouse=a
+set hidden
 
 " Autoread files to watch for changes outside of vim
 set autoread
-" set foldmethod=syntax
-" set foldlevel=1
+augroup autoreload
+    autocmd!
+    " Thanks, Stack Overflow: https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+    autocmd FileChangedShellPost *
+      \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+augroup END
+
+set foldmethod=manual
+set foldlevel=1
 set nowrap
 " 
 " Move lines like Atom
@@ -234,11 +270,36 @@ noremap <C-w><C-Down> :res -5<cr>
 vnoremap < <gv
 vnoremap > >gv
 
+"goto brace
+nnoremap gb %
+vnoremap gb %
+
+" Dash Documentation plugin
+Plugin 'rizzatti/dash.vim'
+
 " Close all buffers except open one
 Plugin 'vim-scripts/BufOnly.vim'
 
 " Tmux-style Pane Zooming
 Plugin 'dhruvasagar/vim-zoom'
+
+nnoremap <leader>+ :<C-u>call zoom#toggle()<cr>
+
+" " Undo Tree for vim
+" Plugin 'sjl/gundo.vim'
+" nnoremap <leader>g :GundoToggle<cr>
+
+" delimiter assistance
+Plugin 'Raimondi/delimitMate'
+
+
+Plugin 'junegunn/vim-easy-align'
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " tags manager
 Plugin 'ludovicchabant/vim-gutentags'
@@ -268,8 +329,13 @@ endfunction
 " Git wrapper for vim
 Plugin 'tpope/vim-fugitive'
 
+nnoremap <C-B> :Gblame<cr>
+
 " View Tags in Vim
 Plugin 'majutsushi/tagbar'
+augroup tagbar
+    autocmd vimenter * TagbarOpen
+augroup END
 nnoremap <C-s> :TagbarToggle<cr>
 vnoremap <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
 
@@ -283,7 +349,7 @@ Plugin 'airblade/vim-rooter'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 noremap <C-p> :FZF -i<cr>
-
+" inoremap <expr> <c-x><c-k> fzf#vim#complete(:DashKeywords)
 
 " Ack for Vim
 Plugin 'mileszs/ack.vim'
@@ -328,8 +394,10 @@ function! IPhpInsertUse()
     call PhpInsertUse()
     call feedkeys('a',  'n')
 endfunction
-autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
-autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+augroup phpImports
+    autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
+    autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+augroup END
 
 
 " Thanks @ian-paterson  https://github.com/ian-paterson
@@ -394,7 +462,9 @@ let g:ale_linters = {
 let g:ale_php_phpcs_standard="XpBar"
 let g:ale_php_phpcs_use_global=1
 
-
+Plugin 'file:///Users/nireland/swift/apple/swift', 
+            \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
+autocmd BufNewFile,BufRead *.swift set syntax=swift
 
 " #theming
 " ---------------------------------------------------------------------------
@@ -441,7 +511,18 @@ nnoremap <C-[> :syn off<cr> :syn on<cr>
 "                      ▘  ▝▀▘▘ ▘ ▝▀  ▀ ▝▀▘▐  ▐
 " ---------------------------------------------------------------------------
 
+" unmap from emmet to use with splits
+unmap <leader>vg
 
+Plugin 'jerrymarino/SwiftPlayground.vim'
+
+
+autocmd VimEnter *
+            \   if !argc()
+            \ |   Startify
+            \ |   NERDTree
+            \ |   wincmd w
+            \ | endif
 " ===========================================================================
 
 call vundle#end()            " required

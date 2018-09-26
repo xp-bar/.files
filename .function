@@ -10,6 +10,18 @@ function show(){
     tput rmcup;
 }
 
+function dash(){
+    if [[ $2 != '' ]]; then
+        open dash://$1:{$2}
+    else
+        open dash://{$1}
+    fi
+}
+
+function rh(){
+    git ls-remote --heads origin $(git rev-parse --abbrev-ref HEAD)  | grep $(git rev-parse --abbrev-ref HEAD) | sed 's/refs\/heads\/'$(git this)'//g' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'; 
+}
+
 function e(){
     typeset -A dotfiles_that_source=(
         a alias
@@ -112,26 +124,53 @@ function fclock() {
 }
 
 function koolaid(){
-    if [[ $(git diff master --name-only) != "" ]] then
-        git diff master --diff-filter=d --name-only | grep -v '.blade.php' | while read IN; do
-            phpcs $IN --colors&;
-        done | sed 's/(phpcs $IN -q --colors)//g' | less
+    unset files; 
+    if [ -t 0 ]; then
+        declare -a files
+        git --no-pager diff master --diff-filter=d --name-only | grep '.php' | grep -v '.blade.php' |
+        while read in; do
+            files+=("$in\n");
+        done
     else
-        echo -e "\e[34mNo Errors!";
+        declare -a files
+        while read -r in; do 
+            files+=("$in\n");
+        done
     fi
+    (for file in $files; do
+        filename=$(echo $file | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'); 
+        phpcs $filename --colors&;
+    done | sed 's/(phpcs $filename -q --colors)//g') | less
 }
 
-function koolfixer(){
-    if [[ $(git diff master --name-only) != "" ]] then
-        git diff master --diff-filter=d --name-only | grep -v '.blade.php' | while read IN; do
-            phpcs $IN --colors & wait;
-            read "response?Would you like to auto-fix? [y/n]"
-            if [[ "$response" =~ ^[Yy]$ ]] then
-                phpcbf $IN&;
-            fi
-        done | sed 's/(phpcs $IN -q --colors)//g';
+function koolfix(){
+    unset files; 
+    if [ -t 0 ]; then
+        declare -a files
+        git --no-pager diff master --diff-filter=d --name-only -- . ':(exclude)*.blade.php;' |
+        while read in; do
+            files+=("$in\n");
+        done
     else
-        echo -e "\e[34mNo Errors!";
+        declare -a files
+        while read -r in; do 
+            files+=("$in\n");
+        done
+    fi
+	echo -e "\e[31mFixing...";
+    (for file in $files; do
+        filename=$(echo $file | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'); 
+		phpcbf $filename --colors;
+	done) > /dev/null;
+	tput cuu1;
+	echo -e "\e[32mFixed!                   ";
+}
+
+function di() {
+    if [[ $@ == "" ]]; then
+        git diff master
+    else
+        git diff $@
     fi
 }
 
@@ -279,6 +318,9 @@ function brlist(){
         fi
 }
 
+function brcount() {
+    i=; git --no-pager branch | while read in; do i=$[i + 1]; done; echo "$i total branches"
+}
 function brnote(){
     INPUT=$1
     if [[ $INPUT = --all ]]; then
@@ -324,11 +366,28 @@ function brstatus(){
     fi
 }
 
+
+# function nuke(){
+#     read response\?"Are you sure you want to nuke your changes? [y/n] "
+#     case "$response" in
+#         [yY][eE][sS]|[yY])
+#         git add . >& /dev/null;
+#         git reset HEAD --hard >& /dev/null;
+#             echo "Now at commit: \e[0;31m$(git rev-parse HEAD)";
+#             ;;
+#         *)
+#             ;;
+#     esac
+# }
+
+
+
 function nuke(){
     read response\?"Are you sure you want to nuke your changes? [y/n] "
     case "$response" in
         [yY][eE][sS]|[yY])
-        git reset HEAD --hard > /dev/null;
+        git add . >& /dev/null;
+        git reset HEAD --hard >& /dev/null;
         hide;
             echo "
 
