@@ -1,26 +1,11 @@
 export ZSH="/Users/nireland/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
 
-eval $(thefuck --alias)
-
-source ~/.antigen/antigen.zsh
 # plugins 
-
-antigen bundle dotenv
-antigen bundle osx
-antigen bundle vi-mode
-antigen bundle command-not-found
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-completions
-antigen bundle mafredri/zsh-async
-antigen bundle MichaelAquilina/zsh-emojis
-
-# theme
-antigen theme xp-bar/zsh-bar-theme
-# antigen theme ~/zshthemes xp-bar.zsh-theme --no-local-clone
-#antigen theme ~/.oh-my-zsh/themes xp-bar.zsh-theme --no-local-clone
-
-antigen apply
+source <(antibody init)
+antibody bundle < ~/.zsh-plugins
+bindkey -v
+eval $(thefuck --alias)
 
 # source ~/.prompt
 source ~/.alias
@@ -41,5 +26,7 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
 
-ZSH_THEME="xp-bar/zsh-bar-theme"
+# ZSH_THEME="xp-bar/zsh-bar-theme"
+#
+# ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern url)
 
