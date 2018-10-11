@@ -27,6 +27,8 @@ call vundle#begin()
 "                            ▝▀ ▝▀▘▘ ▘▝▀▘▘  ▝▀▘ ▘
 " ---------------------------------------------------------------------------
 
+" Remap immediately because not being able to use \ was killing me
+let mapleader = "~"
 map <Space> <leader>
 
 function! SetupCommandAlias(from, to)
@@ -230,6 +232,7 @@ set expandtab     " insert spaces when hitting TABs
 set softtabstop=4 " insert/delete 2 spaces when hitting a TAB/BACKSPACE
 set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
+set smartindent
 set conceallevel=0
 set ignorecase
 set smartcase
@@ -304,6 +307,8 @@ nmap ga <Plug>(EasyAlign)
 " tags manager
 Plugin 'ludovicchabant/vim-gutentags'
 
+let g:gutentags_ctags_extra_args = ['--PHP-kinds=ct', '--exclude="/node_modules/"', '--languages="php"']
+
 augroup MyGutentagsStatusLineRefresher
     autocmd!
     autocmd User GutentagsUpdating call lightline#update()
@@ -349,7 +354,10 @@ Plugin 'airblade/vim-rooter'
 Plugin 'junegunn/fzf'
 Plugin 'junegunn/fzf.vim'
 noremap <C-p> :FZF -i<cr>
+noremap <leader>b :Buffers<cr>
 " inoremap <expr> <c-x><c-k> fzf#vim#complete(:DashKeywords)
+command! LaraViews FZF resources/views/
+command! LaraControllers FZF app/http/controllers/
 
 " Ack for Vim
 Plugin 'mileszs/ack.vim'
@@ -380,6 +388,8 @@ vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
 " Can't live without Emmet
 Plugin 'mattn/emmet-vim'
 let g:user_emmet_leader_key='<leader>' 
+
+inoremap <C-Return> <cr><cr><C-o>k<Tab>
 
 " Comment and Un-comment lines on the fly
 Plugin 'tpope/vim-commentary'
@@ -438,8 +448,10 @@ Plugin 'StanAngeloff/php.vim'
 " Javascript
 Plugin 'othree/javascript-libraries-syntax.vim'
 let g:used_javascript_libs = 'underscore,jquery,vue'
-
-autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
+augroup syntaxcommands
+    autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+augroup END
 
 " Highlight Hex colors
 Plugin 'etdev/vim-hexcolor'
@@ -485,9 +497,34 @@ let g:lightline = {
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
       \ },
       \ 'component_function': {
+      \   'mode': 'LightlineMode',
       \   'gitbranch': 'fugitive#head'
       \ },
       \ }
+let g:lightline.separator = {
+	\   'left': '', 'right': ''
+  \}
+let g:lightline.subseparator = {
+	\   'left': '', 'right': '' 
+  \}
+let g:airline#extensions#tabline#enabled = 1
+let g:lightline.tabline = {
+  \   'left': [ ['buffers'] ],
+  \   'right': [ ['close'] ]
+  \ }
+set showtabline=2  " Show tabline
+set guioptions-=e  " Don't use GUI tabline
+
+
+function! LightlineMode()
+  return expand('%:t') ==# '__Tagbar__' ? 'Tagbar':
+        \ expand('%:t') ==# 'ControlP' ? 'CtrlP' :
+        \ expand('%:t') ==# 'NERD_tree' ? 'NERDTree' :
+        \ &filetype ==# 'unite' ? 'Unite' :
+        \ &filetype ==# 'vimfiler' ? 'VimFiler' :
+        \ &filetype ==# 'vimshell' ? 'VimShell' :
+        \ lightline#mode()
+endfunction
 
 if (has("termguicolors"))
     set termguicolors

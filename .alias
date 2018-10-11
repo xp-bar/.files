@@ -39,7 +39,6 @@ alias art='php artisan'
 alias artm='art migrate'
 alias artc="art clear-compiled && art cache:clear && art route:clear && art config:clear && comp du && art view:clear"
 alias aql="art queue:listen --tries=3"
-alias arl='php artisan route:list'
 alias aqw="php artisan queue:work --once"
 alias tink="c; art tinker"
 alias c="clear"
@@ -65,7 +64,6 @@ alias stash="git stash"
 alias shunk="git stash -p"
 alias pop="git stash pop"
 alias ci="git commit -m"
-alias co="git checkout"
 alias fe="git fetch origin"
 alias p="git push"
 alias pl="git pull"

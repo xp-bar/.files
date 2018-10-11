@@ -3,7 +3,7 @@ robbyrussell/oh-my-zsh folder:dotenv
 robbyrussell/oh-my-zsh folder:dash
 robbyrussell/oh-my-zsh folder:thefuck
 robbyrussell/oh-my-zsh folder:osx
-robbyrussell/oh-my-zsh folder:vi-mode
+# robbyrussell/oh-my-zsh folder:vi-mode
 robbyrussell/oh-my-zsh folder:command-not-found
 zsh-users/zsh-syntax-highlighting
 # ascii-soup/zsh-url-highlighter folder:url

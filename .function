@@ -168,7 +168,7 @@ function koolfix(){
 
 function di() {
     if [[ $@ == "" ]]; then
-        git diff master
+        git diff head
     else
         git diff $@
     fi
@@ -178,7 +178,7 @@ function din(){
     git --no-pager diff $1 --name-only
 }
 
-function clock(){
+function tclock(){
     DEFAULT_FONT="mono9"
     if [[ $1 == "" ]]; then
         FONT=$DEFAULT_FONT
@@ -193,6 +193,9 @@ function clock(){
     done
 }
 
+
+# PHP Artisan
+
 function ting(){
     if [[ "$1" ]]; then
         php artisan tinker ting$1.php
@@ -201,6 +204,48 @@ function ting(){
     fi
 }
 
+function routes(){
+    if [[ "$1" ]]; then
+        if [[ "$1" == *"--all"* ]]; then
+            php artisan route:list
+        else
+            php artisan route:list --name="$1"
+        fi
+    else
+        local result="$(php artisan route:list | tail -n +4 | sed 's/| / /' | awk '{print $6}' | grep -v '|' | awk '!seen[$0]++' | fzf)"
+        php artisan route:list --name="$result"
+    fi
+}
+
+function views() {
+    local view="$(find resources/views -type f | gr --color=none '.blade.php' | fzf)"
+    echo $view | pbcopy;
+    echo $view
+}
+
+function art:cmds(){
+    php artisan list --raw | awk -F ' ' '{print $1}' | gr --color=none ':' | fzf | pbcopy
+}
+
+function logs() {
+    printf '\033[?7h'
+    unset files; 
+    if [ -t 0 ]; then
+        declare -a files
+        ls -l 'storage/logs/'
+        while read in; do
+            files+=("$in\n");
+        done
+    else
+        declare -a files
+        while read -r in; do 
+            files+=("$in\n");
+        done
+    fi
+    for file in $files; do
+        cat $file | sed -n '/[0-9]*-[0-9]*-[0-9]*/p' | sed '/\.php:[0-9]*/ a \'$'\n\\'$'\n' | grep -v 'Next';
+    done | less
+}
 
 TODOLIST=~/todo-list.md
 function todo(){
@@ -297,10 +342,15 @@ function brwatch(){
     c;
 }
 
+function co() {
+    if [[ $@ == "" ]]; then
+        git checkout $(git branch | fzf)
+    else
+        git checkout $@
+    fi
+}
+
 function brlist(){
-        if [[ "$@" != *"--inline"* ]]; then
-           hide;
-        fi
         for x in $(br | NOT \* | NOT master | NOT staging | NOT remote);
             do
                 if [[ "$@" = *"--notes"* ]] && [[ $(git config branch.$x.note) != "" ]]; then
@@ -310,12 +360,7 @@ function brlist(){
                 elif [[ "$@" = "" ]] || [[ "$@" = *"--inline"* ]]; then
                     echo -e "$x\n";
                 fi
-        done;
-
-        if [[ "$@" != *"--inline"* ]]; then
-            read "?";
-            show
-        fi
+        done | less
 }
 
 function brcount() {
@@ -573,4 +618,75 @@ mkalias(){
         echo "alias $1='$2'" >> ~/.extra-aliases
     fi
     source ~/.extra-aliases
+}
+
+function fromroman () {
+  local max=0 sum i j
+  local -A conv
+  conv=(I 1 V 5 X 10 L 50 C 100 D 500 M 1000)
+  for j in ${(Oas::)1}; do
+    i=conv[$j]
+    if (( i >= max )); then
+      (( sum+=i ))
+      (( max=i ))
+    else
+      (( sum-=i ))
+    fi
+  done
+  echo $sum
+}
+
+function toroman() {
+  local -a conv
+  local number=$1 div rom num out
+  conv=(I 1 IV 4 V 5 IX 9 X 10 XL 40 L 50 XC 90 C 100 CD 400 D 500 CM 900 M 1000)
+  for num rom in ${(Oa)conv}; do
+    (( div = number / num, number = number % num ))
+    while (( div-- > 0 )); do
+      out+=$rom
+    done
+  done
+  echo $out
+}
+
+function tasky() {
+    hide;
+    tput clear;
+    tb $TASKBOOK_ARGS;
+    fswatch -0 $TASKBOOK | while (read -d "" event || read "?")
+        do
+            tput clear;
+            tb $TASKBOOK_ARGS;
+        done
+    show;
+}
+
+function icat() {
+    local maxWidth="$(tput cols)" 
+    local width=
+    if [[ $@ == *"--half"* ]]; then
+        width=$[$(tput cols)/2]
+    elif [[ $@ == *"--quarter"* ]]; then
+        width=$[$(tput cols)/4]
+    elif [[ $@ =~ '--width=[0-9]*' ]]; then
+        width="$(echo $@ | sed -n 's/.*\(\-\-width\=\)\([0-9]*\)/\2/p')"
+    else
+        width=$maxWidth
+    fi
+    
+    if [[ $width -gt $maxWidth ]]; then
+        width=$maxWidth;
+    fi
+
+    if [[ $@ == *"--pager"* ]]; then
+        imgcat -w $width --256 -H $1 | cat | $PAGER
+    else
+        imgcat -w $width --256 -H $1 | cat
+    fi
+}
+
+unalias z 2> /dev/null
+z() {
+  [ $# -gt 0 ] && _z "$*" && return
+  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
 }
