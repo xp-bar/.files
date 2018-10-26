@@ -213,6 +213,8 @@ set mousefocus
 set mouse=a
 set hidden
 
+set complete+=t
+
 " Autoread files to watch for changes outside of vim
 set autoread
 augroup autoreload
@@ -344,7 +346,7 @@ nnoremap <C-B> :Gblame<cr>
 " ---- Tagbar ---- {{{
 Plugin 'majutsushi/tagbar'
 augroup tagbar
-    autocmd vimenter * TagbarOpen
+    autocmd vimenter * if index(['man', 'diff', 'startify'], &ft) < 0 | TagbarOpen
 augroup END
 nnoremap <C-s> :TagbarToggle<cr>
 vnoremap <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
