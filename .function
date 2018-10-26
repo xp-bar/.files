@@ -18,6 +18,12 @@ function dash(){
     fi
 }
 
+# myip() {
+#     myip="$(ifconfig | grep 'inet [0-9.]*' | grep -v '127.0.0.1' | sed 's/inet //g' | sed 's/netmask.*255//g' | tr -d '[:blank:]' | head -n 1)"
+#     echo "Your ip address is: "$myip;
+#     echo $myip | pbcopy;
+# }
+
 function rh(){
     git ls-remote --heads origin $(git rev-parse --abbrev-ref HEAD)  | grep $(git rev-parse --abbrev-ref HEAD) | sed 's/refs\/heads\/'$(git this)'//g' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'; 
 }
@@ -187,8 +193,7 @@ function tclock(){
     fi
     while true;
     do
-        clear;
-        date '+%I:%M%p' | toilet -f "$(echo $FONT)" --filter border | lolcat;
+        echo -ne "\e[31m"; date '+%I:%M%p' | toilet -f "$(echo -ne $FONT)"; echo -ne "\e[0m";
         sleep 60;
     done
 }
@@ -217,6 +222,10 @@ function routes(){
     fi
 }
 
+# function controllers() {
+# }
+# | tail -n +4 | sed 's/| / /' | awk '{print $8}' | grep -v '|' | awk '!seen[$0]++'
+
 function views() {
     local view="$(find resources/views -type f | gr --color=none '.blade.php' | fzf)"
     echo $view | pbcopy;
@@ -232,14 +241,13 @@ function logs() {
     unset files; 
     if [ -t 0 ]; then
         declare -a files
-        ls -l 'storage/logs/'
-        while read in; do
-            files+=("$in\n");
+        ls -1 'storage/logs/' | while read in; do
+            files+=("storage/logs/$in");
         done
     else
         declare -a files
         while read -r in; do 
-            files+=("$in\n");
+            files+=("$in");
         done
     fi
     for file in $files; do
@@ -349,6 +357,15 @@ function co() {
         git checkout $@
     fi
 }
+
+function mg() {
+    if [[ $@ == "" ]]; then
+        git merge $(git branch | fzf)
+    else
+        git merge $@
+    fi
+}
+
 
 function brlist(){
         for x in $(br | NOT \* | NOT master | NOT staging | NOT remote);
@@ -553,8 +570,9 @@ function whic(){
     git diff $1 --name-only
 }
 
-function diffcount(){
-    git diff $1 --stat | grep "files changed"
+function dicount(){
+    branch="$([[ $1 != "" ]] && echo $1 || echo "master")";
+    git diff $branch --stat | tail -n 1 | tr , '\n' | sed 's/([+-])//g' | awk '$1=$1'
 }
 
 function owiwwo(){
@@ -573,7 +591,7 @@ function disearch(){
     git diff $2 --name-only | grep $1 | while read in; do git diff $2 -- $in; done
 }
 
-function prs(){
+function _prs(){
     #!/bin/bash
     # set -x
     emulate -L bash

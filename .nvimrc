@@ -4,7 +4,6 @@ filetype off                  " required
 set rtp+=~/.config/nvim/bundle/Vundle.vim
 call vundle#begin()
 
-" #home
 " ===========================================================================
 " ===========================================================================
 "
@@ -17,25 +16,9 @@ call vundle#begin()
 " ===========================================================================
 "       This is my personal .vimrc, built with neovim in mind. Enjoy! 
 
+" --- General Settings --- {{{
 
-
-" #general
-" ---------------------------------------------------------------------------
-"                            ▞▀▖               ▜
-"                            ▌▄▖▞▀▖▛▀▖▞▀▖▙▀▖▝▀▖▐
-"                            ▌ ▌▛▀ ▌ ▌▛▀ ▌  ▞▀▌▐
-"                            ▝▀ ▝▀▘▘ ▘▝▀▘▘  ▝▀▘ ▘
-" ---------------------------------------------------------------------------
-
-" Remap immediately because not being able to use \ was killing me
-let mapleader = "~"
 map <Space> <leader>
-
-function! SetupCommandAlias(from, to)
-exec 'cnoreabbrev <expr> '.a:from
-    \ .' ((getcmdtype() is# ":" && getcmdline() is# "'.a:from.'")'
-    \ .'? ("'.a:to.'") : ("'.a:from.'"))'
-endfun
 
 " Clear highlight after search
 nnoremap <silent><cr> :noh<CR><CR>:<backspace>
@@ -49,27 +32,22 @@ nnoremap <silent><leader>en :split $MYVIMRC<cr>
 nnoremap <leader>w :w<cr>
 
 " Splits
+" {{{
 nnoremap <leader>v :vsp<cr>
 nnoremap <leader>n :sp<cr>
 vnoremap <leader>v :vsp<cr>
 vnoremap <leader>n :sp<cr>
+" }}}
 
 nnoremap <silent><leader>q :bd<cr>
 
-" nnoremap <silent><A-,>:vertical resize +5<cr>
-
-iabbrev adn and 
-iabbrev waht what
-iabbrev tehn then
-iabbrev @@ nick@nicholasireland.ca
-iabbrev ccopy Copyright 2018 Nicholas Ireland, all rights reserved.
-iabbrev iff if ()<left>
-iabbrev \rr\ RoomRoster\
-
-
 " Auto Commands
+" {{{
 augroup buffercmds 
 autocmd!
+" Auto allow folds in vimrc file
+autocmd BufNewFile,BufRead .vimrc :setlocal foldlevelstart=0
+
 " Indent HTML files on save
 autocmd BufWritePre *.html :normal gg=G
 
@@ -82,16 +60,17 @@ autocmd BufNewFile,BufRead *.md setlocal spell spelllang=en_us
 " No linewrap html
 autocmd BufNewFile,BufRead *.php setlocal nowrap
 augroup END
+" }}}
 
 
 " change between parens
 onoremap in( :<c-u>normal! f(vi(<cr>
 
 " Stop using the Arrow keys in normal mode
-noremap <Up> <nop>
-noremap <Down> <nop>
-noremap <Left> <nop>
-noremap <Right> <nop>
+nnoremap <Up> <nop>
+nnoremap <Down> <nop>
+nnoremap <Left> <nop>
+nnoremap <Right> <nop>
 
 " Map Leader space to commands
 noremap <leader><Space> :
@@ -103,8 +82,8 @@ inoremap jk <esc>
 vnoremap jk <esc>
 
 
-" Tab commands with leader
-" nnoremap <leader>t :tabnew<cr>
+" Act like a typewriter
+" {{{
 nnoremap <leader>t :call TypeWriterToggle()<cr>
 
 function! TypeWriterToggle()
@@ -116,14 +95,13 @@ function! TypeWriterToggle()
         :set sidescrolloff=0
     endif
 endfunction
-
-" Surround word with "'s
-" nnoremap <leader>" viw<esc>a"<esc>bi"<esc>lel
+" }}}
 
 " Vundle Plugin Manager manages itself, like npm
 Plugin 'VundleVim/Vundle.vim'
 
 " Navigate Tmux and Vim Seamlessly
+" {{{
 Plugin 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
 
@@ -132,20 +110,16 @@ nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 " nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
+" }}}
 
 " halve the wait time for multi-key keybinds
 set ttm=25
 
+" }}}
 
-" #ui
-" ---------------------------------------------------------------------------
-"                   ▌ ▌          ▜▘   ▐        ▗▀▖
-"                   ▌ ▌▞▀▘▞▀▖▙▀▖ ▐ ▛▀▖▜▀ ▞▀▖▙▀▖▐  ▝▀▖▞▀▖▞▀▖
-"                   ▌ ▌▝▀▖▛▀ ▌   ▐ ▌ ▌▐ ▖▛▀ ▌  ▜▀ ▞▀▌▌ ▖▛▀
-"                   ▝▀ ▀▀ ▝▀▘▘   ▀▘▘ ▘ ▀ ▝▀▘▘  ▐  ▝▀▘▝▀ ▝▀▘
-" ---------------------------------------------------------------------------
+" --- User Interface --- {{{
 
-" Startup Screen
+" ---- Startup Screen ---- {{{
 Plugin 'mhinz/vim-startify'
 " Startify config
 let g:startify_bookmarks = [
@@ -177,14 +151,17 @@ let g:startify_custom_header = [
         \ '',
         \]
 
+" let g:startify_custom_header = 
+            " \ map(split(system('fortune -s -n $[$(tput cols)/2] | toilet -f "Stick Letters" -w 200'), '\n'), '"   ". v:val')
 " let g:startify_custom_footer = 
 "         \ map(split(system('fortune | cowsay -W 80 -f dragon'), '\n'), '"   ". v:val')
 
 let g:startify_custom_footer = ""
 
 nnoremap <leader><C-s> :Startify<cr>
+"  }}}
 
-" Sidebar NERDTree
+" ---- Sidebar NERDTree ---- {{{
 Plugin 'scrooloose/nerdtree'
 noremap <C-\> :NERDTreeToggle<CR>
 noremap <leader>\ :NERDTreeFind<CR>
@@ -207,24 +184,20 @@ let g:NERDTreeIndicatorMapCustom = {
         \ "Unknown"   : "?"
         \ }
 
+"  }}}
 
 " Minimap!
-Plugin 'severin-lemaignan/vim-minimap'
+" Plugin 'severin-lemaignan/vim-minimap'
 
 
 " Gutter for Vim, allows showing statuses beside lines of Code
 Plugin 'airblade/vim-gitgutter'
 
+" }}}
 
+" --- Editor Config --- {{{
 
-" #editor
-" ---------------------------------------------------------------------------
-"                           ▛▀▘  ▌▗▐
-"                           ▙▄ ▞▀▌▄▜▀ ▞▀▖▙▀▖
-"                           ▌  ▌ ▌▐▐ ▖▌ ▌▌
-"                           ▀▀▘▝▀▘▀▘▀ ▝▀ ▘
-" ---------------------------------------------------------------------------
-
+" ---- Native Options ---- {{{
 set number numberwidth=4
 set shiftwidth=4  " operation >> indents 2 columns; << unindents 2 columns
 set tabstop=4     " a hard TAB displays as 2 columns
@@ -232,7 +205,7 @@ set expandtab     " insert spaces when hitting TABs
 set softtabstop=4 " insert/delete 2 spaces when hitting a TAB/BACKSPACE
 set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
-set smartindent
+" set smartindent
 set conceallevel=0
 set ignorecase
 set smartcase
@@ -250,17 +223,21 @@ augroup autoreload
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 augroup END
 
-set foldmethod=manual
-set foldlevel=1
+set foldmethod=marker
+set foldlevel=0
 set nowrap
-" 
-" Move lines like Atom
+" }}}
+
+" ---- Movement and resizing ---- {{{
+
+" Move lines like Atom {{{
 nnoremap <C-Down> :m .+1<CR>==
 nnoremap <C-Up> :m .-2<CR>==
 inoremap <C-Down> <Esc>:m .+1<CR>==gi
 inoremap <C-Up> <Esc>:m .-2<CR>==gi
 vnoremap <C-Down> :m '>+1<CR>gv=gv
 vnoremap <C-Up> :m '<-2<CR>gv=gv
+" }}}
 
 " Remap Page up and Page down
 noremap <S-k> <C-b> 
@@ -277,6 +254,36 @@ vnoremap > >gv
 nnoremap gb %
 vnoremap gb %
 
+" Thanks @ian-paterson  https://github.com/ian-paterson
+"
+" goto blade partials
+" {{{
+nnoremap <leader>pg :call GoToPartial()<CR>
+
+function! GoToPartial()
+  normal "lyi'
+  let partial = @l
+  let file = substitute(partial, "\\.", "/", "g")
+  execute "edit resources/views/" . file . ".blade.php"
+endfunction
+" }}}
+
+" Go to vue component
+" {{{
+nnoremap <leader>vg :call GoToVue()<CR>
+
+function! GoToVue()
+  execute "set isk+=-"
+  normal "lyiw
+  execute "set isk-=-"
+  let filename = @l
+  let file = system("find resources/assets/js -name " . filename . ".vue")
+  execute "edit " . file
+endfunction
+" }}}
+
+" }}}
+
 " Dash Documentation plugin
 Plugin 'rizzatti/dash.vim'
 
@@ -288,14 +295,10 @@ Plugin 'dhruvasagar/vim-zoom'
 
 nnoremap <leader>+ :<C-u>call zoom#toggle()<cr>
 
-" " Undo Tree for vim
-" Plugin 'sjl/gundo.vim'
-" nnoremap <leader>g :GundoToggle<cr>
-
 " delimiter assistance
 Plugin 'Raimondi/delimitMate'
 
-
+" ---- Easy Align ---- {{{
 Plugin 'junegunn/vim-easy-align'
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -304,10 +307,14 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
-" tags manager
+" }}}
+
+" ---- Tag Manager ---- {{{
 Plugin 'ludovicchabant/vim-gutentags'
 
-let g:gutentags_ctags_extra_args = ['--PHP-kinds=ct', '--exclude="/node_modules/"', '--languages="php"']
+" let g:gutentags_ctags_extra_args = ['--PHP-kinds=ct', '--exclude="/node_modules/"', '--languages="php"']
+
+let g:gutentags_ctags_extra_args = ['--exclude="/node_modules/"', '--languages="php"']
 
 augroup MyGutentagsStatusLineRefresher
     autocmd!
@@ -329,20 +336,21 @@ endfunction
 :set statusline+=%{gutentags#statusline_cb(
             \function('<SID>get_gutentags_status'))}
 
-
+" }}}
 
 " Git wrapper for vim
 Plugin 'tpope/vim-fugitive'
 
 nnoremap <C-B> :Gblame<cr>
 
-" View Tags in Vim
+" ---- Tagbar ---- {{{
 Plugin 'majutsushi/tagbar'
 augroup tagbar
     autocmd vimenter * TagbarOpen
 augroup END
 nnoremap <C-s> :TagbarToggle<cr>
 vnoremap <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
+" }}}
 
 " Managing quotations, surrounding brackets, etc. Made easier
 Plugin 'tpope/vim-surround'
@@ -350,16 +358,28 @@ Plugin 'tpope/vim-surround'
 " Should keep me in root dir for commands like fzf
 Plugin 'airblade/vim-rooter'
 
-" FZF Plugins for Fuzzy File Finding
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
-noremap <C-p> :FZF -i<cr>
-noremap <leader>b :Buffers<cr>
-" inoremap <expr> <c-x><c-k> fzf#vim#complete(:DashKeywords)
-command! LaraViews FZF resources/views/
-command! LaraControllers FZF app/http/controllers/
+" ---- FZF Plugins for Fuzzy File Finding ---- {{{
+if executable('fzf')
+    Plugin 'junegunn/fzf'
+    Plugin 'junegunn/fzf.vim'
+    
+    nnoremap <silent> <C-p> :call fzf#run({'source': 'git ls-files --exclude-standard --others --cached', 'sink': 'e', 'down': '40%'})<cr>
+    nnoremap <silent> <M-p> :Buffers<cr>
+    nnoremap <silent> <M-S-p> :History<cr>
+  
+    " inoremap <expr> <c-x><c-k> fzf#vim#complete(:DashKeywords)
+    let g:fzf_nvim_statusline = 0
+    let g:fzf_action = {
+          \ 'ctrl-s': 'split',
+          \ 'ctrl-v': 'vsplit'
+          \ }
+  
+    command! LaraViews FZF resources/views/
+    command! LaraControllers FZF app/http/controllers/
+end
+" }}}
 
-" Ack for Vim
+" ---- Ack for Vim ---- {{{
 Plugin 'mileszs/ack.vim'
 cnoreabbrev Ack Ack!
 " nnoremap <Leader>a :Ack!<Space><Paste>
@@ -370,35 +390,38 @@ vnoremap <leader><C-f> y :Ack!<Space><C-r>"
 vnoremap <leader><S-f> y :%s/<C-r>"/
 nnoremap <C-f> /
 vnoremap <C-f> y /<C-r>"
+" }}}
 
-" Twiddle Case Switcher
-function! TwiddleCase(str)
-  if a:str ==# toupper(a:str)
-    let result = tolower(a:str)
-  elseif a:str ==# tolower(a:str)
-    let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
-  else
-    let result = toupper(a:str)
-  endif
-  return result
-endfunction
-vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
+" ---- Twiddle Case Switcher ---- {{{
+" function! TwiddleCase(str)
+"   if a:str ==# toupper(a:str)
+"     let result = tolower(a:str)
+"   elseif a:str ==# tolower(a:str)
+"     let result = substitute(a:str,'\(\<\w\+\>\)', '\u\1', 'g')
+"   else
+"     let result = toupper(a:str)
+"   endif
+"   return result
+" endfunction
+" vnoremap ~ y:call setreg('', TwiddleCase(@"), getregtype(''))<CR>gv""Pgv
+" }}}
 
-
-" Can't live without Emmet
+" ---- Can't live without Emmet ---- {{{
 Plugin 'mattn/emmet-vim'
+
 let g:user_emmet_leader_key='<leader>' 
 
 inoremap <C-Return> <cr><cr><C-o>k<Tab>
+" }}}
 
-" Comment and Un-comment lines on the fly
+" ---- Comment and Un-comment lines on the fly ---- {{{
 Plugin 'tpope/vim-commentary'
 " https://stackoverflow.com/questions/9051837/how-to-map-c-to-toggle-comments-in-vim
 " Vim recognizes C-_ as C-/, so control+/ will toggle comments
 noremap <C-_> :Commentary<cr>
+" }}}
 
-
-" PHP Namespace and Use Statement support in Vim
+" ---- PHP Namespace and Use Statement support in Vim ---- {{{
 Plugin 'arnaud-lb/vim-php-namespace'
 function! IPhpInsertUse()
     call PhpInsertUse()
@@ -408,53 +431,28 @@ augroup phpImports
     autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
     autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
 augroup END
+" }}}
 
+" }}}
 
-" Thanks @ian-paterson  https://github.com/ian-paterson
-"
-" goto blade partials
-nnoremap <leader>pg :call GoToPartial()<CR>
+" --- Syntax --- {{{
 
-function! GoToPartial()
-  normal "lyi'
-  let partial = @l
-  let file = substitute(partial, "\\.", "/", "g")
-  execute "edit resources/views/" . file . ".blade.php"
-endfunction
-
-" Go to vue component
-nnoremap <leader>vg :call GoToVue()<CR>
-
-function! GoToVue()
-  execute "set isk+=-"
-  normal "lyiw
-  execute "set isk-=-"
-  let filename = @l
-  let file = system("find resources/assets/js -name " . filename . ".vue")
-  execute "edit " . file
-endfunction
-
-" #syntax
-" ---------------------------------------------------------------------------
-"                           ▞▀▖      ▐
-"                           ▚▄ ▌ ▌▛▀▖▜▀ ▝▀▖▚▗▘
-"                           ▖ ▌▚▄▌▌ ▌▐ ▖▞▀▌▗▚
-"                           ▝▀ ▗▄▘▘ ▘ ▀ ▝▀▘▘ ▘
-" ---------------------------------------------------------------------------
+" html5 omnicomplete
+" Plugin 'othree/html5.vim'
 
 " Better PHP Lang Support
 Plugin 'StanAngeloff/php.vim' 
 
 " Javascript
-Plugin 'othree/javascript-libraries-syntax.vim'
-let g:used_javascript_libs = 'underscore,jquery,vue'
+" Plugin 'othree/javascript-libraries-syntax.vim'
+" let g:used_javascript_libs = 'underscore,jquery,vue'
 augroup syntaxcommands
     autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
     autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
 augroup END
 
 " Highlight Hex colors
-Plugin 'etdev/vim-hexcolor'
+" Plugin 'etdev/vim-hexcolor'
 
 " Laravel
 Plugin 'jwalton512/vim-blade'
@@ -466,7 +464,7 @@ augroup END
 
 
 " Async Linter Engine for Vim, allows phpcs, eslint etc.
-Plugin 'w0rp/ale'
+" Plugin 'w0rp/ale'
 let g:ale_linters = {
                     \ 'php': ['phpcs'],
                     \ 'swift': ['swiftlint']
@@ -478,29 +476,34 @@ Plugin 'file:///Users/nireland/swift/apple/swift',
             \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
 autocmd BufNewFile,BufRead *.swift set syntax=swift
 
-" #theming
-" ---------------------------------------------------------------------------
-"                           ▀▛▘▌         ▗
-"                            ▌ ▛▀▖▞▀▖▛▚▀▖▄ ▛▀▖▞▀▌
-"                            ▌ ▌ ▌▛▀ ▌▐ ▌▐ ▌ ▌▚▄▌
-"                            ▘ ▘ ▘▝▀▘▘▝ ▘▀▘▘ ▘▗▄▘
-" ---------------------------------------------------------------------------
+" }}}
 
-" Lightline for Vim
+" --- Themimg --- {{{
+
+" ---- Lightline for Vim ---- {{{
+
 Plugin 'itchyny/lightline.vim'
+
 " Hide -- INSERT --
 set noshowmode
+
 let g:lightline = {
       \ 'colorscheme': 'two',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
       \ },
+      \ 'inactive': {
+      \   'left': [ [ 'mode', 'paste' ] ]
+      \ },
       \ 'component_function': {
-      \   'mode': 'LightlineMode',
-      \   'gitbranch': 'fugitive#head'
+      \   'mode': 'LightLineMode',
+      \   'gitbranch': 'fugitive#head',
+      \ },
+      \ 'component_type': {
       \ },
       \ }
+
 let g:lightline.separator = {
 	\   'left': '', 'right': ''
   \}
@@ -509,15 +512,17 @@ let g:lightline.subseparator = {
   \}
 let g:airline#extensions#tabline#enabled = 1
 let g:lightline.tabline = {
-  \   'left': [ ['buffers'] ],
-  \   'right': [ ['close'] ]
+  \   'left': [],
+  \   'right': []
   \ }
-set showtabline=2  " Show tabline
+
+set showtabline=0 " 2 to show
+
 set guioptions-=e  " Don't use GUI tabline
 
 
-function! LightlineMode()
-  return expand('%:t') ==# '__Tagbar__' ? 'Tagbar':
+function! LightLineMode()
+  return expand('%:t') ==# '__Tagbar__.1' ? 'Tagbar':
         \ expand('%:t') ==# 'ControlP' ? 'CtrlP' :
         \ expand('%:t') ==# 'NERD_tree' ? 'NERDTree' :
         \ &filetype ==# 'unite' ? 'Unite' :
@@ -525,6 +530,7 @@ function! LightlineMode()
         \ &filetype ==# 'vimshell' ? 'VimShell' :
         \ lightline#mode()
 endfunction
+" }}}
 
 if (has("termguicolors"))
     set termguicolors
@@ -540,26 +546,24 @@ syntax on
 
 nnoremap <C-[> :syn off<cr> :syn on<cr> 
 
-" #fun
-" ---------------------------------------------------------------------------
-"                      ▛▀▘       ▞▀▖▐     ▗▀▖▗▀▖
-"                      ▙▄ ▌ ▌▛▀▖ ▚▄ ▜▀ ▌ ▌▐  ▐
-"                      ▌  ▌ ▌▌ ▌ ▖ ▌▐ ▖▌ ▌▜▀ ▜▀
-"                      ▘  ▝▀▘▘ ▘ ▝▀  ▀ ▝▀▘▐  ▐
-" ---------------------------------------------------------------------------
+" }}}
+
+" --- Fun Stuff --- {{{
 
 " unmap from emmet to use with splits
 unmap <leader>vg
 
-Plugin 'jerrymarino/SwiftPlayground.vim'
+" Plugin 'jerrymarino/SwiftPlayground.vim'
 
 
-autocmd VimEnter *
-            \   if !argc()
-            \ |   Startify
-            \ |   NERDTree
-            \ |   wincmd w
-            \ | endif
+" autocmd VimEnter *
+            " \   if !argc()
+            " \ |   Startify
+            " \ |   NERDTree
+            " \ |   wincmd w
+            " \ | endif
+
+" }}}
 " ===========================================================================
 
 call vundle#end()            " required

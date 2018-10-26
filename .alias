@@ -1,4 +1,4 @@
-alias retag='ctags -R --PHP-kinds=ct --exclude="/node_modules/" --languages="php"'
+alias retag='ctags -R --PHP-kinds=ct --exclude="/node_modules/" --exclude="node_modules/**" --languages="php"'
 
 #antigen
 alias itheme="antigen theme $1; antigen cleanup -f > /dev/null"
@@ -16,11 +16,13 @@ alias watch="npm run watch --env.noMaps"
 # NAVIGATION
 alias ..="cd ../"
 alias ..d="cd $(dirs -v | grep 1 | sed 's/[0-9]*[[:space:]]*//')"
-alias ls="ls -FGH"
+alias l="ls -1FGH"
 alias la="ls -a -FGH"
-alias ld="ls -a -FGH | grep '[\.][*]*.' | NOT ./ | NOT ../"
+alias ld="\ls -GHd */"
+alias l.="ls -a -FGH | grep '[\.][*]*.' | NOT ./ | NOT ../"
 alias ll="ls -lh -FGH"
 alias lla="ls -lha -FGHll"
+alias ls="ls -FGH"
 alias mv="mv -v"
 alias rm="rm -vi"
 alias cp="cp -v"
@@ -33,6 +35,9 @@ alias grep="grep --color"
 alias grepp="grep -P --color"
 alias gr='grep'
 
+# FZF
+alias fzf="fzf --prompt='\$ ' --tabstop=4 --color=dark,prompt:$mono_4,bg:-1,fg:$mono_3,bg+:-1,fg+:#fefefe,pointer:$hue_5,hl:$hue_4,hl+:$hue_4"
+
 # CLI SHORTCUTS
 alias comp="composer"
 alias art='php artisan'
@@ -44,7 +49,6 @@ alias tink="c; art tinker"
 alias c="clear"
 alias bc='bc -l'
 alias now="date '+%I:%M%p, %Y-%m-%d'"
-alias a="atom"
 alias vi="nvim"
 alias vim="nvim"
 alias slack="slack-term"
@@ -58,6 +62,7 @@ alias master="git checkout master"
 alias st="git status"
 # alias git="hub"
 alias aa="git add ."
+alias a="git add"
 alias a-="git add"
 alias ahunk="git add -p"
 alias stash="git stash"
@@ -67,7 +72,6 @@ alias ci="git commit -m"
 alias fe="git fetch origin"
 alias p="git push"
 alias pl="git pull"
-alias mg="git merge"
 alias br="git --no-pager branch -a"
 alias br-feature="git branch -a | NOT remotes/ | NOT master | NOT staging | grep feature-"
 alias br-bugfix="git branch -a | NOT remotes/ | NOT master | NOT staging | grep bugfix-"
@@ -107,3 +111,5 @@ alias pman='/usr/local/opt/php@7.1/bin/pman'
 
 # Tmux
 alias tmuxlayout='tmux list-windows -F "#{window_active} #{window_layout}" | grep "^1" | cut -d " " -f 2 | pbcopy'
+
+alias myip="ifconfig | grep 'inet [0-9.]*' | grep -v '127.0.0.1' | sed 's/inet //g' | sed 's/netmask.*255//g' | tr -d '[:blank:]' | head -n 1";
