@@ -571,7 +571,9 @@ function whic(){
 }
 
 function dicount(){
-    branch="$([[ $1 != "" ]] && echo $1 || echo "master")";
+    base_branch="$(git config repo.base-branch)";
+    default_branch="$([[ $base_branch != "" ]] && echo $base_branch || echo "master")";
+    branch="$([[ $1 != "" ]] && echo $1 || echo $default_branch)";
     git diff $branch --stat | tail -n 1 | tr , '\n' | sed 's/([+-])//g' | awk '$1=$1'
 }
 

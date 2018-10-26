@@ -312,9 +312,7 @@ nmap ga <Plug>(EasyAlign)
 " ---- Tag Manager ---- {{{
 Plugin 'ludovicchabant/vim-gutentags'
 
-" let g:gutentags_ctags_extra_args = ['--PHP-kinds=ct', '--exclude="/node_modules/"', '--languages="php"']
-
-let g:gutentags_ctags_extra_args = ['--exclude="/node_modules/"', '--languages="php"']
+let g:gutentags_ctags_extra_args = ['--PHP-kinds=ct', '--exclude="/node_modules/"', '--exclude="node_modules/**"', '--languages="php"']
 
 augroup MyGutentagsStatusLineRefresher
     autocmd!
