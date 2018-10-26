@@ -173,7 +173,7 @@ function koolfix(){
 }
 
 function di() {
-    if [[ "$(git --no-pager diff --stat)" == "" ]]; then
+    if [[ "$(git --no-pager status -s)" == "" ]]; then
         echo "Nothing has changed."
         return 0;
     fi
