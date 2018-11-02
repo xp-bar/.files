@@ -127,6 +127,8 @@ let g:startify_bookmarks = [
         \ {'r' : '~/Sites/RoomRoster'},
         \ {'m' : '~/Sites/wp/mdm/wp-content/themes/mdm-reporting'},
         \ {'v' : '~/.vimrc'},
+        \ {'f' : '~/.function'},
+        \ {'a' : '~/.alias'},
         \ {'t' : '~/.tmux.conf'},
         \ ]
 
@@ -256,6 +258,19 @@ vnoremap > >gv
 nnoremap gb %
 vnoremap gb %
 
+" {{{
+nnoremap <leader>gd :call GoToDefinition()<CR>
+
+function! GoToDefinition()
+  normal "lyiw
+  let file = @l
+  call fzf#run({
+              \ 'sink': 'e',
+              \ 'source*': "find -f **/*".file.".php",
+              \ })
+endfunction
+" }}}
+
 " Thanks @ian-paterson  https://github.com/ian-paterson
 "
 " goto blade partials
@@ -314,39 +329,31 @@ nmap ga <Plug>(EasyAlign)
 " ---- Tag Manager ---- {{{
 Plugin 'ludovicchabant/vim-gutentags'
 
-let g:gutentags_ctags_extra_args = ['--PHP-kinds=ct', '--exclude="/node_modules/"', '--exclude="node_modules/**"', '--languages="php"']
+" let g:gutentags_ctags_extra_args = ['--PHP-kinds=ct', '--exclude="/node_modules/"', '--exclude="node_modules/**"', '--languages="php"']
 
-augroup MyGutentagsStatusLineRefresher
-    autocmd!
-    autocmd User GutentagsUpdating call lightline#update()
-    autocmd User GutentagsUpdated call lightline#update()
-augroup END
+" augroup MyGutentagsStatusLineRefresher
+"     autocmd!
+"     autocmd User GutentagsUpdating call lightline#update()
+"     autocmd User GutentagsUpdated call lightline#update()
+" augroup END
 
-function! s:get_gutentags_status(mods) abort
-    let l:msg = ''
-    if index(a:mods, 'ctags') >= 0
-       let l:msg .= '♨'
-     endif
-     if index(a:mods, 'cscope') >= 0
-       let l:msg .= '♺'
-     endif
-     return l:msg
-endfunction
-
-:set statusline+=%{gutentags#statusline_cb(
-            \function('<SID>get_gutentags_status'))}
+" :set statusline+=%{gutentags#statusline_cb(
+            " \function('<SID>get_gutentags_status'))}
 
 " }}}
 
 " Git wrapper for vim
 Plugin 'tpope/vim-fugitive'
 
+" GV - git log browser
+Plugin 'junegunn/gv.vim'
+
 nnoremap <C-B> :Gblame<cr>
 
 " ---- Tagbar ---- {{{
 Plugin 'majutsushi/tagbar'
 augroup tagbar
-    autocmd vimenter * if index(['man', 'diff'], &ft) < 0 | TagbarOpen
+    autocmd vimenter * if index(['man', 'diff', 'GV'], &ft) < 0 | TagbarOpen <cr>
 augroup END
 nnoremap <C-s> :TagbarToggle<cr>
 vnoremap <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
@@ -463,14 +470,15 @@ autocmd BufNewFile,BufRead *.blade.php set filetype=blade
 augroup END
 
 
-" Async Linter Engine for Vim, allows phpcs, eslint etc.
-" Plugin 'w0rp/ale'
+" Async Linter Engine for Vim, allows phpcs, eslint etc. -- {{{
+Plugin 'w0rp/ale'
 let g:ale_linters = {
                     \ 'php': ['phpcs'],
                     \ 'swift': ['swiftlint']
                     \ }
 let g:ale_php_phpcs_standard="XpBar"
 let g:ale_php_phpcs_use_global=1
+" }}}
 
 Plugin 'file:///Users/nireland/swift/apple/swift', 
             \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
@@ -524,6 +532,7 @@ set guioptions-=e  " Don't use GUI tabline
 function! LightLineMode()
   return expand('%:t') ==# '__Tagbar__.1' ? 'Tagbar':
         \ expand('%:t') ==# 'ControlP' ? 'CtrlP' :
+        \ expand('%:t') ==# 'startify' ? 'Startify' :
         \ expand('%:t') ==# 'NERD_tree' ? 'NERDTree' :
         \ &filetype ==# 'unite' ? 'Unite' :
         \ &filetype ==# 'vimfiler' ? 'VimFiler' :
@@ -554,6 +563,11 @@ nnoremap <C-[> :syn off<cr> :syn on<cr>
 unmap <leader>vg
 
 " Plugin 'jerrymarino/SwiftPlayground.vim'
+
+" augroup qQuit
+"     autocmd FileType diff nnoremap q :qa!<cr>
+"     autocmd FileType man nnoremap q :qa!<cr>
+" augroup END
 
 
 " autocmd VimEnter *

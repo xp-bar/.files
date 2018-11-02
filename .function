@@ -18,11 +18,29 @@ function dash(){
     fi
 }
 
+function cht() {
+    if [[ $@ == *""* ]]; then
+        hide;
+        tput clear;
+        cht.sh --shell;
+        wait;
+        show;
+    else
+        cht.sh $@;
+    fi
+}
+
 # myip() {
 #     myip="$(ifconfig | grep 'inet [0-9.]*' | grep -v '127.0.0.1' | sed 's/inet //g' | sed 's/netmask.*255//g' | tr -d '[:blank:]' | head -n 1)"
 #     echo "Your ip address is: "$myip;
 #     echo $myip | pbcopy;
 # }
+
+function branches(){
+    echo -e "\n \e[31mBRANCHES:\e[0m";
+    git --no-pager branch | sed 's/[\*]*[ ]//g' | sed 's/^/ - /g' | grep -v $(git this);
+    echo "";
+}
 
 function rh(){
     git ls-remote --heads origin $(git rev-parse --abbrev-ref HEAD)  | grep $(git rev-parse --abbrev-ref HEAD) | sed 's/refs\/heads\/'$(git this)'//g' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'; 
@@ -33,6 +51,7 @@ function e(){
         a alias
         f function
         i ignore
+        z zshrc
     );
     for key value in ${(kv)dotfiles_that_source}; do
         if [[ $1 = $key ]]; then
@@ -54,7 +73,6 @@ function e(){
     typeset -A dotfiles_that_dont_source=(
         v vimrc
         t tmux.conf
-        z zshrc
     );
     for key value in ${(kv)dotfiles_that_dont_source}; do
         if [[ $1 = $key ]]; then
@@ -173,10 +191,6 @@ function koolfix(){
 }
 
 function di() {
-    if [[ "$(git --no-pager status -s)" == "" ]]; then
-        echo "Nothing has changed."
-        return 0;
-    fi
     if [[ $@ == "" ]]; then
         git diff head
     else
@@ -433,103 +447,122 @@ function brstatus(){
 }
 
 
-# function nuke(){
-#     read response\?"Are you sure you want to nuke your changes? [y/n] "
-#     case "$response" in
-#         [yY][eE][sS]|[yY])
-#         git add . >& /dev/null;
-#         git reset HEAD --hard >& /dev/null;
-#             echo "Now at commit: \e[0;31m$(git rev-parse HEAD)";
-#             ;;
-#         *)
-#             ;;
-#     esac
-# }
-
-
-
 function nuke(){
     read response\?"Are you sure you want to nuke your changes? [y/n] "
     case "$response" in
         [yY][eE][sS]|[yY])
         git add . >& /dev/null;
         git reset HEAD --hard >& /dev/null;
-        hide;
-            echo "
-
-
-
-
-
-
-
-
-
-
-
-
-            ";
-            tput sc;
-            # tput cuu1;
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "        {........}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "         {......}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "          {....}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "          {....}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "          {....}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "        {.{....}.}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "     {.{..{....}..}.}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "  {..{..{........}..}..}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "{.{..{...{ BOOM }...}..}.}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "  {..{..{........}..}..}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "   {..{..{......}..}..}";
-            tput cuu1; tput cuu1;
-            sleep 0.05;
-            echo "     {..{..{..}..}..}";
-            tput rc;
-            echo "Now at commit: \e[0;31m$(git rev-parse HEAD)";
-            read "?";
-            show;
+            tput cuu1;
+            echo "Now at commit: \e[0;31m$(git rev-parse HEAD)                                             ";
             ;;
         *)
             ;;
     esac
 }
 
+
+
+# function nuke(){
+#     read response\?"Are you sure you want to nuke your changes? [y/n] "
+#     case "$response" in
+#         [yY][eE][sS]|[yY])
+#         git add . >& /dev/null;
+#         git reset HEAD --hard >& /dev/null;
+#         hide;
+#             echo "
+
+
+
+
+
+
+
+
+
+
+
+
+#             ";
+#             tput sc;
+#             # tput cuu1;
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "        {........}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "         {......}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "          {....}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "          {....}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "          {....}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "        {.{....}.}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "     {.{..{....}..}.}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "  {..{..{........}..}..}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "{.{..{...{ BOOM }...}..}.}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "  {..{..{........}..}..}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "   {..{..{......}..}..}";
+#             tput cuu1; tput cuu1;
+#             sleep 0.05;
+#             echo "     {..{..{..}..}..}";
+#             tput rc;
+#             echo "Now at commit: \e[0;31m$(git rev-parse HEAD)";
+#             read "?";
+#             show;
+#             ;;
+#         *)
+#             ;;
+#     esac
+# }
+
 function mkbr(){
     INPUT=$1
     git checkout -b ${INPUT}
-    read response\?"Would you like to push ${INPUT} to origin and add origin/${INPUT} as a remote? [y/n] "
-    # read -r "Would you like to push ${INPUT} to origin and add origin/${INPUT} as a remote? [y/n] " responsetwo
-        case "$response" in
-            [yY][eE][sS]|[yY])
-                git push -u origin ${INPUT}
-                ;;
-            *)
-                echo "If you want to later, run pu!"
-                ;;
-        esac
+    read remote\?"Does the branch ${INPUT} already exist as a remote? [y/n] "
+    case "$remote" in
+        [yY][eE][sS]|[yY])
+            git fetch origin
+            git branch -u origin/${INPUT} ${INPUT}
+            read sync\?"Would you like to sync ${INPUT} with origin/${INPUT}? [y/n] "
+            case "$sync" in
+                [yY][eE][sS]|[yY])
+                    git pull origin ${INPUT}
+                    git reset $(rh) --hard
+                    ;;
+                *)
+                    echo "Okay, then."
+                    ;;
+            esac
+            ;;
+        *)
+            read push\?"Would you like to push ${INPUT} to origin and add origin/${INPUT} as a remote? [y/n] "
+            case "$push" in
+                [yY][eE][sS]|[yY])
+                    git push -u origin ${INPUT}
+                    ;;
+                *)
+                    echo "Okay, then."
+                    ;;
+            esac
+            ;;
+    esac
 }
 
 function dbr(){
@@ -597,6 +630,10 @@ function disearch(){
     git diff $2 --name-only | grep $1 | while read in; do git diff $2 -- $in; done
 }
 
+function col_line(){
+    for i in `seq 0 $[ $(tput cols) * 3 / 4] `; do echo -n "="; done
+}
+
 function _prs(){
     #!/bin/bash
     # set -x
@@ -636,6 +673,55 @@ function _prs(){
         done
     fi
 }
+
+function _labels() {
+    #!/bin/bash
+    emulate -L bash
+    unset URL;
+    LOGIN="$(git config user.email):"$GITHUB_TOKEN
+    DATE=`date -v-12H +"%Y-%m-%dT%H:%M:%SZ"`
+    USER=$GITHUB_USERNAME
+    BASEURL="https://api.github.com/repos/"
+    REPO=$GITHUB_REPO
+    LABELS="labels"
+    URL="$BASEURL$REPO$LABELS";
+
+    if [[ $URL ]]; then
+        RESULT=$(curl -s -u $LOGIN $URL);
+        LENGTH=$(echo $RESULT | jq '[.]' | jq '[.][][] | length');
+        for i in `seq 0 $[$LENGTH - 1]`; do
+            echo -e "$(echo $RESULT | jq -r '[.]' | jq -r '[.][][]['$i'].name')" &&
+        done
+    fi
+}
+
+function _collabs() {
+    #!/bin/bash
+    emulate -L bash
+    unset URL;
+    LOGIN="$(git config user.email):"$GITHUB_TOKEN
+    DATE=`date -v-12H +"%Y-%m-%dT%H:%M:%SZ"`
+    USER=$GITHUB_USERNAME
+    BASEURL="https://api.github.com/orgs/"
+    ORG=$GITHUB_ORGANIZATION
+    MEMBERS="/members"
+    URL=$BASEURL$ORG$MEMBERS;
+    COMMAND="curl -s -u $LOGIN $URL"
+    if [[ $URL ]]; then
+        RESULT=$($COMMAND);
+        LENGTH=$(echo $RESULT | jq '[.]' | jq '[.][][] | length');
+        for i in `seq 0 $[$LENGTH - 1]`; do
+            echo "$(echo $RESULT | jq -r '[.]' | jq -r '[.][][]['$i'].login')";
+        done
+    fi
+}
+
+gpr() {
+    local assigned="$(_collabs | fzf --header='Select an assignee:')"
+    local label="$(_labels | fzf --header='Select a label:')"
+    hub pull-request -a $assigned -r $assigned -l $label
+}
+
 
 mkalias(){
     if [[ $1 ]]; then

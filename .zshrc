@@ -52,3 +52,5 @@ fi
 
 export PAGER="nvim -R"
 export MANPAGER="nvim -c 'set ft=man' -"
+
+fpath=(~/.zsh.d/ $fpath)
