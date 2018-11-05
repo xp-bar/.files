@@ -718,8 +718,12 @@ function _collabs() {
 
 gpr() {
     local assigned="$(_collabs | fzf --header='Select an assignee:')"
-    local label="$(_labels | fzf --header='Select a label:')"
-    hub pull-request -a $assigned -r $assigned -l $label
+    if [[ $@ != *"-nl"* ]]; then
+        local label="$(_labels | fzf --header='Select a label:')"
+        hub pull-request -a $assigned -r $assigned -l $label
+    else
+        hub pull-request -a $assigned -r $assigned
+    fi
 }
 
 

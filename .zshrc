@@ -4,7 +4,9 @@ source $ZSH/oh-my-zsh.sh
 # plugins 
 source <(antibody init)
 antibody bundle < ~/.zsh-plugins
-bindkey -v
+
+bindkey -M viins 'jk' vi-cmd-mode
+
 eval $(thefuck --alias)
 
 # source ~/.prompt
