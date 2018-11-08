@@ -30,6 +30,10 @@ function cht() {
     fi
 }
 
+function launch() {
+    open /Applications/$@.app
+}
+
 # myip() {
 #     myip="$(ifconfig | grep 'inet [0-9.]*' | grep -v '127.0.0.1' | sed 's/inet //g' | sed 's/netmask.*255//g' | tr -d '[:blank:]' | head -n 1)"
 #     echo "Your ip address is: "$myip;
@@ -209,6 +213,7 @@ function tclock(){
     else
         FONT=$1
     fi
+    clear;
     while true;
     do
         echo -ne "\e[31m"; date '+%I:%M%p' | toilet -f "$(echo -ne $FONT)"; echo -ne "\e[0m";
@@ -718,7 +723,7 @@ function _collabs() {
 
 gpr() {
     local assigned="$(_collabs | fzf --header='Select an assignee:')"
-    if [[ $@ != *"-nl"* ]]; then
+    if [[ $@ == *"-l"* ]]; then
         local label="$(_labels | fzf --header='Select a label:')"
         hub pull-request -a $assigned -r $assigned -l $label
     else
@@ -799,8 +804,8 @@ function icat() {
     fi
 }
 
-unalias z 2> /dev/null
-z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
-}
+# unalias z 2> /dev/null
+# z() {
+  # [ $# -gt 0 ] && _z "$*" && return
+  # cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+# }

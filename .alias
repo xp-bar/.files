@@ -1,3 +1,6 @@
+alias azu="antibody update && source ~/.zshrc"
+alias zu="source ~/.zshrc"
+
 alias retag='ctags -R --PHP-kinds=ct --exclude="/node_modules/" --exclude="node_modules/**" --languages="php"'
 
 #antigen
