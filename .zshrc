@@ -6,6 +6,8 @@ source <(antibody init)
 antibody bundle < ~/.zsh-plugins
 
 bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M vicmd 'k' up-line-or-beginning-search
+bindkey -M vicmd 'j' down-line-or-beginning-search
 
 eval $(thefuck --alias)
 

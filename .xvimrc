@@ -1,5 +1,7 @@
 map <Space> <leader>
 nnoremap <leader>w :w<cr>
+nnoremap <leader>r :run<cr>
+nnoremap <leader>x :xcmenucmd 
 " Splits
 " {{{
 nnoremap <leader>v :vsp<cr>
@@ -47,5 +49,3 @@ set smartcase
 set mousefocus
 set mouse=a
 set hidden
-
-set complete+=t

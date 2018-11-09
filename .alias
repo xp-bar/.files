@@ -1,6 +1,10 @@
 alias azu="antibody update && source ~/.zshrc"
 alias zu="source ~/.zshrc"
 
+
+alias start="echo '$(date '+%Y-%m-%d @ %H:%M:%S')' > ~/.time"
+alias wstart="cat ~/.time"
+
 alias retag='ctags -R --PHP-kinds=ct --exclude="/node_modules/" --exclude="node_modules/**" --languages="php"'
 
 #antigen
@@ -90,8 +94,8 @@ alias vshare="(valet unsecure; valet share; valet secure) && c"
 alias sp="spotify"
 alias spp="spotify pause"
 alias sppl="spotify play list"
-alias spn="clear && spotify next | grep 'Track:\|Artist:' && sleep 1 && clear"
-alias spst="spotify status | grep 'Track:\|Artist:'"
+alias spn="spotify next"
+alias spst="spotify status"
 
 # browsing
 alias webb="open '/Applications/Vivaldi.app' '$1'"

@@ -40,6 +40,26 @@ function launch() {
 #     echo $myip | pbcopy;
 # }
 
+whathavewedone() {
+    if [[ $1 != "" ]]; then
+        target=$1
+    else
+        target="head"
+    fi
+    git --no-pager log $target^..head --no-merges --reverse |
+        sed '/commit/d' |
+        sed '/Author: /d' |
+        sed '/Date: /d' |
+        sed '/^$/d' |
+        sed 's/^[ ]*/- /g' |
+        sed 's/\([[:<:]][Cc]hange[d]*[[:>:]]\)/\\\\e[33;1m\1\\\\e[0m/g' |
+        sed 's/\([[:<:]][Uu]pdate[d]*[[:>:]]\)/\\\\e[33;1m\1\\\\e[0m/g' |
+        sed 's/\([[:<:]][Aa]dd\(ed\)*[[:>:]]\)/\\\\e[32;1m\1\\\\e[0m/g' |
+        sed 's/\([[:<:]][Rr]emove[d]*[[:>:]]\)/\\\\e[31;1m\1\\\\e[0m/g' |
+        while read in; do echo -e $in; done |
+        less
+}
+
 function branches(){
     echo -e "\n \e[31mBRANCHES:\e[0m";
     git --no-pager branch | sed 's/[\*]*[ ]//g' | sed 's/^/ - /g' | grep -v $(git this);
@@ -216,6 +236,7 @@ function tclock(){
     clear;
     while true;
     do
+        clear;
         echo -ne "\e[31m"; date '+%I:%M%p' | toilet -f "$(echo -ne $FONT)"; echo -ne "\e[0m";
         sleep 60;
     done
