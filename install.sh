@@ -11,6 +11,11 @@ brew tap caskroom/cask
 brew tap caskroom/versions
 # -- }}}
 
+# -- sqlcheck tap and install -- {{{
+brew tap gwerbin/tap
+brew cask install gwerbin/tap/sqlcheck
+# }}}
+
 # -- homebrew installations -- {{{
 brew install ack
 brew install antibody
@@ -102,6 +107,11 @@ composer global require larvel/valet
 valet install
 valet domain localhost
 valet start
+# -- }}}
+
+# -- python installs -- {{{
+pip install httpie
+pip install http-prompt
 # -- }}}
 
 # -- SYMLINKS -- {{{

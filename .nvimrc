@@ -262,12 +262,13 @@ vnoremap gb %
 nnoremap <leader>gd :call GoToDefinition()<CR>
 
 function! GoToDefinition()
-  normal "lyiw
-  let file = @l
-  call fzf#run({
-              \ 'sink': 'e',
-              \ 'source*': "find -f **/*".file.".php",
-              \ })
+  normal viw"dy
+  let file = @d
+  call fzf#run(fzf#wrap(
+      \ {
+      \   'source': "locate -i $(pwd -P)/*/".file.".php | sed 's:'$(pwd -P)'::g'",
+      \   'sink': 'e'
+      \ }))
 endfunction
 " }}}
 
