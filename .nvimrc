@@ -259,17 +259,19 @@ vnoremap > >gv
 nnoremap gb %
 vnoremap gb %
 
-" {{{
+" -- goto defintion in project -- {{{
 nnoremap <leader>gd :call GoToDefinition()<CR>
 
 function! GoToDefinition()
   normal viw"dy
   let file = @d
+  :echo "Goto Definition"
   call fzf#run(fzf#wrap(
-      \ {
-      \   'source': "locate -i $(pwd -P)/*/".file.".php | sed 's:'$(pwd -P)'::g'",
-      \   'sink': 'e'
-      \ }))
+      \     {
+      \         'source': "locate -i ".getcwd()."/**/".file.".php | sed 's:'".getcwd()."\/'::g'",
+      \         'sink': 'e'
+      \     }
+      \ ))
 endfunction
 " }}}
 
