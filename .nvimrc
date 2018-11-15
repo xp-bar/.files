@@ -260,18 +260,26 @@ nnoremap gb %
 vnoremap gb %
 
 " -- goto defintion in project -- {{{
-nnoremap <leader>gd :call GoToDefinition()<CR>
+nnoremap <silent> <leader>gd :call GotoClassDefinition()<CR>
 
-function! GoToDefinition()
+function! GotoClassDefinition()
   normal viw"dy
   let file = @d
-  :echo "Goto Definition"
-  call fzf#run(fzf#wrap(
-      \     {
-      \         'source': "locate -i ".getcwd()."/**/".file.".php | sed 's:'".getcwd()."\/'::g'",
-      \         'sink': 'e'
-      \     }
-      \ ))
+  :echo "Searching for class definitions..."
+  let results = system("locate -i ".getcwd()."/**/".file.".php | sed 's:'".getcwd()."\/'::g'")
+  let count = str2nr(system("wc -l", results))
+  if (count ==? 1)
+    let file = system("head -n 1", results)
+    execute "edit " . file
+  else
+    call fzf#run(fzf#wrap(
+        \     {
+        \         'source': split(results, '\n'),
+        \         'sink': 'e'
+        \     }
+        \ ))
+  endif
+  :echo "Found!"
 endfunction
 " }}}
 
