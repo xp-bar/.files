@@ -33,6 +33,13 @@ source ~/.extra-aliases
 
 . ~/z.sh
 
+function _launch() {
+    open "/Applications/$(\ls -1 /Applications | sed 's/\.app//g' | fzf).app"
+    zle && zle vi-insert
+}
+zle -N _launch launch-application
+
+bindkey -M vicmd 'p' launch-application
 
 # ZSH_THEME="xp-bar/zsh-bar-theme"
 #
