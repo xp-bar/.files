@@ -39,8 +39,6 @@ vnoremap <leader>v :vsp<cr>
 vnoremap <leader>n :sp<cr>
 " }}}
 
-nnoremap <silent><leader>q :bd<cr>
-
 " Auto Commands
 " {{{
 augroup buffercmds 
@@ -260,26 +258,49 @@ nnoremap gb %
 vnoremap gb %
 
 " -- goto defintion in project -- {{{
-nnoremap <silent> <leader>gd :call GotoClassDefinition()<CR>
+nnoremap <silent> <leader>gd :call GotoProjectDefinition()<CR>
 
-function! GotoClassDefinition()
+function! GotoProjectDefinition()
   normal viw"dy
-  let file = @d
-  :echo "Searching for class definitions..."
-  let results = system("locate -i ".getcwd()."/**/".file.".php | sed 's:'".getcwd()."\/'::g'")
-  let count = str2nr(system("wc -l", results))
-  if (count ==? 1)
-    let file = system("head -n 1", results)
-    execute "edit " . file
+  let class = @d
+  call s:FindClass(class)
+endfunction
+
+function! FindTags(name, kinds)
+  let tag_list = []
+
+  for entry in taglist(a:name)
+    if index(a:kinds, entry.kind) > -1
+      call add(tag_list, entry)
+    endif
+  endfor
+
+  return tag_list
+endfunction
+
+:autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+function! s:FindClass(name)
+  let qflist = []
+  " for entry in FindTags('^'.a:name.'\>', ['c', 'class'])
+  for entry in FindTags('^'.a:name, ['c', 'class', 't', 'trait'])
+    let filename = entry.filename
+    let pattern  = substitute(entry.cmd, '^/\(.*\)/$', '\1', '')
+
+    call add(qflist, {
+          \ 'filename': filename,
+          \ 'pattern':  pattern,
+          \ })
+  endfor
+
+  if len(qflist) == 0
+    echohl Error | echo "Class not found in tags." | echohl NONE
+  elseif len(qflist) == 1
+    call setqflist(qflist)
+    silent cfirst
   else
-    call fzf#run(fzf#wrap(
-        \     {
-        \         'source': split(results, '\n'),
-        \         'sink': 'e'
-        \     }
-        \ ))
+    call setqflist(qflist)
+    botright copen
   endif
-  :echo "Found!"
 endfunction
 " }}}
 
@@ -441,7 +462,7 @@ noremap <C-_> :Commentary<cr>
 " }}}
 
 " ---- PHP Namespace and Use Statement support in Vim ---- {{{
-Plugin 'arnaud-lb/vim-php-namespace'
+Plugin 'xp-bar/vim-php-namespace'
 function! IPhpInsertUse()
     call PhpInsertUse()
     call feedkeys('a',  'n')

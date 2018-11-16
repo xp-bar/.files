@@ -30,6 +30,19 @@ function cht() {
     fi
 }
 
+function retag() {
+    ctags -R \
+        --php-kinds=cft \
+        --exclude="node_modules" \
+        --exclude="*.js" \
+        --exclude="*.md" \
+        --exclude="*.blade.php" \
+        --languages="php";
+    # Remove lines too long for vim
+    echo "Removing long lines";
+    echo "$(awk 'length<512' tags)" > tags;
+}
+
 function launch() {
     open /Applications/$@.app
 }

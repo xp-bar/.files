@@ -5,8 +5,6 @@ alias zu="source ~/.zshrc"
 alias start="echo '$(date '+%Y-%m-%d @ %H:%M:%S')' > ~/.time"
 alias wstart="cat ~/.time"
 
-alias retag='ctags -R --PHP-kinds=ct --exclude="/node_modules/" --exclude="node_modules/**" --languages="php"'
-
 #antigen
 alias itheme="antigen theme $1; antigen cleanup -f > /dev/null"
 
@@ -73,6 +71,7 @@ alias stash="git stash"
 alias shunk="git stash -p"
 alias pop="git stash pop"
 alias ci="git commit -m"
+alias cp="git cherry-pick"
 alias br="git --no-pager branch"
 alias mt="git mergetool"
 alias fe="git fetch origin"
