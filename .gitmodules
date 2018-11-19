@@ -1,3 +1,6 @@
 [submodule "zsh-bar-theme"]
 	path = zsh-bar-theme
 	url = git@github.com:xp-bar/zsh-bar-theme.git
+[submodule "phpcs-standards"]
+	path = phpcs-standards
+	url = git@github.com:xp-bar/phpcs-standards.git
