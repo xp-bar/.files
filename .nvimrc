@@ -229,6 +229,7 @@ augroup END
 set foldmethod=marker
 set foldlevel=0
 set nowrap
+autocmd filetype crontab setlocal nobackup nowritebackup
 " }}}
 
 " ---- Movement and resizing ---- {{{
@@ -360,9 +361,15 @@ nmap ga <Plug>(EasyAlign)
 " }}}
 
 " ---- Tag Manager ---- {{{
-Plugin 'ludovicchabant/vim-gutentags'
+" Plugin 'ludovicchabant/vim-gutentags'
 
-" let g:gutentags_ctags_extra_args = ['--PHP-kinds=ct', '--exclude="/node_modules/"', '--exclude="node_modules/**"', '--languages="php"']
+" let g:gutentags_ctags_extra_args = [
+"             \ '--PHP-kinds=cft',
+"             \ '--exclude="node_modules"',
+"             \ '--exclude="*.js"',
+"             \ '--exclude="*.blade.php"',
+"             \ '--languages="php"'
+"             \ ]
 
 " augroup MyGutentagsStatusLineRefresher
 "     autocmd!

@@ -30,6 +30,8 @@ function cht() {
     fi
 }
 
+source ~/.koolaid
+
 function retag() {
     ctags -R \
         --php-kinds=cft \
@@ -182,49 +184,6 @@ function fclock() {
         date '+%I:%M%p' | figlet -r -f chunky | lolcat;
         sleep 60;
     done
-}
-
-function koolaid(){
-    unset files; 
-    if [ -t 0 ]; then
-        declare -a files
-        git --no-pager diff master --diff-filter=d --name-only | grep '.php' | grep -v '.blade.php' |
-        while read in; do
-            files+=("$in\n");
-        done
-    else
-        declare -a files
-        while read -r in; do 
-            files+=("$in\n");
-        done
-    fi
-    (for file in $files; do
-        filename=$(echo $file | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'); 
-        phpcs $filename --colors&;
-    done | sed 's/(phpcs $filename -q --colors)//g') | less
-}
-
-function koolfix(){
-    unset files; 
-    if [ -t 0 ]; then
-        declare -a files
-        git --no-pager diff master --diff-filter=d --name-only -- . ':(exclude)*.blade.php;' |
-        while read in; do
-            files+=("$in\n");
-        done
-    else
-        declare -a files
-        while read -r in; do 
-            files+=("$in\n");
-        done
-    fi
-	echo -e "\e[31mFixing...";
-    (for file in $files; do
-        filename=$(echo $file | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'); 
-		phpcbf $filename --colors;
-	done) > /dev/null;
-	tput cuu1;
-	echo -e "\e[32mFixed!                   ";
 }
 
 function di() {
