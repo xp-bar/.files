@@ -11,6 +11,11 @@ brew tap caskroom/cask
 brew tap caskroom/versions
 # -- }}}
 
+# -- gotop -- {{{
+brew tap cjbassi/gotop
+brew install gotop
+# --- }}}
+
 # -- sqlcheck tap and install -- {{{
 brew tap gwerbin/tap
 brew cask install gwerbin/tap/sqlcheck
