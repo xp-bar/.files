@@ -93,7 +93,6 @@ npm i -g nvm
 npm i -g avn avn-n avn-nvm
 npm i -g fb-messenger-cli
 npm i -g taskbook
-npm i -g vtop
 npm i -g vue-cli
 # -- }}}
 
