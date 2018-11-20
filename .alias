@@ -62,11 +62,11 @@ alias md="msee"
 # GIT
 alias master="git checkout master"
 alias st="git status"
-# alias git="hub"
 alias aa="git add ."
+alias ra="git reset"
 alias a="git add"
 alias a-="git add"
-alias ahunk="git add -p"
+alias ap="git add -p"
 alias stash="git stash"
 alias shunk="git stash -p"
 alias pop="git stash pop"
@@ -81,7 +81,6 @@ alias br-feature="git branch -a | NOT remotes/ | NOT master | NOT staging | grep
 alias br-bugfix="git branch -a | NOT remotes/ | NOT master | NOT staging | grep bugfix-"
 alias br-merged="git branch --merged | NOT remotes/ | NOT master | NOT staging"
 alias glog="nvim -c 'GV' -c 'nnoremap q :qa!<cr>'"
-# alias glog="git log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'"
 alias gfl="git log -p"
 alias cisearch="git log -S"
 alias wwiwo="git diff HEAD^ --name-only"
@@ -103,16 +102,9 @@ alias rebash="source ~/.bashrc"
 alias bashrc="atom ~/.dotfiles/"
 alias moon="curl wttr.in/moon"
 
-alias g="yarn install && rm -rf public/js && rm -rf public/css && gulp"
-alias gp="yarn install && rm -rf public/js && rm -rf public/css && gulp --production"
-alias gw='gulp watch'
-alias gwp='rm -rf public/js && rm -rf public/css && gulp watch --production'
-alias deps='composer install && yarn install && rm -rf public/js && rm -rf public/css && gulp'
-
 alias epoch="date +%s"
 
 alias pman='/usr/local/opt/php@7.1/bin/pman'
-
 
 # Tmux
 alias tmuxlayout='tmux list-windows -F "#{window_active} #{window_layout}" | grep "^1" | cut -d " " -f 2 | pbcopy'
