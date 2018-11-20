@@ -11,15 +11,14 @@ brew tap caskroom/cask
 brew tap caskroom/versions
 # -- }}}
 
-# -- gotop -- {{{
-brew tap cjbassi/gotop
-brew install gotop
-# --- }}}
-
 # -- sqlcheck tap and install -- {{{
 brew tap gwerbin/tap
 brew cask install gwerbin/tap/sqlcheck
 # }}}
+
+# -- Go installation -- {{{
+brew install go
+# -- }}}
 
 # -- homebrew installations -- {{{
 brew install ack
@@ -79,6 +78,12 @@ brew install vim
 brew install wp-cli
 brew install zsh
 # -- }}}
+
+# -- gotop -- {{{
+brew tap cjbassi/gotop
+brew install gotop
+# --- }}}
+
 
 # -- cask installs -- {{{
 brew cask install spotify
