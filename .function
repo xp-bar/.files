@@ -715,13 +715,25 @@ function _collabs() {
 }
 
 gpr() {
+    function after_pr_hook() {
+        declare -a input_lines
+        while read -r in; do
+            input_lines+=("$in\n");
+        done
+        local url=`echo $input_lines | tail -n 2 | head -n 1 | sed 's/^[[:space:]]//g'`
+        echo $url
+    }
+    local arg1=$1
+    local base=${arg1:-"master"}
     local assigned="$(_collabs | fzf --header='Select an assignee:')"
     if [[ $@ == *"-l"* ]]; then
         local label="$(_labels | fzf --header='Select a label:')"
-        hub pull-request -a $assigned -r $assigned -l $label
+        hub pull-request -a $assigned -r $assigned -l $label -b $base | after_pr_hook
     else
-        hub pull-request -a $assigned -r $assigned
+        hub pull-request -a $assigned -r $assigned -b $base | after_pr_hook
     fi
+
+    unfunction after_pr_hook
 }
 
 

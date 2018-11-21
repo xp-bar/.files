@@ -31,12 +31,24 @@ nnoremap <silent><leader>en :split $MYVIMRC<cr>
 
 nnoremap <leader>w :w<cr>
 
+" -- Nicer buffer closing -- {{{
+Plugin 'moll/vim-bbye'
+nnoremap <leader>q :Bdelete<cr>
+" -- }}}
+
 " Splits
 " {{{
 nnoremap <leader>v :vsp<cr>
 nnoremap <leader>n :sp<cr>
 vnoremap <leader>v :vsp<cr>
 vnoremap <leader>n :sp<cr>
+
+nnoremap <leader>\| :vsp<cr>
+nnoremap <leader>_ :sp<cr>
+vnoremap <leader>\| :vsp<cr>
+vnoremap <leader>_ :sp<cr>
+nnoremap <leader>x :q<cr>
+vnoremap <leader>x :q<cr>
 " }}}
 
 " Auto Commands
@@ -128,6 +140,7 @@ let g:startify_bookmarks = [
         \ {'f' : '~/.function'},
         \ {'a' : '~/.alias'},
         \ {'t' : '~/.tmux.conf'},
+        \ {'z' : '~/.zshrc'},
         \ ]
 
 let g:startify_lists = [
