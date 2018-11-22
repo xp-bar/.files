@@ -176,9 +176,26 @@ nnoremap <leader><C-s> :Startify<cr>
 
 " ---- Sidebar NERDTree ---- {{{
 Plugin 'scrooloose/nerdtree'
-noremap <C-\> :NERDTreeToggle<CR>
+noremap <silent> <C-\> :NERDTreeToggle<CR>
 noremap <leader>\ :NERDTreeFind<CR>
-
+let NERDTreeIgnore = [
+        \ '\.png$',
+        \ '\.jpg$',
+        \ '\.gif$',
+        \ '\.mp3$',
+        \ '\.flac$',
+        \ '\.ogg$',
+        \ '\.mp4$',
+        \ '\.avi$',
+        \ '.webm$',
+        \ '.mkv$',
+        \ '\.pdf$',
+        \ '\.zip$',
+        \ '\.tar.gz$',
+        \ '\.rar$',
+        \ '\.DS_Store$',
+        \ ]
+        
 " Git File marking for NERDTree
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
@@ -408,8 +425,8 @@ Plugin 'majutsushi/tagbar'
 augroup tagbar
     autocmd vimenter * if index(['man', 'diff', 'GV'], &ft) < 0 | TagbarOpen <cr>
 augroup END
-nnoremap <C-s> :TagbarToggle<cr>
-vnoremap <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
+nnoremap <silent> <C-s> :TagbarToggle<cr>
+vnoremap <silent> <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
 " }}}
 
 " Managing quotations, surrounding brackets, etc. Made easier
