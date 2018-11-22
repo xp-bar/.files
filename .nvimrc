@@ -423,7 +423,7 @@ nnoremap <C-B> :Gblame<cr>
 " ---- Tagbar ---- {{{
 Plugin 'majutsushi/tagbar'
 augroup tagbar
-    autocmd vimenter * if index(['man', 'diff', 'GV'], &ft) < 0 | TagbarOpen <cr>
+    " autocmd vimenter * if index(['man', 'diff', 'GV'], &ft) < 0 | TagbarOpen <cr>
 augroup END
 nnoremap <silent> <C-s> :TagbarToggle<cr>
 vnoremap <silent> <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
