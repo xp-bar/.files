@@ -243,6 +243,7 @@ set mousefocus
 set mouse=a
 set hidden
 set shell=/usr/local/bin/zsh
+set tagcase=smart
 
 set complete+=t
 
@@ -500,7 +501,8 @@ noremap <C-_> :Commentary<cr>
 " }}}
 
 " ---- PHP Namespace and Use Statement support in Vim ---- {{{
-Plugin 'xp-bar/vim-php-namespace'
+Plugin 'arnaud-lb/vim-php-namespace'
+
 function! IPhpInsertUse()
     call PhpInsertUse()
     call feedkeys('a',  'n')
