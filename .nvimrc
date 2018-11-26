@@ -247,6 +247,10 @@ set tagcase=smart
 
 set complete+=t
 
+" OSX stupid backspace fix
+set backspace=indent,eol,start
+
+
 " Autoread files to watch for changes outside of vim
 set autoread
 augroup autoreload
