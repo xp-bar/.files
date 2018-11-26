@@ -16,6 +16,9 @@ call vundle#begin()
 " ===========================================================================
 "       This is my personal .vimrc, built with neovim in mind. Enjoy! 
 
+" Vundle Plugin Manager manages itself, like npm
+Plugin 'VundleVim/Vundle.vim'
+
 " --- General Settings --- {{{
 
 map <Space> <leader>
@@ -54,21 +57,21 @@ vnoremap <leader>x :q<cr>
 " Auto Commands
 " {{{
 augroup buffercmds 
-autocmd!
-" Auto allow folds in vimrc file
-autocmd BufNewFile,BufRead .vimrc :setlocal foldlevelstart=0
-
-" Indent HTML files on save
-autocmd BufWritePre *.html :normal gg=G
-
-" No linewrap html
-autocmd BufNewFile,BufRead *.html setlocal nowrap
-
-" Spellcheck Markdown 
-autocmd BufNewFile,BufRead *.md setlocal spell spelllang=en_us
-
-" No linewrap html
-autocmd BufNewFile,BufRead *.php setlocal nowrap
+    autocmd!
+    " Auto allow folds in vimrc file
+    autocmd BufNewFile,BufRead .vimrc :setlocal foldlevelstart=0
+    
+    " Indent HTML files on save
+    autocmd BufWritePre *.html :normal gg=G
+    
+    " No linewrap html
+    autocmd BufNewFile,BufRead *.html setlocal nowrap
+    
+    " Spellcheck Markdown 
+    autocmd BufNewFile,BufRead *.md setlocal spell spelllang=en_us
+    
+    " No linewrap html
+    autocmd BufNewFile,BufRead *.php setlocal nowrap
 augroup END
 " }}}
 
@@ -107,9 +110,6 @@ function! TypeWriterToggle()
 endfunction
 " }}}
 
-" Vundle Plugin Manager manages itself, like npm
-Plugin 'VundleVim/Vundle.vim'
-
 " Navigate Tmux and Vim Seamlessly
 " {{{
 Plugin 'christoomey/vim-tmux-navigator'
@@ -119,7 +119,6 @@ nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-" nnoremap <silent> <C-\> :TmuxNavigatePrevious<cr>
 " }}}
 
 " halve the wait time for multi-key keybinds
@@ -135,12 +134,13 @@ Plugin 'mhinz/vim-startify'
 let g:startify_bookmarks = [
         \ {'i' : '~/swift/roomroster'},
         \ {'r' : '~/Sites/RoomRoster'},
-        \ {'m' : '~/Sites/wp/mdm/wp-content/themes/mdm-reporting'},
-        \ {'v' : '~/.vimrc'},
-        \ {'f' : '~/.function'},
+        \ {'~' : '~/'},
         \ {'a' : '~/.alias'},
+        \ {'f' : '~/.function'},
+        \ {'v' : '~/.vimrc'},
         \ {'t' : '~/.tmux.conf'},
         \ {'z' : '~/.zshrc'},
+        \ {'p' : '~/.zsh-plugins'},
         \ ]
 
 let g:startify_lists = [
