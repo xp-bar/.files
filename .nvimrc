@@ -630,6 +630,10 @@ endif
 set background=dark " for the dark version
 colorscheme two
 
+Plugin 'chrisbra/Colorizer'
+
+nnoremap <leader>cc :ColorToggle<cr>
+nnoremap <leader>ct :ColorContrast<cr>
 
 syntax on
 
