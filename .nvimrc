@@ -428,8 +428,11 @@ nnoremap <C-B> :Gblame<cr>
 " ---- Tagbar ---- {{{
 Plugin 'majutsushi/tagbar'
 augroup tagbar
-    " autocmd vimenter * if index(['man', 'diff', 'GV'], &ft) < 0 | TagbarOpen <cr>
+    let s:hidden_all = 1
+    " autocmd vimenter * if index(['diff'], &ft) > -1 | 
+    autocmd FileType diff nnoremap q :qa!<cr>
 augroup END
+
 nnoremap <silent> <C-s> :TagbarToggle<cr>
 vnoremap <silent> <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
 " }}}
