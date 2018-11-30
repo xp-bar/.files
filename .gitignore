@@ -1,2 +1,6 @@
 .ignore
 .env
+.newsboat/cache.db
+.newsboat/history.cmdline
+.newsboat/history.search
+.newsboat/queue
