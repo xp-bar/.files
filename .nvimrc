@@ -520,6 +520,13 @@ augroup phpImports
 augroup END
 " }}}
 
+" ---- phpDocumentor ---- {{{
+Plugin 'tobyS/vmustache'
+Plugin 'tobyS/pdv'
+let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
+nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr> 
+" ---- }}}
+
 " }}}
 
 " --- Syntax --- {{{
