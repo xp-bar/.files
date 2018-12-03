@@ -19,6 +19,46 @@ call vundle#begin()
 " Vundle Plugin Manager manages itself, like npm
 Plugin 'VundleVim/Vundle.vim'
 
+" ---- Native Options ---- {{{
+set number numberwidth=4
+set shiftwidth=4  " operation >> indents 2 columns; << unindents 2 columns
+set tabstop=4     " a hard TAB displays as 2 columns
+set expandtab     " insert spaces when hitting TABs
+set softtabstop=4 " insert/delete 2 spaces when hitting a TAB/BACKSPACE
+set shiftround    " round indent to multiple of 'shiftwidth'
+set autoindent    " align the new line indent with the previous line
+" set smartindent
+set conceallevel=0
+set ignorecase
+set smartcase
+set mousefocus
+set mouse=a
+set hidden
+set shell=/usr/local/bin/zsh
+set tagcase=smart
+
+set complete+=t
+
+" OSX stupid backspace fix
+set backspace=indent,eol,start
+
+
+" Autoread files to watch for changes outside of vim
+set autoread
+augroup autoreload
+    autocmd!
+    " Thanks, Stack Overflow: https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
+    autocmd FileChangedShellPost *
+      \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+augroup END
+
+set foldmethod=marker
+set foldlevel=0
+set nowrap
+autocmd filetype crontab setlocal nobackup nowritebackup
+" --- }}}
+
 " --- General Settings --- {{{
 
 map <Space> <leader>
@@ -205,13 +245,13 @@ let g:NERDTreeIndicatorMapCustom = {
         \ "Modified"  : "*",
         \ "Staged"    : "+",
         \ "Untracked" : "",
-        \ "Renamed"   : "➜",
+        \ "Renamed"   : ">",
         \ "Unmerged"  : "═",
         \ "Deleted"   : "x",
-        \ "Dirty"     : "✗",
-        \ "Clean"     : "✔︎",
-        \ 'Ignored'   : '☒',
-        \ "Unknown"   : "?"
+        \ "Dirty"     : "",
+        \ "Clean"     : "",
+        \ 'Ignored'   : '',
+        \ "Unknown"   : ""
         \ }
 
 "  }}}
@@ -226,46 +266,6 @@ Plugin 'airblade/vim-gitgutter'
 " }}}
 
 " --- Editor Config --- {{{
-
-" ---- Native Options ---- {{{
-set number numberwidth=4
-set shiftwidth=4  " operation >> indents 2 columns; << unindents 2 columns
-set tabstop=4     " a hard TAB displays as 2 columns
-set expandtab     " insert spaces when hitting TABs
-set softtabstop=4 " insert/delete 2 spaces when hitting a TAB/BACKSPACE
-set shiftround    " round indent to multiple of 'shiftwidth'
-set autoindent    " align the new line indent with the previous line
-" set smartindent
-set conceallevel=0
-set ignorecase
-set smartcase
-set mousefocus
-set mouse=a
-set hidden
-set shell=/usr/local/bin/zsh
-set tagcase=smart
-
-set complete+=t
-
-" OSX stupid backspace fix
-set backspace=indent,eol,start
-
-
-" Autoread files to watch for changes outside of vim
-set autoread
-augroup autoreload
-    autocmd!
-    " Thanks, Stack Overflow: https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
-    autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
-    autocmd FileChangedShellPost *
-      \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
-augroup END
-
-set foldmethod=marker
-set foldlevel=0
-set nowrap
-autocmd filetype crontab setlocal nobackup nowritebackup
-" }}}
 
 " ---- Movement and resizing ---- {{{
 
@@ -668,7 +668,13 @@ unmap <leader>vg
             " \ |   wincmd w
             " \ | endif
 
+"
+" Plugin 'ryanoasis/vim-devicons'
+" let g:WebDevIconsOS='Darwin'
+" set guifont=DroidSansMono\ Nerd\ Font\ 11
+
 " }}}
+
 " ===========================================================================
 
 call vundle#end()            " required
