@@ -21,7 +21,7 @@ alias watch="npm run watch --env.noMaps"
 # NAVIGATION
 alias ..="cd ../"
 alias ..d="cd $(dirs -v | grep 1 | sed 's/[0-9]*[[:space:]]*//')"
-alias l="ls -1FGH"
+alias l="ls -la1FGH"
 alias la="ls -a -FGH"
 alias ld="\ls -GHd */"
 alias l.="ls -a -GH | grep --color=never '^[\.][^\/\.]'"

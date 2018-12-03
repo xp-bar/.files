@@ -34,7 +34,7 @@ set smartcase
 set mousefocus
 set mouse=a
 set hidden
-set shell=/usr/local/bin/zsh
+set shell=/usr/local/bin/zsh\ -i
 set tagcase=smart
 
 set complete+=t

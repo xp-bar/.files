@@ -194,6 +194,15 @@ function di() {
     fi
 }
 
+function fdi() {
+    local TARGET="head"
+    if [[ $@ == "" ]]; then
+        TARGET=$@
+    fi
+
+    git diff `git diff $TARGET --name-only | fzf`
+}
+
 function din(){
     git --no-pager diff $1 --name-only
 }
