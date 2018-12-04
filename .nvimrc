@@ -429,7 +429,8 @@ nnoremap <C-B> :Gblame<cr>
 Plugin 'majutsushi/tagbar'
 augroup tagbar
     let s:hidden_all = 1
-    " autocmd vimenter * if index(['diff'], &ft) > -1 | 
+    " autocmd BufRead *.py set noexpandtab
+    autocmd FileType diff setlocal foldlevel=1000
     autocmd FileType diff nnoremap q :qa!<cr>
 augroup END
 
