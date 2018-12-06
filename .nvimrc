@@ -34,7 +34,8 @@ set smartcase
 set mousefocus
 set mouse=a
 set hidden
-set shell=/usr/local/bin/zsh\ -i
+" set shell=/usr/local/bin/zsh\ -i
+set shell=zsh
 set tagcase=smart
 
 set complete+=t
@@ -154,6 +155,7 @@ endfunction
 " {{{
 Plugin 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
+let g:tmux_navigator_disable_when_zoomed = 1
 
 nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
@@ -638,10 +640,10 @@ endif
 set background=dark " for the dark version
 colorscheme two
 
-Plugin 'chrisbra/Colorizer'
+" Plugin 'chrisbra/Colorizer'
 
-nnoremap <leader>cc :ColorToggle<cr>
-nnoremap <leader>ct :ColorContrast<cr>
+" nnoremap <leader>cc :ColorToggle<cr>
+" nnoremap <leader>ct :ColorContrast<cr>
 
 syntax on
 
