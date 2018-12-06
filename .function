@@ -676,7 +676,17 @@ function dicount(){
     base_branch="$(git config repo.base-branch)";
     default_branch="$([[ $base_branch != "" ]] && echo $base_branch || echo "master")";
     branch="$([[ $1 != "" ]] && echo $1 || echo $default_branch)";
-    git diff $branch --stat | tail -n 1 | tr , '\n' | sed 's/([+-])//g' | awk '$1=$1'
+    local result=`git diff $branch --stat | tail -n 1 | tr , '\n' | sed 's/([+-])//g' | awk '$1=$1'`
+
+    echo $result | while read in; do
+        if [[ $in = *"changed"* ]]; then
+            echo -e "\e[33m~ $in\e[0m";
+        elif [[ $in = *"insertions"* ]]; then
+            echo -e "\e[32m+ $in\e[0m";
+        elif [[ $in = *"deletions"* ]]; then
+            echo -e "\e[31m- $in\e[0m";
+        fi
+    done
 }
 
 function owiwwo(){
