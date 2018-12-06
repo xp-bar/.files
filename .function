@@ -203,6 +203,56 @@ function fdi() {
     git diff `git diff $TARGET --name-only | fzf`
 }
 
+function idi() {
+    setopt localtraps
+    function clean_up() {
+        tput rc;
+        tput rmcup;
+        tput clear;
+        clear;
+        trap - INT
+        return;
+    }
+    trap clean_up INT
+    tput smcup;
+    tput clear;
+    tput sc;
+    tput cup 0 0;
+    local this=`git rev-parse --abbrev-ref HEAD`
+    local base_branch=`git config repo.base-branch`
+    local base=${base_branch:-"master"}
+
+    local files=(${(f)"$(git diff --name-only $base..$this)"})
+    local fcount=$#files
+    local index=1;
+
+    if [[ $fcount -lt 1 ]]; then
+        return 0;
+    fi
+    for file in $files; do
+        echo -e "\n(file \e[33m$index\e[0m of $fcount)";
+        tput cup 0 0;
+        read -k 1 response\?"View the diff for `echo -e "\e[32m$file\e[0m"`? [y/n/q] "
+        case "$response" in
+            [yY][eE][sS]|[yY])
+                git diff $base..$this -- $file;
+                ;;
+            [nN][oO]|[nN])
+                ;;
+            [qQ][uU][iI][tT]|[qQ])
+                break
+                ;;
+            *)
+                ;;
+        esac
+        let "index = $index + 1"
+        tput clear;
+        tput cuu1;
+    done
+    clean_up
+    unfunction clean_up
+}
+
 function din(){
     git --no-pager diff $1 --name-only
 }
