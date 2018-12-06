@@ -435,7 +435,15 @@ function co() {
 
 function mg() {
     if [[ $@ == "" ]]; then
-        git merge $(git branch | fzf)
+        local branch=$(echo `git branch | fzf` | sed 's/[[:space:]]//g')
+        read response\?"Do you want to merge "`echo -e "\e[33m$branch\e[0m"`" into "`echo -e "\e[32m$(git rev-parse --abbrev-ref HEAD)\e[0m"`"? [y/n] "
+        case "$response" in
+            [yy][ee][ss]|[yy])
+            git merge $branch
+                ;;
+            *)
+                ;;
+        esac
     else
         git merge $@
     fi
