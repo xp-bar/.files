@@ -220,9 +220,11 @@ function idi() {
     tput cup 0 0;
     local this=`git rev-parse --abbrev-ref HEAD`
     local base_branch=`git config repo.base-branch`
+    local input=$1
     local base=${base_branch:-"master"}
+    local diff_range=${input:-"$base..$this"}
 
-    local files=(${(f)"$(git diff --name-only $base..$this)"})
+    local files=(${(f)"$(git diff --name-only $diff_range)"})
     local fcount=$#files
     local index=1;
 
@@ -235,7 +237,7 @@ function idi() {
         read -k 1 response\?"View the diff for `echo -e "\e[32m$file\e[0m"`? [y/n/q] "
         case "$response" in
             [yY][eE][sS]|[yY])
-                git diff $base..$this -- $file;
+                git diff $diff_range -- $file;
                 ;;
             [nN][oO]|[nN])
                 ;;
