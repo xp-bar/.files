@@ -600,14 +600,22 @@ function nuke(){
 # }
 
 function mkbr(){
-    INPUT=$1
+    local INPUT=$1
+    if [[ $INPUT = "" ]]; then
+        echo -e "\e[31mSorry, you need to provide a branch name.";
+        return 1;
+    fi
     git checkout -b ${INPUT}
-    read remote\?"Does the branch ${INPUT} already exist as a remote? [y/n] "
+    if [[ $? -ne 0 ]]; then
+        echo -e "\e[31mSorry, something went wrong there";
+        return 1;
+    fi
+    read remote\?"Does the branch `echo -e "\e[32m$INPUT\e[0m"` already exist as a remote? [y/n] "
     case "$remote" in
         [yY][eE][sS]|[yY])
             git fetch origin
             git branch -u origin/${INPUT} ${INPUT}
-            read sync\?"Would you like to sync ${INPUT} with origin/${INPUT}? [y/n] "
+            read sync\?"Would you like to sync `echo -e "\e[32m$INPUT\e[0m"` with `echo -e "\e[33morigin/$INPUT\e[0m"`? [y/n] "
             case "$sync" in
                 [yY][eE][sS]|[yY])
                     git pull origin ${INPUT}
@@ -619,7 +627,7 @@ function mkbr(){
             esac
             ;;
         *)
-            read push\?"Would you like to push ${INPUT} to origin and add origin/${INPUT} as a remote? [y/n] "
+            read push\?"Would you like to push `echo -e "\e[32m$INPUT\e[0m"` to origin and add `echo -e "\e[33morigin/$INPUT\e[0m"` as a remote? [y/n] "
             case "$push" in
                 [yY][eE][sS]|[yY])
                     git push -u origin ${INPUT}
