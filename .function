@@ -640,6 +640,10 @@ function mkbr(){
     esac
 }
 
+function bug() {
+    echo "$(echo bugfix-$1 | sed 's/[0-9]//g' | sed 's/\([A-Z]\)/\-\1/g' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g' | sed 's/://g')" | sed -E 's/[\-]{2,}/-/g'
+}
+
 function dbr(){
     INPUT=$1
     read response\?"Are you sure you would like to force delete branch ${INPUT}? [y/n] "
