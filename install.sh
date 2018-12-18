@@ -124,6 +124,7 @@ pip install http-prompt
 # -- }}}
 
 # -- SYMLINKS -- {{{
+ln -sv $PWD/.global_gitignore ~/.gitignore
 ln -sv $PWD/.alias ~
 ln -sv $PWD/.bash_profile ~
 ln -sv $PWD/.env ~
