@@ -1,5 +1,6 @@
 .ignore
 .env
+*.lock
 .newsboat/cache.db
 .newsboat/history.cmdline
 .newsboat/history.search
