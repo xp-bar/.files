@@ -89,6 +89,10 @@ whathavewedone() {
         less
 }
 
+function origin() {
+    git remote -v -- | sed 's/^.*git@github.com://g' | sed 's/.git.*$//g' | tr -s " " | awk '!seen[$0]++'
+}
+
 function branches(){
     echo -e "\n \e[31mBRANCHES:\e[0m";
     git --no-pager branch | sed 's/[\*]*[ ]//g' | sed 's/^/ - /g' | grep -v $(git this);
