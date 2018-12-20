@@ -160,7 +160,7 @@ function isdown(){
 }
 
 fvim(){
-    nvim $(fzf)
+    nvim $(ack -f | fzf --preview "cat {}")
 }
 
 # fda - including hidden directories
@@ -214,11 +214,11 @@ function di() {
 
 function fdi() {
     local TARGET="head"
-    if [[ $@ == "" ]]; then
+    if [[ $@ != "" ]]; then
         TARGET=$@
     fi
 
-    git diff `git diff $TARGET --name-only | fzf`
+    git diff $TARGET -- `git diff $TARGET --name-only | fzf --preview "cat {}"`
 }
 
 function idi() {
@@ -322,7 +322,7 @@ function routes(){
 # | tail -n +4 | sed 's/| / /' | awk '{print $8}' | grep -v '|' | awk '!seen[$0]++'
 
 function views() {
-    local view="$(find resources/views -type f | gr --color=none '.blade.php' | fzf)"
+    local view="$(find resources/views -type f | gr --color=none '.blade.php' | fzf --preview 'cat {}')"
     echo $view | pbcopy;
     echo $view
 }
