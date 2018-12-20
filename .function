@@ -49,6 +49,20 @@ function launch() {
     open /Applications/$@.app
 }
 
+function dirwatch() {
+    dirone=$1
+    dirtwo=$2
+
+    clear;
+    git --no-pager diff $(\ls -1d "$dirone"* | sed "s:$dirone::g" | git hash-object -w --stdin) $(\ls -1d "$dirtwo"* | sed "s:$dirtwo::g" | git hash-object -w --stdin);
+
+    fswatch -0 $dirtwo | while read -d "" event; do
+        clear;
+        git --no-pager diff $(\ls -1d "$dirone"* | sed "s:$dirone::g" | git hash-object -w --stdin) $(\ls -1d "$dirtwo"* | sed "s:$dirtwo::g" | git hash-object -w --stdin);
+    done
+    clear;
+}
+
 # myip() {
 #     myip="$(ifconfig | grep 'inet [0-9.]*' | grep -v '127.0.0.1' | sed 's/inet //g' | sed 's/netmask.*255//g' | tr -d '[:blank:]' | head -n 1)"
 #     echo "Your ip address is: "$myip;
