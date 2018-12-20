@@ -49,18 +49,29 @@ function launch() {
     open /Applications/$@.app
 }
 
-function dirwatch() {
+function dirdiff() {
     dirone=$1
     dirtwo=$2
 
+    if [[ $dirone == "" || $dirtwo == "" ]]; then
+        echo -e "\e[31mYou need to provide two directories:\e[0m $0 \e[34mdirectory_one \e[33mdirectory_two\e[0m";
+        return 1;
+    fi
+
+    function _difffunc() {
+        git --no-pager diff $(\ls -1d "$dirone"* | sed "s:$dirone::g" | git hash-object -w --stdin) $(\ls -1d "$dirtwo"* | sed "s:$dirtwo::g" | git hash-object -w --stdin);
+    }
+
     clear;
-    git --no-pager diff $(\ls -1d "$dirone"* | sed "s:$dirone::g" | git hash-object -w --stdin) $(\ls -1d "$dirtwo"* | sed "s:$dirtwo::g" | git hash-object -w --stdin);
+
+    _difffunc
 
     fswatch -0 $dirtwo | while read -d "" event; do
         clear;
-        git --no-pager diff $(\ls -1d "$dirone"* | sed "s:$dirone::g" | git hash-object -w --stdin) $(\ls -1d "$dirtwo"* | sed "s:$dirtwo::g" | git hash-object -w --stdin);
+        _difffunc
     done
     clear;
+    unfunction _difffunc
 }
 
 # myip() {
