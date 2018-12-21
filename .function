@@ -1,4 +1,14 @@
 #!/bin/bash
+function sim() {
+    device=$(xcrun simctl list | grep -E '^[ ]{1,}' |  grep -v unavailable | sed 's:^[ ]*\(.\):\1:g' | sed 's:\()\) (.*$:\1:g' | fzf);
+    if [[ $device == "" ]]; then
+        return 1;
+    fi
+    UUID=$(echo $device | grep -E -o -i "([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12})");
+    name=$(echo $device | sed 's:(.*$::g');
+    echo -e "Starting \e[33m$name";
+    xcrun simctl boot $UUID;
+}
 
 function hide(){
     tput smcup
