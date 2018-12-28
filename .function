@@ -314,6 +314,24 @@ function tclock(){
     done
 }
 
+function tclockclear(){
+    DEFAULT_FONT="mono9"
+    if [[ $1 == "" ]]; then
+        FONT=$DEFAULT_FONT
+    else
+        FONT=$1
+    fi
+    clear;
+    while true;
+    do
+        clear;
+        tput civis;
+        echo -ne "\e[31m"; date '+%I:%M%p' | toilet -f "$(echo -ne $FONT)"; echo -ne "\e[0m";
+        sleep 60;
+    done
+    tput cnorm;
+}
+
 
 # PHP Artisan
 
