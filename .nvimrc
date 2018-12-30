@@ -37,11 +37,30 @@ set hidden
 " set shell=/usr/local/bin/zsh\ -i
 set shell=zsh
 set tagcase=smart
+set foldlevel=1000
 
 set complete+=t
 
 " OSX stupid backspace fix
 set backspace=indent,eol,start
+
+
+" --- PHP Folding options --- {{{ 
+" convert '@return ReturnType' to ': ReturnType' in function preview if there is no return type specified in the function declaration
+let g:php_fold_return_comment_as_declaration=1
+
+" convert function access (public, private, protected) to UPPERCASE in preview
+let g:php_fold_uppercase_access_types=0
+
+" if the return type can't be found from an @return tag or a return type declaration, show the return type as ': unknown type' 
+let g:php_fold_show_unknown_types=1
+
+" the maximum length for function comments (accross all lines) before being truncated with '...'
+let g:php_fold_comment_length=60
+
+" show a preview of the first line in the fold, otherwise show the number of hidden lines
+let g:php_fold_show_fold_preview=0
+" --- }}}
 
 
 " Autoread files to watch for changes outside of vim
