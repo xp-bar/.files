@@ -29,7 +29,7 @@ set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
 " set smartindent
 set conceallevel=0
-set ignorecase
+" set ignorecase
 set smartcase
 set mousefocus
 set mouse=a
