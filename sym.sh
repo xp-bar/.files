@@ -6,7 +6,6 @@ ln -sv $PWD/.function ~
 ln -sv $PWD/.gitignore_global ~
 ln -sv $PWD/.ignore ~
 ln -sv $PWD/.lynx/ ~
-ln -sv $PWD/.myclirc ~
 ln -sv $PWD/.newsboat ~
 ln -sv $PWD/.path ~
 # rm ~/.tmux/tmux.conf
