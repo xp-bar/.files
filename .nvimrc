@@ -593,6 +593,8 @@ Plugin 'file:///Users/nireland/swift/apple/swift',
             \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
 autocmd BufNewFile,BufRead *.swift set syntax=swift
 
+" xdebug for vim
+Plugin 'vim-vdebug/vdebug'
 " }}}
 
 " --- Themimg --- {{{
