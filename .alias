@@ -105,8 +105,6 @@ alias moon="curl wttr.in/moon"
 
 alias epoch="date +%s"
 
-alias pman='/usr/local/opt/php@7.1/bin/pman'
-
 # Tmux
 alias tmuxlayout='tmux list-windows -F "#{window_active} #{window_layout}" | grep "^1" | cut -d " " -f 2 | pbcopy'
 
