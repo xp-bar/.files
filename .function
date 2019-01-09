@@ -505,7 +505,7 @@ function co() {
 
 function mg() {
     if [[ $@ == "" ]]; then
-        local branch=$(echo `git branch | grep -v "$(git rev-parse --abbrev-ref HEAD)" | fzf` | sed 's/[[:space:]]//g')
+        local branch=$(echo `git branch | grep -v "\*" | fzf` | sed 's/[[:space:]]//g')
         if [[ $branch == "" ]]; then
             echo -e "\e[31mCancelling merge."
             return 1;
