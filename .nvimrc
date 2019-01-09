@@ -37,7 +37,6 @@ set hidden
 " set shell=/usr/local/bin/zsh\ -i
 set shell=zsh
 set tagcase=smart
-set foldlevel=1000
 
 set complete+=t
 
@@ -74,7 +73,7 @@ augroup autoreload
 augroup END
 
 set foldmethod=marker
-set foldlevel=0
+set foldlevel=2
 set nowrap
 autocmd filetype crontab setlocal nobackup nowritebackup
 " --- }}}
@@ -93,6 +92,8 @@ nnoremap <silent><leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <silent><leader>en :split $MYVIMRC<cr>
 
 nnoremap <leader>w :w<cr>
+
+vnoremap <leader>s :sort<cr>
 
 " -- Nicer buffer closing -- {{{
 Plugin 'moll/vim-bbye'
@@ -595,6 +596,26 @@ autocmd BufNewFile,BufRead *.swift set syntax=swift
 
 " xdebug for vim
 Plugin 'vim-vdebug/vdebug'
+let g:vdebug_options = {
+        \ 'break_on_open' : '0'
+        \ }
+
+let g:vdebug_keymap = {
+    \ "run" : "<F5>",
+    \ "run_to_cursor" : "<F9>",
+    \ "step_over" : "<F2>",
+    \ "step_into" : "<F3>",
+    \ "step_out" : "<F4>",
+    \ "close" : "<F6>",
+    \ "detach" : "<F7>",
+    \ "set_breakpoint" : "<F10>",
+    \ "get_context" : "<F11>",
+    \ "eval_under_cursor" : "<F12>",
+    \ "eval_visual" : "<Leader>e",
+    \ }
+
+nnoremap <silent> <M-b> :Breakpoint<cr>
+nnoremap <silent> <M-r> :BreakpointRemove *<cr>
 " }}}
 
 " --- Themimg --- {{{
