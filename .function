@@ -505,13 +505,22 @@ function co() {
 
 function mg() {
     if [[ $@ == "" ]]; then
-        local branch=$(echo `git branch | fzf` | sed 's/[[:space:]]//g')
+        local branch=$(echo `git branch | grep -v "$(git rev-parse --abbrev-ref HEAD)" | fzf` | sed 's/[[:space:]]//g')
+        if [[ $branch == "" ]]; then
+            echo -e "\e[31mCancelling merge."
+            return 1;
+        fi
         read response\?"Do you want to merge "`echo -e "\e[33m$branch\e[0m"`" into "`echo -e "\e[32m$(git rev-parse --abbrev-ref HEAD)\e[0m"`"? [y/n] "
         case "$response" in
             [yy][ee][ss]|[yy])
-            git merge $branch
+                git merge $branch
                 ;;
             *)
+                tput cuu1;
+                printf "%${COLUMNS}s" "";
+                tput cuu1;
+                echo -e "\e[33m$branch\e[0m was not merged."
+                return 1;
                 ;;
         esac
     else
