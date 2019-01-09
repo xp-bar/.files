@@ -135,7 +135,7 @@ font:
   #
   # This is a global setting and will require a log out or restart to take
   # effect.
-  use_thin_strokes: true
+  use_thin_strokes: false
 # }}}
 
 # Display the time it takes to redraw each frame. {{{
@@ -300,7 +300,7 @@ mouse:
     #
     # These are the modifiers that need to be held down for opening URLs when clicking
     # on them. The available modifiers are documented in the key binding section.
-    # modifiers: Control|Shift
+    modifiers: Control|Shift
 # }}}
 
 # Selection {{{
@@ -532,5 +532,6 @@ key_bindings:
   - { key: J,        mods: Alt,     chars: "\x1bj"                       }
   - { key: L,        mods: Alt,     chars: "\x1bl"                       }
   - { key: H,        mods: Alt,     chars: "\x1bh"                       }
+  - { key: P,        mods: Alt,     chars: "\x1bp"                       }
   - { key: Q,        mods: Control, chars: "\x11q"                       }
 # }}}
