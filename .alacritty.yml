@@ -533,5 +533,7 @@ key_bindings:
   - { key: L,        mods: Alt,     chars: "\x1bl"                       }
   - { key: H,        mods: Alt,     chars: "\x1bh"                       }
   - { key: P,        mods: Alt,     chars: "\x1bp"                       }
+  - { key: R,        mods: Alt,     chars: "\x1br"                       }
+  - { key: B,        mods: Alt,     chars: "\x1bb"                       }
   - { key: Q,        mods: Control, chars: "\x11q"                       }
 # }}}
