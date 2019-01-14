@@ -371,10 +371,6 @@ function routes(){
     fi
 }
 
-# function controllers() {
-# }
-# | tail -n +4 | sed 's/| / /' | awk '{print $8}' | grep -v '|' | awk '!seen[$0]++'
-
 function views() {
     local view="$(find resources/views -type f | gr --color=none '.blade.php' | fzf --preview 'cat {}')"
     echo $view | pbcopy;
@@ -902,14 +898,6 @@ function _collabs() {
 }
 
 gpr() {
-    function after_pr_hook() {
-        declare -a input_lines
-        while read -r in; do
-            input_lines+=("$in\n");
-        done
-        local url=`echo $input_lines | tail -n 2 | head -n 1 | sed 's/^[[:space:]]//g'`
-        echo $url
-    }
     local arg1=$1
     local base=${arg1:-"master"}
     local assigned="$(_collabs | fzf --header='Select an assignee:')"
@@ -921,8 +909,6 @@ gpr() {
         # hub pull-request -a $assigned -r $assigned -b $base | after_pr_hook
         hub pull-request -a $assigned -r $assigned -b $base
     fi
-
-    unfunction after_pr_hook
 }
 
 
