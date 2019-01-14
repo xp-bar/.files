@@ -571,9 +571,22 @@ augroup END
 " Javascript
 " Plugin 'othree/javascript-libraries-syntax.vim'
 " let g:used_javascript_libs = 'underscore,jquery,vue'
+
+" Vue
+Plugin 'posva/vim-vue'
+" Typescript and Vue
+Plugin 'Quramy/tsuquyomi'
+Plugin 'Quramy/tsuquyomi-vue'
+
 augroup syntaxcommands
+    autocmd!
     autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+    " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+    " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.typescript.css
+    " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.typescript.html.css
+    autocmd BufRead,BufNewFile *.vue setlocal filetype=vue
+    autocmd FileType vue syntax sync fromstart
+    autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
 augroup END
 
 " Highlight Hex colors
@@ -587,6 +600,12 @@ autocmd!
 autocmd BufNewFile,BufRead *.blade.php setlocal filetype=blade
 augroup END
 
+Plugin 'leafgarland/typescript-vim'
+
+augroup typescript
+autocmd!
+autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+augroup END
 
 " Async Linter Engine for Vim, allows phpcs, eslint etc. -- {{{
 Plugin 'w0rp/ale'
