@@ -56,7 +56,15 @@ function retag() {
 }
 
 function launch() {
-    open /Applications/$@.app
+    if [[ $@ == "" ]]; then
+        local app=$(\ls -1 /Applications | sed 's:\.app::g' | fzf);
+        if [[ $app != "" ]]; then
+            echo -e "Opening \e[33m$app\e[0m"
+            open /Applications/$app.app > /dev/null 2>&1;
+        fi
+    else
+        open /Applications/$@.app
+    fi
 }
 
 function dirdiff() {
@@ -295,7 +303,14 @@ function idi() {
 }
 
 function din(){
-    git --no-pager diff $1 --name-only
+    input=$1
+    if [[ $input == "" ]]; then
+        base_branch="$(git config repo.base-branch)";
+        default_branch="$([[ $base_branch != "" ]] && echo $base_branch || echo "master")";
+        git --no-pager diff $default_branch --name-only
+    else
+        git --no-pager diff $input --name-only
+    fi
 }
 
 function tclock(){
