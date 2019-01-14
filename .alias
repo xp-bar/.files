@@ -9,7 +9,7 @@ alias wstart="cat ~/.time"
 alias itheme="antigen theme $1; antigen cleanup -f > /dev/null"
 
 #DB
-alias localdb="clear; mycli -u root -h 127.0.0.1"
+alias localdb="mycli -u root -h 127.0.0.1"
 
 #PHPCS
 alias fix="phpcbf --standard=XpBar"
