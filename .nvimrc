@@ -73,7 +73,7 @@ augroup autoreload
 augroup END
 
 set foldmethod=marker
-set foldlevel=2
+set foldlevel=0
 set nowrap
 autocmd filetype crontab setlocal nobackup nowritebackup
 " --- }}}
@@ -559,6 +559,10 @@ nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr>
 
 " Better PHP Lang Support
 Plugin 'StanAngeloff/php.vim' 
+augroup php
+autocmd!
+autocmd BufNewFile,BufRead *.php setlocal foldlevel=2
+augroup END
 
 " Javascript
 " Plugin 'othree/javascript-libraries-syntax.vim'
