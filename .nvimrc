@@ -146,6 +146,9 @@ nnoremap <Down> <nop>
 nnoremap <Left> <nop>
 nnoremap <Right> <nop>
 
+" Stop using C-q for visual block, use <C-v>
+nnoremap <C-q> <nop>
+
 " Map Leader space to commands
 noremap <leader><Space> :
 
@@ -540,6 +543,7 @@ endfunction
 augroup phpImports
     autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
     autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
+    autocmd FileType php setlocal commentstring=//%s
 augroup END
 " }}}
 
@@ -580,7 +584,7 @@ Plugin 'jwalton512/vim-blade'
 " Workaround to ensure correct filetypes for blade template syntax highlight
 augroup blade
 autocmd!
-autocmd BufNewFile,BufRead *.blade.php set filetype=blade
+autocmd BufNewFile,BufRead *.blade.php setlocal filetype=blade
 augroup END
 
 
