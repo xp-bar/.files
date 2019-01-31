@@ -270,12 +270,40 @@ let g:NERDTreeIndicatorMapCustom = {
 
 "  }}}
 
-" Minimap!
+" --- Minimap --- {{{
 " Plugin 'severin-lemaignan/vim-minimap'
+" --- }}}
 
-
+" --- GitGutter --- {{{
 " Gutter for Vim, allows showing statuses beside lines of Code
 Plugin 'airblade/vim-gitgutter'
+" --- }}}
+
+" --- Buftabline --- {{{
+Plugin 'ap/vim-buftabline'
+
+" Only show if there are 2+ buffers open (0 = never, 1 = if buffers > 2, 2 = always)
+let g:buftabline_show = 1
+
+" Numbers beside buffers (0 = none, 1 = internal buffer number, 2 = ordinal)
+let g:buftabline_number = 1
+
+let g:buftabline_indicators = 1
+
+" -- Keymap -- {{{
+nmap <leader>1 <Plug>BufTabLine.Go(1)
+nmap <leader>2 <Plug>BufTabLine.Go(2)
+nmap <leader>3 <Plug>BufTabLine.Go(3)
+nmap <leader>4 <Plug>BufTabLine.Go(4)
+nmap <leader>5 <Plug>BufTabLine.Go(5)
+nmap <leader>6 <Plug>BufTabLine.Go(6)
+nmap <leader>7 <Plug>BufTabLine.Go(7)
+nmap <leader>8 <Plug>BufTabLine.Go(8)
+nmap <leader>9 <Plug>BufTabLine.Go(9)
+nmap <leader>0 <Plug>BufTabLine.Go(10)
+" -- }}}
+
+" --- }}}
 
 " }}}
 
@@ -291,10 +319,6 @@ inoremap <C-Up> <Esc>:m .-2<CR>==gi
 vnoremap <C-Down> :m '>+1<CR>gv=gv
 vnoremap <C-Up> :m '<-2<CR>gv=gv
 " }}}
-
-" Remap Page up and Page down
-noremap <S-k> <C-b> 
-noremap <S-j> <C-f> 
 
 noremap <C-w><C-Up> :res +5<cr> 
 noremap <C-w><C-Down> :res -5<cr> 
@@ -536,6 +560,25 @@ augroup phpImports
 augroup END
 " }}}
 
+" Add a namespace declaration - php {{{
+function! NameSpace()
+    if (&ft=='php')
+        let l:root = $ROOT_NAMESPACE != "" ? $ROOT_NAMESPACE : 'Root'
+        let l:file = @%
+        let l:path = matchstr(l:file, '^\zs.*\ze\/.*\..*$')
+        let l:parsed = substitute(l:path, '^\zsapp\ze', l:root, '')
+        let l:namespace = 'namespace ' . substitute(l:parsed, '\/', '\', 'g') .';'
+        exe "normal \i\<cr>\<esc>" 
+        call setline('.', l:namespace)
+        exe "normal \o\<esc>" 
+    endif
+endfunction
+
+augroup phpNamespace
+    autocmd FileType php noremap <Leader>n :call NameSpace()<CR>
+augroup END
+" }}}
+"
 " ---- phpDocumentor ---- {{{
 Plugin 'tobyS/vmustache'
 Plugin 'tobyS/pdv'
@@ -548,7 +591,10 @@ nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr>
 " --- Syntax --- {{{
 
 " html5 omnicomplete
-" Plugin 'othree/html5.vim'
+Plugin 'othree/html5.vim'
+
+" Scss support
+Plugin 'cakebaker/scss-syntax.vim'
 
 " Better PHP Lang Support
 Plugin 'StanAngeloff/php.vim' 
@@ -558,24 +604,25 @@ autocmd BufNewFile,BufRead *.php setlocal foldlevel=2
 augroup END
 
 " Javascript
-" Plugin 'othree/javascript-libraries-syntax.vim'
-" let g:used_javascript_libs = 'underscore,jquery,vue'
+Plugin 'pangloss/vim-javascript'
+
+inoreabbrev log console.log();<Left><Left>
 
 " Vue
 Plugin 'posva/vim-vue'
+
+" disable pre-processors bc they're breaking things
+" let g:vue_disable_pre_processors=1
 " Typescript and Vue
 Plugin 'Quramy/tsuquyomi'
 Plugin 'Quramy/tsuquyomi-vue'
 
 augroup syntaxcommands
     autocmd!
-    autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
-    " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
-    " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.typescript.css
-    " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.typescript.html.css
-    autocmd BufRead,BufNewFile *.vue setlocal filetype=vue
-    autocmd FileType vue syntax sync fromstart
+    autocmd FileType vue,css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.css
     autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
+    autocmd FileType vue syntax sync fromstart
 augroup END
 
 " Highlight Hex colors
@@ -613,7 +660,7 @@ autocmd BufNewFile,BufRead *.swift set syntax=swift
 " xdebug for vim
 Plugin 'vim-vdebug/vdebug'
 let g:vdebug_options = {
-        \ 'break_on_open' : '0'
+        \ 'break_on_open' : '1'
         \ }
 
 let g:vdebug_keymap = {
@@ -705,7 +752,8 @@ colorscheme two
 
 syntax on
 
-nnoremap <C-[> :syn off<cr> :syn on<cr> 
+nnoremap <silent> <C-[> :syn sync fromstart<cr>
+" nnoremap <C-[> :syn off<cr> :syn on<cr> :syn sync fromstart<cr>
 
 " }}}
 
@@ -733,6 +781,10 @@ unmap <leader>vg
 " Plugin 'ryanoasis/vim-devicons'
 " let g:WebDevIconsOS='Darwin'
 " set guifont=DroidSansMono\ Nerd\ Font\ 11
+
+nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 " }}}
 
