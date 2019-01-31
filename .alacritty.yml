@@ -51,11 +51,10 @@ window:
   #     - none: Neither borders nor title bar
   #     - buttonless: Title bar, transparent background and title bar buttons
   #     - transparent: Title bar, transparent background, but no title bar buttons
-  # decorations: full
-  decorations: none
+  decorations: full
 
   # When true, alacritty starts maximized.
-  start_maximized: true
+  start_maximized: false
 # }}}
 
 # Scrolling {{{
@@ -254,7 +253,8 @@ visual_bell:
 #
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
-background_opacity: 0.65
+# background_opacity: 0.65
+background_opacity: 1
 # }}}
 
 # Mouse bindings {{{
