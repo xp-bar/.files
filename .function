@@ -20,6 +20,45 @@ function show(){
     tput rmcup;
 }
 
+# alias pack='npm run watch > __.webpack 2>&1 &; webpack=$!; tput cuu1; echo -e "\e[34mStarting Webpack - PID: $webpack"'
+# alias killpack='kill $webpack'
+
+pack() {
+    trap 'tput rc; tput rmcup; trap - SIGINT SIGQUIT' SIGINT SIGQUIT
+    args=$1;
+    if [[ $args = *"--kill"* ]]; then
+        if [[ $webpack == '' ]]; then
+            ps aux | grep npm | grep -v 'grep';
+            echo "Please run 'kill PID' to kill npm and stop webpack, we lost track of the PID.";
+            return 1;
+        fi
+
+        kill $webpack;
+        webpack=;
+    elif [[ $args = *"--info"* ]]; then
+        echo -e "Webpack, PID: \e[34m$webpack";
+    elif [[ $args = *"--log"* ]]; then
+        tput sc;
+        tput smcup;
+        tput cup 0 0;
+        [[ -e __.webpack ]] && tail -f __.webpack;
+    elif [[ $args = "" ]]; then
+        if [[ $webpack != "" ]]; then
+            echo -e "\e[31mWebpack is already running!\e[0m";
+            return 1;
+        fi
+        npm run watch > __.webpack 2>&1 &;
+        webpack=$!;
+        tput cuu1;
+        echo -e "\e[34mStarting Webpack - PID: $webpack";
+    else
+        echo "Usage: pack [--info, --log, --kill]"
+        return 1;
+    fi
+
+    return 0;
+}
+
 function dash(){
     if [[ $2 != '' ]]; then
         open dash://$1:{$2}
@@ -41,19 +80,6 @@ function cht() {
 }
 
 source ~/.koolaid
-
-function retag() {
-    ctags -R \
-        --php-kinds=cft \
-        --exclude="node_modules" \
-        --exclude="*.js" \
-        --exclude="*.md" \
-        --exclude="*.blade.php" \
-        --languages="php";
-    # Remove lines too long for vim
-    echo "Removing long lines";
-    echo "$(awk 'length<512' tags)" > tags;
-}
 
 function launch() {
     if [[ $@ == "" ]]; then
@@ -122,6 +148,18 @@ function origin() {
     git remote -v -- | sed 's/^.*git@github.com://g' | sed 's/.git.*$//g' | tr -s " " | awk '!seen[$0]++'
 }
 
+function af() {
+    local files="`git status --short | sed 's/^.* \(.*$\)/\1/g'`"
+    local selected="$(echo "$files" | fzf --multi --preview "git --no-pager diff --color=always head {}")"
+
+    if [[ $selected != "" ]]; then
+        echo "$selected" | while read in; do
+            echo -e "\e[32mAdd: \e[0m$in";
+            git add "$in"
+        done
+    fi
+}
+
 function branches(){
     echo -e "\n \e[31mBRANCHES:\e[0m";
     git --no-pager branch | sed 's/[\*]*[ ]//g' | sed 's/^/ - /g' | grep -v $(git this);
@@ -179,13 +217,7 @@ function e(){
 }
 
 function isdown(){
-    hide;
-    tput sc;
-    tput cup 5 5;
     curl $1 -s -f -o /dev/null && echo -e "\e[32m$1 is up!" || echo  -e "\e[31m$1 is down...";
-    read "?";
-    tput rc;
-    show;
 }
 
 fvim(){
