@@ -41,7 +41,7 @@ pack() {
         tput sc;
         tput smcup;
         tput cup 0 0;
-        [[ -e __.webpack ]] && tail -f __.webpack;
+        [[ -e __.webpack ]] && tail -n 50 -f __.webpack;
     elif [[ $args = "" ]]; then
         if [[ $webpack != "" ]]; then
             echo -e "\e[31mWebpack is already running!\e[0m";
