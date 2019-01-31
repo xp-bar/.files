@@ -215,29 +215,15 @@ let g:startify_lists = [
         \ { 'type': 'dir',       'header': ['   Most Recently Used in '. getcwd()] },
         \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
         \ ]
-let g:startify_custom_header = [
-        \ '',
-        \ '',
-        \ '                                             ▀▀ ',
-        \ '      ██▄████▄   ▄████▄    ▄████▄   ██▄  ▄██   ████     ████▄██▄ ',
-        \ '      ██▀   ██  ██▄▄▄▄██  ██▀  ▀██   ██  ██      ██     ██ ██ ██ ',
-        \ '      ██    ██  ██▀▀▀▀▀▀  ██    ██   ▀█▄▄█▀      ██     ██ ██ ██ ',
-        \ '      ██    ██  ▀██▄▄▄▄█  ▀██▄▄██▀    ████    ▄▄▄██▄▄▄  ██ ██ ██ ',
-        \ '      ▀▀    ▀▀    ▀▀▀▀▀     ▀▀▀▀       ▀▀     ▀▀▀▀▀▀▀▀  ▀▀ ▀▀ ▀▀ ',
-        \ ''  ,
-        \ '  ▜ ▗▐           ▜▜     ▐  ▌      ▗▀▖   ▐               ▗▀▖    ▗ ',
-        \ '  ▐ ▄▜▀ ▞▀▖▙▀▖▝▀▖▐▐ ▌ ▌ ▜▀ ▛▀▖▞▀▖ ▐  ▌ ▌▜▀ ▌ ▌▙▀▖▞▀▖ ▞▀▖▐   ▌ ▌▄ ▛▚▀▖ ',
-        \ '  ▐ ▐▐ ▖▛▀ ▌  ▞▀▌▐▐ ▚▄▌ ▐ ▖▌ ▌▛▀  ▜▀ ▌ ▌▐ ▖▌ ▌▌  ▛▀  ▌ ▌▜▀  ▐▐ ▐ ▌▐ ▌ ',
-        \ '   ▘▀▘▀ ▝▀▘▘  ▝▀▘ ▘▘▗▄▘  ▀ ▘ ▘▝▀▘ ▐  ▝▀▘ ▀ ▝▀▘▘  ▝▀▘ ▝▀ ▐    ▘ ▀▘▘▝ ▘ ',
-        \ '',
-        \]
 
 " let g:startify_custom_header = 
-            " \ map(split(system('fortune -s -n $[$(tput cols)/2] | toilet -f "Stick Letters" -w 200'), '\n'), '"   ". v:val')
-" let g:startify_custom_footer = 
-"         \ map(split(system('fortune | cowsay -W 80 -f dragon'), '\n'), '"   ". v:val')
+"             \ map(split(system('fortune -s -n $[$(tput cols)/4] | toilet -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
 
-let g:startify_custom_footer = ""
+let g:startify_custom_footer = 
+        \ map(split(system('fortune | cowsay -W 80 -f tux'), '\n'), '"   ". v:val')
+
+" let g:startify_custom_footer = ""
+let g:startify_custom_header = ""
 
 nnoremap <leader><C-s> :Startify<cr>
 "  }}}
