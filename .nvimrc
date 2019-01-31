@@ -95,18 +95,21 @@ nnoremap <leader>w :w<cr>
 
 vnoremap <leader>s :sort<cr>
 
-" -- Nicer buffer closing -- {{{
+" -- Buffers -- {{{
+" Nicer buffer closing {{{
 Plugin 'moll/vim-bbye'
 nnoremap <leader>q :Bdelete<cr>
+" }}}
+" Buffer switching {{{
+nnoremap <leader>j :bnext<cr>
+nnoremap <leader>k :bprev<cr>
+nnoremap <S-j> :bnext<cr>
+nnoremap <S-k> :bprev<cr>
+" }}}
 " -- }}}
 
 " Splits
 " {{{
-nnoremap <leader>v :vsp<cr>
-nnoremap <leader>n :sp<cr>
-vnoremap <leader>v :vsp<cr>
-vnoremap <leader>n :sp<cr>
-
 nnoremap <leader>\| :vsp<cr>
 nnoremap <leader>_ :sp<cr>
 vnoremap <leader>\| :vsp<cr>
