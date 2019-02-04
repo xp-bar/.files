@@ -1,3 +1,4 @@
+#! /bin/zsh
 function koolaid(){
     unset files; 
     if [ -t 0 ]; then
