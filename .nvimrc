@@ -606,7 +606,7 @@ augroup END
 " Javascript
 Plugin 'pangloss/vim-javascript'
 
-inoreabbrev log console.log();<Left><Left>
+inoreabbrev console console.log();<Left><Left>
 
 " Vue
 Plugin 'posva/vim-vue'
