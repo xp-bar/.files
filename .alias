@@ -61,7 +61,6 @@ alias md="msee"
 
 # GIT
 alias master="git checkout master"
-alias st="git status"
 alias aa="git add ."
 alias ra="git reset"
 alias a="git add"
