@@ -1,0 +1,16 @@
+#! /bin/zsh
+
+function _launch() {
+    open "/Applications/$(\ls -1 /Applications | sed 's/\.app//g' | fzf).app"
+    zle && zle vi-insert
+}
+zle -N _launch
+bindkey -M vicmd 'p' _launch
+
+function _z_widget() {
+    z
+    zle && zle vi-insert
+}
+zle -N _z_widget
+bindkey -M vicmd 'z' _z_widget
+

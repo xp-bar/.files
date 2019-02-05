@@ -6,32 +6,28 @@ source <(antibody init)
 antibody bundle < ~/.zsh-plugins
 # }}}
 
-# vim bindings {{{
-bindkey -M viins 'jk' vi-cmd-mode
-bindkey -M vicmd 'k' up-line-or-beginning-search
-bindkey -M vicmd 'j' down-line-or-beginning-search
-
-function _launch() {
-    open "/Applications/$(\ls -1 /Applications | sed 's/\.app//g' | fzf).app"
-    zle && zle vi-insert
-}
-zle -N _launch launch-application
-
-bindkey -M vicmd 'p' launch-application
-# }}}
-
-# get the fuck {{{
-eval $(thefuck --alias)
-# }}}
-
 # aliases, functions, etc. {{{
+source ~/z.sh
 source ~/.alias
 source ~/.env
 source ~/.function
 source ~/.ignore
 source ~/.path
 source ~/.extra-aliases
-source ~/z.sh
+# }}}
+
+# vim bindings {{{
+bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M vicmd 'k' up-line-or-beginning-search
+bindkey -M vicmd 'j' down-line-or-beginning-search
+# }}}
+
+# ZLE import {{{
+source ~/.zle
+# }}}
+
+# get the fuck {{{
+eval $(thefuck --alias)
 # }}}
 
 # fix zle history search {{{
