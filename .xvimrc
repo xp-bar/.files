@@ -8,8 +8,13 @@ nnoremap <leader>v :vsp<cr>
 nnoremap <leader>n :sp<cr>
 vnoremap <leader>v :vsp<cr>
 vnoremap <leader>n :sp<cr>
+nnoremap <leader>| :vsp<cr>
+nnoremap <leader>_ :sp<cr>
+vnoremap <leader>| :vsp<cr>
+vnoremap <leader>_ :sp<cr>
 " }}}
 nnoremap <silent><leader>q :bd<cr>
+vnoremap <silent><leader>s :sort<cr>
 noremap <leader><Space> :
 inoremap jk <Esc>`^
 vnoremap jk <Esc>`^

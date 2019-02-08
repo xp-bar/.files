@@ -458,10 +458,11 @@ nmap ga <Plug>(EasyAlign)
 " Git wrapper for vim
 Plugin 'tpope/vim-fugitive'
 
+nnoremap <silent><C-B> :Gblame<cr>
+
 " GV - git log browser
 Plugin 'junegunn/gv.vim'
-
-nnoremap <C-B> :Gblame<cr>
+nnoremap <silent><leader>g :GV<cr>
 
 " ---- Tagbar ---- {{{
 Plugin 'majutsushi/tagbar'

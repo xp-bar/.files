@@ -95,6 +95,9 @@ alias sppl="spotify play list"
 alias spn="spotify next"
 alias spst="spotify status"
 
+#spotctl
+alias splayer="spotctl player > /dev/null 2>&1"
+
 # browsing
 alias webb="open '/Applications/Vivaldi.app' '$1'"
 
