@@ -1,19 +1,22 @@
 export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
 
+# Prevent nice calls on windows
+unsetopt BG_NICE
+
 # plugins {{{
 source <(antibody init)
 antibody bundle < ~/.zsh-plugins
 # }}}
 
 # aliases, functions, etc. {{{
-source ~/z.sh
-source ~/.alias
-source ~/.env
-source ~/.function
-source ~/.ignore
-source ~/.path
-source ~/.extra-aliases
+[[ -e ~/.env ]] && source ~/.env
+[[ -e ~/.path ]] && source ~/.path
+[[ -e ~/z.sh ]] && source ~/z.sh
+[[ -e ~/.alias ]] && source ~/.alias || echo "Aliases not loaded."
+[[ -e ~/.function ]] && source ~/.function || echo "Functions not loaded."
+[[ -e ~/.ignore ]] && source ~/.ignore
+[[ -e ~/.extra-aliases ]] && source ~/.extra-aliases
 # }}}
 
 # vim bindings {{{
