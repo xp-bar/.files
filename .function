@@ -10,6 +10,10 @@ function sim() {
     xcrun simctl boot $UUID;
 }
 
+function tempwttr() {
+    echo "`curl -s wttr.in/London,Canada?0FQT`" | sed 's/^.\{15\}//g' | head -n 3 | sed 's:[ ]*$:,:g' | perl -pe 's/,\n/, /g' | sed 's/,[ ]*$//g' | sed 's/\(^.*\),[ ]*\([\-]*[0-9]*\)\-\(.*\),.*$/<< \1 >> [\2 to \3]/g' | sed 's:[^0-9\-]*\]:\]:g'
+}
+
 function hide(){
     tput smcup
     tput sc
