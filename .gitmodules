@@ -4,3 +4,6 @@
 [submodule "phpcs-standards"]
 	path = phpcs-standards
 	url = git@github.com:xp-bar/phpcs-standards.git
+[submodule "z"]
+	path = z
+	url = git@github.com:rupa/z.git
