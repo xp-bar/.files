@@ -996,7 +996,8 @@ function toroman() {
 }
 
 function tasky() {
-    hide;
+    tput sc;
+    tput smcup;
     tput clear;
     tb $TASKBOOK_ARGS;
     fswatch -0 $TASKBOOK | while (read -d "" event || read "?")
@@ -1004,7 +1005,8 @@ function tasky() {
             tput clear;
             tb $TASKBOOK_ARGS;
         done
-    show;
+    tput rc;
+    tput rmcup;
 }
 
 function icat() {

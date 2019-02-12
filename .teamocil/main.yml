@@ -1,0 +1,17 @@
+name: Main
+windows:
+  - name: zsh
+    root: ~/Sites/roomroster
+    layout: 71e3,272x75,0,0[272x71,0,0{199x71,0,0,47,72x71,200,0[72x5,200,0,55,72x39,200,6,56,72x25,200,46,57]},272x3,0,72,51] 
+    panes:
+      - commands: # 1 Main Large pane
+        - nvim
+        focus: true
+      - commands: # 2 watch
+          - npm run watch -- --env.noMaps
+      - commands: # 3 slack cli
+          - slack
+      - commands: # 4 facebook messenger
+          - fb-messenger-cli
+      - commands: # 5 blank terminal
+          - clear
