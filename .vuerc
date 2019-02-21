@@ -1,0 +1,33 @@
+{
+  "useTaobaoRegistry": false,
+  "packageManager": "npm",
+  "presets": {
+    "TS_SASS_PWA": {
+      "useConfigFiles": true,
+      "plugins": {
+        "@vue/cli-plugin-babel": {},
+        "@vue/cli-plugin-typescript": {
+          "classComponent": true,
+          "useTsWithBabel": true
+        },
+        "@vue/cli-plugin-pwa": {}
+      },
+      "router": true,
+      "routerHistoryMode": false,
+      "cssPreprocessor": "sass"
+    },
+    "basic": {
+      "useConfigFiles": true,
+      "plugins": {
+        "@vue/cli-plugin-babel": {},
+        "@vue/cli-plugin-typescript": {
+          "classComponent": true,
+          "useTsWithBabel": true
+        }
+      },
+      "router": true,
+      "routerHistoryMode": true,
+      "cssPreprocessor": "node-sass"
+    }
+  }
+}
