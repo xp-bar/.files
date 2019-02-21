@@ -103,8 +103,8 @@ nnoremap <leader>q :Bdelete<cr>
 " Buffer switching {{{
 nnoremap <leader>j :bnext<cr>
 nnoremap <leader>k :bprev<cr>
-nnoremap <S-j> :bnext<cr>
-nnoremap <S-k> :bprev<cr>
+nnoremap <silent> <S-j> :bnext<cr>
+nnoremap <silent> <S-k> :bprev<cr>
 " }}}
 " -- }}}
 
@@ -117,6 +117,9 @@ vnoremap <leader>_ :sp<cr>
 nnoremap <leader>x :q<cr>
 vnoremap <leader>x :q<cr>
 " }}}
+
+
+cnoreabbrev ww setl wrap!
 
 " Auto Commands
 " {{{
@@ -569,15 +572,27 @@ function! NameSpace()
         let l:path = matchstr(l:file, '^\zs.*\ze\/.*\..*$')
         let l:parsed = substitute(l:path, '^\zsapp\ze', l:root, '')
         let l:namespace = 'namespace ' . substitute(l:parsed, '\/', '\', 'g') .';'
+        exe "normal ggj"
         exe "normal \i\<cr>\<esc>" 
         call setline('.', l:namespace)
         exe "normal \o\<esc>" 
     endif
 endfunction
 
+function! ReturnType()
+    if (&ft=='php')
+        " exe "normal ?@return[ ]\zs.*\ze$<CR>"
+        " exe "normal \"lyw"
+        " exe "normal $i:<esc>"
+        " exe "normal \"lp"
+    endif
+endfunction
+
 augroup phpNamespace
     autocmd FileType php noremap <Leader>n :call NameSpace()<CR>
+    autocmd FileType php noremap <Leader>r :call ReturnType()<CR>
 augroup END
+
 " }}}
 "
 " ---- phpDocumentor ---- {{{
