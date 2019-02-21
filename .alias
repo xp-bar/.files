@@ -1,6 +1,6 @@
 alias azu="antibody update && source ~/.zshrc"
 alias zu="source ~/.zshrc"
-
+alias vrand="curl -sL 'http://vim.wikia.com/wiki/Special:Random' | lynx -stdin"
 
 alias start="echo '$(date '+%Y-%m-%d @ %H:%M:%S')' > ~/.time"
 alias wstart="cat ~/.time"
@@ -45,9 +45,13 @@ alias fzf="fzf --prompt='\$ ' --tabstop=4 --color=dark,prompt:$mono_4,bg:-1,fg:$
 
 # CLI SHORTCUTS
 alias comp="composer"
+
 alias art='php artisan'
 alias artm='art migrate'
+alias artrm='art migrate:rollback'
+alias arts='art db:seed'
 alias artc="art clear-compiled && art cache:clear && art route:clear && art config:clear && comp du && art view:clear"
+
 alias aql="art queue:listen --tries=3"
 alias aqw="php artisan queue:work --once"
 alias tink="c; art tinker"

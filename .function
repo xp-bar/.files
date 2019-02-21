@@ -748,7 +748,7 @@ function mkbr(){
     read remote\?"Does the branch `echo -e "\e[32m$INPUT\e[0m"` already exist as a remote? [y/n] "
     case "$remote" in
         [yY][eE][sS]|[yY])
-            git fetch origin
+            git fetch origin ${INPUT}
             git branch -u origin/${INPUT} ${INPUT}
             read sync\?"Would you like to sync `echo -e "\e[32m$INPUT\e[0m"` with `echo -e "\e[33morigin/$INPUT\e[0m"`? [y/n] "
             case "$sync" in
@@ -996,14 +996,15 @@ function toroman() {
 }
 
 function tasky() {
+    local args=$@
     tput sc;
     tput smcup;
     tput clear;
-    tb $TASKBOOK_ARGS;
+    tb $args;
     fswatch -0 $TASKBOOK | while (read -d "" event || read "?")
         do
             tput clear;
-            tb $TASKBOOK_ARGS;
+            tb $args;
         done
     tput rc;
     tput rmcup;
