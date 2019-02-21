@@ -802,6 +802,48 @@ nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
+" --- Goyo --- {{{
+Plugin 'junegunn/goyo.vim'
+nnoremap <silent><leader>y :Goyo 120<cr>
+
+function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
+  let ft=toupper(a:filetype)
+  let group='textGroup'.ft
+
+  if exists('b:current_syntax')
+    let s:current_syntax=b:current_syntax
+    " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
+    " do nothing if b:current_syntax is defined.
+    unlet b:current_syntax
+  endif
+
+  execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
+  try
+    execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
+  catch
+  endtry
+
+  if exists('s:current_syntax')
+    let b:current_syntax=s:current_syntax
+  else
+    unlet b:current_syntax
+  endif
+
+  execute 'syntax region '.ft.'
+  \ matchgroup='.a:textSnipHl.'
+  \ start=/'.a:start.'/ end=/'.a:end.'/
+  \ keepend
+  \ contains=@'.group
+endfunction
+
+augroup mdSyntaxes
+    autocmd!
+    autocmd BufEnter *.md call TextEnableCodeSnip('php', '^```php', '^```', 'phpRegion')
+    autocmd BufEnter *.md call TextEnableCodeSnip('vue', '^```vue', '^```', 'jsRegion')
+    " autocmd BufEnter *.md call TextEnableCodeSnip('markdown', '```\[^php\]', '```php', 'markdown')
+augroup END
+" --- }}}
+
 " }}}
 
 " ===========================================================================
