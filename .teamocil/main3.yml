@@ -4,17 +4,13 @@ windows:
     root: ~/Sites/RoomRoster
     focus: true
     # layout: 23c9,274x75,0,0[274x63,0,0{177x63,0,0,1,96x63,178,0,2},274x11,0,64{221x11,0,64,3,52x11,222,64,4}]
-    # layout: 024f,274x76,0,0[274x64,0,0,1,274x11,0,65,3]
-    layout: f583,274x76,0,0[274x64,0,0{216x64,0,0,1,57x64,217,0[57x45,217,0,9,57x18,217,46,11]},274x11,0,65,2]
+    layout: 024f,274x76,0,0[274x64,0,0,1,274x11,0,65,3]
+    # layout: f583,274x76,0,0[274x64,0,0{216x64,0,0,1,57x64,217,0[57x45,217,0,9,57x18,217,46,11]},274x11,0,65,2]
     # layout: 
     panes:
       - commands: # 1 neovim
         - nvim
         focus: true
-      - commands: # 2 taskbook
-        - tasky
-      - commands: # 3 spotify
-        - splayer
       - commands: # 4 web
         - clear
   - name: ios

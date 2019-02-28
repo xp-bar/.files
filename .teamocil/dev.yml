@@ -1,0 +1,26 @@
+name: Dev
+windows:
+  - name: frontend
+    root: ~/projects/portfolio/portfolio.frontend
+    focus: true
+    layout: 5961,205x63,0,0[205x50,0,0,1,205x12,0,51{136x12,0,51,6,68x12,137,51,0}]
+    panes:
+      - commands: # 1 neovim
+        - nvim
+        focus: true
+      - commands:
+        - clear
+      - commands:
+        - nvm use 8
+        - npm run serve
+  - name: backend
+    root: ~/projects/portfolio/portfolio.backend
+    layout: 1186,205x63,0,0[205x55,0,0,7,205x7,0,56,10]
+    panes:
+      - commands:
+        - nvim
+        focus: true
+      - commands:
+        - clear
+  - name: repository
+    root: ~/projects/portfolio
