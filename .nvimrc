@@ -118,8 +118,9 @@ nnoremap <leader>x :q<cr>
 vnoremap <leader>x :q<cr>
 " }}}
 
+cnoreabbrev ww setl wrap!|setl lbr!
 
-cnoreabbrev ww setl wrap!
+nnoremap <silent><esc><esc> :set nopaste<cr>
 
 " Auto Commands
 " {{{
@@ -838,8 +839,8 @@ endfunction
 
 augroup mdSyntaxes
     autocmd!
-    autocmd BufEnter *.md call TextEnableCodeSnip('php', '^```php', '^```', 'phpRegion')
-    autocmd BufEnter *.md call TextEnableCodeSnip('vue', '^```vue', '^```', 'jsRegion')
+    " autocmd BufEnter *.md call TextEnableCodeSnip('php', '^```php', '^```', 'phpRegion')
+    " autocmd BufEnter *.md call TextEnableCodeSnip('vue', '^```vue', '^```', 'jsRegion')
     " autocmd BufEnter *.md call TextEnableCodeSnip('markdown', '```\[^php\]', '```php', 'markdown')
 augroup END
 " --- }}}

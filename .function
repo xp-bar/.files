@@ -1,4 +1,9 @@
 #!/bin/bash
+
+function brewfo() {
+    brew info `brew list | awk '{print $1}' | fzf`
+}
+
 function sim() {
     device=$(xcrun simctl list | grep -E '^[ ]{1,}' |  grep -v unavailable | sed 's:^[ ]*\(.\):\1:g' | sed 's:\()\) (.*$:\1:g' | fzf);
     if [[ $device == "" ]]; then
