@@ -43,7 +43,6 @@ set complete+=t
 " OSX stupid backspace fix
 set backspace=indent,eol,start
 
-
 " --- PHP Folding options --- {{{ 
 " convert '@return ReturnType' to ': ReturnType' in function preview if there is no return type specified in the function declaration
 let g:php_fold_return_comment_as_declaration=1
@@ -309,6 +308,12 @@ nmap <leader>0 <Plug>BufTabLine.Go(10)
 
 " --- }}}
 
+" --- Goyo --- {{{
+Plugin 'junegunn/goyo.vim'
+let g:goyo_width = 80
+nnoremap <silent><leader>y :Goyo<cr>
+" --- }}}
+
 " }}}
 
 " --- Editor Config --- {{{
@@ -357,10 +362,17 @@ function! FindTags(name, kinds)
 endfunction
 
 :autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
+function! Mapped(fn, l)
+    let new_list = deepcopy(a:l)
+    call map(new_list, string(a:fn) . '(v:val)')
+    return new_list
+endfunction
+
 function! s:FindClass(name)
   let qflist = []
   " for entry in FindTags('^'.a:name.'\>', ['c', 'class'])
-  for entry in FindTags('^'.a:name, ['c', 'class', 't', 'trait'])
+  for entry in FindTags('^'.a:name.'\>', ['c', 'class', 't', 'trait'])
     let filename = entry.filename
     let pattern  = substitute(entry.cmd, '^/\(.*\)/$', '\1', '')
 
@@ -376,8 +388,52 @@ function! s:FindClass(name)
     call setqflist(qflist)
     silent cfirst
   else
-    call setqflist(qflist)
-    botright copen
+
+  function! s:align_lists(lists)
+      let maxes = {}
+      for list in a:lists
+          let i = 0
+          while i < len(list)
+              let maxes[i] = max([get(maxes, i, 0), len(list[i])])
+              let i += 1
+          endwhile
+      endfor
+      for list in a:lists
+          call map(list, "printf('%-'.maxes[v:key].'s', v:val)")
+      endfor
+      return a:lists
+  endfunction
+
+
+    function! s:sink(line)
+        echom a:line
+        let l:split = split(a:line, " => ")
+        let l:file = l:split[1]
+        let l:search = substitute(l:split[0], '\', '\\\\\\\\', 'g')
+        let l:search = substitute(l:search, ' ', '\\ ', 'g')
+        let l:search = substitute(l:search, ' $', '', 'g')
+        echom "edit +/" . l:search . " " . l:file
+        exe "edit +/^.*" . l:search . " " .l:file
+    endfunction
+
+    " call setqflist(qflist)
+    " botright copen
+    "
+    function! s:stylizeTag(key, val, name)
+        let l:result = a:val['pattern']
+        let l:result = substitute(l:result, '^\^', '', '')
+        let l:result = substitute(l:result, '\$$', '', '')
+        let l:result = substitute(l:result, '\zs' . a:name . '\ze', "\e[4m\e[35m" . a:name . "\e[0m", '')
+        return result . " \e[30m => " .  a:val['filename'] . "\e[0m" 
+    endfunction
+
+    call fzf#run({
+        \ 'title': a:name,
+        \ 'options': "--ansi --preview='cat $(echo {} | sed \"s/^.*=>//g\") | grep namespace'",
+        \ 'source': map(qflist, {key, val -> s:stylizeTag(key, val, a:name)}),
+        \ 'sink': function('s:sink'),
+        \ 'down': '50%'
+        \ })
   endif
 endfunction
 " }}}
@@ -441,7 +497,7 @@ nmap ga <Plug>(EasyAlign)
 " Plugin 'ludovicchabant/vim-gutentags'
 
 " let g:gutentags_ctags_extra_args = [
-"             \ '--PHP-kinds=cft',
+"             \ '--PHP-kinds=cfmt',
 "             \ '--exclude="node_modules"',
 "             \ '--exclude="*.js"',
 "             \ '--exclude="*.blade.php"',
@@ -449,7 +505,7 @@ nmap ga <Plug>(EasyAlign)
 "             \ ]
 
 " augroup MyGutentagsStatusLineRefresher
-"     autocmd!
+    " autocmd!
 "     autocmd User GutentagsUpdating call lightline#update()
 "     autocmd User GutentagsUpdated call lightline#update()
 " augroup END
@@ -505,6 +561,41 @@ if executable('fzf')
   
     command! LaraViews FZF resources/views/
     command! LaraControllers FZF app/http/controllers/
+
+    function! s:file_tags_source()
+        return 'cat ' . join(tagfiles()) . " | grep " . expand("%:t") . " | awk 'match($5, /[fm]/)'"
+    endfunction
+
+    function! s:tags_source()
+        return 'cat ' . join(tagfiles()) . " | awk 'match($5, /[fm]/)'"
+    endfunction
+	
+	function! s:tag_handler(tag)
+	    if !empty(a:tag)
+	        let token = split(split(a:tag, '\t')[2],';"')[0]
+            echom token
+	        let m = &magic
+	        setlocal nomagic
+	        execute token
+	        if m
+	            setlocal magic
+	        endif
+	    endif
+	endfunction
+
+    command! FZFTagFile if !empty(tagfiles()) | call fzf#run({
+		\ 'source': s:file_tags_source(),
+		\ 'sink': function('<sid>tag_handler'),
+		\ 'options': '+m --with-nth=1',
+		\ 'down': '50%'
+		\ }) | else | echo 'No tags' | endif
+
+    command! FZFTags if !empty(tagfiles()) | call fzf#run({
+		\ 'source': s:tags_source(),
+		\ 'sink': function('<sid>tag_handler'),
+		\ 'options': '+m --with-nth=1',
+		\ 'down': '50%'
+		\ }) | else | echo 'No tags' | endif
 end
 " }}}
 
@@ -516,7 +607,23 @@ cnoreabbrev Ack Ack!
 " Finding Keybinds for Ack
 nnoremap <leader><C-f> :Ack!<Space>
 vnoremap <leader><C-f> y :Ack!<Space><C-r>"
-vnoremap <leader><S-f> y :%s/<C-r>"/
+" vnoremap <leader><S-f> "py :%s/<C-r>"/
+vnoremap <leader><S-f> :call VReplacer()<cr>
+nnoremap <leader><S-f> :call FReplacer()<cr>
+
+function! VReplacer() range
+    exe "normal gv\"py"
+    let l:replace = input("Replace what? ")
+    let l:replacement = input("Replace '" . l:replace . "' with: ")
+    exe a:firstline . "," . a:lastline . "s/\zs" . l:replace . "\ze/" . l:replacement . "/g"
+endfunction
+
+function! FReplacer() range
+    let l:replace = input("Replace what? ")
+    let l:replacement = input("Replace '" . l:replace . "' with: ")
+    exe "%s/\\zs" . l:replace . "\\ze/" . l:replacement . "/g"
+endfunction
+
 nnoremap <C-f> /
 vnoremap <C-f> y /<C-r>"
 " }}}
@@ -553,6 +660,8 @@ noremap <C-_> :Commentary<cr>
 
 " ---- PHP Namespace and Use Statement support in Vim ---- {{{
 Plugin 'arnaud-lb/vim-php-namespace'
+
+let g:php_namespace_sort_after_insert=1
 
 function! IPhpInsertUse()
     call PhpInsertUse()
@@ -636,7 +745,9 @@ Plugin 'Quramy/tsuquyomi-vue'
 
 augroup syntaxcommands
     autocmd!
-    autocmd FileType vue,css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType scss setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType sass setlocal omnifunc=csscomplete#CompleteCSS
     autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.css
     autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
     autocmd FileType vue syntax sync fromstart
@@ -779,33 +890,10 @@ nnoremap <silent> <C-[> :syn sync fromstart<cr>
 " unmap from emmet to use with splits
 unmap <leader>vg
 
-" Plugin 'jerrymarino/SwiftPlayground.vim'
-
-" augroup qQuit
-"     autocmd FileType diff nnoremap q :qa!<cr>
-"     autocmd FileType man nnoremap q :qa!<cr>
-" augroup END
-
-
-" autocmd VimEnter *
-            " \   if !argc()
-            " \ |   Startify
-            " \ |   NERDTree
-            " \ |   wincmd w
-            " \ | endif
-
-"
-" Plugin 'ryanoasis/vim-devicons'
-" let g:WebDevIconsOS='Darwin'
-" set guifont=DroidSansMono\ Nerd\ Font\ 11
-
 nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-" --- Goyo --- {{{
-Plugin 'junegunn/goyo.vim'
-nnoremap <silent><leader>y :Goyo 120<cr>
 
 function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
   let ft=toupper(a:filetype)
@@ -843,8 +931,6 @@ augroup mdSyntaxes
     " autocmd BufEnter *.md call TextEnableCodeSnip('vue', '^```vue', '^```', 'jsRegion')
     " autocmd BufEnter *.md call TextEnableCodeSnip('markdown', '```\[^php\]', '```php', 'markdown')
 augroup END
-" --- }}}
-
 " }}}
 
 " ===========================================================================
