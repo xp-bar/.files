@@ -92,7 +92,7 @@ nnoremap <silent><leader>en :split $MYVIMRC<cr>
 
 nnoremap <leader>w :w<cr>
 
-vnoremap <leader>s :sort<cr>
+vnoremap <leader>s :sort u<cr>
 
 " -- Buffers -- {{{
 " Nicer buffer closing {{{
