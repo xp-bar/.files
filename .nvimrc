@@ -732,7 +732,8 @@ augroup END
 " Javascript
 Plugin 'pangloss/vim-javascript'
 
-inoreabbrev console console.log();<Left><Left>
+inoreabbrev clog console.log();<Left><Left>
+inoreabbrev cgroup console.group();<cr><cr>console.log();<cr><cr>console.groupEnd();
 
 " Vue
 Plugin 'posva/vim-vue'
