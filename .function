@@ -103,7 +103,7 @@ function launch() {
 }
 
 st() {
-    if [[ $1 = *"--long"* || $1 = *"-l"* ]]; then
+    if [[ $1 = *"--long"* || $1 = *"-l"* || $1 = *"-v"* ]]; then
         git status;
         return 0;
     fi
