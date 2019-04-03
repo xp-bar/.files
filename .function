@@ -107,9 +107,19 @@ st() {
         git status;
         return 0;
     fi
+
+    git status > /dev/null 2>&1
+
+    if [[ $? != 0 ]]; then
+        echo "No git repo found.";
+        return 1;
+    fi
+
     local gstatus="`git -c color.status=always status --short`";
     if [[ $gstatus != "" ]];then 
         echo -e "`echo $gstatus | sed 's/^\(.*\) \(.*\)/\\\\e[90m\[\1\\\\e[90m\]\\\\e[0m \2/g' | sed 's/\(.* \)\(.*\/\)\(.*$\)/\1\\\\e[90m\2\\\\e[0m\3/g'`";
+    else
+        ls -a
     fi
 }
 
