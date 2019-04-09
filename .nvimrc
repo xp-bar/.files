@@ -343,12 +343,19 @@ vnoremap gb %
 " -- goto defintion in project -- {{{
 nnoremap <silent> <leader>gd :call GotoProjectDefinition()<CR>
 
+:autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
 function! GotoProjectDefinition()
-  normal viw"dy
-  let class = @d
-  call s:FindClass(class)
+    normal viw"dy
+    let name = @d
+    if match(name, "^[A-Z]")
+        call s:FindTagsOfTypeFZF(name, ['f', 'function'])
+    else
+        call s:FindTagsOfTypeFZF(name, ['c', 'class', 't', 'trait'])
+    endif
 endfunction
 
+" FindTags helper {{{
 function! FindTags(name, kinds)
   let tag_list = []
 
@@ -360,19 +367,20 @@ function! FindTags(name, kinds)
 
   return tag_list
 endfunction
+" }}}
 
-:autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
-
+" Mapped helper {{{
 function! Mapped(fn, l)
     let new_list = deepcopy(a:l)
     call map(new_list, string(a:fn) . '(v:val)')
     return new_list
 endfunction
+" }}}
 
-function! s:FindClass(name)
+" s:FindTagsOfTypeFZF {{{
+function! s:FindTagsOfTypeFZF(name, types)
   let qflist = []
-  " for entry in FindTags('^'.a:name.'\>', ['c', 'class'])
-  for entry in FindTags('^'.a:name.'\>', ['c', 'class', 't', 'trait'])
+  for entry in FindTags('^'.a:name.'\>', a:types)
     let filename = entry.filename
     let pattern  = substitute(entry.cmd, '^/\(.*\)/$', '\1', '')
 
@@ -383,59 +391,58 @@ function! s:FindClass(name)
   endfor
 
   if len(qflist) == 0
-    echohl Error | echo "Class not found in tags." | echohl NONE
+    echohl Error | echo "Class / Trait / Function not found in tags." | echohl NONE
   elseif len(qflist) == 1
     call setqflist(qflist)
     silent cfirst
   else
+      function! s:align_lists(lists)
+          let maxes = {}
+          for list in a:lists
+              let i = 0
+              while i < len(list)
+                  let maxes[i] = max([get(maxes, i, 0), len(list[i])])
+                  let i += 1
+              endwhile
+          endfor
+          for list in a:lists
+              call map(list, "printf('%-'.maxes[v:key].'s', v:val)")
+          endfor
+          return a:lists
+      endfunction
 
-  function! s:align_lists(lists)
-      let maxes = {}
-      for list in a:lists
-          let i = 0
-          while i < len(list)
-              let maxes[i] = max([get(maxes, i, 0), len(list[i])])
-              let i += 1
-          endwhile
-      endfor
-      for list in a:lists
-          call map(list, "printf('%-'.maxes[v:key].'s', v:val)")
-      endfor
-      return a:lists
-  endfunction
+      function! s:sink(line)
+          echom a:line
+          let l:split = split(a:line, " => ")
+          let l:file = l:split[1]
+          let l:search = substitute(l:split[0], '\', '\\\\\\\\', 'g')
+          let l:search = substitute(l:search, ' ', '\\ ', 'g')
+          let l:search = substitute(l:search, ' $', '', 'g')
+          echom "edit +/" . l:search . ".* " . l:file
+          exe "edit +/.*" . l:search . ".* " .l:file
+      endfunction
 
+      " call setqflist(qflist)
+      " botright copen
+      "
+      function! s:stylizeTag(key, val, name)
+          let l:result = a:val['pattern']
+          let l:result = substitute(l:result, '^\^', '', '')
+          let l:result = substitute(l:result, '\$$', '', '')
+          let l:result = substitute(l:result, '\zs' . a:name . '\ze', "\e[4m\e[35m" . a:name . "\e[0m", '')
+          return result . " \e[30m => " .  a:val['filename'] . "\e[0m" 
+      endfunction
 
-    function! s:sink(line)
-        echom a:line
-        let l:split = split(a:line, " => ")
-        let l:file = l:split[1]
-        let l:search = substitute(l:split[0], '\', '\\\\\\\\', 'g')
-        let l:search = substitute(l:search, ' ', '\\ ', 'g')
-        let l:search = substitute(l:search, ' $', '', 'g')
-        echom "edit +/" . l:search . " " . l:file
-        exe "edit +/^.*" . l:search . " " .l:file
-    endfunction
-
-    " call setqflist(qflist)
-    " botright copen
-    "
-    function! s:stylizeTag(key, val, name)
-        let l:result = a:val['pattern']
-        let l:result = substitute(l:result, '^\^', '', '')
-        let l:result = substitute(l:result, '\$$', '', '')
-        let l:result = substitute(l:result, '\zs' . a:name . '\ze', "\e[4m\e[35m" . a:name . "\e[0m", '')
-        return result . " \e[30m => " .  a:val['filename'] . "\e[0m" 
-    endfunction
-
-    call fzf#run({
-        \ 'title': a:name,
-        \ 'options': "--ansi --preview='cat $(echo {} | sed \"s/^.*=>//g\") | grep namespace'",
-        \ 'source': map(qflist, {key, val -> s:stylizeTag(key, val, a:name)}),
-        \ 'sink': function('s:sink'),
-        \ 'down': '50%'
-        \ })
+      call fzf#run({
+                  \ 'title': a:name,
+                  \ 'options': "--ansi --preview='cat $(echo {} | sed \"s/^.*=>//g\") | grep namespace'",
+                  \ 'source': map(qflist, {key, val -> s:stylizeTag(key, val, a:name)}),
+                  \ 'sink': function('s:sink'),
+                  \ 'down': '50%'
+                  \ })
   endif
 endfunction
+" }}}
 " }}}
 
 " Thanks @ian-paterson  https://github.com/ian-paterson
