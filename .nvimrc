@@ -342,6 +342,7 @@ vnoremap gb %
 
 " -- goto defintion in project -- {{{
 nnoremap <silent> <leader>gd :call GotoProjectDefinition()<CR>
+nnoremap <silent> <leader>gl :Lines<CR>
 
 :autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
