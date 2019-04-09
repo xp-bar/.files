@@ -352,7 +352,11 @@ function! GotoProjectDefinition()
     if match(name, "^[A-Z]")
         call s:FindTagsOfTypeFZF(name, ['f', 'function'])
     else
-        call s:FindTagsOfTypeFZF(name, ['c', 'class', 't', 'trait'])
+        if match(name, "^[A-Z][A-Z]")
+            call s:FindTagsOfTypeFZF(name, ['c', 'class', 't', 'trait', 'i', 'interface'])
+        else
+            call s:FindTagsOfTypeFZF(name, ['d'])
+        endif
     endif
 endfunction
 
@@ -413,13 +417,11 @@ function! s:FindTagsOfTypeFZF(name, types)
       endfunction
 
       function! s:sink(line)
-          echom a:line
           let l:split = split(a:line, " => ")
           let l:file = l:split[1]
           let l:search = substitute(l:split[0], '\', '\\\\\\\\', 'g')
           let l:search = substitute(l:search, ' ', '\\ ', 'g')
           let l:search = substitute(l:search, ' $', '', 'g')
-          echom "edit +/" . l:search . ".* " . l:file
           exe "edit +/.*" . l:search . ".* " .l:file
       endfunction
 
