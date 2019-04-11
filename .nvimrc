@@ -505,12 +505,12 @@ nmap ga <Plug>(EasyAlign)
 
 " Custom function to wrap a line in debugbar wrappers
 function! s:DebugBar(key)
-    normal O\DebugBar::startMeasure('REPLACE_ME', 'REPLACE_ME');jk
+    normal O\Debugbar::startMeasure('REPLACE_ME', 'REPLACE_ME');jk
     let replacement = a:key
     let line = getline('.')
     let result = substitute(line, "REPLACE_ME", replacement, "g")
     call setline('.', result)
-    normal jo\DebugBar::stopMeasure('REPLACE_ME');jk
+    normal jo\Debugbar::stopMeasure('REPLACE_ME');jk
     let line = getline('.')
     let result = substitute(line, "REPLACE_ME", replacement, "g")
     call setline('.', result)
