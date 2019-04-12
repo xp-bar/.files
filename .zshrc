@@ -51,7 +51,8 @@ fi
 
 # Set pagers {{{
 export PAGER="nvim -R"
-export MANPAGER="nvim -c 'set ft=man' -"
+# export MANPAGER="nvim -c 'set ft=man' -"
+export MANPAGER="nvim -c 'set ft=man' -c 'set ft=man.php' -"
 # }}}
 
 fpath=(~/.zsh.d/ $fpath)
