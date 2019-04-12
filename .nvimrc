@@ -116,6 +116,8 @@ vnoremap <leader>_ :sp<cr>
 nnoremap <leader>x :q<cr>
 vnoremap <leader>x :q<cr>
 " }}}
+"
+vnoremap <leader>a <esc>ggVG"*y
 
 cnoreabbrev ww setl wrap!|setl lbr!
 
