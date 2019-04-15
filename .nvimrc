@@ -480,9 +480,6 @@ endfunction
 
 " }}}
 
-" Dash Documentation plugin
-Plugin 'rizzatti/dash.vim'
-
 " Close all buffers except open one
 Plugin 'vim-scripts/BufOnly.vim'
 
@@ -567,6 +564,9 @@ vnoremap <silent> <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
 
 " Managing quotations, surrounding brackets, etc. Made easier
 Plugin 'tpope/vim-surround'
+
+" The missing motion - sneak
+Plugin 'justinmk/vim-sneak'
 
 " Should keep me in root dir for commands like fzf
 Plugin 'airblade/vim-rooter'
