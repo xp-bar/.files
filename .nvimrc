@@ -702,6 +702,12 @@ augroup phpImports
 augroup END
 " }}}
 
+
+
+" ---- Conquer of Completion {{{
+Plugin 'neoclide/coc.nvim'
+" ---- }}}
+
 " Add a namespace declaration - php {{{
 function! NameSpace()
     if (&ft=='php')
