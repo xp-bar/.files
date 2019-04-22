@@ -803,11 +803,20 @@ augroup END
 " Async Linter Engine for Vim, allows phpcs, eslint etc. -- {{{
 Plugin 'w0rp/ale'
 let g:ale_linters = {
-                    \ 'php': ['phpcs'],
+                    \ 'php': ['phpcs', 'phpstan'],
                     \ 'swift': ['swiftlint']
                     \ }
 let g:ale_php_phpcs_standard="XpBar"
 let g:ale_php_phpcs_use_global=1
+" }}}
+"
+" -- PHPStan -- {{{
+Plugin 'phpstan/vim-phpstan'
+
+function! Stanley()
+    let l:filename=@%
+    call phpstan#PHPStanAnalyse(l:filename)
+endfunction
 " }}}
 
 Plugin 'file:///Users/nireland/swift/apple/swift', 
