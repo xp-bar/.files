@@ -221,14 +221,22 @@ let g:startify_lists = [
         \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
         \ ]
 
-" let g:startify_custom_header = 
-"             \ map(split(system('fortune -s -n $[$(tput cols)/4] | toilet -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
+let g:startify_custom_header = 
+            \ map(split(system('fortune -s -n $[$(tput cols)/4] computers | toilet -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
 
-let g:startify_custom_footer = 
-        \ map(split(system('fortune | cowsay -W 80 -f tux'), '\n'), '"   ". v:val')
+let g:startify_custom_footer =
+        \ map(
+        \    split(
+        \        system(
+        \            'fortune -l computers | cowsay -W 80 -f tux'
+        \        ),
+        \        '\n'
+        \    ),
+        \    '"   ". v:val'
+        \ )
 
 " let g:startify_custom_footer = ""
-let g:startify_custom_header = ""
+" let g:startify_custom_header = ""
 
 nnoremap <leader><C-s> :Startify<cr>
 "  }}}
@@ -704,10 +712,6 @@ augroup END
 
 
 
-" ---- Conquer of Completion {{{
-Plugin 'neoclide/coc.nvim'
-" ---- }}}
-
 " Add a namespace declaration - php {{{
 function! NameSpace()
     if (&ft=='php')
@@ -806,25 +810,32 @@ autocmd!
 autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 augroup END
 
+
+" ---- Conquer of Completion {{{
+Plugin 'neoclide/coc.nvim'
+
+" Installation: 
+" run coc#util#install()
+" run :CocInstall coc-phpls
+" ---- }}}
+"
+" Plugin 'Shougo/deoplete.nvim'
+" let g:deoplete#enable_at_startup = 1
+
 " Async Linter Engine for Vim, allows phpcs, eslint etc. -- {{{
 Plugin 'w0rp/ale'
+                        " \ 'phpcs',
+                        " \ 'langserver'
+                    " \ 'php': ['phpcs'],
 let g:ale_linters = {
-                    \ 'php': ['phpcs', 'phpstan'],
+                    \ 'php': [],
                     \ 'swift': ['swiftlint']
                     \ }
-let g:ale_php_phpcs_standard="XpBar"
-let g:ale_php_phpcs_use_global=1
+
+" let g:ale_php_phpcs_standard="XpBar"
+" let g:ale_php_phpcs_use_global=1
 " }}}
 "
-" -- PHPStan -- {{{
-Plugin 'phpstan/vim-phpstan'
-
-function! Stanley()
-    let l:filename=@%
-    call phpstan#PHPStanAnalyse(l:filename)
-endfunction
-" }}}
-
 Plugin 'file:///Users/nireland/swift/apple/swift', 
             \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
 autocmd BufNewFile,BufRead *.swift set syntax=swift
