@@ -10,3 +10,6 @@
 [submodule "brewery"]
 	path = brewery
 	url = git@github.com:xp-bar/brewery
+[submodule "figlet-fonts"]
+	path = figlet-fonts
+	url = git@github.com:xero/figlet-fonts.git
