@@ -42,6 +42,12 @@ set tagcase=smart
 
 set complete+=t
 
+" Python 3 path for windows
+if has('unix') && (substitute(system('which brew'), "\n", "", "") != "")
+    let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'  " Python 3
+else
+endif
+
 " OSX stupid backspace fix
 set backspace=indent,eol,start
 
