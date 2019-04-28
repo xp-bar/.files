@@ -86,7 +86,8 @@ font:
     #   - (macOS) Menlo
     #   - (Linux) monospace
     #   - (Windows) Consolas
-      family: 'DSMNF'
+    # family: 'DSMNF'
+      family: 'DroidSansMonoNerdFontComplete N'
       style: 'Book'
 
   # Bold font face
