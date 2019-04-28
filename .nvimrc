@@ -2,6 +2,8 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 set rtp+=~/.config/nvim/bundle/Vundle.vim
+set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf " fzf windows
+
 call vundle#begin()
 
 " ===========================================================================
