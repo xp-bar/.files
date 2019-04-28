@@ -50,9 +50,16 @@ fi
 # }}}
 
 # Set pagers {{{
-export PAGER="nvim -R"
-# export MANPAGER="nvim -c 'set ft=man' -"
-export MANPAGER="nvim -c 'set ft=man' -c 'set ft=man.php' -"
+if [[ "$(uname 2> /dev/null)" != "Linux" ]]; then
+    # OSX
+    export PAGER="nvim -R"
+    export MANPAGER="nvim -c 'set ft=man' -"
+    # export MANPAGER="nvim -c 'set ft=man' -c 'set ft=man.php' -"
+else
+    # LINUX
+    export PAGER="less"
+    export MANPAGER="man"
+fi
 # }}}
 
 fpath=(~/.zsh.d/ $fpath)
