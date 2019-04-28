@@ -155,9 +155,9 @@ draw_bold_text_with_bright_colors: true
 # Colors (Tomorrow Night Bright)
 colors:
   # Default colors
-  primary:
-    background: '0x000000'
-    foreground: '0xeaeaea'
+  # primary:
+  #   background: '0x000000'
+  #   foreground: '0xeaeaea'
 
     # Bright and dim foreground colors
     #
@@ -176,26 +176,63 @@ colors:
   #  cursor: '0xffffff'
 
   # Normal colors
+  # normal:
+    # black:   '0x000000'
+    # red:     '0xd54e53'
+    # green:   '0xb9ca4a'
+    # yellow:  '0xe6c547'
+    # blue:    '0x7aa6da'
+    # magenta: '0xc397d8'
+    # cyan:    '0x70c0ba'
+    # white:   '0xeaeaea'
+
+  # # Bright colors
+  # bright:
+    # black:   '0x666666'
+    # red:     '0xff3334'
+    # green:   '0x9ec400'
+    # yellow:  '0xe7c547'
+    # blue:    '0x7aa6da'
+    # magenta: '0xb77ee0'
+    # cyan:    '0x54ced6'
+    # white:   '0xffffff'
+  # # Default colors
+  # primary:
+    # background: '0x282c34'
+    # foreground: '0xabb2bf'
+
+  # Default colors
+  primary:
+    background: '0x272c33'
+    foreground: '0xb9bfca'
+
+  # Normal colors
   normal:
-    black:   '0x000000'
-    red:     '0xd54e53'
-    green:   '0xb9ca4a'
-    yellow:  '0xe6c547'
-    blue:    '0x7aa6da'
-    magenta: '0xc397d8'
-    cyan:    '0x70c0ba'
-    white:   '0xeaeaea'
+    black:   '0x272c33'
+    # red:     '0xbe5046'
+    red:     '0xe78287'
+    # green:   '0x98c379'
+    green:   '0xa7cb8b'
+    # yellow:  '0xd19a66'
+    yellow:  '0xdaaa78'
+    # blue:    '0x61afef'
+    blue:    '0x71bdf2'
+    # magenta: '0xc678dd'
+    magenta: '0xd190e3'
+    # cyan:    '0x56b6c2'
+    cyan:    '0x65c1cd'
+    white:   '0xb9bfca'
 
   # Bright colors
   bright:
-    black:   '0x666666'
-    red:     '0xff3334'
-    green:   '0x9ec400'
-    yellow:  '0xe7c547'
-    blue:    '0x7aa6da'
-    magenta: '0xb77ee0'
-    cyan:    '0x54ced6'
-    white:   '0xffffff'
+    black:   '0x6f7683'
+    red:     '0xe78287'
+    green:   '0xa7cb8b'
+    yellow:  '0xdaaa78'
+    blue:    '0x71bdf2'
+    magenta: '0xd190e3'
+    cyan:    '0x65c1cd'
+    white:   '0xfefefe'
 
   # Dim colors
   #
