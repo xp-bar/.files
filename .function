@@ -295,7 +295,7 @@ function fclock() {
 
 function di() {
     if [[ $@ == "" ]]; then
-        git diff head
+        git diff HEAD
     else
         git diff $@
     fi
