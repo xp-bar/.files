@@ -335,7 +335,10 @@ live_config_reload: true
 #   - (Linux/macOS) /bin/bash --login
 #   - (Windows) powershell
 shell:
-        program: "C://Windows//System32//wsl.exe tmux attach || tmux new -s 'Main'"
+    program: "C://Windows//System32//wsl.exe tmux attach || tmux new -s 'Main'"
+    args: 
+        - -u # force UTF-8
+        
  # args:
 #   - tmux attach || tmux new -s "Main"
 
@@ -348,7 +351,7 @@ shell:
 #
 # Alacritty will fall back to the WinPTY automatically if the ConPTY
 # backend cannot be initialized.
-enable_experimental_conpty_backend: false
+enable_experimental_conpty_backend: true
 
 # Send ESC (\x1b) before characters when alt is pressed.
 alt_send_esc: true
@@ -462,7 +465,8 @@ key_bindings:
   - { key: Paste,                   action: Paste                        }
   - { key: Copy,                    action: Copy                         }
   - { key: L,        mods: Control, action: ClearLogNotice               }
-  - { key: L,        mods: Control, chars: "\x0c"                        }
+# - { key: L,        mods: Control, chars: "\x0c"                        }
+# - { key: H,        mods: Control, chars: "\x0c"                        }
   - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
   - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
   - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }
