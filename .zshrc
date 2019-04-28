@@ -58,7 +58,7 @@ if [[ "$(uname 2> /dev/null)" != "Linux" ]]; then
 else
     # LINUX
     export PAGER="less"
-    export MANPAGER="man"
+    export MANPAGER="less"
 fi
 # }}}
 
