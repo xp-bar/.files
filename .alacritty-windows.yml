@@ -373,10 +373,11 @@ live_config_reload: true
 #   - (Linux/macOS) /bin/bash --login
 #   - (Windows) powershell
 shell:
-    program: "C://Windows//System32//wsl.exe tmux attach || tmux new -s 'Main'"
-    args: 
-        - -u # force UTF-8
-        
+    program: "C://Windows//System32//wsl.exe tmux new-session"
+    args:
+        - -A
+        - -s 'Main'
+
  # args:
 #   - tmux attach || tmux new -s "Main"
 
