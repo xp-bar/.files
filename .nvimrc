@@ -128,7 +128,6 @@ vnoremap <leader>x :q<cr>
 vnoremap <leader>a <esc>ggVG"*y
 
 cnoreabbrev ww setl wrap!|setl lbr!
-cnoreabbrev <silent> where let @*=expand("%:p")
 
 nnoremap <silent><esc><esc> :set nopaste<cr>
 
