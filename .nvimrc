@@ -606,6 +606,8 @@ if executable('fzf')
   
     command! LaraViews FZF resources/views/
     command! LaraControllers FZF app/http/controllers/
+    command! Vendor FZF vendor/
+    command! Modules FZF node_modules/
 
     function! s:file_tags_source()
         return 'cat ' . join(tagfiles()) . " | grep " . expand("%:t") . " | awk 'match($5, /[fm]/)'"
