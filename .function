@@ -188,10 +188,43 @@ function af() {
     fi
 }
 
+function brlabel() {
+    local branch="$3"
+    local color="$2"
+    local label="$1"
+    case "$color" in
+        "red")
+           label="[\e[31m$label\e[0m]" 
+        ;;
+        "blue")
+           label="[\e[34m$label\e[0m]" 
+        ;;
+        "green")
+           label="[\e[32m$label\e[0m]" 
+        ;;
+        *)
+           label="[$label]" 
+        ;;
+    esac
+
+    if [[ $branch = "" ]]; then
+        branch="$(git symbolic-ref --short HEAD)"
+    fi
+
+    git config branch.$branch.label $label
+}
+
 function branches(){
-    echo -e "\n \e[31mBRANCHES:\e[0m";
-    git --no-pager branch | sed 's/[\*]*[ ]//g' | sed 's/^/ - /g' | grep -v $(git this);
-    echo "";
+    # echo -e "\n \e[31mBRANCHES:\e[0m";
+    local branches="$(git --no-pager branch |\
+        sed 's/[\*]*[ ]//g' |\
+        grep -v $(git this) |\
+        while read in; do
+            echo "$(git config branch.$in.label || echo "\e[90m[ ]\e[0m") $in";
+        done)"
+
+    echo "$branches"
+    # echo "";
 }
 
 function rh(){
