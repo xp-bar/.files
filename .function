@@ -202,6 +202,12 @@ function brlabel() {
         "green")
            label="[\e[32m$label\e[0m]" 
         ;;
+        "orange")
+           label="[\e[33m$label\e[0m]"
+        ;;
+        "magenta")
+           label="[\e[35m$label\e[0m]"
+        ;;
         *)
            label="[$label]" 
         ;;
