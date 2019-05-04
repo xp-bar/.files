@@ -2,7 +2,12 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 
 set rtp+=~/.config/nvim/bundle/Vundle.vim
-set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf " fzf windows
+
+if has('linux') && (substitute(system('which brew'), "\n", "", "") != "")
+    set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf " fzf unix
+else
+    set rtp+=/usr/local/opt/fzf " fzf mac
+endif
 
 call vundle#begin()
 
@@ -43,7 +48,7 @@ set tagcase=smart
 set complete+=t
 
 " Python 3 path for windows
-if has('unix') && (substitute(system('which brew'), "\n", "", "") != "")
+if has('linux') && (substitute(system('which brew'), "\n", "", "") != "")
     let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'  " Python 3
 else
 endif
@@ -605,6 +610,8 @@ if executable('fzf')
   
     command! LaraViews FZF resources/views/
     command! LaraControllers FZF app/http/controllers/
+    command! Vendor FZF vendor/
+    command! Modules FZF node_modules/
 
     function! s:file_tags_source()
         return 'cat ' . join(tagfiles()) . " | grep " . expand("%:t") . " | awk 'match($5, /[fm]/)'"
