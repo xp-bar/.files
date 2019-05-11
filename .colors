@@ -1,0 +1,12 @@
+export mono_1='#abb2bf' # #abb2bf
+export mono_2='#828997' # #828997
+export mono_3='#5c6370' # #5c6370
+export mono_4='#4b5263' # #4b5263
+export hue_1='#56b6c2' # cyan #56b6c2
+export hue_2='#61afef' # blue #61afef
+export hue_3='#c678dd' # purple #c678dd
+export hue_4='#98c379' # green #98c379
+export hue_5='#e06c75' # red 1 #e06c75
+export hue_5_2='#be5046' # red 2 #be5046
+export hue_6='#d19a66' # orange 1 #d19a66
+export hue_6_2='#e5c07b' # orange 2 #e5c07b
