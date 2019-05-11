@@ -10,11 +10,23 @@ su - $USERNAME
 sudo apt-get update && sudo apt-get upgrade
 sudo apt-get install build-essential curl file git
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)'>> ~/.profile
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew install gcc
-brew install fortune cowsay
 apt install zsh
+brew install fortune cowsay figlet toilet
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 curl -sL git.io/antibody | sh -s
 chsh -s /usr/bin/zsh xp-bar
+
+# packages
+brew install ack fzf nvim node composer nginx php thefuck
+pip3 install pynvim
+[[ -e $HOME/.config ]] || mkdir $HOME/.config
+[[ -e $HOME/.config/nvim ]] || mkdir $HOME/.config/nvim
+[[ -e $HOME/.config/nvim/autoload ]] || mkdir $HOME/.config/nvim/autoload
+[[ -e $HOME/.config/nvim/bundle ]] || mkdir $HOME/.config/nvim/bundle
+[[ -e $HOME/.config/nvim/colors ]] || mkdir $HOME/.config/nvim/colors
+[[ -e $HOME/.config/nvim/autoload/lightline ]] || mkdir $HOME/.config/nvim/autoload/lightline
+[[ -e $HOME/.config/nvim/autoload/lightline/colorscheme ]] || mkdir $HOME/.config/nvim/autoload/lightline/colorscheme
+
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
