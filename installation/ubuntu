@@ -14,3 +14,7 @@ echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)'>> ~/.profile
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew install gcc
 brew install fortune cowsay
+apt install zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+curl -sL git.io/antibody | sh -s
+chsh -s /usr/bin/zsh xp-bar
