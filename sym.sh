@@ -15,5 +15,7 @@ ln -sv $PWD/.zsh-plugins ~
 ln -sv $PWD/.zshrc ~
 ln -sv $PWD/.koolaid ~
 ln -sv $PWD/.teamocil ~
+ln -sv $PWD/vim-colors/two.vim ~/.config/nvim/colors/
+ln -sv $PWD/vim-colors/lightline/two.vim ~/.config/nvim/autoload/lightline/colorscheme/
 touch ~/.ignore
 touch ~/.env
