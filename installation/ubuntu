@@ -19,7 +19,8 @@ curl -sL git.io/antibody | sh -s
 chsh -s /usr/bin/zsh xp-bar
 
 # packages
-brew install ack fzf nvim node composer nginx php thefuck
+sudo apt-get install nginx
+brew install ack fzf nvim node composer php thefuck
 pip3 install pynvim
 [[ -e $HOME/.config ]] || mkdir $HOME/.config
 [[ -e $HOME/.config/nvim ]] || mkdir $HOME/.config/nvim
