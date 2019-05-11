@@ -11,7 +11,6 @@ ln -sv $PWD/.nvimrc ~/.vimrc
 ln -sv $PWD/.xvimrc ~
 ln -sv $PWD/.zle ~
 ln -sv $PWD/z/z.sh ~
-ln -sv $PWD/z/zsh.sh ~
 ln -sv $PWD/.zsh-plugins ~
 ln -sv $PWD/.zshrc ~
 ln -sv $PWD/.koolaid ~
