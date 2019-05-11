@@ -1,0 +1,16 @@
+#! /bin/sh
+if test "$USERNAME" = ""; then
+    echo "Run export USERNAME first!"
+    exit 1
+fi
+
+adduser $USERNAME
+usermod -aG sudo $USERNAME
+su - $USERNAME
+sudo apt-get update && sudo apt-get upgrade
+sudo apt-get install build-essential curl file git
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+echo 'eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)'>> ~/.profile
+eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+brew install gcc
+brew install fortune cowsay
