@@ -12,6 +12,7 @@ antibody bundle < ~/.zsh-plugins
 # aliases, functions, etc. {{{
 [[ -e ~/.env ]] && source ~/.env
 [[ -e ~/.path ]] && source ~/.path
+[[ -e ~/.colors ]] && source ~/.colors
 [[ -e ~/z.sh ]] && source ~/z.sh
 [[ -e ~/.alias ]] && source ~/.alias || echo "Aliases not loaded."
 [[ -e ~/.function ]] && source ~/.function || echo "Functions not loaded."
