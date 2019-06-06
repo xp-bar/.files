@@ -11,7 +11,7 @@
 [core]
 	editor = nvim
 	excludesfile = /Users/nireland/.gitignore
-	page = nvim -R -c 'set foldlevel=1000'
+	page = nvim -R
 [oh-my-zsh]
 	hide-status = 0
 	hide-dirty-status = 0
