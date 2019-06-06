@@ -16,7 +16,6 @@
 	hide-status = 0
 	hide-dirty-status = 0
 	hide-dirty = 0
-	hide-statu = 1
 [alias]
 	current = rev-parse --abbrev-ref HEAD
 	coubmit = commit
