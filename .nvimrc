@@ -126,8 +126,8 @@ nnoremap <leader>\| :vsp<cr>
 nnoremap <leader>_ :sp<cr>
 vnoremap <leader>\| :vsp<cr>
 vnoremap <leader>_ :sp<cr>
-nnoremap <leader>x :q<cr>
-vnoremap <leader>x :q<cr>
+" nnoremap <leader>x :q<cr>
+" vnoremap <leader>x :q<cr>
 " }}}
 "
 vnoremap <leader>a <esc>ggVG"*y
@@ -858,20 +858,21 @@ autocmd BufNewFile,BufRead *.swift set syntax=swift
 " xdebug for vim
 Plugin 'vim-vdebug/vdebug'
 let g:vdebug_options = {
-        \ 'break_on_open' : '1'
+        \ 'break_on_open' : '0',
+        \ 'ide_key': 'xdebug'
         \ }
 
 let g:vdebug_keymap = {
-    \ "run" : "<F5>",
-    \ "run_to_cursor" : "<F9>",
-    \ "step_over" : "<F2>",
-    \ "step_into" : "<F3>",
-    \ "step_out" : "<F4>",
-    \ "close" : "<F6>",
-    \ "detach" : "<F7>",
-    \ "set_breakpoint" : "<F10>",
+    \ "run" : "<Leader>xr",
+    \ "run_to_cursor" : "<Leader>xc",
+    \ "step_over" : "<Leader>xo",
+    \ "step_into" : "<Leader>xi",
+    \ "step_out" : "<Leader>xu",
+    \ "close" : "<Leader>xs",
+    \ "detach" : "<Leader>xd",
+    \ "set_breakpoint" : "<Leader>xb",
     \ "get_context" : "<F11>",
-    \ "eval_under_cursor" : "<F12>",
+    \ "eval_under_cursor" : "<Leader>xc",
     \ "eval_visual" : "<Leader>e",
     \ }
 
