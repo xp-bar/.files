@@ -15,9 +15,14 @@ function _in() {
     local args="${@:2}"
 
     (
+        local old_pwd="$PWD"
         z $1
 
         if [[ $@ = "" ]]; then
+            if [[ $PWD = $old_pwd ]]; then
+                return
+            fi
+
             read "dowhat?Do what? "
             args="$dowhat"
         fi
