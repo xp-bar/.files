@@ -230,8 +230,8 @@ let g:startify_bookmarks = [
         \ ]
 
 let g:startify_lists = [
-        \ { 'type': 'dir',       'header': ['   Most Recently Used in '. getcwd()] },
-        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+        \ { 'header': ['   Most Recently Used in '. getcwd()], 'type': 'dir' },
+        \ { 'header': ['   Bookmarks'], 'type': 'bookmarks' },
         \ ]
 
 let g:startify_custom_header = 
@@ -247,9 +247,6 @@ let g:startify_custom_footer =
         \    ),
         \    '"   ". v:val'
         \ )
-
-" let g:startify_custom_footer = ""
-" let g:startify_custom_header = ""
 
 nnoremap <leader><C-s> :Startify<cr>
 "  }}}
