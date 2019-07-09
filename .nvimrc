@@ -229,7 +229,17 @@ let g:startify_bookmarks = [
         \ {'p' : '~/.zsh-plugins'},
         \ ]
 
+function! s:changed_files()
+    let files = systemlist('git --no-pager diff --name-only')
+
+    return map(files, '{
+            \ "line": v:val,
+            \  "cmd": "edit ". v:val
+        \ }')
+endfunction
+
 let g:startify_lists = [
+        \ { 'header': ['   Changed Files in: ' . substitute(system('git rev-parse --abbrev-ref HEAD'), '\n', '', 'g')], 'type': function('s:changed_files') },
         \ { 'header': ['   Most Recently Used in '. getcwd()], 'type': 'dir' },
         \ { 'header': ['   Bookmarks'], 'type': 'bookmarks' },
         \ ]
