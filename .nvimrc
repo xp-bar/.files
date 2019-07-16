@@ -179,6 +179,28 @@ inoremap <esc> <nop>
 inoremap jk <esc>
 vnoremap jk <esc>
 
+function! s:session_list(ArgLead, CmdLine, CursorPos)
+    return systemlist('ls ~/vim-sessions/')
+endfunction
+
+function! s:session(...)
+    if (a:0 > 1)
+        let session = '~/vim-sessions/' . a:1
+        let do = a:2
+
+        if (do == "save")
+            exe 'mks!' session
+        elseif (do == "restore")
+            exe 'source' session
+        endif
+    else
+        let session = '~/vim-sessions/' . a:1
+        exe 'source' session
+    endif
+endfunction
+
+command! -nargs=* -complete=customlist,s:session_list Session call s:session(<f-args>)
+
 
 " Act like a typewriter
 " {{{
