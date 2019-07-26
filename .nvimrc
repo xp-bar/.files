@@ -856,8 +856,6 @@ let g:ale_linters = {
 " let g:ale_php_phpcs_use_global=1
 " }}}
 "
-Plugin 'file:///Users/nireland/swift/apple/swift', 
-            \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
 autocmd BufNewFile,BufRead *.swift set syntax=swift
 
 " xdebug for vim
