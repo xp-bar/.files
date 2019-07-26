@@ -218,8 +218,6 @@ set ttm=25
 Plugin 'mhinz/vim-startify'
 " Startify config
 let g:startify_bookmarks = [
-        \ {'i' : '~/swift/roomroster'},
-        \ {'r' : '~/Sites/RoomRoster'},
         \ {'~' : '~/'},
         \ {'a' : '~/.alias'},
         \ {'f' : '~/.function'},
