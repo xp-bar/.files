@@ -242,8 +242,10 @@ let g:startify_lists = [
         \ { 'header': ['   Bookmarks'], 'type': 'bookmarks' },
         \ ]
 
+let g:toilet_font_dir = "~/.files/figlet-fonts/"
+
 let g:startify_custom_header = 
-            \ map(split(system('fortune -s -n $[$(tput cols)/4] computers | toilet -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
+            \ map(split(system('fortune -s -n $[$(tput cols)/4] computers | toilet -d ' . g:toilet_font_dir . ' -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
 
 let g:startify_custom_footer =
         \ map(
