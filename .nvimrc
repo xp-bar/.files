@@ -126,8 +126,8 @@ nnoremap <leader>\| :vsp<cr>
 nnoremap <leader>_ :sp<cr>
 vnoremap <leader>\| :vsp<cr>
 vnoremap <leader>_ :sp<cr>
-nnoremap <leader>x :q<cr>
-vnoremap <leader>x :q<cr>
+" nnoremap <leader>x :q<cr>
+" vnoremap <leader>x :q<cr>
 " }}}
 "
 vnoremap <leader>a <esc>ggVG"*y
@@ -218,8 +218,6 @@ set ttm=25
 Plugin 'mhinz/vim-startify'
 " Startify config
 let g:startify_bookmarks = [
-        \ {'i' : '~/swift/roomroster'},
-        \ {'r' : '~/Sites/RoomRoster'},
         \ {'~' : '~/'},
         \ {'a' : '~/.alias'},
         \ {'f' : '~/.function'},
@@ -229,13 +227,25 @@ let g:startify_bookmarks = [
         \ {'p' : '~/.zsh-plugins'},
         \ ]
 
+function! s:changed_files()
+    let files = systemlist('git --no-pager diff --name-only')
+
+    return map(files, '{
+            \ "line": v:val,
+            \  "cmd": "edit ". v:val
+        \ }')
+endfunction
+
 let g:startify_lists = [
-        \ { 'type': 'dir',       'header': ['   Most Recently Used in '. getcwd()] },
-        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+        \ { 'header': ['   Changed Files in: ' . substitute(system('git rev-parse --abbrev-ref HEAD'), '\n', '', 'g')], 'type': function('s:changed_files') },
+        \ { 'header': ['   Most Recently Used in '. getcwd()], 'type': 'dir' },
+        \ { 'header': ['   Bookmarks'], 'type': 'bookmarks' },
         \ ]
 
+let g:toilet_font_dir = "~/.files/figlet-fonts/"
+
 let g:startify_custom_header = 
-            \ map(split(system('fortune -s -n $[$(tput cols)/4] computers | toilet -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
+            \ map(split(system('fortune -s -n $[$(tput cols)/4] computers | toilet -d ' . g:toilet_font_dir . ' -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
 
 let g:startify_custom_footer =
         \ map(
@@ -247,9 +257,6 @@ let g:startify_custom_footer =
         \    ),
         \    '"   ". v:val'
         \ )
-
-" let g:startify_custom_footer = ""
-" let g:startify_custom_header = ""
 
 nnoremap <leader><C-s> :Startify<cr>
 "  }}}
@@ -333,7 +340,7 @@ nmap <leader>0 <Plug>BufTabLine.Go(10)
 
 " --- Goyo --- {{{
 Plugin 'junegunn/goyo.vim'
-let g:goyo_width = 80
+let g:goyo_width = 120
 nnoremap <silent><leader>y :Goyo<cr>
 " --- }}}
 
@@ -851,27 +858,26 @@ let g:ale_linters = {
 " let g:ale_php_phpcs_use_global=1
 " }}}
 "
-Plugin 'file:///Users/nireland/swift/apple/swift', 
-            \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
 autocmd BufNewFile,BufRead *.swift set syntax=swift
 
 " xdebug for vim
 Plugin 'vim-vdebug/vdebug'
 let g:vdebug_options = {
-        \ 'break_on_open' : '1'
+        \ 'break_on_open' : '0',
+        \ 'ide_key': 'xdebug'
         \ }
 
 let g:vdebug_keymap = {
-    \ "run" : "<F5>",
-    \ "run_to_cursor" : "<F9>",
-    \ "step_over" : "<F2>",
-    \ "step_into" : "<F3>",
-    \ "step_out" : "<F4>",
-    \ "close" : "<F6>",
-    \ "detach" : "<F7>",
-    \ "set_breakpoint" : "<F10>",
+    \ "run" : "<Leader>xr",
+    \ "run_to_cursor" : "<Leader>xc",
+    \ "step_over" : "<Leader>xo",
+    \ "step_into" : "<Leader>xi",
+    \ "step_out" : "<Leader>xu",
+    \ "close" : "<Leader>xs",
+    \ "detach" : "<Leader>xd",
+    \ "set_breakpoint" : "<Leader>xb",
     \ "get_context" : "<F11>",
-    \ "eval_under_cursor" : "<F12>",
+    \ "eval_under_cursor" : "<Leader>xc",
     \ "eval_visual" : "<Leader>e",
     \ }
 

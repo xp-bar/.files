@@ -18,6 +18,7 @@ antibody bundle < ~/.zsh-plugins
 [[ -e ~/.function ]] && source ~/.function || echo "Functions not loaded."
 [[ -e ~/.ignore ]] && source ~/.ignore
 [[ -e ~/.extra-aliases ]] && source ~/.extra-aliases
+[[ -e ~/scripts/.script-source ]] && source ~/scripts/.script-source
 # }}}
 
 # vim bindings {{{

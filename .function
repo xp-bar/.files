@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 function brewfo() {
     brew info `brew list | awk '{print $1}' | fzf`
@@ -288,7 +288,12 @@ function isdown(){
 }
 
 fvim(){
-    nvim $(ack -f | fzf --preview "cat {}")
+    local search=$1
+    if [[ $search = "" ]]; then
+        nvim $(ack -f | fzf --preview "cat {}")
+    else
+        nvim $(ack -f | grep $search | fzf --preview "cat {}")
+    fi
 }
 
 # fda - including hidden directories
@@ -1121,6 +1126,13 @@ function icat() {
     else
         imgcat -w $width --256 -H $1 | cat
     fi
+}
+
+function csslook() {
+    local file=$1
+    local lookup="$(ack ^[\\.#].*$ $file | fzf)"
+
+    sed -n "/^$(echo $lookup | sed 's:\\.:\\\\.:g')$/,/\}/p" $file
 }
 
 unalias z 2> /dev/null

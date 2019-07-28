@@ -1,0 +1,38 @@
+[user]
+	email = nick@nicholasireland.ca
+	name = Nicholas Ireland
+[color]
+	ui = true
+	pager = no
+	mergetool = no
+[hub]
+	protocol = ssh
+	token = 9085e229c8cb95af76b1b6224e4aa9c129f5a39c
+[core]
+	editor = nvim
+	excludesfile = /Users/nireland/.gitignore
+	page = nvim -R
+[oh-my-zsh]
+	hide-status = 0
+	hide-dirty-status = 0
+	hide-dirty = 0
+[alias]
+	current = rev-parse --abbrev-ref HEAD
+	coubmit = commit
+	glad = add .
+	groceries = checkout
+	groceries-from = checkout
+	this = rev-parse --abbrev-ref HEAD
+	skip = update-index --skip-worktree
+	noskip = update-index --no-skip-worktree
+	head = rev-parse HEAD
+	cdate = !git --no-pager show -s --format=%ci
+[mergetool "fugitive"]
+	cmd = nvim -f \"$MERGED\"
+[merge]
+	tool = fugitive
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
