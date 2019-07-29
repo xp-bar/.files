@@ -951,8 +951,10 @@ set noshowmode
 let g:lightline = {
       \ 'colorscheme': 'two',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \   'left': [
+      \       [ 'mode', 'paste' ],
+      \       [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+      \   ]
       \ },
       \ 'inactive': {
       \   'left': [ [ 'mode', 'paste' ] ]
