@@ -249,6 +249,7 @@ let g:startify_bookmarks = [
         \ {'t' : '~/.tmux.conf'},
         \ {'z' : '~/.zshrc'},
         \ {'p' : '~/.zsh-plugins'},
+        \ {'.' : '.git/hooks/'},
         \ ]
 
 function! s:changed_files()
