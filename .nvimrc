@@ -116,10 +116,12 @@ Plugin 'moll/vim-bbye'
 nnoremap <leader>q :Bdelete<cr>
 " }}}
 " Buffer switching {{{
-nnoremap <leader>j :bnext<cr>
-nnoremap <leader>k :bprev<cr>
 nnoremap <silent> <S-j> :bnext<cr>
 nnoremap <silent> <S-k> :bprev<cr>
+" }}}
+" Tab switching {{{
+nnoremap <silent> <leader>j :tabnext<cr>
+nnoremap <silent> <leader>k :tabprev<cr>
 " }}}
 " -- }}}
 
