@@ -28,10 +28,10 @@ Plugin 'VundleVim/Vundle.vim'
 
 " ---- Native Options ---- {{{
 set number numberwidth=4
-set shiftwidth=4  " operation >> indents 2 columns; << unindents 2 columns
-set tabstop=4     " a hard TAB displays as 2 columns
+set shiftwidth=4  " operation >> indents 4 columns; << unindents 4 columns
+set tabstop=4     " a hard TAB displays as 4 columns
 set expandtab     " insert spaces when hitting TABs
-set softtabstop=4 " insert/delete 2 spaces when hitting a TAB/BACKSPACE
+set softtabstop=4 " insert/delete 4 spaces when hitting a TAB/BACKSPACE
 set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
 " set smartindent
@@ -92,7 +92,9 @@ autocmd filetype crontab setlocal nobackup nowritebackup
 
 " --- General Settings --- {{{
 
+" -- General Mappings -- {{{
 map <Space> <leader>
+" -- }}}
 
 " Clear highlight after search
 nnoremap <silent><cr> :noh<CR><CR>:<backspace>
@@ -120,15 +122,12 @@ nnoremap <silent> <S-k> :bprev<cr>
 " }}}
 " -- }}}
 
-" Splits
-" {{{
+" -- Splits -- {{{
 nnoremap <leader>\| :vsp<cr>
 nnoremap <leader>_ :sp<cr>
 vnoremap <leader>\| :vsp<cr>
 vnoremap <leader>_ :sp<cr>
-" nnoremap <leader>x :q<cr>
-" vnoremap <leader>x :q<cr>
-" }}}
+" -- }}}
 "
 vnoremap <leader>a <esc>ggVG"*y
 
@@ -136,8 +135,7 @@ cnoreabbrev ww setl wrap!|setl lbr!
 
 nnoremap <silent><esc><esc> :set nopaste<cr>
 
-" Auto Commands
-" {{{
+" -- Auto Commands -- {{{
 augroup buffercmds 
     autocmd!
     " Auto allow folds in vimrc file
@@ -200,7 +198,6 @@ function! s:session(...)
 endfunction
 
 command! -nargs=* -complete=customlist,s:session_list Session call s:session(<f-args>)
-
 
 " Act like a typewriter
 " {{{
