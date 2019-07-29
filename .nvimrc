@@ -254,6 +254,9 @@ let g:startify_bookmarks = [
 
 function! s:changed_files()
     let files = systemlist('git --no-pager diff --name-only')
+    if v:shell_error != 0
+        return []
+    endif
 
     return map(files, '{
             \ "line": v:val,
