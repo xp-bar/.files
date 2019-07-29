@@ -240,8 +240,6 @@ set ttm=25
 Plugin 'mhinz/vim-startify'
 " Startify config
 let g:startify_bookmarks = [
-        \ {'i' : '~/swift/roomroster'},
-        \ {'r' : '~/Sites/RoomRoster'},
         \ {'~' : '~/'},
         \ {'a' : '~/.alias'},
         \ {'f' : '~/.function'},
@@ -270,8 +268,10 @@ let g:startify_lists = [
         \ { 'header': ['   Bookmarks'], 'type': 'bookmarks' },
         \ ]
 
+let g:toilet_font_dir = "~/.files/figlet-fonts/"
+
 let g:startify_custom_header = 
-            \ map(split(system('fortune -s -n $[$(tput cols)/4] computers | toilet -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
+            \ map(split(system('fortune -s -n $[$(tput cols)/4] computers | toilet -d ' . g:toilet_font_dir . ' -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
 
 let g:startify_custom_footer =
         \ map(
@@ -915,8 +915,6 @@ let g:ale_linters = {
 " let g:ale_php_phpcs_use_global=1
 " }}}
 "
-Plugin 'file:///Users/nireland/swift/apple/swift', 
-            \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
 autocmd BufNewFile,BufRead *.swift set syntax=swift
 
 " xdebug for vim
