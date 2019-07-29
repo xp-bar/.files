@@ -34,17 +34,13 @@ set expandtab     " insert spaces when hitting TABs
 set softtabstop=4 " insert/delete 4 spaces when hitting a TAB/BACKSPACE
 set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
-" set smartindent
 set conceallevel=0
-" set ignorecase
 set smartcase
 set mousefocus
 set mouse=a
 set hidden
-" set shell=/usr/local/bin/zsh\ -i
 set shell=zsh
 set tagcase=smart
-
 set complete+=t
 
 " Python 3 path for windows
@@ -115,10 +111,12 @@ vnoremap <leader>s :sort<cr>
 Plugin 'moll/vim-bbye'
 nnoremap <leader>q :Bdelete<cr>
 " }}}
+
 " Buffer switching {{{
 nnoremap <silent> <S-j> :bnext<cr>
 nnoremap <silent> <S-k> :bprev<cr>
 " }}}
+
 " Tab switching {{{
 nnoremap <silent> <leader>j :tabnext<cr>
 nnoremap <silent> <leader>k :tabprev<cr>
