@@ -13,3 +13,6 @@
 [submodule "figlet-fonts"]
 	path = figlet-fonts
 	url = git@github.com:xero/figlet-fonts.git
+[submodule "vim/ftplugin/php"]
+	path = vim/ftplugin/php
+	url = https://github.com/xp-bar/vim-php-folding
