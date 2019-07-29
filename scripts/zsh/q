@@ -1,0 +1,21 @@
+#! /bin/zsh
+
+function _q() {
+    if [[ $(type mycli > /dev/null; echo $?) = 1 ]]; then
+        echo "Sorry, mycli is not installed."
+        return 1
+    fi
+
+    local args="${@:2}"
+    local database="$1"
+
+    $(which mycli) -u root -h 127.0.0.1 -D $database -e $args
+}
+
+if [[ $ZSH_EVAL_CONTEXT != 'toplevel' ]]; then
+    # we're sourcing the file, make an alias
+    alias q="noglob _q"
+else
+    echo "Sorry, this must be aliased with noglob to work properly, and thus can't be run directly"
+    return 1
+fi
