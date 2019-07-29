@@ -532,6 +532,32 @@ function! GoToVue()
 endfunction
 " }}}
 
+function! s:blade_list(ArgLead, CmdLine, CursorPos)
+    let current_path = a:ArgLead
+    let flist = systemlist('ls -GHd ' . current_path . '*/')
+
+    if v:shell_error != 0
+        return []
+    endif
+
+    return flist
+endfunction
+
+function! s:blade_files(...)
+    let path = ""
+
+    if (a:0 == 1)
+        let path = a:1
+    endif
+
+    call fzf#run({
+        \ 'source': 'ack --blade -f ' . path,
+        \ 'sink': 'e',
+        \ 'down': '40%'
+        \ })
+endfunction
+
+command! -nargs=* -complete=customlist,s:blade_list Blade call s:blade_files(<f-args>)
 " }}}
 
 " Close all buffers except open one
