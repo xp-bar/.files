@@ -599,6 +599,11 @@ endfunction
 command! -nargs=1 DebugBar call s:DebugBar(<f-args>)
 
 " ---- Tag Manager ---- {{{
+function! s:Retag()
+    call system('retag')
+endfunction
+
+command! Retag call s:Retag()
 " Plugin 'ludovicchabant/vim-gutentags'
 
 " let g:gutentags_ctags_extra_args = [
