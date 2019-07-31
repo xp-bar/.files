@@ -178,6 +178,8 @@ inoremap <esc> <nop>
 inoremap jk <esc>
 vnoremap jk <esc>
 
+let g:sessions_dir = '~/vim-sessions/'
+
 function! s:session_list(ArgLead, CmdLine, CursorPos)
     if (a:CmdLine =~ " .* ")
         return [
@@ -185,13 +187,13 @@ function! s:session_list(ArgLead, CmdLine, CursorPos)
             \ "restore"
             \ ]
     else
-        return systemlist('ls ~/vim-sessions/')
+        return systemlist('ls ' . g:sessions_dir)
     endif
 endfunction
 
 function! s:session(...)
     if (a:0 > 1)
-        let session = '~/vim-sessions/' . a:1
+        let session = g:sessions_dir . a:1
         let do = a:2
 
         if (do == "save")
