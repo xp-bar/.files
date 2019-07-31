@@ -179,7 +179,14 @@ inoremap jk <esc>
 vnoremap jk <esc>
 
 function! s:session_list(ArgLead, CmdLine, CursorPos)
-    return systemlist('ls ~/vim-sessions/')
+    if (a:CmdLine =~ " .* ")
+        return [
+            \ "save",
+            \ "restore"
+            \ ]
+    else
+        return systemlist('ls ~/vim-sessions/')
+    endif
 endfunction
 
 function! s:session(...)
