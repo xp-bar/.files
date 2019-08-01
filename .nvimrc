@@ -91,6 +91,10 @@ autocmd filetype crontab setlocal nobackup nowritebackup
 
 " -- General Mappings -- {{{
 map <Space> <leader>
+
+vnoremap <silent> a- <esc>:setl nohlsearch<cr>?[^a-z-]<cr>:normal! ebmk<cr>/[^a-z-]<cr>:normal! beml<cr>:setl hlsearch \| noh<cr>`kv`l
+omap <silent> a- :normal Va-<cr>
+
 " -- }}}
 
 " Clear highlight after search
