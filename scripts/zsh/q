@@ -6,8 +6,8 @@ function _q() {
         return 1
     fi
 
-    local args="${@:2}"
-    local database="$1"
+    local args="${@:1}"
+    local database="$Q_DATABASE_DB"
 
     $(which mycli) -u root -h 127.0.0.1 -D $database -e $args
 }
