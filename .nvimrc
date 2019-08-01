@@ -42,6 +42,10 @@ set hidden
 set shell=zsh
 set tagcase=smart
 set complete+=t
+set foldmethod=marker
+set foldlevel=0
+set nowrap
+set colorcolumn=120
 
 " Python 3 path for windows
 if has('linux') && (substitute(system('which brew'), "\n", "", "") != "")
@@ -80,10 +84,6 @@ augroup autoreload
     autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 augroup END
-
-set foldmethod=marker
-set foldlevel=0
-set nowrap
 autocmd filetype crontab setlocal nobackup nowritebackup
 " --- }}}
 
