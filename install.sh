@@ -16,10 +16,6 @@ brew tap gwerbin/tap
 brew cask install gwerbin/tap/sqlcheck
 # }}}
 
-# -- Go installation -- {{{
-brew install go
-# -- }}}
-
 # -- homebrew installations -- {{{
 brew install ack
 brew install antibody
@@ -32,18 +28,15 @@ brew install coreutils
 brew install dep
 brew install fd
 brew install figlet
-brew install fish
 brew install fortune
 brew install fswatch
 brew install fzf
 brew install gnupg
-brew install googler
-brew install howdoi
+brew install go
 brew install httpie
 brew install hub
 brew install irssi
 brew install jq
-brew install libsodium
 brew install lynx
 brew install mycli
 brew install mysql
@@ -66,14 +59,12 @@ brew install rlwrap
 brew install rtv
 brew install screenfetch
 brew install shpotify
-brew install swiftlint
-brew install task
 brew install telnet
 brew install thefuck
 brew install tmux
 brew install toilet
 brew install tree
-brew install universal-ctags/universal-ctags/universal-ctags
+brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 brew install vim
 brew install wp-cli
 brew install zsh
@@ -89,15 +80,13 @@ brew install gotop
 brew cask install spotify
 brew cask install vivaldi
 brew cask install sequelpro
-brew cask install iterm2
 brew cask install keepassx@0.4.4 
+brew cask install figma
 # -- }}}
 
 # -- npm installations -- {{{
 npm i -g nvm
 npm i -g avn avn-n avn-nvm
-npm i -g fb-messenger-cli
-npm i -g taskbook
 npm i -g vue-cli
 # -- }}}
 
@@ -115,10 +104,15 @@ rm -rf fonts
 composer global require larvel/valet
 valet install
 valet domain localhost
-valet start
+valet restart
 # -- }}}
 
 # -- python installs -- {{{
+# get pip {{{
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py
+# }}}
+
 pip install httpie
 pip install http-prompt
 # -- }}}
