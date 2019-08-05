@@ -48,7 +48,7 @@ set nowrap
 set colorcolumn=120
 
 " Python 3 path for windows
-if has('linux') && (substitute(system('which brew'), "\n", "", "") != "")
+if (has('linux') || has('unix')) && (substitute(system('which brew'), "\n", "", "") != "")
     let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'  " Python 3
 else
     let g:python3_host_prog = '/usr/local/bin/python3'  " Python 3
