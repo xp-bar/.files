@@ -16,3 +16,6 @@
 [submodule "vim/ftplugin/php"]
 	path = vim/ftplugin/php
 	url = https://github.com/xp-bar/vim-php-folding
+[submodule "vim/packs/neovim-xp"]
+	path = vim/packs/neovim-xp
+	url = https://github.com/xp-bar/neovim-xp
