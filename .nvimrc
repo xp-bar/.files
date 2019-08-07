@@ -182,8 +182,12 @@ inoremap <esc> <nop>
 inoremap jk <esc>
 vnoremap jk <esc>
 
+" Custom Pack stuff  --- {{{
+packadd! xp-session
 let g:sessions_dir = '~/vim-sessions/'
-packadd! session
+
+packadd! xp-where
+" --- }}}
 
 " Act like a typewriter
 " {{{
@@ -268,6 +272,7 @@ let g:startify_custom_footer =
         \ )
 
 nnoremap <leader><C-s> :Startify<cr>
+
 "  }}}
 
 function! s:changed_files_complete(ArgLead, CmdLine, CursorPos)
