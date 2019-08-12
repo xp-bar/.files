@@ -1135,6 +1135,73 @@ function csslook() {
     sed -n "/^$(echo $lookup | sed 's:\\.:\\\\.:g')$/,/\}/p" $file
 }
 
+function rgo() {
+    if [[ $(php artisan > /dev/null; echo $?) != 0 ]]; then
+        echo "Sorry, artisan not found.";
+        return 1;
+    fi
+
+    if [[ $* = *"--rebuild"* ]]; then
+        if [[ -e $RGO_CACHE_DIR/.cache ]]; then
+            echo "" > $RGO_CACHE_DIR/.cache;
+        else
+            touch $RGO_CACHE_DIR/.cache;
+        fi
+    fi
+
+    local url=""
+
+    if [[ $RGO_CACHE_DIR = "" ]]; then
+        echo "no cache dir"
+        return 1;
+    fi
+
+    if [[ -e $RGO_CACHE_DIR/.cache && $(cat $RGO_CACHE_DIR/.cache) != "" ]]; then
+        url="$(cat $RGO_CACHE_DIR/.cache)";
+    else
+        echo "Building...";
+        url="$(\
+            php artisan route:list \
+                | grep GET\|HEAD \
+                | sed 's:[ ]|[ ]: # :g' \
+                | sed 's:|$:#:g' \
+                | sed 's:^|:#:g' \
+                | awk -F '#' '{print $4}' \
+                | sed 's:^[ ]*::g' \
+                | sed 's:[ ]*$::g' \
+                | sed 's:}::g' \
+                | sed 's/{/:/g' \
+            )";
+        touch $RGO_CACHE_DIR/.cache;
+        echo "$url" > $RGO_CACHE_DIR/.cache;
+    fi
+
+    url=$(echo "$url" | fzf)
+
+    local fill_ins="$(\
+        echo $url | \grep -o ':[a-z\-_]*[\/]*' \
+            | sed 's:\/::g' \
+            | sed 's/://g' \
+        )"
+
+    if [[ $fill_ins != "" ]]; then
+        while read in; do
+            printf "Replace '$in' with:\n"
+            read -u 1 "resp?"
+            url="$(echo $url | sed "s/:$in/$resp/g")"
+        done <<< $fill_ins
+    fi
+
+    if [[ $url != "" ]]; then
+        url="$(echo "$url" | sed 's:^/::g')"
+        local full_url="$RGO_BASE_URL/$url"
+        echo -e "\e[34mOpening: $full_url"
+        /usr/bin/open $full_url
+    else
+        echo "Sorry, that url didn't work."
+    fi
+}
+
 unalias z 2> /dev/null
 z() {
   [ $# -gt 0 ] && _z "$*" && return
