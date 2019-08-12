@@ -405,110 +405,11 @@ vnoremap > >gv
 nnoremap gb %
 vnoremap gb %
 
-" -- goto defintion in project -- {{{
-nnoremap <silent> <leader>gd :call GotoProjectDefinition()<CR>
-nnoremap <silent> <leader>gl :Lines<CR>
-
-:autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
-
-function! GotoProjectDefinition()
-    normal viw"dy
-    let name = @d
-    if match(name, "^[A-Z]")
-        call s:FindTagsOfTypeFZF(name, ['f', 'function'])
-    else
-        if match(name, "^[A-Z][A-Z]")
-            call s:FindTagsOfTypeFZF(name, ['c', 'class', 't', 'trait', 'i', 'interface'])
-        else
-            call s:FindTagsOfTypeFZF(name, ['d'])
-        endif
-    endif
-endfunction
-
-" FindTags helper {{{
-function! FindTags(name, kinds)
-  let tag_list = []
-
-  for entry in taglist(a:name)
-    if index(a:kinds, entry.kind) > -1
-      call add(tag_list, entry)
-    endif
-  endfor
-
-  return tag_list
-endfunction
-" }}}
-
 " Mapped helper {{{
 function! Mapped(fn, l)
     let new_list = deepcopy(a:l)
     call map(new_list, string(a:fn) . '(v:val)')
     return new_list
-endfunction
-" }}}
-
-" s:FindTagsOfTypeFZF {{{
-function! s:FindTagsOfTypeFZF(name, types)
-  let qflist = []
-  for entry in FindTags('^'.a:name.'\>', a:types)
-    let filename = entry.filename
-    let pattern  = substitute(entry.cmd, '^/\(.*\)/$', '\1', '')
-
-    call add(qflist, {
-          \ 'filename': filename,
-          \ 'pattern':  pattern,
-          \ })
-  endfor
-
-  if len(qflist) == 0
-    echohl Error | echo "Class / Trait / Function not found in tags." | echohl NONE
-  elseif len(qflist) == 1
-    call setqflist(qflist)
-    silent cfirst
-  else
-      function! s:align_lists(lists)
-          let maxes = {}
-          for list in a:lists
-              let i = 0
-              while i < len(list)
-                  let maxes[i] = max([get(maxes, i, 0), len(list[i])])
-                  let i += 1
-              endwhile
-          endfor
-          for list in a:lists
-              call map(list, "printf('%-'.maxes[v:key].'s', v:val)")
-          endfor
-          return a:lists
-      endfunction
-
-      function! s:sink(line)
-          let l:split = split(a:line, " => ")
-          let l:file = l:split[1]
-          let l:search = substitute(l:split[0], '\', '\\\\\\\\', 'g')
-          let l:search = substitute(l:search, ' ', '\\ ', 'g')
-          let l:search = substitute(l:search, ' $', '', 'g')
-          exe "edit +/.*" . l:search . ".* " .l:file
-      endfunction
-
-      " call setqflist(qflist)
-      " botright copen
-      "
-      function! s:stylizeTag(key, val, name)
-          let l:result = a:val['pattern']
-          let l:result = substitute(l:result, '^\^', '', '')
-          let l:result = substitute(l:result, '\$$', '', '')
-          let l:result = substitute(l:result, '\zs' . a:name . '\ze', "\e[4m\e[35m" . a:name . "\e[0m", '')
-          return result . " \e[30m => " .  a:val['filename'] . "\e[0m" 
-      endfunction
-
-      call fzf#run({
-                  \ 'title': a:name,
-                  \ 'options': "--ansi --preview='cat $(echo {} | sed \"s/^.*=>//g\") | grep namespace'",
-                  \ 'source': map(qflist, {key, val -> s:stylizeTag(key, val, a:name)}),
-                  \ 'sink': function('s:sink'),
-                  \ 'down': '50%'
-                  \ })
-  endif
 endfunction
 " }}}
 " }}}
@@ -902,28 +803,147 @@ augroup END
 " ---- Conquer of Completion {{{
 Plugin 'neoclide/coc.nvim'
 
+" Remap keys for gotos
+nmap <silent> <leader>gd <Plug>(coc-definition)
+" nmap <silent> <leader>gy <Plug>(coc-type-definition)
+" nmap <silent> <leader>gi <Plug>(coc-implementation)
+nmap <silent> <leader>gr <Plug>(coc-references)
+
+nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocAction('doHover')
+    endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
 " Installation: 
 " run coc#util#install()
 " run :CocInstall coc-phpls
 " ---- }}}
-"
-" Plugin 'Shougo/deoplete.nvim'
-" let g:deoplete#enable_at_startup = 1
+
+" -- goto defintion in project -- {{{
+nnoremap <silent> <leader>gt :call GotoProjectDefinition()<CR>
+nnoremap <silent> <leader>gl :Lines<CR>
+
+" FindTags helper {{{
+function! FindTags(name, kinds)
+  let tag_list = []
+
+  for entry in taglist(a:name)
+    if index(a:kinds, entry.kind) > -1
+      call add(tag_list, entry)
+    endif
+  endfor
+
+  return tag_list
+endfunction
+" }}}
+
+" s:FindTagsOfTypeFZF {{{
+function! s:FindTagsOfTypeFZF(name, types)
+  let qflist = []
+  for entry in FindTags('^'.a:name.'\>', a:types)
+    let filename = entry.filename
+    let pattern  = substitute(entry.cmd, '^/\(.*\)/$', '\1', '')
+
+    call add(qflist, {
+          \ 'filename': filename,
+          \ 'pattern':  pattern,
+          \ })
+  endfor
+
+  if len(qflist) == 0
+    echohl Error | echo "Class / Trait / Function not found in tags." | echohl NONE
+  elseif len(qflist) == 1
+    call setqflist(qflist)
+    silent cfirst
+  else
+      function! s:align_lists(lists)
+          let maxes = {}
+          for list in a:lists
+              let i = 0
+              while i < len(list)
+                  let maxes[i] = max([get(maxes, i, 0), len(list[i])])
+                  let i += 1
+              endwhile
+          endfor
+          for list in a:lists
+              call map(list, "printf('%-'.maxes[v:key].'s', v:val)")
+          endfor
+          return a:lists
+      endfunction
+
+      function! s:sink(line)
+          let l:split = split(a:line, " => ")
+          let l:file = l:split[1]
+          let l:search = substitute(l:split[0], '\', '\\\\\\\\', 'g')
+          let l:search = substitute(l:search, ' ', '\\ ', 'g')
+          let l:search = substitute(l:search, ' $', '', 'g')
+          exe "edit +/.*" . l:search . ".* " .l:file
+      endfunction
+
+      " call setqflist(qflist)
+      " botright copen
+      "
+      function! s:stylizeTag(key, val, name)
+          let l:result = a:val['pattern']
+          let l:result = substitute(l:result, '^\^', '', '')
+          let l:result = substitute(l:result, '\$$', '', '')
+          let l:result = substitute(l:result, '\zs' . a:name . '\ze', "\e[4m\e[35m" . a:name . "\e[0m", '')
+          return result . " \e[30m => " .  a:val['filename'] . "\e[0m"
+      endfunction
+
+      call fzf#run({
+                  \ 'title': a:name,
+                  \ 'options': "--ansi --preview='cat $(echo {} | sed \"s/^.*=>//g\") | grep namespace'",
+                  \ 'source': map(qflist, {key, val -> s:stylizeTag(key, val, a:name)}),
+                  \ 'sink': function('s:sink'),
+                  \ 'down': '50%'
+                  \ })
+  endif
+endfunction
+" }}}
+
+" GotoProjectDefinition {{{
+function! GotoProjectDefinition()
+    normal viw"dy
+    let name = @d
+    if match(name, "^[A-Z]")
+        call s:FindTagsOfTypeFZF(name, ['f', 'function'])
+    else
+        if match(name, "^[A-Z][A-Z]")
+            call s:FindTagsOfTypeFZF(name, ['c', 'class', 't', 'trait', 'i', 'interface'])
+        else
+            call s:FindTagsOfTypeFZF(name, ['d'])
+        endif
+    endif
+endfunction
+" }}}
+" -- }}}
 
 " Async Linter Engine for Vim, allows phpcs, eslint etc. -- {{{
 Plugin 'w0rp/ale'
-                        " \ 'phpcs',
-                        " \ 'langserver'
-                    " \ 'php': ['phpcs'],
 let g:ale_linters = {
-                    \ 'php': [],
-                    \ 'swift': ['swiftlint']
-                    \ }
+        \ 'javascript': [],
+        \ 'vue': [],
+        \ 'php': [],
+        \ 'swift': ['swiftlint']
+        \ }
 
 " let g:ale_php_phpcs_standard="XpBar"
 " let g:ale_php_phpcs_use_global=1
-" }}}
-"
+" -- }}}
+
+autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 autocmd BufNewFile,BufRead *.swift set syntax=swift
 
 " xdebug for vim
