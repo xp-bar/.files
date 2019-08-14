@@ -607,27 +607,10 @@ end
 " ---- Ack for Vim ---- {{{
 Plugin 'mileszs/ack.vim'
 cnoreabbrev Ack Ack!
-" nnoremap <Leader>a :Ack!<Space><Paste>
 
 " Finding Keybinds for Ack
 nnoremap <leader><C-f> :Ack!<Space>
 vnoremap <leader><C-f> y :Ack!<Space><C-r>"
-vnoremap <leader><S-f> :call VReplacer()<cr>
-nnoremap <leader><S-f> :call FReplacer()<cr>
-
-function! VReplacer() range
-    exe "normal gv\"py"
-    let l:replace = input("Replace what? ")
-    let l:replacement = input("Replace '" . l:replace . "' with: ")
-    exe a:firstline . "," . a:lastline . "s/\zs" . l:replace . "\ze/" . l:replacement . "/g"
-endfunction
-
-function! FReplacer() range
-    let l:replace = input("Replace what? ")
-    let l:replacement = input("Replace '" . l:replace . "' with: ")
-    exe "%s/\\zs" . l:replace . "\\ze/" . l:replacement . "/g"
-endfunction
-
 nnoremap <C-f> /
 vnoremap <C-f> y /<C-r>"
 " }}}
@@ -681,12 +664,9 @@ function! NameSpace()
     endif
 endfunction
 
-" autocmd! FileType php noremap <Leader>r :call ReturnType()<CR>
-
-" augroup phpNamespace
-"     autocmd FileType php noremap <Leader>n :call NameSpace()<CR>
-"     autocmd FileType php noremap <Leader>r :call ReturnType()<CR>
-" augroup END
+augroup phpNamespace
+    autocmd FileType php noremap <Leader>n :call NameSpace()<CR>
+augroup END
 
 " }}}
 "
