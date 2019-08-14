@@ -188,7 +188,6 @@ let g:sessions_dir = '~/vim-sessions/'
 
 packadd! xp-where
 packadd! xp-changed
-packadd! xp-php-return-type
 " --- }}}
 
 " Act like a typewriter
