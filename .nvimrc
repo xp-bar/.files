@@ -781,7 +781,7 @@ endfunction
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+nmap <leader>RN <Plug>(coc-rename)
 
 " Installation: 
 " run coc#util#install()
