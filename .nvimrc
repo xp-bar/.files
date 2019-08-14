@@ -188,6 +188,7 @@ let g:sessions_dir = '~/vim-sessions/'
 
 packadd! xp-where
 packadd! xp-changed
+packadd! xp-php-return-type
 " --- }}}
 
 " Act like a typewriter
@@ -681,19 +682,12 @@ function! NameSpace()
     endif
 endfunction
 
-function! ReturnType()
-    if (&ft=='php')
-        " exe "normal ?@return[ ]\zs.*\ze$<CR>"
-        " exe "normal \"lyw"
-        " exe "normal $i:<esc>"
-        " exe "normal \"lp"
-    endif
-endfunction
+" autocmd! FileType php noremap <Leader>r :call ReturnType()<CR>
 
-augroup phpNamespace
-    autocmd FileType php noremap <Leader>n :call NameSpace()<CR>
-    autocmd FileType php noremap <Leader>r :call ReturnType()<CR>
-augroup END
+" augroup phpNamespace
+"     autocmd FileType php noremap <Leader>n :call NameSpace()<CR>
+"     autocmd FileType php noremap <Leader>r :call ReturnType()<CR>
+" augroup END
 
 " }}}
 "
