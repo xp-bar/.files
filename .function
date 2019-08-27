@@ -462,16 +462,66 @@ function ting(){
     fi
 }
 
-function routes(){
-    if [[ "$1" ]]; then
-        if [[ "$1" == *"--all"* ]]; then
-            php artisan route:list
-        else
-            php artisan route:list --name="$1"
-        fi
+function routes() {
+    local cache_dir="$HOME/.cache"
+    local project_name=${PWD##*/}
+    local file_name="$cache_dir/artisan_routes/.$project_name"
+
+    if [[ ! -d $cache_dir ]]; then
+        echo "No $HOME/.cache directory."
+        return 1
+    fi
+
+    [[ ! -d $cache_dir/artisan_routes ]] && mkdir -p $cache_dir/artisan_routes
+    [[ ! -f $file_name ]] && touch $file_name
+
+    if [[ $* = *"--rebuild"* ]]; then
+        echo "" > $file_name
+        echo "$(php artisan route:list)" > $file_name
+    fi
+
+    local search="\$6"
+
+    if [[ $* = *"--url"* ]]; then
+        search="\$4"
+    fi
+
+    if [[ $* = *"--controller"* ]]; then
+        search="\$8"
+    fi
+
+    local searchable="$(\
+        cat $file_name |\
+        tail -n +4 |\
+        sed 's/| / /' |\
+        awk '{print '$search', "+++", $6}' |\
+        grep -v '|' |\
+        awk '!seen[$0]++' |\
+        grep -v '^ +++ '
+    )"
+
+    result="$(echo "$searchable" | sed 's:+++.*::g' | fzf)"
+    result="$(echo "$result" | sed 's:\\:.:g')"
+    local route_name="$(echo "$searchable" | grep "$result" | sed 's:.*+++::g' | sed 's:^[ ]*::g')"
+
+    if [[ $route_name = "" ]]; then
+        return 1
+    fi
+
+    if [[ $* = *"--show-url"* ]]; then
+        php artisan route:list --name="$route_name" |\
+            tail -n +4 |\
+            sed 's/| / /' |\
+            awk '{print $4}' |\
+            grep -v '^[ ]*$'
+    elif [[ $* = *"--show-controller"* ]]; then
+        php artisan route:list --name="$route_name" |\
+            tail -n +4 |\
+            sed 's/| / /' |\
+            awk '{print $8}' |\
+            grep -v '^[ ]*$'
     else
-        local result="$(php artisan route:list | tail -n +4 | sed 's/| / /' | awk '{print $6}' | grep -v '|' | awk '!seen[$0]++' | fzf)"
-        php artisan route:list --name="$result"
+        php artisan route:list --name="$route_name"
     fi
 }
 
@@ -746,6 +796,7 @@ function brstatus(){
 function nuke(){
     echo "Branch: $(git rev-parse --abbrev-ref HEAD)"
     echo "Repo: $(git remote -v -- | sed 's/^.*git@github.com://g' | sed 's/.git.*$//g' | tr -s " " | awk '!seen[$0]++')"
+    echo ""
     sleep 0.5
     read response\?"Are you sure you want to nuke your changes? [y/n] "
     case "$response" in
