@@ -178,7 +178,7 @@ function origin() {
 
 function af() {
     local files="`git status --short | sed 's/^.* \(.*$\)/\1/g'`"
-    local selected="$(echo "$files" | fzf --multi --preview "git --no-pager diff --color=always head {}")"
+    local selected="$(echo "$files" | fzf --multi --preview "git --no-pager diff --color=always HEAD {} 1>&2 2> /dev/null")"
 
     if [[ $selected != "" ]]; then
         echo "$selected" | while read in; do
