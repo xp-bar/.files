@@ -794,12 +794,11 @@ function brstatus(){
 
 
 function nuke(){
-    stty -echo
+    stty -echo -icanon time 0 min 0
     echo "Branch: $(git rev-parse --abbrev-ref HEAD)"
     echo "Repo: $(git remote -v -- | sed 's/^.*git@github.com://g' | sed 's/.git.*$//g' | tr -s " " | awk '!seen[$0]++')"
     echo ""
-    sleep 0.5
-    stty echo
+    sleep 0.5 && stty sane
     read response\?"Are you sure you want to nuke your changes? [y/n] "
     case "$response" in
         [yY][eE][sS]|[yY])
