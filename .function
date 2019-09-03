@@ -234,7 +234,7 @@ function branches(){
 }
 
 function rh(){
-    git ls-remote --heads origin $(git rev-parse --abbrev-ref HEAD)  | grep $(git rev-parse --abbrev-ref HEAD) | sed 's/refs\/heads\/'$(git this)'//g' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'; 
+    git ls-remote --heads origin $(git rev-parse --abbrev-ref HEAD)  | grep $(git rev-parse --abbrev-ref HEAD) | sed 's/refs\/heads\/'$(git this | sed 's:/:\\\/:g')'//g' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//';
 }
 
 function e(){
