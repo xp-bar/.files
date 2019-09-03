@@ -463,6 +463,19 @@ function ting(){
 }
 
 function routes() {
+    local i=0
+    local fzf_search=""
+
+    while [[ $i -lt $# ]]; do
+        i=$[$i+1]
+        local argument=$argv[$i]
+
+        if [[ $argument != *"--"* ]]; then
+            fzf_search=$argument
+            i=$#
+        fi
+    done
+
     local cache_dir="$HOME/.cache"
     local project_name=${PWD##*/}
     local file_name="$cache_dir/artisan_routes/.$project_name"
@@ -500,7 +513,7 @@ function routes() {
         grep -v '^ +++ '
     )"
 
-    result="$(echo "$searchable" | sed 's:+++.*::g' | fzf)"
+    result="$(echo "$searchable" | sed 's:+++.*::g' | fzf -q "$fzf_search")"
     result="$(echo "$result" | sed 's:\\:.:g')"
     local route_name="$(echo "$searchable" | grep "$result" | sed 's:.*+++::g' | sed 's:^[ ]*::g')"
 
