@@ -59,7 +59,7 @@ if [[ "$(uname 2> /dev/null)" != "Linux" ]]; then
     # export MANPAGER="nvim -c 'set ft=man' -c 'set ft=man.php' -"
 else
     # LINUX
-    export PAGER="less"
+    export PAGER="nvim -R"
     export MANPAGER="less"
 fi
 # }}}
