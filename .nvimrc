@@ -551,7 +551,11 @@ if executable('fzf')
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
     
-    nnoremap <silent> <C-p> :call fzf#run({'source': 'git ls-files --exclude-standard --others --cached', 'sink': 'e', 'down': '40%'})<cr>
+    nnoremap <silent> <C-p> :call fzf#run({
+        \   'source': 'git ls-files --exclude-standard --others --cached',
+        \   'sink': 'e',
+        \   'down': '40%'
+        \   })<cr>
     nnoremap <silent> <M-p> :Buffers<cr>
     nnoremap <silent> <M-S-p> :History<cr>
   
