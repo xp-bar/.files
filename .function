@@ -533,6 +533,18 @@ function routes() {
             sed 's/| / /' |\
             awk '{print $8}' |\
             grep -v '^[ ]*$'
+    elif [[ $* = *"--edit"* ]]; then
+        local namespace=${ROOT_NAMESPACE:-""}
+        local filename="$(php artisan route:list --name="$route_name" |\
+            tail -n +4 |\
+            sed 's/| / /' |\
+            awk '{print $8}' |\
+            grep -v '^[ ]*$' |\
+            sed 's/@.*$//g' |\
+            sed 's:\\:/:g' |\
+            sed "s:"$namespace":app:g")"
+
+        $EDITOR $filename".php"
     else
         php artisan route:list --name="$route_name"
     fi
