@@ -839,6 +839,10 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   call <sid>X('rustCommentBlockDoc',      s:mono_3,    '', '')
   call <sid>X('rustCommentBlockDocError', s:mono_3,    '', '')
   " }}}
+  
+  " Coc.nvim highlighting ---------------------------------------------------{{{
+  " call <sid>X('CocErrorHighlight', '',    s:hue_5, '')
+  " }}}
 
   " man highlighting --------------------------------------------------------{{{
   hi link manTitle String
