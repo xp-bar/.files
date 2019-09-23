@@ -547,6 +547,9 @@ Plugin 'justinmk/vim-sneak'
 Plugin 'airblade/vim-rooter'
 
 " ---- FZF Plugins for Fuzzy File Finding ---- {{{
+"  Fix Hanging
+let g:airline#extensions#branch#enabled = 0
+
 if executable('fzf')
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
