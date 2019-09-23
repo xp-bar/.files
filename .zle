@@ -1,16 +1,32 @@
 #! /bin/zsh
 
+bindkey -v
+bindkey -M viins 'jk' vi-cmd-mode
+
+# http://stratus3d.com/blog/2017/10/26/better-vi-mode-in-zshell/
+# Better searching in command mode
+bindkey -M vicmd '?' history-incremental-search-backward
+bindkey -M vicmd '/' history-incremental-search-forward
+
+# Beginning search with arrow keys
+bindkey "^[OA" up-line-or-beginning-search
+bindkey "^[OB" down-line-or-beginning-search
+bindkey -M vicmd "k" up-line-or-beginning-search
+bindkey -M vicmd "j" down-line-or-beginning-search
+bindkey -M vicmd "^V" edit-command-line
+bindkey -M viins "^?" backward-delete-char
+
 function _launch() {
     open "/Applications/$(\ls -1 /Applications | sed 's/\.app//g' | fzf).app"
     zle && zle vi-insert
 }
 zle -N _launch
-bindkey -M vicmd 'p' _launch
+bindkey -M vicmd '^P' _launch
 
 function _z_widget() {
     z
     zle && zle vi-insert
 }
 zle -N _z_widget
-bindkey -M vicmd 'z' _z_widget
+bindkey -M vicmd '^Z' _z_widget
 

@@ -19,16 +19,8 @@ antibody bundle < ~/.zsh-plugins
 [[ -e ~/.ignore ]] && source ~/.ignore
 [[ -e ~/.extra-aliases ]] && source ~/.extra-aliases
 [[ -e ~/scripts/.script-source ]] && source ~/scripts/.script-source
-# }}}
-
-# vim bindings {{{
-bindkey -M viins 'jk' vi-cmd-mode
-bindkey -M vicmd 'k' up-line-or-beginning-search
-bindkey -M vicmd 'j' down-line-or-beginning-search
-# }}}
-
-# ZLE import {{{
-source ~/.zle
+# ZLE bindings, vi mode etc.
+[[ -e ~/.zle ]] && source ~/.zle
 # }}}
 
 # get the fuck {{{
