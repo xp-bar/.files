@@ -864,30 +864,30 @@ endfunction
 " }}}
 
 " GotoProjectDefinition {{{
-function! GotoProjectDefinition()
-    normal viw"dy
-    let name = @d
-    if match(name, "^[A-Z]")
-        call s:FindTagsOfTypeFZF(name, ['f', 'function'])
-    else
-        if match(name, "^[A-Z][A-Z]")
-            call s:FindTagsOfTypeFZF(name, ['c', 'class', 't', 'trait', 'i', 'interface'])
-        else
-            call s:FindTagsOfTypeFZF(name, ['d'])
-        endif
-    endif
-endfunction
+" function! GotoProjectDefinition()
+"     normal viw"dy
+"     let name = @d
+"     if match(name, "^[A-Z]")
+"         call s:FindTagsOfTypeFZF(name, ['f', 'function'])
+"     else
+"         if match(name, "^[A-Z][A-Z]")
+"             call s:FindTagsOfTypeFZF(name, ['c', 'class', 't', 'trait', 'i', 'interface'])
+"         else
+"             call s:FindTagsOfTypeFZF(name, ['d'])
+"         endif
+"     endif
+" endfunction
 " }}}
 " -- }}}
 
 " Async Linter Engine for Vim, allows phpcs, eslint etc. -- {{{
-Plugin 'w0rp/ale'
-let g:ale_linters = {
-        \ 'javascript': [],
-        \ 'vue': [],
-        \ 'php': [],
-        \ 'swift': ['swiftlint']
-        \ }
+" Plugin 'w0rp/ale'
+" let g:ale_linters = {
+"         \ 'javascript': [],
+"         \ 'vue': [],
+"         \ 'php': [],
+"         \ 'swift': ['swiftlint']
+"         \ }
 
 " let g:ale_php_phpcs_standard="XpBar"
 " let g:ale_php_phpcs_use_global=1
@@ -1041,8 +1041,8 @@ endfunction
 
 augroup mdSyntaxes
     autocmd!
-    " autocmd BufEnter *.md call TextEnableCodeSnip('php', '^```php', '^```', 'phpRegion')
-    " autocmd BufEnter *.md call TextEnableCodeSnip('vue', '^```vue', '^```', 'jsRegion')
+    " autocmd BufEnter *.md call TextEnableCodeSnip('php', '^[ ]*```php', '^[ ]*```', 'phpRegion')
+    " autocmd BufEnter *.md call TextEnableCodeSnip('vue', '^[ ]*```vue', '^[ ]*```', 'jsRegion')
     " autocmd BufEnter *.md call TextEnableCodeSnip('markdown', '```\[^php\]', '```php', 'markdown')
 augroup END
 " }}}
