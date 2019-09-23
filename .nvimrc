@@ -318,12 +318,7 @@ let g:NERDTreeIndicatorMapCustom = {
 
 "  }}}
 
-" --- Minimap --- {{{
-" Plugin 'severin-lemaignan/vim-minimap'
-" --- }}}
-
 " --- GitGutter --- {{{
-" Gutter for Vim, allows showing statuses beside lines of Code
 Plugin 'airblade/vim-gitgutter'
 " --- }}}
 
@@ -494,25 +489,6 @@ function! s:Retag()
 endfunction
 
 command! Retag call s:Retag()
-" Plugin 'ludovicchabant/vim-gutentags'
-
-" let g:gutentags_ctags_extra_args = [
-"             \ '--PHP-kinds=cfmt',
-"             \ '--exclude="node_modules"',
-"             \ '--exclude="*.js"',
-"             \ '--exclude="*.blade.php"',
-"             \ '--languages="php"'
-"             \ ]
-
-" augroup MyGutentagsStatusLineRefresher
-    " autocmd!
-"     autocmd User GutentagsUpdating call lightline#update()
-"     autocmd User GutentagsUpdated call lightline#update()
-" augroup END
-
-" :set statusline+=%{gutentags#statusline_cb(
-            " \function('<SID>get_gutentags_status'))}
-
 " }}}
 
 " Git wrapper for vim
@@ -524,14 +500,15 @@ nnoremap <silent><C-B> :Gblame<cr>
 Plugin 'junegunn/gv.vim'
 nnoremap <silent><leader>g :GV<cr>
 
-" ---- Tagbar ---- {{{
-Plugin 'majutsushi/tagbar'
-augroup tagbar
-    let s:hidden_all = 1
-    " autocmd BufRead *.py set noexpandtab
+augroup diffgroup
     autocmd FileType diff setlocal foldlevel=1000
     autocmd FileType diff nnoremap q :qa!<cr>
 augroup END
+
+" ---- Tagbar ---- {{{
+Plugin 'majutsushi/tagbar'
+
+let s:hidden_all = 1
 
 nnoremap <silent> <C-s> :TagbarToggle<cr>
 vnoremap <silent> <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
@@ -562,7 +539,6 @@ if executable('fzf')
     nnoremap <silent> <M-p> :Buffers<cr>
     nnoremap <silent> <M-S-p> :History<cr>
   
-    " inoremap <expr> <c-x><c-k> fzf#vim#complete(:DashKeywords)
     let g:fzf_nvim_statusline = 0
 
     function! s:build_quickfix_list(lines)
@@ -576,46 +552,6 @@ if executable('fzf')
           \ 'ctrl-s': 'split',
           \ 'ctrl-v': 'vsplit'
           \ }
-  
-    command! LaraViews FZF resources/views/
-    command! LaraControllers FZF app/http/controllers/
-    command! Vendor FZF vendor/
-    command! Modules FZF node_modules/
-
-    function! s:file_tags_source()
-        return 'cat ' . join(tagfiles()) . " | grep " . expand("%:t") . " | awk 'match($5, /[fm]/)'"
-    endfunction
-
-    function! s:tags_source()
-        return 'cat ' . join(tagfiles()) . " | awk 'match($5, /[fm]/)'"
-    endfunction
-	
-	function! s:tag_handler(tag)
-	    if !empty(a:tag)
-	        let token = split(split(a:tag, '\t')[2],';"')[0]
-            echom token
-	        let m = &magic
-	        setlocal nomagic
-	        execute token
-	        if m
-	            setlocal magic
-	        endif
-	    endif
-	endfunction
-
-    command! FZFTagFile if !empty(tagfiles()) | call fzf#run({
-		\ 'source': s:file_tags_source(),
-		\ 'sink': function('<sid>tag_handler'),
-		\ 'options': '+m --with-nth=1',
-		\ 'down': '50%'
-		\ }) | else | echo 'No tags' | endif
-
-    command! FZFTags if !empty(tagfiles()) | call fzf#run({
-		\ 'source': s:tags_source(),
-		\ 'sink': function('<sid>tag_handler'),
-		\ 'options': '+m --with-nth=1',
-		\ 'down': '50%'
-		\ }) | else | echo 'No tags' | endif
 end
 " }}}
 
@@ -661,8 +597,6 @@ augroup phpImports
     autocmd FileType php setlocal commentstring=//%s
 augroup END
 " }}}
-
-
 
 " Add a namespace declaration - php {{{
 function! NameSpace()
@@ -758,8 +692,8 @@ Plugin 'neoclide/coc.nvim'
 
 " Remap keys for gotos
 nmap <silent> <leader>gd <Plug>(coc-definition)
-" nmap <silent> <leader>gy <Plug>(coc-type-definition)
-" nmap <silent> <leader>gi <Plug>(coc-implementation)
+nmap <silent> <leader>gy <Plug>(coc-type-definition)
+nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
 
 nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
@@ -783,118 +717,7 @@ nmap <leader>RN <Plug>(coc-rename)
 " run :CocInstall coc-phpls
 " ---- }}}
 
-" -- goto defintion in project -- {{{
-nnoremap <silent> <leader>gt :call GotoProjectDefinition()<CR>
 nnoremap <silent> <leader>gl :Lines<CR>
-
-" FindTags helper {{{
-function! FindTags(name, kinds)
-  let tag_list = []
-
-  for entry in taglist(a:name)
-    if index(a:kinds, entry.kind) > -1
-      call add(tag_list, entry)
-    endif
-  endfor
-
-  return tag_list
-endfunction
-" }}}
-
-" s:FindTagsOfTypeFZF {{{
-function! s:FindTagsOfTypeFZF(name, types)
-  let qflist = []
-  for entry in FindTags('^'.a:name.'\>', a:types)
-    let filename = entry.filename
-    let pattern  = substitute(entry.cmd, '^/\(.*\)/$', '\1', '')
-
-    call add(qflist, {
-          \ 'filename': filename,
-          \ 'pattern':  pattern,
-          \ })
-  endfor
-
-  if len(qflist) == 0
-    echohl Error | echo "Class / Trait / Function not found in tags." | echohl NONE
-  elseif len(qflist) == 1
-    call setqflist(qflist)
-    silent cfirst
-  else
-      function! s:align_lists(lists)
-          let maxes = {}
-          for list in a:lists
-              let i = 0
-              while i < len(list)
-                  let maxes[i] = max([get(maxes, i, 0), len(list[i])])
-                  let i += 1
-              endwhile
-          endfor
-          for list in a:lists
-              call map(list, "printf('%-'.maxes[v:key].'s', v:val)")
-          endfor
-          return a:lists
-      endfunction
-
-      function! s:sink(line)
-          let l:split = split(a:line, " => ")
-          let l:file = l:split[1]
-          let l:search = substitute(l:split[0], '\', '\\\\\\\\', 'g')
-          let l:search = substitute(l:search, ' ', '\\ ', 'g')
-          let l:search = substitute(l:search, ' $', '', 'g')
-          exe "edit +/.*" . l:search . ".* " .l:file
-      endfunction
-
-      " call setqflist(qflist)
-      " botright copen
-      "
-      function! s:stylizeTag(key, val, name)
-          let l:result = a:val['pattern']
-          let l:result = substitute(l:result, '^\^', '', '')
-          let l:result = substitute(l:result, '\$$', '', '')
-          let l:result = substitute(l:result, '\zs' . a:name . '\ze', "\e[4m\e[35m" . a:name . "\e[0m", '')
-          return result . " \e[30m => " .  a:val['filename'] . "\e[0m"
-      endfunction
-
-      call fzf#run({
-                  \ 'title': a:name,
-                  \ 'options': "--ansi --preview='cat $(echo {} | sed \"s/^.*=>//g\") | grep namespace'",
-                  \ 'source': map(qflist, {key, val -> s:stylizeTag(key, val, a:name)}),
-                  \ 'sink': function('s:sink'),
-                  \ 'down': '50%'
-                  \ })
-  endif
-endfunction
-" }}}
-
-" GotoProjectDefinition {{{
-" function! GotoProjectDefinition()
-"     normal viw"dy
-"     let name = @d
-"     if match(name, "^[A-Z]")
-"         call s:FindTagsOfTypeFZF(name, ['f', 'function'])
-"     else
-"         if match(name, "^[A-Z][A-Z]")
-"             call s:FindTagsOfTypeFZF(name, ['c', 'class', 't', 'trait', 'i', 'interface'])
-"         else
-"             call s:FindTagsOfTypeFZF(name, ['d'])
-"         endif
-"     endif
-" endfunction
-" }}}
-" -- }}}
-
-" Async Linter Engine for Vim, allows phpcs, eslint etc. -- {{{
-" Plugin 'w0rp/ale'
-" let g:ale_linters = {
-"         \ 'javascript': [],
-"         \ 'vue': [],
-"         \ 'php': [],
-"         \ 'swift': ['swiftlint']
-"         \ }
-
-" let g:ale_php_phpcs_standard="XpBar"
-" let g:ale_php_phpcs_use_global=1
-" -- }}}
 
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 autocmd BufNewFile,BufRead *.swift set syntax=swift
@@ -990,15 +813,9 @@ endif
 set background=dark " for the dark version
 colorscheme two
 
-" Plugin 'chrisbra/Colorizer'
-
-" nnoremap <leader>cc :ColorToggle<cr>
-" nnoremap <leader>ct :ColorContrast<cr>
-
 syntax on
 
 nnoremap <silent> <C-[> :syn sync fromstart<cr>
-" nnoremap <C-[> :syn off<cr> :syn on<cr> :syn sync fromstart<cr>
 
 " }}}
 
@@ -1011,43 +828,6 @@ nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-
-function! TextEnableCodeSnip(filetype,start,end,textSnipHl) abort
-  let ft=toupper(a:filetype)
-  let group='textGroup'.ft
-
-  if exists('b:current_syntax')
-    let s:current_syntax=b:current_syntax
-    " Remove current syntax definition, as some syntax files (e.g. cpp.vim)
-    " do nothing if b:current_syntax is defined.
-    unlet b:current_syntax
-  endif
-
-  execute 'syntax include @'.group.' syntax/'.a:filetype.'.vim'
-  try
-    execute 'syntax include @'.group.' after/syntax/'.a:filetype.'.vim'
-  catch
-  endtry
-
-  if exists('s:current_syntax')
-    let b:current_syntax=s:current_syntax
-  else
-    unlet b:current_syntax
-  endif
-
-  execute 'syntax region '.ft.'
-  \ matchgroup='.a:textSnipHl.'
-  \ start=/'.a:start.'/ end=/'.a:end.'/
-  \ keepend
-  \ contains=@'.group
-endfunction
-
-augroup mdSyntaxes
-    autocmd!
-    " autocmd BufEnter *.md call TextEnableCodeSnip('php', '^[ ]*```php', '^[ ]*```', 'phpRegion')
-    " autocmd BufEnter *.md call TextEnableCodeSnip('vue', '^[ ]*```vue', '^[ ]*```', 'jsRegion')
-    " autocmd BufEnter *.md call TextEnableCodeSnip('markdown', '```\[^php\]', '```php', 'markdown')
-augroup END
 " }}}
 
 " ===========================================================================
