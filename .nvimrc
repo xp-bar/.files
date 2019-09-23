@@ -561,7 +561,15 @@ if executable('fzf')
   
     " inoremap <expr> <c-x><c-k> fzf#vim#complete(:DashKeywords)
     let g:fzf_nvim_statusline = 0
+
+    function! s:build_quickfix_list(lines)
+        call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
+        copen
+        cc
+    endfunction
+
     let g:fzf_action = {
+          \ 'ctrl-q': function('s:build_quickfix_list'),
           \ 'ctrl-s': 'split',
           \ 'ctrl-v': 'vsplit'
           \ }
