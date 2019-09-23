@@ -1255,7 +1255,22 @@ function rgo() {
         echo "$url" > $RGO_CACHE_DIR/.cache;
     fi
 
-    url=$(echo "$url" | fzf)
+    local i=0
+    local fzf_search=""
+
+    while [[ $i -lt $# ]]; do
+        i=$[$i+1]
+        local argument=$argv[$i]
+
+        if [[ $argument != *"--"* ]]; then
+            fzf_search=$argument
+            i=$#
+        fi
+    done
+
+    fzf_search="$(echo $fzf_search | sed 's/{/:/g' | sed 's:}::g')"
+
+    url="$(echo "$url" | fzf -q "$fzf_search")"
 
     local fill_ins="$(\
         echo $url | \grep -o ':[a-z\-_]*[\/]*' \
