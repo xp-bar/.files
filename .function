@@ -696,38 +696,30 @@ function co() {
 
 rco() {
     local all_remote_branches="$(git ls-remote --heads origin | grep -o 'refs/heads/.*' | sed 's:refs/heads/::g')"
+    local branch=""
 
     if [[ $@ == "" ]]; then
-        local branch="$(echo $all_remote_branches | fzf)"
-
-        if [[ $branch != "" ]]; then
-            if [[ $(git branch | grep $branch ) != "" ]]; then
-                git checkout $branch
-                return;
-            fi
-
-            read "response?Create a local copy of $(echo -e "\e[34m$branch\e[0m")? "
-            case "$response" in
-                [yY][eE][sS]|[yY])
-                    git checkout -b $branch
-                    git pull origin $branch
-                    git reset $(rh) --hard
-                    ;;
-                *)
-                    ;;
-            esac
-        fi
+        branch="$(echo $all_remote_branches | fzf --exact --height 15%)"
     else
-        local branches="$(echo $all_remote_branches | grep $@)"
-        local wcount=$(echo $branches | wc -l | sed 's/[[:space:]]//g')
-        if [[ $wcount == 0 ]]; then
-            echo -e "\e[31mNo branches found with that name."
-            return 1;
-        elif [[ $wcount == 1 ]]; then
-            git checkout $(echo $branches | head -n 1)
-        else
-            git checkout $(echo $branches | fzf)
+        branch="$(echo $all_remote_branches | fzf --exact --height 15% -q "$@")"
+    fi
+
+    if [[ $branch != "" ]]; then
+        if [[ $(git branch | grep $branch ) != "" ]]; then
+            git checkout $branch
+            return;
         fi
+
+        read "response?Create a local copy of $(echo -e "\e[34m$branch\e[0m")? "
+        case "$response" in
+            [yY][eE][sS]|[yY])
+                git checkout -b $branch
+                git pull origin $branch
+                git reset $(rh) --hard
+                ;;
+            *)
+                ;;
+        esac
     fi
 }
 
