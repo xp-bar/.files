@@ -678,17 +678,18 @@ function co() {
     local all_branches="$(git branch | grep -v "\*")";
 
     if [[ $@ == "" ]]; then
-        git checkout $(echo $all_branches | fzf)
+        git checkout $(echo "$all_branches" | fzf --exact --height 15%)
     else
         local branches="$(echo $all_branches | grep $@)"
         local wcount=$(echo $branches | wc -l | sed 's/[[:space:]]//g')
+
         if [[ $wcount == 0 ]]; then
             echo -e "\e[31mNo branches found with that name."
             return 1;
         elif [[ $wcount == 1 ]]; then
             git checkout $(echo $branches | head -n 1)
         else
-            git checkout $(echo $branches | fzf)
+            git checkout $(echo "$branches" | fzf --exact --height 15% -q "$@")
         fi
     fi
 }
