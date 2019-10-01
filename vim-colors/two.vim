@@ -841,7 +841,9 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   " }}}
   
   " Coc.nvim highlighting ---------------------------------------------------{{{
-  " call <sid>X('CocErrorHighlight', '',    s:hue_5, '')
+  call <sid>X('CocErrorFloat',    s:hue_5, '',      '')
+  call <sid>X('CocWarningFloat',  s:hue_6, '',      '')
+  call <sid>X('CocInfoFloat',     s:hue_1, '',      '')
   " }}}
 
   " man highlighting --------------------------------------------------------{{{
