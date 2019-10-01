@@ -533,6 +533,7 @@ if executable('fzf')
     
     nnoremap <silent> <C-p> :call fzf#run({
         \   'source': 'git ls-files --exclude-standard --others --cached',
+        \   'options': '--multi -i',
         \   'sink': 'e',
         \   'down': '40%'
         \   })<cr>
