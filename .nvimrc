@@ -592,10 +592,13 @@ function! IPhpInsertUse()
     call PhpInsertUse()
     call feedkeys('a',  'n')
 endfunction
+
 augroup phpImports
+    autocmd!
     autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
     autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
     autocmd FileType php setlocal commentstring=//%s
+    autocmd FileType php setlocal makeprg=phpcs\ $*\ -n\ %
 augroup END
 " }}}
 
@@ -615,6 +618,7 @@ function! NameSpace()
 endfunction
 
 augroup phpNamespace
+    autocmd!
     autocmd FileType php noremap <Leader>n :call NameSpace()<CR>
 augroup END
 
