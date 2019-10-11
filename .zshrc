@@ -46,11 +46,13 @@ fi
 # Set pagers {{{
 if [[ "$(uname 2> /dev/null)" != "Linux" ]]; then
     # OSX
+    export EDITOR="nvim"
     export PAGER="nvim -R"
     export MANPAGER="nvim -c 'set ft=man' -"
     # export MANPAGER="nvim -c 'set ft=man' -c 'set ft=man.php' -"
 else
     # LINUX
+    export EDITOR="nvim"
     export PAGER="nvim -R"
     export MANPAGER="less"
 fi
