@@ -599,6 +599,7 @@ augroup phpImports
     autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
     autocmd FileType php setlocal commentstring=//%s
     autocmd FileType php setlocal makeprg=phpcs\ $*\ -n\ %
+    autocmd FileType php inoreabbrev fn function () {<CR>}<Esc>F%s<c-o>:call getchar()<CR>
 augroup END
 " }}}
 
