@@ -607,6 +607,15 @@ augroup phpImports
 augroup END
 " }}}
 
+" --- Make command --- {{{
+function! s:make_func(...)
+    silent exec 'make ' . (a:0 > 0 ? a:1 : '')
+    bot copen
+endfunction
+command! -nargs=* Make call s:make_func(<f-args>)
+cnoreabbrev make Make
+" }}}
+
 " Add a namespace declaration - php {{{
 function! NameSpace()
     if (&ft=='php')
