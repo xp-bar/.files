@@ -595,10 +595,14 @@ endfunction
 
 augroup phpImports
     autocmd!
+    let errorformat =
+            \ '%-GFile\,Line\,Column\,Type\,Message\,Source\,Severity%.%#,'.
+            \ '"%f"\,%l\,%c\,%t%*[a-zA-Z]\,"%m"\,%*[a-zA-Z0-9_.-]\,%*[0-9]%.%#'
     autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
     autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
     autocmd FileType php setlocal commentstring=//%s
-    autocmd FileType php setlocal makeprg=phpcs\ $*\ -n\ %
+    autocmd FileType php setlocal makeprg=phpcs\ $*\ --report=csv\ --standard=XpBar\ -n\ %
+    autocmd FileType php let &errorformat=errorformat
     autocmd FileType php inoreabbrev fn function () {<CR>}<Esc>F%s<c-o>:call getchar()<CR>
 augroup END
 " }}}
