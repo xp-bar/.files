@@ -120,11 +120,6 @@ nnoremap <leader>q :Bdelete<cr>
 nnoremap <silent> <S-j> :bnext<cr>
 nnoremap <silent> <S-k> :bprev<cr>
 " }}}
-
-" Tab switching {{{
-nnoremap <silent> <leader>j :tabnext<cr>
-nnoremap <silent> <leader>k :tabprev<cr>
-" }}}
 " -- }}}
 
 " -- Splits -- {{{
@@ -502,7 +497,6 @@ nnoremap <silent><leader>g :GV<cr>
 
 augroup diffgroup
     autocmd FileType diff setlocal foldlevel=1000
-    autocmd FileType diff nnoremap q :qa!<cr>
 augroup END
 
 " ---- Tagbar ---- {{{
@@ -715,18 +709,22 @@ nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
 
-nnoremap <silent> <leader>K :call <SID>show_documentation()<CR>
-
 function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
         execute 'h '.expand('<cword>')
     else
-        call CocAction('doHover')
+        call CocActionAsync('doHover')
     endif
 endfunction
 
+nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
+
+augroup phpHold
+autocmd!
 " Highlight symbol under cursor on CursorHold
 autocmd CursorHold * silent call CocActionAsync('highlight')
+augroup END
+
 
 " Remap for rename current word
 nmap <leader>RN <Plug>(coc-rename)
@@ -800,7 +798,7 @@ let g:lightline.separator = {
 let g:lightline.subseparator = {
 	\   'left': '', 'right': '' 
   \}
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:lightline.tabline = {
   \   'left': [],
   \   'right': []
