@@ -11,8 +11,12 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 [ -s "$NVM_DIR/nvm.sh" ] && export PATH="$NVM_BIN:$PATH"
 
+export PATH="$(npm get prefix)/bin:$PATH"
+
 # set PATH so it includes user's private bin directories
 if [ -s "/home/linuxbrew/" ]; then
-    PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+    export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
     eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 fi
+
+[[ -e $HOME/.files/docs ]] && export MANPATH="$MANPATH:$HOME/.files/docs"
