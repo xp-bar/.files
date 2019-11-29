@@ -281,6 +281,7 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
     let s:hue_6_2 = 'e5c07b' " orange 2 #e5c07b
 
     " let s:syntax_bg     = '282c34'
+    let s:syntax_bg_true     = '282c34'
     let s:syntax_bg     = 'none'
     let s:syntax_gutter = '636d83'
     let s:syntax_cursor = '2c323c'
@@ -353,7 +354,7 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   call <sid>X('PMenuSbar',    '',              s:syntax_bg,      '')
   call <sid>X('PMenuThumb',   '',              s:mono_1,         '')
   call <sid>X('Question',     s:hue_2,         '',               '')
-  call <sid>X('Search',       s:syntax_bg,     s:hue_6_2,        '')
+  call <sid>X('Search',       s:syntax_bg_true,     s:mono_1,  '')
   call <sid>X('SpecialKey',   s:special_grey,  '',               'none')
   call <sid>X('Whitespace',   s:special_grey,  '',               'none')
   call <sid>X('StatusLine',   s:syntax_fg,     s:syntax_cursor,  'none')
