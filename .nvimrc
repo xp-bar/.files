@@ -748,6 +748,12 @@ augroup syntaxcommands
     autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.css
     autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
     autocmd FileType vue syntax sync fromstart
+    autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
+augroup END
+
+augroup vueabbrevs
+    autocmd!
+    autocmd FileType vue inoreabbrev gscomp : {<CR><Tab>get() {<CR><CR>},<CR>set() {<CR><CR>}<CR>}, <Esc><<F%s<c-o>:call getchar()<CR>
 augroup END
 
 " Highlight Hex colors
