@@ -17,16 +17,15 @@
 	hide-dirty-status = 0
 	hide-dirty = 0
 [alias]
-	current = rev-parse --abbrev-ref HEAD
-	coubmit = commit
-	glad = add .
-	groceries = checkout
-	groceries-from = checkout
-	this = rev-parse --abbrev-ref HEAD
-	skip = update-index --skip-worktree
-	noskip = update-index --no-skip-worktree
-	head = rev-parse HEAD
 	cdate = !git --no-pager show -s --format=%ci
+	head = rev-parse HEAD
+	noskip = update-index --no-skip-worktree
+	skip = update-index --skip-worktree
+	this = rev-parse --abbrev-ref HEAD
+    din = !git --no-pager diff --name-only
+    last = "![[ -e .git/hooks/LAST_CHECKOUT_TIME ]] && cat .git/hooks/LAST_CHECKOUT_TIME | awk -F '@' '{print $2\"@\"$1}' | sort |  awk -F '@' '{print $2\"@\"$1}' | tail -n 2 | head -n 1 | sed 's:@.*::g'"
+    tag-archived = "! f() { git tag archive/$1 $1; }; f"
+    checkout-archived = "! f() { git checkout -b $1 archive/$1; }; f"
 [mergetool "fugitive"]
 	cmd = nvim -f \"$MERGED\"
 [merge]
