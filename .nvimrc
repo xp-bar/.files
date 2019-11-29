@@ -275,6 +275,7 @@ nnoremap <leader><C-s> :Startify<cr>
 Plugin 'scrooloose/nerdtree'
 noremap <silent> <C-\> :NERDTreeToggle<CR>
 noremap <leader>\ :NERDTreeFind<CR>
+let NERDTreeHijackNetrw=1
 let NERDTreeIgnore = [
         \ '\.png$',
         \ '\.jpg$',
