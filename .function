@@ -29,6 +29,14 @@ function show(){
     tput rmcup;
 }
 
+function ldu() {
+    ls -d1 -- *(/) |\
+        while read in; do
+            echo "$PWD/$in" | sed 's: :\\\ :g'
+        done |\
+        xargs du $*
+}
+
 # alias pack='npm run watch > __.webpack 2>&1 &; webpack=$!; tput cuu1; echo -e "\e[34mStarting Webpack - PID: $webpack"'
 # alias killpack='kill $webpack'
 
@@ -512,10 +520,18 @@ function routes() {
         awk '!seen[$0]++' |\
         grep -v '^ +++ '
     )"
+    
+    local route_name=""
 
-    result="$(echo "$searchable" | sed 's:+++.*::g' | fzf -q "$fzf_search")"
+    if [[ $fzf_search = "" ]]; then
+        result="$(echo "$searchable" | sed 's:+++.*::g' | fzf)"
+    else
+        result="$(echo "$searchable" | sed 's:+++.*::g' | fzf -q "$fzf_search")"
+    fi
+
     result="$(echo "$result" | sed 's:\\:.:g')"
-    local route_name="$(echo "$searchable" | grep "$result" | sed 's:.*+++::g' | sed 's:^[ ]*::g')"
+    route_name="$(echo "$searchable" | grep "$result" | sed 's:.*+++::g' | sed 's:^[ ]*::g')"
+
 
     if [[ $route_name = "" ]]; then
         return 1
@@ -1212,36 +1228,35 @@ function icat() {
     fi
 }
 
-function csslook() {
-    local file=$1
-    local lookup="$(ack ^[\\.#].*$ $file | fzf)"
-
-    sed -n "/^$(echo $lookup | sed 's:\\.:\\\\.:g')$/,/\}/p" $file
-}
-
 function rgo() {
     if [[ $(php artisan > /dev/null; echo $?) != 0 ]]; then
         echo "Sorry, artisan not found.";
         return 1;
     fi
 
+    local cache_dir='~/.cache/rgo'
+    local file_name="$(basename $(pwd))"
+
     if [[ $* = *"--rebuild"* ]]; then
-        if [[ -e $RGO_CACHE_DIR/.cache ]]; then
-            echo "" > $RGO_CACHE_DIR/.cache;
-        else
-            touch $RGO_CACHE_DIR/.cache;
+        if [[ ! -d $cache_dir ]]; then
+            mkdir -p $cache_dir
         fi
+        if [[ -e $cache_dir/.cache ]]; then
+            echo "" > $cache_dir/.cache;
+        else
+            touch $cache_dir/.cache;
+        fi
+    fi
+
+    if [[ ! -d $cache_dir ]]; then
+        echo "please run with --rebuild first."
+        return 1;
     fi
 
     local url=""
 
-    if [[ $RGO_CACHE_DIR = "" ]]; then
-        echo "no cache dir"
-        return 1;
-    fi
-
-    if [[ -e $RGO_CACHE_DIR/.cache && $(cat $RGO_CACHE_DIR/.cache) != "" ]]; then
-        url="$(cat $RGO_CACHE_DIR/.cache)";
+    if [[ -e $cache_dir/.cache && $(cat $cache_dir/.cache) != "" ]]; then
+        url="$(cat $cache_dir/.cache)";
     else
         echo "Building...";
         url="$(\
@@ -1256,8 +1271,8 @@ function rgo() {
                 | sed 's:}::g' \
                 | sed 's/{/:/g' \
             )";
-        touch $RGO_CACHE_DIR/.cache;
-        echo "$url" > $RGO_CACHE_DIR/.cache;
+        touch $cache_dir/.cache;
+        echo "$url" > $cache_dir/.cache;
     fi
 
     local i=0
@@ -1275,7 +1290,11 @@ function rgo() {
 
     fzf_search="$(echo $fzf_search | sed 's/{/:/g' | sed 's:}::g')"
 
-    url="$(echo "$url" | fzf -q "$fzf_search")"
+    if [[ $fzf_search != "" ]]; then
+        url="$(echo "$url" | fzf -q "$fzf_search")"
+    else
+        url="$(echo "$url" | fzf)"
+    fi
 
     local fill_ins="$(\
         echo $url | \grep -o ':[a-z\-_]*[\/]*' \
