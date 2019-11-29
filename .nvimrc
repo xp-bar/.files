@@ -316,6 +316,8 @@ let g:NERDTreeIndicatorMapCustom = {
 
 " --- GitGutter --- {{{
 Plugin 'airblade/vim-gitgutter'
+
+let g:gitgutter_highlight_linenrs = 1
 " --- }}}
 
 " --- Buftabline --- {{{
@@ -527,7 +529,7 @@ if executable('fzf')
     Plugin 'junegunn/fzf.vim'
     
     nnoremap <silent> <C-p> :call fzf#run({
-        \   'source': 'git ls-files --exclude-standard --others --cached',
+        \   'source': 'ack -f',
         \   'options': '--multi -i',
         \   'sink': 'e',
         \   'down': '40%'
@@ -548,7 +550,57 @@ if executable('fzf')
           \ 'ctrl-s': 'split',
           \ 'ctrl-v': 'vsplit'
           \ }
+
+    function! s:git_changed(...)
+        let l:source = (a:0 > 0 ? join(a:000) : 'git diff --name-only --diff-filter=d')
+        call fzf#run({
+            \   'source': l:source,
+            \   'options': '--multi -i',
+            \   'sink': 'e',
+            \   'down': '40%'
+            \   })
+    endfunction
+
+    command! Vendor FZF vendor/
+    command! Modules FZF node_modules/
+    command! -nargs=* GitChanged call s:git_changed(<f-args>)
 end
+
+" }}}
+
+" Quickfix -- {{{
+function! s:RemoveQFItem()
+    let curqfidx = line('.') - 1
+    let qfall = getqflist()
+    call remove(qfall, curqfidx)
+    call setqflist(qfall, 'r')
+    " execute curqfidx + 1 . "cfirst"
+    :copen
+endfunction
+
+function! s:AddQFItem(...)
+    let l:text = (a:0 > 0 ? join(a:000) : getline('.'))
+    call setqflist(getqflist(), 'a', {
+                \    'title': 'My List',
+                \    'nr': 0,
+                \    'items': [
+                \       {
+                \           'filename': expand('%'),
+                \           'lnum': line('.'),
+                \           'text': l:text
+                \       }
+                \      ]
+                \   }
+                \   )
+    botright copen
+endfunction
+
+command! QfRemove :call s:RemoveQFItem()
+command! -nargs=* Qf :call s:AddQFItem(<f-args>)
+
+autocmd FileType qf map <buffer> dd :QfRemove<cr>
+nmap <silent> <leader>aq :Qf<cr>
+
 " }}}
 
 " ---- Ack for Vim ---- {{{
@@ -601,6 +653,22 @@ augroup phpImports
     autocmd FileType php inoreabbrev fn function () {<CR>}<Esc>F%s<c-o>:call getchar()<CR>
 augroup END
 " }}}
+
+
+function! s:tinker()
+    silent execute '!echo "<?php\\n" > $TMPDIR/tinker'
+    silent tabnew $TMPDIR/tinker
+    silent setlocal ft=php
+    silent setlocal makeprg=php\ artisan\ tinker\ %
+
+    function! s:make_func(...)
+        silent exec 'make ' . (a:0 > 0 ? a:1 : '')
+        vert copen 100
+    endfunction
+    command! -nargs=* Make call s:make_func(<f-args>)
+endfunction
+
+command! Tinker call s:tinker()
 
 " --- Make command --- {{{
 function! s:make_func(...)
