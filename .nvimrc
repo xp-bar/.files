@@ -739,13 +739,15 @@ Plugin 'posva/vim-vue'
 " Typescript and Vue
 Plugin 'Quramy/tsuquyomi'
 Plugin 'Quramy/tsuquyomi-vue'
+let g:vue_pre_processors = ['typescript', 'scss']
 
 augroup syntaxcommands
     autocmd!
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType scss setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType sass setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.css
+    " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.css
+    autocmd BufRead,BufNewFile *.vue setlocal filetype=vue
     autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
     autocmd FileType vue syntax sync fromstart
     autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
