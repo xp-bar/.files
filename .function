@@ -310,10 +310,6 @@ fda() {
   dir=$(find ${1:-.} -type d 2> /dev/null | fzf-tmux +m --preview "ls -a1 {}") && cd "$dir"
 }
 
-fd() {
-  DIR=`find * -maxdepth 2 -type d -print 2> /dev/null | fzf-tmux --preview "ls -1 {}"` \
-    && cd "$DIR"
-}
 
 function calc(){
     awk "BEGIN { print $* }";
