@@ -705,7 +705,6 @@ augroup END
 Plugin 'tobyS/vmustache'
 Plugin 'tobyS/pdv'
 let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
-nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr> 
 " ---- }}}
 
 " }}}
@@ -734,11 +733,28 @@ inoreabbrev cgroup console.group();<cr><cr>console.log();<cr><cr>console.groupEn
 " Vue
 Plugin 'posva/vim-vue'
 
-" disable pre-processors bc they're breaking things
-" let g:vue_disable_pre_processors=1
+" JS Doc
+Plugin 'heavenshell/vim-jsdoc'
+let g:jsdoc_allow_input_prompt=1
+let g:jsdoc_enable_es6=1
+let g:jsdoc_input_description=1
+let g:jsdoc_return_description=0
+
+" -- Documentation -- {{{
+" See - tobyS/pdv
+" See - heavenshell/vim-jsdoc
+augroup documentors
+    autocmd!
+    autocmd FileType php nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr> 
+    autocmd FileType vue nnoremap <silent> <leader>d :JsDoc<cr>
+    autocmd FileType javascript nnoremap <silent> <leader>d :JsDoc<cr>
+augroup END
+"  }}}
+
 " Typescript and Vue
 Plugin 'Quramy/tsuquyomi'
 Plugin 'Quramy/tsuquyomi-vue'
+" let g:vue_disable_pre_processors=1
 let g:vue_pre_processors = ['typescript', 'scss']
 
 augroup syntaxcommands
@@ -750,7 +766,7 @@ augroup syntaxcommands
     autocmd BufRead,BufNewFile *.vue setlocal filetype=vue
     autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
     autocmd FileType vue syntax sync fromstart
-    autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
+    autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ --quiet\ $*\ %
 augroup END
 
 augroup vueabbrevs
