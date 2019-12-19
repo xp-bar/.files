@@ -707,13 +707,39 @@ function co() {
 }
 
 rco() {
-    local all_remote_branches="$(git ls-remote --heads origin | grep -o 'refs/heads/.*' | sed 's:refs/heads/::g')"
+    if [[ "$(git remote -v 2>&1 1>/dev/null; echo $?)" -gt 0 ]]; then
+        echo "Not a git repo."
+        return
+    fi
+
+    local all_remote_branches=""
     local branch=""
+    local cache_file="$(git remote -v | \grep fetch | ack -o '(?<=:).*(?=\.git)' | sed 's:[/\.]:_:g' | tr '[:upper:]' '[:lower:]')"
+    local cache_dir="$HOME/.cache/rco"
+
+    if [[ $* = *"--rebuild"* || ! -e $cache_dir/$cache_file ]]; then
+        local all_remote_branches="$(git ls-remote --heads origin | grep -o 'refs/heads/.*' | sed 's:refs/heads/::g')"
+
+        if [[ ! -d $cache_dir ]]; then
+            mkdir -p $cache_dir
+        fi
+
+        if [[ ! -e $cache_dir/$cache_file ]]; then
+            touch $cache_dir/$cache_file;
+        fi
+
+        echo "$all_remote_branches" > "$cache_dir/$cache_file"
+
+        echo "Rebuilt rco cache."
+        return
+    else
+        local all_remote_branches="$(cat $cache_dir/$cache_file)"
+    fi
 
     if [[ $@ == "" ]]; then
-        branch="$(echo $all_remote_branches | fzf --exact --height 15%)"
+        branch="$(echo $all_remote_branches | fzf)"
     else
-        branch="$(echo $all_remote_branches | fzf --exact --height 15% -q "$@")"
+        branch="$(echo $all_remote_branches | fzf -q "$@")"
     fi
 
     if [[ $branch != "" ]]; then
