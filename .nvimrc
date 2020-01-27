@@ -515,7 +515,7 @@ if executable('fzf')
           \ }
 
     function! s:git_changed(...)
-        let l:source = (a:0 > 0 ? join(a:000) : 'git diff --name-only --diff-filter=d')
+        let l:source = (a:0 > 0 ? 'git diff --name-only ' . join(a:000) : 'git diff --name-only --diff-filter=d')
         call fzf#run({
             \   'source': l:source,
             \   'options': '--multi -i',
