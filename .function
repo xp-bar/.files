@@ -84,18 +84,6 @@ function dash(){
     fi
 }
 
-function cht() {
-    if [[ $@ == *""* ]]; then
-        hide;
-        tput clear;
-        cht.sh --shell;
-        wait;
-        show;
-    else
-        cht.sh $@;
-    fi
-}
-
 source ~/.koolaid
 
 function launch() {
@@ -153,12 +141,6 @@ function dirdiff() {
     clear;
     unfunction _difffunc
 }
-
-# myip() {
-#     myip="$(ifconfig | grep 'inet [0-9.]*' | grep -v '127.0.0.1' | sed 's/inet //g' | sed 's/netmask.*255//g' | tr -d '[:blank:]' | head -n 1)"
-#     echo "Your ip address is: "$myip;
-#     echo $myip | pbcopy;
-# }
 
 whathavewedone() {
     if [[ $1 != "" ]]; then
