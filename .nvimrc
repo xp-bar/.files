@@ -389,60 +389,8 @@ endfunction
 " }}}
 " }}}
 
-" Thanks @ian-paterson  https://github.com/ian-paterson
-"
-" goto blade partials
-" {{{
-nnoremap <leader>pg :call GoToPartial()<CR>
 
-function! GoToPartial()
-  normal "lyi'
-  let partial = @l
-  let file = substitute(partial, "\\.", "/", "g")
-  execute "edit resources/views/" . file . ".blade.php"
-endfunction
-" }}}
 
-" Go to vue component
-" {{{
-nnoremap <leader>vg :call GoToVue()<CR>
-
-function! GoToVue()
-  execute "set isk+=-"
-  normal "lyiw
-  execute "set isk-=-"
-  let filename = @l
-  let file = system("find resources/assets/js -name " . filename . ".vue")
-  execute "edit " . file
-endfunction
-" }}}
-
-function! s:blade_list(ArgLead, CmdLine, CursorPos)
-    let current_path = a:ArgLead
-    let flist = systemlist('ls -GHd ' . current_path . '*/')
-
-    if v:shell_error != 0
-        return []
-    endif
-
-    return flist
-endfunction
-
-function! s:blade_files(...)
-    let path = ""
-
-    if (a:0 == 1)
-        let path = a:1
-    endif
-
-    call fzf#run({
-        \ 'source': 'ack --blade -f ' . path,
-        \ 'sink': 'e',
-        \ 'down': '40%'
-        \ })
-endfunction
-
-command! -nargs=* -complete=customlist,s:blade_list Blade call s:blade_files(<f-args>)
 " }}}
 
 " Close all buffers except open one
@@ -682,23 +630,11 @@ cnoreabbrev make Make
 " }}}
 
 " Add a namespace declaration - php {{{
-function! NameSpace()
-    if (&ft=='php')
-        let l:root = $ROOT_NAMESPACE != "" ? $ROOT_NAMESPACE : 'Root'
-        let l:file = @%
-        let l:path = matchstr(l:file, '^\zs.*\ze\/.*\..*$')
-        let l:parsed = substitute(l:path, '^\zsapp\ze', l:root, '')
-        let l:namespace = 'namespace ' . substitute(l:parsed, '\/', '\', 'g') .';'
-        exe "normal ggj"
-        exe "normal \i\<cr>\<esc>" 
-        call setline('.', l:namespace)
-        exe "normal \o\<esc>" 
-    endif
-endfunction
-
 augroup phpNamespace
     autocmd!
-    autocmd FileType php noremap <Leader>n :call NameSpace()<CR>
+    command! -nargs=* Class call php#php#new_class(<f-args>)
+    autocmd FileType php noremap <Leader>c :call php#php#class()<CR>
+    autocmd FileType php noremap <Leader>n :call php#php#namespace()<CR>
 augroup END
 
 " }}}
@@ -786,6 +722,8 @@ augroup blade
 autocmd!
 autocmd BufNewFile,BufRead *.blade.php setlocal filetype=blade
 augroup END
+
+command! -nargs=* -complete=customlist,php#laravel#blade_list Blade call php#laravel#blade_files(<f-args>)
 
 Plugin 'leafgarland/typescript-vim'
 
