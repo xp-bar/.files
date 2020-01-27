@@ -26,6 +26,7 @@
     last = "![[ -e .git/hooks/LAST_CHECKOUT_TIME ]] && cat .git/hooks/LAST_CHECKOUT_TIME | awk -F '@' '{print $2\"@\"$1}' | sort |  awk -F '@' '{print $2\"@\"$1}' | tail -n 2 | head -n 1 | sed 's:@.*::g'"
     tag-archived = "! f() { git tag archive/$1 $1; }; f"
     checkout-archived = "! f() { git checkout -b $1 archive/$1; }; f"
+	base = "!git config repo.base-branch || echo \"\""
 [mergetool "fugitive"]
 	cmd = nvim -f \"$MERGED\"
 [merge]
