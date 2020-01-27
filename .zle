@@ -16,6 +16,9 @@ bindkey -M vicmd "j" down-line-or-beginning-search
 bindkey -M vicmd "^V" edit-command-line
 bindkey -M viins "^?" backward-delete-char
 
+# remove clear screen binding
+bindkey -r "^L"
+
 # re-enable history search with <C-r>
 bindkey "^R" history-incremental-search-backward
 
