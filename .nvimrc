@@ -809,6 +809,14 @@ let g:vdebug_keymap = {
 
 nnoremap <silent> <M-b> :Breakpoint<cr>
 nnoremap <silent> <M-r> :BreakpointRemove *<cr>
+
+" Database Markdown Language Syntax
+Plugin 'jidn/vim-dbml'
+
+augroup dbml
+autocmd!
+autocmd BufNewFile,BufRead *.dbml set syntax=dbml
+augroup END
 " }}}
 
 " --- Themimg --- {{{
