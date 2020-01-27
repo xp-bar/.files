@@ -84,7 +84,7 @@ function dash(){
     fi
 }
 
-source ~/.koolaid
+[[ -e $HOME/.koolaid ]] && source $HOME/.koolaid
 
 function launch() {
     if [[ $@ == "" ]]; then
