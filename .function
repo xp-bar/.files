@@ -670,9 +670,10 @@ function brwatch(){
 
 function co() {
     local all_branches="$(git branch | grep -v "\*")";
+    local branch=""
 
     if [[ $@ == "" ]]; then
-        git checkout $(echo "$all_branches" | fzf --exact --height 15%)
+        branch="$(echo "$all_branches" | fzf --height 15%)"
     else
         local branches="$(echo $all_branches | grep $@)"
         local wcount=$(echo $branches | wc -l | sed 's/[[:space:]]//g')
@@ -681,11 +682,13 @@ function co() {
             echo -e "\e[31mNo branches found with that name."
             return 1;
         elif [[ $wcount == 1 ]]; then
-            git checkout $(echo $branches | head -n 1)
+            branch="$(echo $branches | head -n 1)"
         else
-            git checkout $(echo "$branches" | fzf --exact --height 15% -q "$@")
+            branch="$(echo "$branches" | fzf --height 15% -q "$@")"
         fi
     fi
+
+    git checkout $branch
 }
 
 rco() {
