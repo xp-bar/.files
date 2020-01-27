@@ -36,3 +36,6 @@ function _z_widget() {
 zle -N _z_widget
 bindkey -M vicmd '^Z' _z_widget
 
+# line movement
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
