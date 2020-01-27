@@ -365,7 +365,7 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   call <sid>X('Title',        s:syntax_fg,     '',               'bold')
   call <sid>X('Visual',       '',              s:visual_grey,    '')
   call <sid>X('VisualNOS',    '',              s:visual_grey,    '')
-  call <sid>X('WarningMsg',   s:hue_5,         '',               '')
+  call <sid>X('WarningMsg',   s:hue_6,         '',               '')
   call <sid>X('TooLong',      s:hue_5,         '',               '')
   call <sid>X('WildMenu',     s:syntax_fg,     s:mono_3,         '')
   call <sid>X('SignColumn',   '',              s:syntax_bg,      '')
