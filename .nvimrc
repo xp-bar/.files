@@ -369,6 +369,8 @@ vnoremap <C-Up> :m '<-2<CR>gv=gv
 
 noremap <C-w><C-Up> :res +5<cr> 
 noremap <C-w><C-Down> :res -5<cr> 
+noremap <C-w><C-Left> :vert res +5<cr>
+noremap <C-w><C-Right> :vert res -5<cr>
 
 " visual shifting (builtin-repeat)
 vnoremap < <gv
