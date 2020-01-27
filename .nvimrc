@@ -531,7 +531,7 @@ end
 
 " }}}
 
-" Quickfix -- {{{
+" --- Quickfix -- {{{
 function! s:RemoveQFItem()
     let curqfidx = line('.') - 1
     let qfall = getqflist()
@@ -617,7 +617,7 @@ augroup phpImports
 augroup END
 " }}}
 
-
+" --- Additional PHP functions --- {{{
 function! s:tinker()
     silent execute '!echo "<?php\\n" > $TMPDIR/tinker'
     silent tabnew $TMPDIR/tinker
@@ -632,6 +632,7 @@ function! s:tinker()
 endfunction
 
 command! Tinker call s:tinker()
+" --- }}}
 
 " --- Make command --- {{{
 function! s:make_func(...)
