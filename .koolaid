@@ -15,7 +15,7 @@ function koolaid(){
     fi
     (for file in $files; do
         filename=$(echo $file | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//'); 
-        phpcs $filename --colors&;
+        phpcs $* $filename --colors&;
     done | sed 's/(phpcs $filename -q --colors)//g') | less
 }
 
