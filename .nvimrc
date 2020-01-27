@@ -444,12 +444,25 @@ Plugin 'tpope/vim-fugitive'
 
 nnoremap <silent><C-B> :Gblame<cr>
 
+
 " GV - git log browser
 Plugin 'junegunn/gv.vim'
 nnoremap <silent><leader>g :GV<cr>
 
-augroup diffgroup
+function! s:co_auth()
+    call inputsave()
+    let l:author = input('Author: ')
+    let l:email = input('Email: ')
+    call setline('.', ['Co-authored-by: ' . l:author . ' <' . l:email .'>'])
+    call inputrestore()
+endfunction
+
+command! GitCoAuth call s:co_auth()
+
+augroup gitgroup
+    autocmd!
     autocmd FileType diff setlocal foldlevel=1000
+    autocmd FileType gitcommit inoreabbrev co- <ESC>:GitCoAuth<CR>
 augroup END
 
 " ---- Tagbar ---- {{{
