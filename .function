@@ -641,16 +641,6 @@ function stack() {
 }
 
 
-# WEBPACK
-function dev(){
-	COMPONENT=$1
-	if [[ $COMPONENT ]]; then
-		npm run dev -- --env.noMaps --env.component=$COMPONENT
-	else
-		npm run dev -- --env.noMaps
-	fi
-}
-
 # GIT
 
 function pu(){
@@ -853,77 +843,6 @@ function nuke(){
     esac
 }
 
-
-
-# function nuke(){
-#     read response\?"Are you sure you want to nuke your changes? [y/n] "
-#     case "$response" in
-#         [yY][eE][sS]|[yY])
-#         git add . >& /dev/null;
-#         git reset HEAD --hard >& /dev/null;
-#         hide;
-#             echo "
-
-
-
-
-
-
-
-
-
-
-
-
-#             ";
-#             tput sc;
-#             # tput cuu1;
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "        {........}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "         {......}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "          {....}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "          {....}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "          {....}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "        {.{....}.}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "     {.{..{....}..}.}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "  {..{..{........}..}..}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "{.{..{...{ BOOM }...}..}.}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "  {..{..{........}..}..}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "   {..{..{......}..}..}";
-#             tput cuu1; tput cuu1;
-#             sleep 0.05;
-#             echo "     {..{..{..}..}..}";
-#             tput rc;
-#             echo "Now at commit: \e[0;31m$(git rev-parse HEAD)";
-#             read "?";
-#             show;
-#             ;;
-#         *)
-#             ;;
-#     esac
-# }
-
 function mkbr(){
     local INPUT=$1
     if [[ $INPUT = "" ]]; then
@@ -988,24 +907,6 @@ function dbr(){
     esac
 }
 
-# function rnbr(){
-#     INPUT=$1
-#     read -r -p "Are you sure you would like to rename branch ${INPUT}? Make sure no one else is working on it! [y/n] " response
-#     case "$response" in
-#         [yY][eE][sS]|[yY])
-#             git branch -m $(parse_git_branch) ${INPUT};
-#             echo "Renamed branch to ${INPUT}.";
-#             git push origin :$(parse_git_branch) ${INPUT};
-#             git push origin -u ${INPUT};
-#             echo "Pushed branch to remote."
-#             ;;
-#         *)
-#             echo "Branch left untouched."
-#             ;;
-#     esac
-# }
-# export -f rnbr
-
 function brup(){
     git push origin $1
     git branch --set-upstream-to=origin/$1 $1
@@ -1030,14 +931,6 @@ function dicount(){
             echo -e "\e[31m- $in\e[0m";
         fi
     done
-}
-
-function owiwwo(){
-    wwiwo | while read in; do atom $in; done
-}
-
-function openall(){
-    $1 | while read in; do atom $in; done
 }
 
 function lsearch() {

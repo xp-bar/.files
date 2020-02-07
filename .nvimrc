@@ -389,10 +389,6 @@ endfunction
 " }}}
 " }}}
 
-
-
-" }}}
-
 " Close all buffers except open one
 Plugin 'vim-scripts/BufOnly.vim'
 
@@ -485,8 +481,6 @@ Plugin 'airblade/vim-rooter'
 
 " ---- FZF Plugins for Fuzzy File Finding ---- {{{
 "  Fix Hanging
-let g:airline#extensions#branch#enabled = 0
-
 if executable('fzf')
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
@@ -853,7 +847,7 @@ let g:lightline.separator = {
 let g:lightline.subseparator = {
 	\   'left': '', 'right': '' 
   \}
-let g:airline#extensions#tabline#enabled = 0
+
 let g:lightline.tabline = {
   \   'left': [],
   \   'right': []
