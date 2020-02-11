@@ -20,10 +20,6 @@ unsetopt BG_NICE
 [[ -e ~/.zle ]] && source ~/.zle
 # }}}
 
-# get the fuck {{{
-eval $(thefuck --alias)
-# }}}
-
 # Fix memory leak from find on osx for fzf {{{
 # Use fd (https://github.com/sharkdp/fd) instead of the default find
 # command for listing path candidates.
