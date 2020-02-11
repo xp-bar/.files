@@ -678,7 +678,12 @@ function co() {
         fi
     fi
 
-    git checkout $branch
+    branch="$(echo $branch | sed 's:^[ ]*::g')"
+
+    if [[ $branch != "" ]]; then
+        git checkout "$branch"
+    fi
+
 }
 
 rco() {
