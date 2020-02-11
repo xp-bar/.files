@@ -822,20 +822,44 @@ Plugin 'itchyny/lightline.vim'
 " Hide -- INSERT --
 set noshowmode
 
+function! StatusDiagnostic() abort
+    let info = get(b:, 'coc_diagnostic_info', {})
+    if empty(info) | return '' | endif
+    let msgs = []
+    if get(info, 'error', 0)
+        call add(msgs, 'E' . info['error'])
+    endif
+    if get(info, 'warning', 0)
+        call add(msgs, 'W' . info['warning'])
+    endif
+    return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
+endfunction
+
+
 let g:lightline = {
       \ 'colorscheme': 'two',
       \ 'active': {
       \   'left': [
       \       [ 'mode', 'paste' ],
       \       [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+      \   ],
+      \   'right': [
+      \     [ 'lineinfo' ],
+      \     [ 'percent' ],
+      \     [ 'cocstatus', 'fileformat', 'fileencoding', 'filetype' ]
       \   ]
       \ },
       \ 'inactive': {
-      \   'left': [ [ 'mode', 'paste' ] ]
+      \   'left': [ [ 'mode', 'paste' ] ],
+      \   'right': [
+      \     [ 'lineinfo' ],
+      \     [ 'percent' ]
+      \   ]
       \ },
       \ 'component_function': {
       \   'mode': 'LightLineMode',
       \   'gitbranch': 'fugitive#head',
+      \   'cocstatus': 'StatusDiagnostic'
       \ },
       \ 'component_type': {
       \ },
