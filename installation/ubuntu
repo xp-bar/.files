@@ -16,7 +16,7 @@ apt install zsh
 brew install fortune cowsay figlet toilet
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 curl -sL git.io/antibody | sh -s
-chsh -s /usr/bin/zsh xp-bar
+chsh -s /usr/bin/zsh $USERNAME
 
 # packages
 sudo apt-get install nginx
