@@ -1,0 +1,27 @@
+#! /bin/zsh
+
+plugins=(
+    vi-mode
+    osx
+    thefuck
+)
+
+local ANTIBODY_STATIC=1
+local PLUGINS=""
+
+read -r -d '' PLUGINS << EOF
+ohmyzsh/oh-my-zsh
+zsh-users/zsh-completions
+mafredri/zsh-async
+MichaelAquilina/zsh-emojis
+xp-bar/zsh-bar-theme
+zsh-users/zsh-syntax-highlighting
+EOF
+
+if [[ $ANTIBODY_STATIC ]]; then
+    [[ ! -e ~/.zsh-plugins.sh ]] && antibody bundle < <(echo "$PLUGINS") > ~/.zsh-plugins.sh
+    source ~/.zsh-plugins.sh
+else
+    source <(antibody init)
+    antibody bundle < <(echo "$PLUGINS")
+fi

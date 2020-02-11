@@ -1,15 +1,12 @@
 export ZSH="$HOME/.oh-my-zsh"
 source $ZSH/oh-my-zsh.sh
 
+
 # Prevent nice calls on windows
 unsetopt BG_NICE
 
-# plugins {{{
-source <(antibody init)
-antibody bundle < ~/.zsh-plugins
-# }}}
-
 # aliases, functions, etc. {{{
+[[ -e ~/.antibody ]] && source ~/.antibody || echo "Plugins not loaded."
 [[ -e ~/.env ]] && source ~/.env
 [[ -e ~/.path ]] && source ~/.path
 [[ -e ~/.colors ]] && source ~/.colors
