@@ -14,7 +14,7 @@ eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 brew install gcc
 apt install zsh
 brew install fortune cowsay figlet toilet
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 curl -sL git.io/antibody | sh -s
 chsh -s /usr/bin/zsh xp-bar
 
