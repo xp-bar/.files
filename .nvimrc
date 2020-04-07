@@ -489,8 +489,38 @@ Plugin 'majutsushi/tagbar'
 
 let s:hidden_all = 1
 
-nnoremap <silent> <C-s> :TagbarToggle<cr>
-vnoremap <silent> <C-s> <esc>:TagbarOpen<cr> :TagbarCurrentTag<cr>
+function! s:tagbar_autopause()
+    let l:open = 0
+    let tagbarwinnr = -1
+
+    try
+        let tagbarwinnr = bufwinnr(t:tagbar_buf_name)
+    catch /^Vim(\a\+):E121:/
+        :TagbarOpen
+        :TagbarTogglePause
+        return
+    endtry
+
+    " let l:paused = tagbar#is_paused()
+
+    if tagbarwinnr != -1
+        let l:open = 1
+    endif
+
+    if l:open && winnr() == tagbarwinnr
+        :TagbarClose
+    elseif l:open && winnr() != tagbarwinnr
+        :TagbarOpen fj
+    elseif !l:open
+        :TagbarOpen
+    endif
+endfunction
+
+command! -bar TagbarFrozen call s:tagbar_autopause()
+
+" let g:tagbar_autofocus = 1
+nnoremap <silent> <C-s> :TagbarFrozen<cr>
+vnoremap <silent> <C-s> <esc>:TagbarOpen fj<cr> :TagbarCurrentTag<cr>
 " }}}
 
 " Managing quotations, surrounding brackets, etc. Made easier
