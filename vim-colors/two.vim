@@ -560,9 +560,6 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   call <sid>X('SignifySignAdd',    s:hue_4,   '', '')
   call <sid>X('SignifySignChange', s:hue_6_2, '', '')
   call <sid>X('SignifySignDelete', s:hue_5,   '', '')
-  hi link GitGutterAdd    SignifySignAdd
-  hi link GitGutterChange SignifySignChange
-  hi link GitGutterDelete SignifySignDelete
   call <sid>X('diffAdded',         s:hue_4,   '', '')
   call <sid>X('diffRemoved',       s:hue_5,   '', '')
   " }}}
@@ -874,6 +871,22 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   " ALE (Asynchronous Lint Engine) highlighting -----------------------------{{{
   call <sid>X('ALEWarningSign', s:hue_6_2, '', '')
   call <sid>X('ALEErrorSign', s:hue_5,   '', '')
+  " }}}
+  "
+  " GitGutter ----------------------------------------------------------------{{{
+  call <sid>X('GitGutterAdd',    s:hue_4,   '', '')
+  call <sid>X('GitGutterChange', s:hue_6_2, '', '')
+  call <sid>X('GitGutterDelete', s:hue_5,   '', '')
+  call <sid>X('GitGutterChangeDelete', s:hue_5_2,   '', '')
+
+  " call <sid>X('GitGutterAddLine',    s:syntax_bg_true, s:hue_4,   '')
+  " call <sid>X('GitGutterChangeLine', s:syntax_bg_true, s:hue_6_2, '')
+  " call <sid>X('GitGutterDeleteLine', s:syntax_bg_true, s:hue_5,   '')
+  " call <sid>X('GitGutterChangeDelete', s:syntax_bg_true, s:hue_5_2,   '')
+  call <sid>X('GitGutterAddLine',      s:hue_4,   s:mono_4, '')
+  call <sid>X('GitGutterChangeLine',   s:hue_6_2, s:mono_4, '')
+  call <sid>X('GitGutterDeleteLine',   s:hue_5,   s:mono_4, '')
+  call <sid>X('GitGutterChangeDelete', s:hue_5_2, s:mono_4, '')
   " }}}
 
   " Delete functions =========================================================={{{
