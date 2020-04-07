@@ -1,5 +1,19 @@
 #!/bin/zsh
 
+# helpers
+function _git_get_branches() {
+    IFS=" "
+    git branch | grep -v "\*" | sed 's:^[ ]*::g'
+}
+
+function _git_branch_completion() {
+    local -a commands
+    IFS=$'\n'
+    commands=(`_git_get_branches`)
+
+    _describe 'commands' commands
+}
+
 function brewfo() {
     brew info `brew list | awk '{print $1}' | fzf`
 }
@@ -117,6 +131,37 @@ st() {
     fi
 }
 
+function stashy() {
+    local long_stash=$(\
+        git stash list |\
+        fzf --ansi\
+            --no-sort\
+            --print-query\
+            --preview-window up:50:noborder\
+            --preview "git -c color.ui=always stash show -p \`echo {} | ack -o \"stash@\\{[0-9]*\\}\"\`" |\
+            \grep -v "^[ \t]*$" \
+    )
+
+    local stash="$(echo "$long_stash" | ack -o "stash@\{[0-9]*\}")"
+
+    if [[ $stash = "" ]]; then
+        echo "Okay."
+        return
+    fi
+
+    echo -e " $long_stash"
+    git --no-pager -c color.ui=always stash show $stash
+    read response\?"Pop this stash? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            git stash pop $stash
+            ;;
+        *)
+            ;;
+    esac
+
+}
+
 function dirdiff() {
     dirone=$1
     dirtwo=$2
@@ -140,26 +185,6 @@ function dirdiff() {
     done
     clear;
     unfunction _difffunc
-}
-
-whathavewedone() {
-    if [[ $1 != "" ]]; then
-        target=$1
-    else
-        target="head"
-    fi
-    git --no-pager log $target^..head --no-merges --reverse |
-        sed '/commit/d' |
-        sed '/Author: /d' |
-        sed '/Date: /d' |
-        sed '/^$/d' |
-        sed 's/^[ ]*/- /g' |
-        sed 's/\([[:<:]][Cc]hange[d]*[[:>:]]\)/\\\\e[33;1m\1\\\\e[0m/g' |
-        sed 's/\([[:<:]][Uu]pdate[d]*[[:>:]]\)/\\\\e[33;1m\1\\\\e[0m/g' |
-        sed 's/\([[:<:]][Aa]dd\(ed\)*[[:>:]]\)/\\\\e[32;1m\1\\\\e[0m/g' |
-        sed 's/\([[:<:]][Rr]emove[d]*[[:>:]]\)/\\\\e[31;1m\1\\\\e[0m/g' |
-        while read in; do echo -e $in; done |
-        less
 }
 
 function origin() {
@@ -242,8 +267,8 @@ function e(){
             echo -e "Editing \e[33m~/.$value\e[0m..."
             tput rc;
             sleep 0.2;
-            nvim ~/.$value;
-            source ~/.$value;
+            nvim $HOME/.$value;
+            source $HOME/.$value;
             tput sc;
             tput cuf 2;
             tput cuu1;
@@ -263,7 +288,7 @@ function e(){
             echo -e "Editing \e[33m~/.$value\e[0m..."
             tput rc;
             sleep 0.2;
-            nvim ~/.$value;
+            nvim $HOME/.$value;
             tput sc;
             tput cuf 2;
             tput cuu1;
@@ -330,6 +355,8 @@ function di() {
         git diff $@
     fi
 }
+
+compdef _git_branch_completion di
 
 function fdi() {
     local TARGET="head"
@@ -403,6 +430,8 @@ function din(){
     fi
 }
 
+compdef _git_branch_completion din
+
 function tclock(){
     DEFAULT_FONT="mono9"
     if [[ $1 == "" ]]; then
@@ -439,6 +468,10 @@ function tclockclear(){
 
 
 # PHP Artisan
+
+function artmk() {
+    php artisan make:$1 ${@:2}
+}
 
 function ting(){
     if [[ "$1" ]]; then
@@ -573,7 +606,7 @@ function logs() {
     done | less
 }
 
-TODOLIST=~/todo-list.md
+TODOLIST=$HOME/todo-list.md
 function todo(){
     if  [[ "$@" = *"-u"* ]] || [[ "$@" = *"--ugly"* ]]; then
         DISPLAY=cat
@@ -583,12 +616,12 @@ function todo(){
     if [[ "$@" != *"--inline"* ]]; then
         hide
     fi
-    cp ~/todo-list.md ~/.todo-list.bak >> /dev/null
+    cp $HOME/todo-list.md $HOME/.todo-list.bak >> /dev/null
     if [[ "$@" = *"-e"* ]] || [[ "$@" = *"--edit"* ]]; then
         nvim $TODOLIST
     else
         if [[ "$@" = *"-a"* ]] || [[ "$@" = *"--add"* ]]; then
-            echo "- "$2 >> ~/todo-list.md
+            echo "- "$2 >> $HOME/todo-list.md
         fi
         if [[ "$@" = *"--center"* ]]; then
             LINES=$(wc -l < $TODOLIST)
@@ -663,7 +696,7 @@ function co() {
     local branch=""
 
     if [[ $@ == "" ]]; then
-        branch="$(echo "$all_branches" | fzf --height 15%)"
+        branch="$(echo "$all_branches" | fzf --height 25%)"
     else
         local branches="$(echo $all_branches | grep $@)"
         local wcount=$(echo $branches | wc -l | sed 's/[[:space:]]//g')
@@ -686,6 +719,8 @@ function co() {
 
 }
 
+compdef _git_branch_completion co
+
 rco() {
     if [[ "$(git remote -v 2>&1 1>/dev/null; echo $?)" -gt 0 ]]; then
         echo "Not a git repo."
@@ -694,7 +729,7 @@ rco() {
 
     local all_remote_branches=""
     local branch=""
-    local cache_file="$(git remote -v | \grep fetch | ack -o '(?<=:).*(?=\.git)' | sed 's:[/\.]:_:g' | tr '[:upper:]' '[:lower:]')"
+    local cache_file="$(git remote -v | \grep fetch | ack -o '(?<=:)[^ ]*' | sed 's:\.git::g' | sed 's:[/\.]:_:g' | tr '[:upper:]' '[:lower:]')"
     local cache_dir="$HOME/.cache/rco"
 
     if [[ $* = *"--rebuild"* || ! -e $cache_dir/$cache_file ]]; then
@@ -766,6 +801,7 @@ function mg() {
     fi
 }
 
+compdef _git_branch_completion mg
 
 function brlist(){
         for x in $(br | NOT \* | NOT master | NOT staging | NOT remote);
@@ -912,6 +948,23 @@ function dbr(){
     esac
 }
 
+function _git_get_merged() {
+    IFS=" "
+    git branch --merged | grep -v "master\|mobile\|staging" | sed 's:^[ ]*::g'
+}
+
+function _dbr() {
+    local -a commands
+    IFS=$'\n'
+    commands=(`_git_get_merged`)
+
+    _describe 'commands' commands
+    # _arguments -C $commands
+}
+
+# should be registering with: compdef _dbr dbr
+compdef _dbr dbr
+
 function brup(){
     git push origin $1
     git branch --set-upstream-to=origin/$1 $1
@@ -1057,12 +1110,14 @@ gpr() {
     fi
 }
 
+compdef _git_branch_completion gpr
+
 
 mkalias(){
     if [[ $1 ]]; then
-        echo "alias $1='$2'" >> ~/.extra-aliases
+        echo "alias $1='$2'" >> $HOME/.extra-aliases
     fi
-    source ~/.extra-aliases
+    source $HOME/.extra-aliases
 }
 
 function fromroman () {
@@ -1139,7 +1194,7 @@ function rgo() {
         return 1;
     fi
 
-    local cache_dir='~/.cache/rgo'
+    local cache_dir="$HOME/.cache/rgo"
     local file_name="$(basename $(pwd))"
 
     if [[ $* = *"--rebuild"* ]]; then
@@ -1217,7 +1272,8 @@ function rgo() {
 
     if [[ $url != "" ]]; then
         url="$(echo "$url" | sed 's:^/::g')"
-        local full_url="$RGO_BASE_URL/$url"
+        local base_url=`grep "^APP_URL" .env | head -n 1 | sed 's:^APP_URL=::g'`
+        local full_url="$base_url/$url"
         echo -e "\e[34mOpening: $full_url"
         /usr/bin/open $full_url
     else
