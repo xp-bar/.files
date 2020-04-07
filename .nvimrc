@@ -155,7 +155,6 @@ augroup buffercmds
 augroup END
 " }}}
 
-
 " change between parens
 onoremap in( :<c-u>normal! f(vi(<cr>
 
@@ -182,6 +181,7 @@ packadd! xp-session
 let g:sessions_dir = '~/vim-sessions/'
 
 packadd! xp-where
+packadd! xp-text-casing
 packadd! xp-changed
 " --- }}}
 
