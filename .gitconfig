@@ -27,6 +27,13 @@
     tag-archived = "! f() { git tag archive/$1 $1; }; f"
     checkout-archived = "! f() { git checkout -b $1 archive/$1; }; f"
 	base = "!git config repo.base-branch || echo \"\""
+    ; stat = "! f() { git --no-pager diff --stat \"$(git merge-base HEAD \"${1:-HEAD^}\")\"; }; f"
+    stat = "! f() { \
+        git --no-pager diff --stat $(\
+        [[ $1 = *\"-f\"* ]] \
+            && echo $(git branch | grep -v '\\*' | sed 's:^[ ]*::g' | fzf) \
+            || echo $(git merge-base HEAD \"${1:-HEAD^}\")); \
+    } f"
 [mergetool "fugitive"]
 	cmd = nvim -f \"$MERGED\"
 [merge]
@@ -36,3 +43,5 @@
 	required = true
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
+[diff]
+	tool = vimdiff
