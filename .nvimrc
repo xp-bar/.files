@@ -729,9 +729,6 @@ Plugin 'pangloss/vim-javascript'
 inoreabbrev clog console.log();<Left><Left>
 inoreabbrev cgroup console.group();<cr><cr>console.log();<cr><cr>console.groupEnd();
 
-" Vue
-Plugin 'posva/vim-vue'
-
 " JS Doc
 Plugin 'heavenshell/vim-jsdoc'
 let g:jsdoc_allow_input_prompt=1
@@ -751,10 +748,14 @@ augroup END
 "  }}}
 
 " Typescript and Vue
+Plugin 'posva/vim-vue'
 Plugin 'Quramy/tsuquyomi'
 Plugin 'Quramy/tsuquyomi-vue'
 " let g:vue_disable_pre_processors=1
 let g:vue_pre_processors = ['typescript', 'scss']
+
+command! WebpackImport call vue#snippets#webpack_async_import()
+command! Vue call vue#snippets#vue_files()
 
 augroup syntaxcommands
     autocmd!
@@ -763,9 +764,10 @@ augroup syntaxcommands
     autocmd FileType sass setlocal omnifunc=csscomplete#CompleteCSS
     " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.css
     autocmd BufRead,BufNewFile *.vue setlocal filetype=vue
-    autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
+    " autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
     autocmd FileType vue syntax sync fromstart
     autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ --quiet\ $*\ %
+    autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ --quiet\ $*\ %
 augroup END
 
 augroup vueabbrevs
