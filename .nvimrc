@@ -275,8 +275,9 @@ nnoremap <leader><C-s> :Startify<cr>
 Plugin 'scrooloose/nerdtree'
 noremap <silent> <C-\> :NERDTreeToggle<CR>
 noremap <leader>\ :NERDTreeFind<CR>
-let NERDTreeHijackNetrw=1
-let NERDTreeIgnore = [
+let g:NERDTreeHijackNetrw = 1
+let g:NERDTreeQuitOnOpen = 1
+let g:NERDTreeIgnore = [
         \ '\.png$',
         \ '\.jpg$',
         \ '\.gif$',
@@ -305,8 +306,8 @@ let g:NERDTreeIndicatorMapCustom = {
         \ "Untracked" : "",
         \ "Renamed"   : ">",
         \ "Unmerged"  : "═",
-        \ "Deleted"   : "x",
-        \ "Dirty"     : "",
+        \ "Deleted"   : "-",
+        \ "Dirty"     : "~",
         \ "Clean"     : "",
         \ 'Ignored'   : '',
         \ "Unknown"   : ""
