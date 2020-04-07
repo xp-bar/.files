@@ -36,3 +36,5 @@ fi
 # }}}
 
 fpath=(~/.zsh.d/ $fpath)
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
