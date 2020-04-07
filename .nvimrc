@@ -319,6 +319,28 @@ let g:NERDTreeIndicatorMapCustom = {
 Plugin 'airblade/vim-gitgutter'
 
 let g:gitgutter_highlight_linenrs = 1
+
+function! s:do_review(branch)
+    let l:base_sha = substitute(system('git rev-parse ' . a:branch), '[^A-z0-9]', '', 'g')
+    let g:gitgutter_diff_base = l:base_sha
+
+    :GitGutterLineHighlightsEnable
+
+    set foldmethod=manual
+    set foldlevel=2
+
+    let l:files = systemlist('git diff --name-only ' . a:branch)
+
+    for file in l:files
+        exec 'e ' . file
+    endfor
+
+    " sleep 500m
+
+    " bufdo GitGutterFold
+endfunction
+
+command! -nargs=1 Review call s:do_review(<f-args>)
 " --- }}}
 
 " --- Buftabline --- {{{
