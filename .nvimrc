@@ -835,7 +835,15 @@ nmap <leader>RN <Plug>(coc-rename)
 nnoremap <silent> <leader>gl :Lines<CR>
 
 autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
-autocmd BufNewFile,BufRead *.swift set syntax=swift
+
+let g:swift_plugin_directory = $HOME . '/swift/apple/swift'
+
+if isdirectory(g:swift_plugin_directory)
+    Plugin 'file://' . g:swift_plugin_directory,
+                \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
+endif
+
+autocmd BufNewFile,BufRead *.swift set syntax=swift | set filetype=swift
 
 " xdebug for vim
 Plugin 'vim-vdebug/vdebug'
