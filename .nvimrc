@@ -734,7 +734,7 @@ inoreabbrev cgroup console.group();<cr><cr>console.log();<cr><cr>console.groupEn
 
 " JS Doc
 Plugin 'heavenshell/vim-jsdoc'
-let g:jsdoc_allow_input_prompt=1
+let g:jsdoc_allow_input_prompt=0
 let g:jsdoc_enable_es6=1
 let g:jsdoc_input_description=1
 let g:jsdoc_return_description=0
@@ -745,8 +745,8 @@ let g:jsdoc_return_description=0
 augroup documentors
     autocmd!
     autocmd FileType php nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr> 
-    autocmd FileType vue nnoremap <silent> <leader>d :JsDoc<cr>
-    autocmd FileType javascript nnoremap <silent> <leader>d :JsDoc<cr>
+    autocmd FileType vue nmap <silent> <leader>d <Plug>(jsdoc)
+    autocmd FileType javascript nmap <silent> <leader>d <Plug>(jsdoc)
 augroup END
 "  }}}
 
