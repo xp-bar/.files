@@ -769,8 +769,8 @@ augroup syntaxcommands
     autocmd BufRead,BufNewFile *.vue setlocal filetype=vue
     " autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
     autocmd FileType vue syntax sync fromstart
-    autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ --quiet\ $*\ %
-    autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ --quiet\ $*\ %
+    autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
+    autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ $*\ %
 augroup END
 
 augroup vueabbrevs
