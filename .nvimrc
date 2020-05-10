@@ -93,6 +93,9 @@ autocmd filetype crontab setlocal nobackup nowritebackup
 map <Space> <leader>
 
 vnoremap <silent> a- <esc>:setl nohlsearch<cr>?[^a-z-]<cr>:normal! ebmk<cr>/[^a-z-]<cr>:normal! beml<cr>:setl hlsearch \| noh<cr>`kv`l
+
+nmap ,* *<C-O>:%s///gn<CR>
+
 omap <silent> a- :normal Va-<cr>
 
 " -- }}}
