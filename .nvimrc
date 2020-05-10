@@ -831,6 +831,8 @@ augroup END
 " Remap for rename current word
 nmap <leader>RN <Plug>(coc-rename)
 
+"eslint
+command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint')['quiet'] ? v:false : v:true)
 " Installation: 
 " run coc#util#install()
 " run :CocInstall coc-phpls
