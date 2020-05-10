@@ -807,6 +807,7 @@ nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
+nmap <silent> gk <Plug>(coc-codeaction)
 
 nmap <silent> <leader>ga :call php#laravel#goto_attribute()<CR>
 
