@@ -47,6 +47,12 @@ set foldlevel=0
 set nowrap
 set colorcolumn=120
 
+set path+=**
+set wildmenu
+set wildignore+=**/node_modules/**
+set wildignore+=**/vendor/**
+set wildignore+=**/public/**
+
 " Python 3 path for windows
 if (has('macunix'))
     let g:python3_host_prog = '/usr/local/bin/python3'  " Python 3
