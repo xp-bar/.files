@@ -16,6 +16,7 @@ mafredri/zsh-async
 MichaelAquilina/zsh-emojis
 xp-bar/zsh-bar-theme
 zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-autosuggestions
 EOF
 
 if [[ $ANTIBODY_STATIC ]]; then
