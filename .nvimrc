@@ -991,6 +991,22 @@ command! -bang Qa :echom "QUACK!"
 command! Qa1 :echom "QUACK!"
 " }}}
 
+" --- Remove user (plugin) commands I don't use --- {{{
+function! s:clear_startify_commands()
+    " ---- Startify ---- {{{
+    delcommand SLoad
+    delcommand SSave
+    delcommand SDelete
+    delcommand SClose
+    delcommand StartifyDebug " may need to not delete this one for debug
+    " ---- }}}
+
+    delcommand Sexplore
+endfunction
+
+autocmd VimEnter * nested call s:clear_startify_commands()
+"  }}}
+
 " ===========================================================================
 
 call vundle#end()            " required
