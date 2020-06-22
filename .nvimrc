@@ -233,13 +233,13 @@ Plugin 'mhinz/vim-startify'
 " Startify config
 let g:startify_bookmarks = [
         \ {'~' : '~/'},
-        \ {'a' : '~/.alias'},
-        \ {'f' : '~/.function'},
-        \ {'v' : '~/.vimrc'},
-        \ {'t' : '~/.tmux.conf'},
-        \ {'z' : '~/.zshrc'},
-        \ {'p' : '~/.zsh-plugins'},
-        \ {'.' : '.git/hooks/'},
+        \ {'.a' : '~/.alias'},
+        \ {'.f' : '~/.function'},
+        \ {'.v' : '~/.vimrc'},
+        \ {'.t' : '~/.tmux.conf'},
+        \ {'.z' : '~/.zshrc'},
+        \ {'.p' : '~/.zsh-plugins'},
+        \ {'.h' : '.git/hooks/'},
         \ ]
 
 function! s:changed_files()
