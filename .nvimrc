@@ -750,8 +750,6 @@ augroup END
 
 " Typescript and Vue
 Plugin 'posva/vim-vue'
-Plugin 'Quramy/tsuquyomi'
-Plugin 'Quramy/tsuquyomi-vue'
 " let g:vue_disable_pre_processors=1
 let g:vue_pre_processors = ['typescript', 'scss']
 
