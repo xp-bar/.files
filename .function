@@ -938,7 +938,7 @@ function dbr(){
 
 function _git_get_merged() {
     IFS=" "
-    git branch --merged | grep -v "master\|mobile\|staging" | sed 's:^[ ]*::g'
+    git branch --merged | grep -v "master\|mobile\|staging\|\*" | sed 's:^[ ]*::g'
 }
 
 function _dbr() {
