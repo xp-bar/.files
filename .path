@@ -24,3 +24,7 @@ export PATH="$(npm get prefix)/bin:$PATH"
 if [[ ! "$PATH" == *$HOME/.fzf/bin* ]]; then
   export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
 fi
+
+
+# PHP 7.2 path
+export PATH="/usr/local/opt/php@7.2/bin:$PATH"
