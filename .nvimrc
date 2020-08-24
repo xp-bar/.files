@@ -738,6 +738,9 @@ Plugin 'tobyS/pdv'
 let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 " ---- }}}
 
+
+Plugin 'simnalamburt/vim-mundo'
+
 " }}}
 
 " --- Syntax --- {{{
