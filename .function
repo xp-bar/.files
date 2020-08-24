@@ -727,29 +727,8 @@ rco() {
         return
     fi
 
-    local all_remote_branches=""
     local branch=""
-    local cache_file="$(git remote -v | \grep fetch | ack -o '(?<=:)[^ ]*' | sed 's:\.git::g' | sed 's:[/\.]:_:g' | tr '[:upper:]' '[:lower:]')"
-    local cache_dir="$HOME/.cache/rco"
-
-    if [[ $* = *"--rebuild"* || ! -e $cache_dir/$cache_file ]]; then
-        local all_remote_branches="$(git ls-remote --heads origin | grep -o 'refs/heads/.*' | sed 's:refs/heads/::g')"
-
-        if [[ ! -d $cache_dir ]]; then
-            mkdir -p $cache_dir
-        fi
-
-        if [[ ! -e $cache_dir/$cache_file ]]; then
-            touch $cache_dir/$cache_file;
-        fi
-
-        echo "$all_remote_branches" > "$cache_dir/$cache_file"
-
-        echo "Rebuilt rco cache."
-        return
-    else
-        local all_remote_branches="$(cat $cache_dir/$cache_file)"
-    fi
+    local all_remote_branches="$(git ls-remote --heads origin | grep -o 'refs/heads/.*' | sed 's:refs/heads/::g')"
 
     if [[ $@ == "" ]]; then
         branch="$(echo $all_remote_branches | fzf)"
