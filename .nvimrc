@@ -60,6 +60,10 @@ elseif (has('unix') && substitute(system('which brew'), "\n", "", "") != "")
     let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'  " Python 3
 endif
 
+" --- indentation options --- {{{
+let g:PHP_noArrowMatching = 1
+" }}}
+
 " OSX stupid backspace fix
 set backspace=indent,eol,start
 
