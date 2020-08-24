@@ -51,7 +51,12 @@ alias art='php artisan'
 alias artm='art migrate'
 alias artrm='art migrate:rollback'
 alias arts='art db:seed'
-alias artc="art clear-compiled && art cache:clear && art route:clear && art config:clear && comp du && art view:clear"
+alias artc="php artisan clear-compiled && \
+php artisan cache:clear && \
+php artisan route:clear && \
+php artisan config:clear && \
+composer du && \
+php artisan view:clear"
 
 alias aql="art queue:listen --tries=3"
 alias aqw="php artisan queue:work --once"
