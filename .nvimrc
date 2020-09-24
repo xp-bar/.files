@@ -725,8 +725,6 @@ cnoreabbrev make Make
 augroup phpNamespace
     autocmd!
     command! -nargs=* Class call php#php#new_class(<f-args>)
-    autocmd FileType php noremap <Leader>c :call php#php#class()<CR>
-    autocmd FileType php noremap <Leader>n :call php#php#namespace()<CR>
 augroup END
 
 " }}}
