@@ -874,6 +874,9 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
 " Map function and class text objects (operator mappings for inner-function,
 " a-function, etc.)
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
