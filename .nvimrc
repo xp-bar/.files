@@ -843,6 +843,11 @@ nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
 nmap <silent> gk <Plug>(coc-codeaction)
 
+" Cursors
+nmap <silent> <leader>c <Plug>(coc-cursors-position)
+nmap <C-c> <Plug>(coc-cursors-operator)
+xmap <silent> <C-c> <Plug>(coc-cursors-range)
+
 nmap <silent> <leader>ga :call php#laravel#goto_attribute()<CR>
 
 function! s:show_documentation()
