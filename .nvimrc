@@ -870,6 +870,10 @@ augroup END
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
 "eslint
 command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint')['quiet'] ? v:false : v:true)
 " Installation: 
