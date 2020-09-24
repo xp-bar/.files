@@ -922,18 +922,19 @@ function fuz() {
 }
 
 function dbr(){
-    INPUT=$1
-    read response\?"Are you sure you would like to force delete branch ${INPUT}? [y/n] "
-    # read -r "Are you sure you would like to force delete branch ${INPUT}? [y/n] " response
-    case "$response" in
-        [yY][eE][sS]|[yY])
-            echo "Deleting branch...";
-            git branch -D ${INPUT};
-            ;;
-        *)
-            echo "Branch left untouched."
-            ;;
-    esac
+    for branch in $@; do
+        read response\?"Are you sure you would like to force delete branch ${branch}? [y/n] "
+
+        case "$response" in
+            [yY][eE][sS]|[yY])
+                echo "Deleting branch...";
+                git branch -D ${branch};
+                ;;
+            *)
+                echo "Branch left untouched."
+                ;;
+        esac
+    done
 }
 
 function _git_get_merged() {
