@@ -659,7 +659,7 @@ vnoremap <C-f> y /<C-r>"
 Plugin 'mattn/emmet-vim'
 
 let g:user_emmet_leader_key='<leader>' 
-let g:user_emmet_mode='n'
+let g:user_emmet_mode=''
 
 inoremap <C-Return> <cr><cr><C-o>k<Tab>
 " }}}
