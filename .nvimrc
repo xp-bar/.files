@@ -498,7 +498,6 @@ nnoremap <silent><C-B> :Gblame<cr>
 
 " GV - git log browser
 Plugin 'junegunn/gv.vim'
-nnoremap <silent><leader>g :GV<cr>
 
 function! s:co_auth()
     call inputsave()
