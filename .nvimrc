@@ -47,7 +47,7 @@ set foldlevel=0
 set nowrap
 set colorcolumn=120
 
-set path+=**
+set path+=./**
 set wildmenu
 set wildignore+=**/node_modules/**
 set wildignore+=**/vendor/**
