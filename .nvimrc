@@ -315,7 +315,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 
 
 " Custom indicator mappings for nerdtree-git-plugin
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
         \ "Modified"  : "*",
         \ "Staged"    : "+",
         \ "Untracked" : "",
