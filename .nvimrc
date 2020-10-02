@@ -926,7 +926,7 @@ command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint
 
 nnoremap <silent> <leader>gl :Lines<CR>
 
-autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+" autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 let g:swift_plugin_directory = $HOME . '/swift/apple/swift'
 
