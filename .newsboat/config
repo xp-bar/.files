@@ -5,4 +5,4 @@ color listnormal_unread   magenta default
 color listfocus_unread    red default bold
 color info                black default bold
 color article             white default
-browser "lynx -cfg='~/.lynx/lynx.cfg' -lss='~/.lynx/lynx.lss' %u"
+browser "open %u"
