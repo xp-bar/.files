@@ -606,12 +606,18 @@ if executable('fzf')
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
     
-    nnoremap <silent> <C-p> :call fzf#run({
-        \   'source': 'ack -f',
-        \   'options': '--multi -i',
+    command! -bang -nargs=? PFiles call fzf#run({
+        \   'source': 'ack -f ' . <q-args>,
+        \   'options': [
+        \       '--multi',
+        \       '-i',
+        \       '--preview', 'bat --theme=TwoDark --color=always {}',
+        \   ],
         \   'sink': 'e',
-        \   'down': '40%'
-        \   })<cr>
+        \   'window': { 'width': 0.9, 'height': 0.6 }
+        \   })
+
+    nnoremap <silent> <C-p> :PFiles<cr>
     nnoremap <silent> <M-p> :Buffers<cr>
     nnoremap <silent> <M-S-p> :History<cr>
   
