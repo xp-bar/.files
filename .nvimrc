@@ -148,6 +148,12 @@ cnoreabbrev ww setl wrap!|setl lbr!
 
 nnoremap <silent><esc><esc> :set nopaste<cr>
 
+function! s:trim_whitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
 " -- Auto Commands -- {{{
 augroup buffercmds 
     autocmd!
@@ -156,6 +162,9 @@ augroup buffercmds
     
     " Indent HTML files on save
     autocmd BufWritePre *.html :normal gg=G
+
+    " trailing whitespace on save
+    autocmd BufWritePre *.php :call s:trim_whitespace()
     
     " No linewrap html
     autocmd BufNewFile,BufRead *.html setlocal nowrap
