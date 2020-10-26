@@ -52,6 +52,8 @@ set wildmenu
 set wildignore+=**/node_modules/**
 set wildignore+=**/vendor/**
 set wildignore+=**/public/**
+" Hide -- INSERT --
+set noshowmode
 
 " Python 3 path for windows
 if (has('macunix'))
@@ -112,15 +114,7 @@ omap <silent> a- :normal Va-<cr>
 
 " Clear highlight after search
 nnoremap <silent><cr> :noh<CR><CR>:<backspace>
-
-" Quick Open vimrc while vim is open
-nnoremap <silent><leader>ev :vsplit $MYVIMRC<cr>
-
-" Quick Open vimrc while vim is open
-nnoremap <silent><leader>en :split $MYVIMRC<cr>
-
 nnoremap <leader>w :w<cr>
-
 vnoremap <leader>s :sort<cr>
 
 " -- Buffers -- {{{
@@ -141,8 +135,6 @@ nnoremap <leader>_ :sp<cr>
 vnoremap <leader>\| :vsp<cr>
 vnoremap <leader>_ :sp<cr>
 " -- }}}
-"
-vnoremap <leader>a <esc>ggVG"*y
 
 cnoreabbrev ww setl wrap!|setl lbr!
 
@@ -236,7 +228,6 @@ nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
 " halve the wait time for multi-key keybinds
 set ttm=25
-
 " }}}
 
 " --- User Interface --- {{{
@@ -290,7 +281,6 @@ let g:startify_custom_footer =
         \ )
 
 nnoremap <leader><C-s> :Startify<cr>
-
 "  }}}
 
 " ---- Sidebar NERDTree ---- {{{
@@ -322,7 +312,6 @@ let g:NERDTreeIgnore = [
 " Git File marking for NERDTree
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
-
 " Custom indicator mappings for nerdtree-git-plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
         \ "Modified"  : "*",
@@ -336,7 +325,6 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
         \ 'Ignored'   : '',
         \ "Unknown"   : ""
         \ }
-
 "  }}}
 
 " --- GitGutter --- {{{
@@ -529,9 +517,7 @@ command! Retag call s:Retag()
 
 " Git wrapper for vim
 Plugin 'tpope/vim-fugitive'
-
 nnoremap <silent><C-B> :Gblame<cr>
-
 
 " GV - git log browser
 Plugin 'junegunn/gv.vim'
@@ -569,8 +555,6 @@ function! s:tagbar_autopause()
         return
     endtry
 
-    " let l:paused = tagbar#is_paused()
-
     if tagbarwinnr != -1
         let l:open = 1
     endif
@@ -585,8 +569,6 @@ function! s:tagbar_autopause()
 endfunction
 
 command! -bar TagbarFrozen call s:tagbar_autopause()
-
-" let g:tagbar_autofocus = 1
 nnoremap <silent> <C-s> :TagbarFrozen<cr>
 vnoremap <silent> <C-s> <esc>:TagbarOpen fj<cr> :TagbarCurrentTag<cr>
 " }}}
@@ -601,7 +583,6 @@ Plugin 'justinmk/vim-sneak'
 Plugin 'airblade/vim-rooter'
 
 " ---- FZF Plugins for Fuzzy File Finding ---- {{{
-"  Fix Hanging
 if executable('fzf')
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
@@ -649,7 +630,6 @@ if executable('fzf')
     command! Modules FZF node_modules/
     command! -nargs=* GitChanged call s:git_changed(<f-args>)
 end
-
 " }}}
 
 " --- Quickfix -- {{{
@@ -658,7 +638,6 @@ function! s:RemoveQFItem()
     let qfall = getqflist()
     call remove(qfall, curqfidx)
     call setqflist(qfall, 'r')
-    " execute curqfidx + 1 . "cfirst"
     :copen
 endfunction
 
@@ -681,10 +660,8 @@ endfunction
 
 command! QfRemove :call s:RemoveQFItem()
 command! -nargs=* Qf :call s:AddQFItem(<f-args>)
-
 autocmd FileType qf map <buffer> dd :QfRemove<cr>
 nmap <silent> <leader>aq :Qf<cr>
-
 " }}}
 
 " ---- Ack for Vim ---- {{{
@@ -778,9 +755,7 @@ Plugin 'tobyS/pdv'
 let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 " ---- }}}
 
-
 Plugin 'simnalamburt/vim-mundo'
-
 " }}}
 
 " --- Syntax --- {{{
@@ -837,9 +812,7 @@ augroup syntaxcommands
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType scss setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType sass setlocal omnifunc=csscomplete#CompleteCSS
-    " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.css
     autocmd BufEnter,BufRead,BufNewFile *.vue set filetype=vue
-    " autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
     autocmd FileType vue syntax sync fromstart
     autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
     autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ $*\ %
@@ -849,9 +822,6 @@ augroup vueabbrevs
     autocmd!
     autocmd FileType vue inoreabbrev gscomp : {<CR><Tab>get() {<CR><CR>},<CR>set() {<CR><CR>}<CR>}, <Esc><<F%s<c-o>:call getchar()<CR>
 augroup END
-
-" Highlight Hex colors
-" Plugin 'etdev/vim-hexcolor'
 
 " Laravel
 Plugin 'jwalton512/vim-blade'
@@ -932,7 +902,7 @@ omap ic <Plug>(coc-classobj-i)
 xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
-"eslint
+" eslint
 command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint')['quiet'] ? v:false : v:true)
 " Installation: 
 " run coc#util#install()
@@ -990,9 +960,6 @@ augroup END
 " ---- Lightline for Vim ---- {{{
 
 Plugin 'itchyny/lightline.vim'
-
-" Hide -- INSERT --
-set noshowmode
 
 function! StatusDiagnostic() abort
     let info = get(b:, 'coc_diagnostic_info', {})
@@ -1082,7 +1049,6 @@ nnoremap <silent> <C-[> :syn sync fromstart<cr>
 " }}}
 
 " --- Fun Stuff --- {{{
-
 nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
