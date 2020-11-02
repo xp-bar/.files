@@ -45,6 +45,7 @@ set complete+=t
 set foldmethod=marker
 set foldlevel=0
 set nowrap
+set undofile
 set colorcolumn=120
 
 set path+=./**
