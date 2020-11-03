@@ -284,6 +284,10 @@ let g:startify_custom_footer =
 nnoremap <leader><C-s> :Startify<cr>
 "  }}}
 
+" -- Visual marks -- {{{
+Plugin 'kshenoy/vim-signature'
+"  }}}
+
 " ---- Sidebar NERDTree ---- {{{
 Plugin 'scrooloose/nerdtree'
 noremap <silent> <C-\> :NERDTreeToggle<CR>
