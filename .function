@@ -1186,6 +1186,15 @@ function icat() {
     fi
 }
 
+rdb() {
+    if [[ -e .env && $(cat .env | grep '^DB_DATABASE=') ]]; then
+        name=$(cat .env | sed -n "s:^DB_DATABASE=\(.*\):\1:p")
+        mycli -u root -h 127.0.0.1 -D $name
+    else
+        mycli -u root -h 127.0.0.1
+    fi
+}
+
 function rgo() {
     if [[ $(php artisan > /dev/null; echo $?) != 0 ]]; then
         echo "Sorry, artisan not found.";
