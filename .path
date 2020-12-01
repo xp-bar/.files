@@ -17,7 +17,7 @@ if [ -s "/home/linuxbrew/" ]; then
     eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 fi
 
-export PATH="$(npm get prefix)/bin:$PATH"
+# export PATH="$(npm get prefix)/bin:$PATH"
 
 [[ -e $HOME/.files/docs ]] && export MANPATH="$MANPATH:$HOME/.files/docs"
 
