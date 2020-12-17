@@ -453,6 +453,11 @@ function! LineBreakAt(bang, ...) range
     " Example: 10,20s/\%(arg1\|arg2\|arg3\)\ze./&\r/ge
     execute a:firstline . ',' . a:lastline . 's/'. l:find . '/' . repl . '/ge'
 
+    " reindent the lines
+    mark q
+    normal gvg`q=jk
+    delmarks q
+
     let @/ = save_search
 endfunction
 
