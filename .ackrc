@@ -148,9 +148,6 @@
 # Common graphics, just as an optimization
 --ignore-file=ext:gif,jpg,jpeg,png
 
-# Ignore ting*.php files
---ignore-file=match:/^(ting).*(\.php)/
-
 # Ignore ^__ files
 --ignore-file=match:/^(__).*/
 
