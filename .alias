@@ -48,9 +48,9 @@ alias fzf="fzf --prompt='\$ ' --tabstop=4 --color=dark,prompt:$mono_4,bg:-1,fg:$
 alias comp="composer"
 
 alias art='php artisan'
-alias artm='art migrate'
-alias artrm='art migrate:rollback'
-alias arts='art db:seed'
+alias artm='php artisan migrate'
+alias artrm='php artisan migrate:rollback'
+alias arts='php artisan db:seed'
 alias artc="php artisan clear-compiled && \
 php artisan cache:clear && \
 php artisan route:clear && \
@@ -58,7 +58,7 @@ php artisan config:clear && \
 composer du && \
 php artisan view:clear"
 
-alias aql="art queue:listen --tries=3"
+alias aql="php artisan queue:listen --tries=3"
 alias aqw="php artisan queue:work --once"
 alias tink="c; art tinker"
 alias c="clear"
