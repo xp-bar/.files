@@ -285,6 +285,10 @@ let g:startify_custom_footer =
 nnoremap <leader><C-s> :Startify<cr>
 "  }}}
 
+" -- Switch to absolute numbering when losing focus for a buffer -- {{{
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+" -- }}}
+
 " -- Visual marks -- {{{
 Plugin 'kshenoy/vim-signature'
 "  }}}
