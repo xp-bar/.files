@@ -260,8 +260,23 @@ function! s:changed_files()
         \ }')
 endfunction
 
+
+function! s:untracked_files()
+    let files = systemlist('git ls-files --others --exclude-standard')
+    if v:shell_error != 0
+        return []
+    endif
+
+    return map(files, '{
+            \ "line": v:val,
+            \  "cmd": "edit ". v:val
+        \ }')
+endfunction
+
+
 let g:startify_lists = [
-        \ { 'header': ['   Changed Files in: ' . substitute(system('git rev-parse --abbrev-ref HEAD'), '\n', '', 'g')], 'type': function('s:changed_files') },
+        \ { 'header': ['   Untracked Files:'], 'type': function('s:untracked_files') },
+        \ { 'header': ['   Changed Files on: ' . substitute(system('git rev-parse --abbrev-ref HEAD'), '\n', '', 'g')], 'type': function('s:changed_files') },
         \ { 'header': ['   Most Recently Used in '. getcwd()], 'type': 'dir' },
         \ { 'header': ['   Bookmarks'], 'type': 'bookmarks' },
         \ ]
