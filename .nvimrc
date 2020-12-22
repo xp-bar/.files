@@ -201,6 +201,20 @@ packadd! xp-text-casing
 packadd! xp-changed
 " --- }}}
 
+" --- Testing --- {{{
+Plugin 'vim-test/vim-test'
+
+let test#strategy = "neovim"
+let test#php#phpunit#executable = "./vendor/bin/phpunit"
+let test#php#phpunit#options = {
+  \ 'nearest': '-d memory_limit=2G --testdox',
+  \ 'file':    '-d memory_limit=2G --testdox',
+  \ 'suite':   '-d memory_limit=2G',
+\}
+let test#neovim#term_position = "vert botright"
+
+" --- }}}
+
 " Act like a typewriter
 " {{{
 nnoremap <leader>t :call TypeWriterToggle()<cr>
