@@ -834,7 +834,7 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'StanAngeloff/php.vim' 
 augroup php
 autocmd!
-autocmd BufNewFile,BufRead *.php setlocal foldlevel=10
+autocmd BufNewFile,BufRead *.php setlocal foldlevel=1000
 augroup END
 
 " Javascript
