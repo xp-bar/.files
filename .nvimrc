@@ -228,6 +228,26 @@ let test#php#phpunit#options = {
 \}
 let test#neovim#term_position = "vert botright"
 
+augroup phpunit
+autocmd!
+autocmd FileType php call s:phpunit_test_check()
+augroup END
+
+function! s:phpunit_test_check()
+    let n = 1
+    while getline(n) !~ 'class' && n < line("$")
+        let n = n + 1
+    endwhile
+
+    if getline(n) =~ 'extends\s\(.*\)TestCase'
+        nnoremap <silent> <leader>tn :TestNearest<CR>
+        nnoremap <silent> <leader>tf :TestFile<CR>
+        nnoremap <silent> <leader>ts :TestSuite<CR>
+        nnoremap <silent> <leader>t. :TestLast<CR>
+        nnoremap <silent> <leader>td :TestVisit<CR>
+    endif
+endfun
+
 " --- }}}
 
 " Navigate Tmux and Vim Seamlessly
