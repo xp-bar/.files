@@ -203,7 +203,7 @@ packadd! xp-changed
 
 " Act like a typewriter
 " {{{
-nnoremap <leader>t :call TypeWriterToggle()<cr>
+nnoremap <leader>tt :call TypeWriterToggle()<cr>
 
 function! TypeWriterToggle()
     if &scrolloff ==# "0"
