@@ -1,3 +1,4 @@
+#! /bin/zsh
 export mono_background='#282c34' # background color
 export mono_0='#636d83' # light grey
 export mono_1='#abb2bf' # #abb2bf
