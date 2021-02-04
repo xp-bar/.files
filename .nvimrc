@@ -475,7 +475,7 @@ nmap <leader>0 <Plug>BufTabLine.Go(10)
 " --- Goyo --- {{{
 Plugin 'junegunn/goyo.vim'
 let g:goyo_width = 120
-nnoremap <silent><leader>y :Goyo<cr>
+nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 " --- }}}
 
 " }}}
