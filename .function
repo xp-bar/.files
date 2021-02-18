@@ -1086,30 +1086,12 @@ function _collabs() {
 gpr() {
     local arg1=$1
     local base=${arg1:-"master"}
-    local assigned=""
-    local label=""
+    local branch=$(git rev-parse --abbrev-ref HEAD)
 
-    if [[ $@ == *"-a"* ]]; then
-        assigned="$(_collabs | fzf --header='Select an assignee:')"
-    fi
-
-    if [[ $@ == *"-l"* ]]; then
-        label="$(_labels | fzf --header='Select a label:')"
-    fi
-
-    if [[ $assigned != "" && $label != "" ]]; then
-        hub pull-request -a $assigned -r $assigned -l $label -b $base
-    elif [[ $assigned != "" && $label = "" ]]; then
-        hub pull-request -a $assigned -r $assigned -b $base
-    elif [[ $assigned = "" && $label != "" ]]; then
-        hub pull-request -l $label -b $base
-    else
-        hub pull-request -b $base
-    fi
+    hub pull-request -b $base
 }
 
 compdef _git_branch_completion gpr
-
 
 mkalias(){
     if [[ $1 ]]; then
