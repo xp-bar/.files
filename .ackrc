@@ -28,6 +28,12 @@
 # npm modules folder
 --ignore-directory=is:node_modules
 
+# sass cache folder
+--ignore-directory=is:.sass-cache
+
+# ignore the phpunit result cache
+--ignore-file=is:.phpunit.result.cache
+
 # Bazaar
 # http://bazaar.canonical.com/
 --ignore-directory=is:.bzr
