@@ -1189,9 +1189,9 @@ function icat() {
 rdb() {
     if [[ -e .env && $(cat .env | grep '^DB_DATABASE=') ]]; then
         name=$(cat .env | sed -n "s:^DB_DATABASE=\(.*\):\1:p")
-        mycli -u root -h 127.0.0.1 -D $name
+        mycli -u root -D $name
     else
-        mycli -u root -h 127.0.0.1
+        mycli -u root
     fi
 }
 
