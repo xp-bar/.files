@@ -694,16 +694,20 @@ if executable('fzf')
 
     command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
     
-    command! -bang -nargs=? PFiles call fzf#run({
-        \   'source': 'ack -f ' . <q-args>,
-        \   'options': [
-        \       '--multi',
-        \       '-i',
-        \       '--preview', 'bat --theme=TwoDark --color=always {}',
-        \   ],
-        \   'sink': 'e',
-        \   'window': { 'width': 0.9, 'height': 0.6 }
-        \   })
+    command! -bang -nargs=? -complete=dir PFiles call fzf#vim#files(
+        \   <q-args>,
+        \   fzf#vim#with_preview(
+        \       {
+        \           'options': [
+        \               '--multi',
+        \               '-i',
+        \               '--preview', 'bat --theme=TwoDark --color=always {}',
+        \           ],
+        \          'window': { 'width': 0.9, 'height': 0.6 }
+        \       }
+        \   ),
+        \   <bang>0
+        \)
 
     nnoremap <silent> <C-p> :PFiles<cr>
     nnoremap <silent> <M-p> :Buffers<cr>
