@@ -159,6 +159,7 @@ augroup buffercmds
 
     " trailing whitespace on save
     autocmd BufWritePre *.php :call s:trim_whitespace()
+    autocmd BufWritePre *.md :call s:trim_whitespace()
     
     " No linewrap html
     autocmd BufNewFile,BufRead *.html setlocal nowrap
