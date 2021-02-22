@@ -2,8 +2,6 @@
 
 plugins=(
     vi-mode
-    osx
-    thefuck
 )
 
 local ANTIBODY_STATIC=1
