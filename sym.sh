@@ -2,6 +2,7 @@ ln -sv $PWD/.global_gitignore ~/.gitignore
 ln -sv $PWD/.gitconfig ~
 ln -sv $PWD/.colors ~
 ln -sv $PWD/.alias ~
+ln -sv $PWD/.antibody ~
 ln -sv $PWD/.function ~
 ln -sv $PWD/.lynx/ ~
 ln -sv $PWD/.newsboat ~
