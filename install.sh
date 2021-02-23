@@ -48,8 +48,7 @@ brew install nginx
 brew install ninja
 brew install node
 brew install nyancat
-brew install php
-brew install php@7.1
+brew install php@7.4
 brew install pipes-sh
 brew install pv
 brew install rainbarf
@@ -77,11 +76,16 @@ brew install gotop
 
 
 # -- cask installs -- {{{
+brew cask install slack
+brew cask install postman
 brew cask install spotify
-brew cask install vivaldi
-brew cask install sequelpro
 brew cask install keepassx@0.4.4 
-brew cask install figma
+
+# browsers
+brew cask install google-chrome
+brew cask install google-chrome-canary
+brew cask install firefox
+brew cask install firefox-developer-edition
 # -- }}}
 
 # -- npm installations -- {{{
