@@ -107,6 +107,7 @@ rm -rf fonts
 # -- valet installation -- {{{
 composer global require larvel/valet
 valet install
+valet use php@7.4
 valet domain localhost
 valet restart
 # -- }}}
