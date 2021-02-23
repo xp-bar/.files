@@ -11,7 +11,7 @@ brew tap homebrew/versions
 
 # -- sqlcheck tap and install -- {{{
 brew tap gwerbin/tap
-brew cask install gwerbin/tap/sqlcheck
+brew install --cask gwerbin/tap/sqlcheck
 # }}}
 
 # -- homebrew installations -- {{{
@@ -74,16 +74,16 @@ brew install gotop
 
 
 # -- cask installs -- {{{
-brew cask install slack
-brew cask install postman
-brew cask install spotify
-brew cask install keepassx@0.4.4 
+brew install --cask slack
+brew install --cask postman
+brew install --cask spotify
+brew install --cask keepassx@0.4.4
 
 # browsers
-brew cask install google-chrome
-brew cask install google-chrome-canary
-brew cask install firefox
-brew cask install firefox-developer-edition
+brew install --cask google-chrome
+brew install --cask google-chrome-canary
+brew install --cask firefox
+brew install --cask firefox-developer-edition
 # -- }}}
 
 # -- npm installations -- {{{
