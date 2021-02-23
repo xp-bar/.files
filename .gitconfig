@@ -35,6 +35,7 @@
             && echo $(git branch | grep -v '\\*' | sed 's:^[ ]*::g' | fzf) \
             || echo $(git merge-base HEAD \"${1:-HEAD^}\")); \
     } f"
+    ancestor = "!zsh -c 'git show $([[ ${#@} -gt 1 ]] && echo ${@:1:-1}) $(diff -u <(git rev-list --first-parent \"${@[-1]:-master}\") <(git rev-list --first-parent \"${2:-HEAD}\") | sed -ne \"s/^ //p\" | head -1)' -"
 [mergetool "fugitive"]
 	cmd = nvim -f \"$MERGED\"
 [merge]

@@ -10,6 +10,7 @@ robbyrussell/oh-my-zsh folder:plugins/npm
 robbyrussell/oh-my-zsh folder:plugins/pod
 # ascii-soup/zsh-url-highlighter folder:url
 zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
 mafredri/zsh-async
 MichaelAquilina/zsh-emojis
 xp-bar/zsh-bar-theme

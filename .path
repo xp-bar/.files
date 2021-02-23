@@ -17,10 +17,18 @@ if [ -s "/home/linuxbrew/" ]; then
     eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
 fi
 
-export PATH="$(npm get prefix)/bin:$PATH"
+# export PATH="$(npm get prefix)/bin:$PATH"
 
 [[ -e $HOME/.files/docs ]] && export MANPATH="$MANPATH:$HOME/.files/docs"
 
 if [[ ! "$PATH" == *$HOME/.fzf/bin* ]]; then
   export PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
 fi
+
+# PHP 7.2 path
+# export PATH="/usr/local/opt/php@7.2/bin:$PATH"
+# export PATH="/usr/local/opt/php@7.4/bin:$PATH"
+# export PATH="/usr/local/opt/php@7.4/sbin:$PATH"
+
+# openssl 1.1
+# export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"

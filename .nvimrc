@@ -28,6 +28,7 @@ Plugin 'VundleVim/Vundle.vim'
 
 " ---- Native Options ---- {{{
 set number numberwidth=4
+set number relativenumber
 set shiftwidth=4  " operation >> indents 4 columns; << unindents 4 columns
 set tabstop=4     " a hard TAB displays as 4 columns
 set expandtab     " insert spaces when hitting TABs
@@ -45,7 +46,16 @@ set complete+=t
 set foldmethod=marker
 set foldlevel=0
 set nowrap
+set undofile
 set colorcolumn=120
+
+set path+=./**
+set wildmenu
+set wildignore+=**/node_modules/**
+set wildignore+=**/vendor/**
+set wildignore+=**/public/**
+" Hide -- INSERT --
+set noshowmode
 
 " Python 3 path for windows
 if (has('macunix'))
@@ -53,6 +63,10 @@ if (has('macunix'))
 elseif (has('unix') && substitute(system('which brew'), "\n", "", "") != "")
     let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'  " Python 3
 endif
+
+" --- indentation options --- {{{
+let g:PHP_noArrowMatching = 1
+" }}}
 
 " OSX stupid backspace fix
 set backspace=indent,eol,start
@@ -102,15 +116,7 @@ omap <silent> a- :normal Va-<cr>
 
 " Clear highlight after search
 nnoremap <silent><cr> :noh<CR><CR>:<backspace>
-
-" Quick Open vimrc while vim is open
-nnoremap <silent><leader>ev :vsplit $MYVIMRC<cr>
-
-" Quick Open vimrc while vim is open
-nnoremap <silent><leader>en :split $MYVIMRC<cr>
-
 nnoremap <leader>w :w<cr>
-
 vnoremap <leader>s :sort<cr>
 
 " -- Buffers -- {{{
@@ -131,12 +137,16 @@ nnoremap <leader>_ :sp<cr>
 vnoremap <leader>\| :vsp<cr>
 vnoremap <leader>_ :sp<cr>
 " -- }}}
-"
-vnoremap <leader>a <esc>ggVG"*y
 
 cnoreabbrev ww setl wrap!|setl lbr!
 
 nnoremap <silent><esc><esc> :set nopaste<cr>
+
+function! s:trim_whitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
 
 " -- Auto Commands -- {{{
 augroup buffercmds 
@@ -146,6 +156,10 @@ augroup buffercmds
     
     " Indent HTML files on save
     autocmd BufWritePre *.html :normal gg=G
+
+    " trailing whitespace on save
+    autocmd BufWritePre *.php :call s:trim_whitespace()
+    autocmd BufWritePre *.md :call s:trim_whitespace()
     
     " No linewrap html
     autocmd BufNewFile,BufRead *.html setlocal nowrap
@@ -186,11 +200,43 @@ let g:sessions_dir = '~/vim-sessions/'
 packadd! xp-where
 packadd! xp-text-casing
 packadd! xp-changed
+
+function! s:hidden(...)
+    let l:listchars = ''
+    if a:0 == 0
+        let l:listchars='tab:>\ ,space:·,nbsp:␣,trail:-,eol:$'
+    else
+        for i in a:000
+            if i == 'tab'
+                let l:listchars = l:listchars . 'tab:>\ ,'
+            elseif i == 'space'
+                let l:listchars = l:listchars . 'space:·,'
+            elseif i == 'nbsp'
+                let l:listchars = l:listchars . 'nbsp:␣,'
+            elseif i == 'trail'
+                let l:listchars = l:listchars . 'trail:-,'
+            elseif i == 'eol'
+                let l:listchars = l:listchars . 'eol:$,'
+            endif
+        endfor
+    endif
+
+    let &listchars = substitute(l:listchars, ',$', '', '')
+
+    if &list == 'nolist'
+        set list
+    else
+        set nolist
+    endif
+endfunction
+
+command! -nargs=* Hidden call s:hidden(<f-args>)
+
 " --- }}}
 
 " Act like a typewriter
 " {{{
-nnoremap <leader>t :call TypeWriterToggle()<cr>
+nnoremap <leader>tt :call TypeWriterToggle()<cr>
 
 function! TypeWriterToggle()
     if &scrolloff ==# "0"
@@ -202,6 +248,40 @@ function! TypeWriterToggle()
     endif
 endfunction
 " }}}
+
+" --- Testing --- {{{
+Plugin 'vim-test/vim-test'
+
+let test#strategy = "neovim"
+let test#php#phpunit#executable = "./vendor/bin/phpunit"
+let test#php#phpunit#options = {
+  \ 'nearest': '-d memory_limit=2G --testdox',
+  \ 'file':    '-d memory_limit=2G --testdox',
+  \ 'suite':   '-d memory_limit=2G',
+\}
+let test#neovim#term_position = "vert botright"
+
+augroup phpunit
+autocmd!
+autocmd FileType php call s:phpunit_test_check()
+augroup END
+
+function! s:phpunit_test_check()
+    let n = 1
+    while getline(n) !~ 'class' && n < line("$")
+        let n = n + 1
+    endwhile
+
+    if getline(n) =~ 'extends\s\(.*\)TestCase'
+        nnoremap <silent> <leader>tn :TestNearest<CR>
+        nnoremap <silent> <leader>tf :TestFile<CR>
+        nnoremap <silent> <leader>ts :TestSuite<CR>
+        nnoremap <silent> <leader>t. :TestLast<CR>
+        nnoremap <silent> <leader>td :TestVisit<CR>
+    endif
+endfun
+
+" --- }}}
 
 " Navigate Tmux and Vim Seamlessly
 " {{{
@@ -217,7 +297,6 @@ nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
 " halve the wait time for multi-key keybinds
 set ttm=25
-
 " }}}
 
 " --- User Interface --- {{{
@@ -227,13 +306,13 @@ Plugin 'mhinz/vim-startify'
 " Startify config
 let g:startify_bookmarks = [
         \ {'~' : '~/'},
-        \ {'a' : '~/.alias'},
-        \ {'f' : '~/.function'},
-        \ {'v' : '~/.vimrc'},
-        \ {'t' : '~/.tmux.conf'},
-        \ {'z' : '~/.zshrc'},
-        \ {'p' : '~/.zsh-plugins'},
-        \ {'.' : '.git/hooks/'},
+        \ {'.a' : '~/.alias'},
+        \ {'.f' : '~/.function'},
+        \ {'.v' : '~/.vimrc'},
+        \ {'.t' : '~/.tmux.conf'},
+        \ {'.z' : '~/.zshrc'},
+        \ {'.p' : '~/.zsh-plugins'},
+        \ {'.h' : '.git/hooks/'},
         \ ]
 
 function! s:changed_files()
@@ -248,8 +327,23 @@ function! s:changed_files()
         \ }')
 endfunction
 
+
+function! s:untracked_files()
+    let files = systemlist('git ls-files --others --exclude-standard')
+    if v:shell_error != 0
+        return []
+    endif
+
+    return map(files, '{
+            \ "line": v:val,
+            \  "cmd": "edit ". v:val
+        \ }')
+endfunction
+
+
 let g:startify_lists = [
-        \ { 'header': ['   Changed Files in: ' . substitute(system('git rev-parse --abbrev-ref HEAD'), '\n', '', 'g')], 'type': function('s:changed_files') },
+        \ { 'header': ['   Untracked Files:'], 'type': function('s:untracked_files') },
+        \ { 'header': ['   Changed Files on: ' . substitute(system('git rev-parse --abbrev-ref HEAD'), '\n', '', 'g')], 'type': function('s:changed_files') },
         \ { 'header': ['   Most Recently Used in '. getcwd()], 'type': 'dir' },
         \ { 'header': ['   Bookmarks'], 'type': 'bookmarks' },
         \ ]
@@ -271,7 +365,14 @@ let g:startify_custom_footer =
         \ )
 
 nnoremap <leader><C-s> :Startify<cr>
+"  }}}
 
+" -- Switch to absolute numbering when losing focus for a buffer -- {{{
+Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+" -- }}}
+
+" -- Visual marks -- {{{
+Plugin 'kshenoy/vim-signature'
 "  }}}
 
 " ---- Sidebar NERDTree ---- {{{
@@ -296,14 +397,15 @@ let g:NERDTreeIgnore = [
         \ '\.tar.gz$',
         \ '\.rar$',
         \ '\.DS_Store$',
+        \ '__.*$',
+        \ 'ting.*\.php',
         \ ]
         
 " Git File marking for NERDTree
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
-
 " Custom indicator mappings for nerdtree-git-plugin
-let g:NERDTreeIndicatorMapCustom = {
+let g:NERDTreeGitStatusIndicatorMapCustom = {
         \ "Modified"  : "*",
         \ "Staged"    : "+",
         \ "Untracked" : "",
@@ -315,7 +417,6 @@ let g:NERDTreeIndicatorMapCustom = {
         \ 'Ignored'   : '',
         \ "Unknown"   : ""
         \ }
-
 "  }}}
 
 " --- GitGutter --- {{{
@@ -375,7 +476,7 @@ nmap <leader>0 <Plug>BufTabLine.Go(10)
 " --- Goyo --- {{{
 Plugin 'junegunn/goyo.vim'
 let g:goyo_width = 120
-nnoremap <silent><leader>y :Goyo<cr>
+nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 " --- }}}
 
 " }}}
@@ -413,6 +514,36 @@ function! Mapped(fn, l)
     return new_list
 endfunction
 " }}}
+
+" https://vim.fandom.com/wiki/Add_a_newline_after_given_patterns
+function! LineBreakAt(bang, ...) range
+    let save_search = @/
+
+    if empty(a:bang)
+        let before = ''
+        let after = '\ze.'
+        let repl = '&\r'
+    else
+        let before = '.\zs'
+        let after = ''
+        let repl = '\r&'
+    endif
+    " let l:pat_list = map(deepcopy(a:000), "escape(v:val, '/\\.*$^~[')")
+    let l:pat_list = map(deepcopy(a:000), "escape(v:val, '/\\.*$^~')")
+    let l:find = empty(l:pat_list) ? @/ : join(l:pat_list, '\|')
+    let l:find = before . '\%(' . l:find . '\)' . after
+    " Example: 10,20s/\%(arg1\|arg2\|arg3\)\ze./&\r/ge
+    execute a:firstline . ',' . a:lastline . 's/'. l:find . '/' . repl . '/ge'
+
+    " reindent the lines
+    mark q
+    normal gvg`q=jk
+    delmarks q
+
+    let @/ = save_search
+endfunction
+
+command! -bang -nargs=* -range Unjoin <line1>,<line2>call LineBreakAt('<bang>', <f-args>)
 " }}}
 
 " Close all buffers except open one
@@ -435,20 +566,40 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 
+let g:easy_align_delimiters = {
+\    '>': {
+\        'pattern': '>>\|=>\|->\|>'
+\    },
+\    '/': {
+\        'pattern':         '//\+\|/\*\|\*/',
+\        'delimiter_align': 'l',
+\        'ignore_groups':   ['!Comment']
+\    },
+\    ']': {
+\        'pattern':       '[[\]]',
+\        'left_margin':   0,
+\        'right_margin':  0,
+\        'stick_to_left': 0
+\    },
+\    ')': {
+\        'pattern':       '[()]',
+\        'left_margin':   0,
+\        'right_margin':  0,
+\        'stick_to_left': 0
+\    },
+\    'd': {
+\        'pattern':      ' \(\S\+\s*[;=]\)\@=',
+\        'left_margin':  0,
+\        'right_margin': 0
+\    }
+\ }
+
 " }}}
 
 " Custom function to wrap a line in debugbar wrappers
 function! s:DebugBar(key)
-    normal O\Debugbar::startMeasure('REPLACE_ME', 'REPLACE_ME');jk
-    let replacement = a:key
-    let line = getline('.')
-    let result = substitute(line, "REPLACE_ME", replacement, "g")
-    call setline('.', result)
-    normal jo\Debugbar::stopMeasure('REPLACE_ME');jk
-    let line = getline('.')
-    let result = substitute(line, "REPLACE_ME", replacement, "g")
-    call setline('.', result)
-    normal k_
+    call append(line('.') - 1, ["\\Debugbar::startMeasure('" . a:key . "', '" . a:key . "');"])
+    call append(line('.'), ["\\Debugbar::stopMeasure('" . a:key . "');"])
 endfunction
 
 command! -nargs=1 DebugBar call s:DebugBar(<f-args>)
@@ -463,13 +614,10 @@ command! Retag call s:Retag()
 
 " Git wrapper for vim
 Plugin 'tpope/vim-fugitive'
-
 nnoremap <silent><C-B> :Gblame<cr>
-
 
 " GV - git log browser
 Plugin 'junegunn/gv.vim'
-nnoremap <silent><leader>g :GV<cr>
 
 function! s:co_auth()
     call inputsave()
@@ -504,8 +652,6 @@ function! s:tagbar_autopause()
         return
     endtry
 
-    " let l:paused = tagbar#is_paused()
-
     if tagbarwinnr != -1
         let l:open = 1
     endif
@@ -520,8 +666,6 @@ function! s:tagbar_autopause()
 endfunction
 
 command! -bar TagbarFrozen call s:tagbar_autopause()
-
-" let g:tagbar_autofocus = 1
 nnoremap <silent> <C-s> :TagbarFrozen<cr>
 vnoremap <silent> <C-s> <esc>:TagbarOpen fj<cr> :TagbarCurrentTag<cr>
 " }}}
@@ -536,17 +680,36 @@ Plugin 'justinmk/vim-sneak'
 Plugin 'airblade/vim-rooter'
 
 " ---- FZF Plugins for Fuzzy File Finding ---- {{{
-"  Fix Hanging
 if executable('fzf')
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
+
+    function! RipgrepFzf(query, fullscreen)
+        let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+        let initial_command = printf(command_fmt, shellescape(a:query))
+        let reload_command = printf(command_fmt, '{q}')
+        let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+        call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+    endfunction
+
+    command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
     
-    nnoremap <silent> <C-p> :call fzf#run({
-        \   'source': 'ack -f',
-        \   'options': '--multi -i',
-        \   'sink': 'e',
-        \   'down': '40%'
-        \   })<cr>
+    command! -bang -nargs=? -complete=dir PFiles call fzf#vim#files(
+        \   <q-args>,
+        \   fzf#vim#with_preview(
+        \       {
+        \           'options': [
+        \               '--multi',
+        \               '-i',
+        \               '--preview', 'bat --theme=TwoDark --color=always {}',
+        \           ],
+        \          'window': { 'width': 0.9, 'height': 0.6 }
+        \       }
+        \   ),
+        \   <bang>0
+        \)
+
+    nnoremap <silent> <C-p> :PFiles<cr>
     nnoremap <silent> <M-p> :Buffers<cr>
     nnoremap <silent> <M-S-p> :History<cr>
   
@@ -578,7 +741,6 @@ if executable('fzf')
     command! Modules FZF node_modules/
     command! -nargs=* GitChanged call s:git_changed(<f-args>)
 end
-
 " }}}
 
 " --- Quickfix -- {{{
@@ -587,7 +749,6 @@ function! s:RemoveQFItem()
     let qfall = getqflist()
     call remove(qfall, curqfidx)
     call setqflist(qfall, 'r')
-    " execute curqfidx + 1 . "cfirst"
     :copen
 endfunction
 
@@ -610,10 +771,8 @@ endfunction
 
 command! QfRemove :call s:RemoveQFItem()
 command! -nargs=* Qf :call s:AddQFItem(<f-args>)
-
 autocmd FileType qf map <buffer> dd :QfRemove<cr>
 nmap <silent> <leader>aq :Qf<cr>
-
 " }}}
 
 " ---- Ack for Vim ---- {{{
@@ -697,8 +856,6 @@ cnoreabbrev make Make
 augroup phpNamespace
     autocmd!
     command! -nargs=* Class call php#php#new_class(<f-args>)
-    autocmd FileType php noremap <Leader>c :call php#php#class()<CR>
-    autocmd FileType php noremap <Leader>n :call php#php#namespace()<CR>
 augroup END
 
 " }}}
@@ -709,6 +866,7 @@ Plugin 'tobyS/pdv'
 let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 " ---- }}}
 
+Plugin 'simnalamburt/vim-mundo'
 " }}}
 
 " --- Syntax --- {{{
@@ -723,7 +881,7 @@ Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'StanAngeloff/php.vim' 
 augroup php
 autocmd!
-autocmd BufNewFile,BufRead *.php setlocal foldlevel=2
+autocmd BufNewFile,BufRead *.php setlocal foldlevel=1000
 augroup END
 
 " Javascript
@@ -752,22 +910,20 @@ augroup END
 
 " Typescript and Vue
 Plugin 'posva/vim-vue'
-Plugin 'Quramy/tsuquyomi'
-Plugin 'Quramy/tsuquyomi-vue'
 " let g:vue_disable_pre_processors=1
 let g:vue_pre_processors = ['typescript', 'scss']
 
 command! WebpackImport call vue#snippets#webpack_async_import()
 command! Vue call vue#snippets#vue_files()
+command! Mutator call vue#snippets#set_mutator()
+command! Getter call vue#snippets#get_getter()
 
 augroup syntaxcommands
     autocmd!
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType scss setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType sass setlocal omnifunc=csscomplete#CompleteCSS
-    " autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.css
-    autocmd BufRead,BufNewFile *.vue setlocal filetype=vue
-    " autocmd BufRead,BufNewFile *.vue setlocal commentstring=//%s
+    autocmd BufEnter,BufRead,BufNewFile *.vue set filetype=vue
     autocmd FileType vue syntax sync fromstart
     autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
     autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ $*\ %
@@ -777,9 +933,6 @@ augroup vueabbrevs
     autocmd!
     autocmd FileType vue inoreabbrev gscomp : {<CR><Tab>get() {<CR><CR>},<CR>set() {<CR><CR>}<CR>}, <Esc><<F%s<c-o>:call getchar()<CR>
 augroup END
-
-" Highlight Hex colors
-" Plugin 'etdev/vim-hexcolor'
 
 " Laravel
 Plugin 'jwalton512/vim-blade'
@@ -802,12 +955,22 @@ augroup END
 " ---- Conquer of Completion {{{
 Plugin 'neoclide/coc.nvim'
 
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
 " Remap keys for gotos
 nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
 nmap <silent> gk <Plug>(coc-codeaction)
+
+" Cursors
+nmap <silent> <leader>c <Plug>(coc-cursors-position)
+nmap <C-c> <Plug>(coc-cursors-operator)
+xmap <silent> <C-c> <Plug>(coc-cursors-range)
 
 nmap <silent> <leader>ga :call php#laravel#goto_attribute()<CR>
 
@@ -829,9 +992,28 @@ augroup END
 
 
 " Remap for rename current word
-nmap <leader>RN <Plug>(coc-rename)
+nmap <leader>rn <Plug>(coc-rename)
 
-"eslint
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects (operator mappings for inner-function,
+" a-function, etc.)
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" eslint
 command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint')['quiet'] ? v:false : v:true)
 " Installation: 
 " run coc#util#install()
@@ -840,7 +1022,7 @@ command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint
 
 nnoremap <silent> <leader>gl :Lines<CR>
 
-autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+" autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
 let g:swift_plugin_directory = $HOME . '/swift/apple/swift'
 
@@ -890,9 +1072,6 @@ augroup END
 
 Plugin 'itchyny/lightline.vim'
 
-" Hide -- INSERT --
-set noshowmode
-
 function! StatusDiagnostic() abort
     let info = get(b:, 'coc_diagnostic_info', {})
     if empty(info) | return '' | endif
@@ -912,7 +1091,7 @@ let g:lightline = {
       \ 'active': {
       \   'left': [
       \       [ 'mode', 'paste' ],
-      \       [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+      \       [ 'readonly', 'filename', 'modified' ]
       \   ],
       \   'right': [
       \     [ 'lineinfo' ],
@@ -988,6 +1167,22 @@ nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
 command! -bang Qa :echom "QUACK!"
 command! Qa1 :echom "QUACK!"
 " }}}
+
+" --- Remove user (plugin) commands I don't use --- {{{
+function! s:clear_startify_commands()
+    " ---- Startify ---- {{{
+    delcommand SLoad
+    delcommand SSave
+    delcommand SDelete
+    delcommand SClose
+    delcommand StartifyDebug " may need to not delete this one for debug
+    " ---- }}}
+
+    delcommand Sexplore
+endfunction
+
+autocmd VimEnter * nested call s:clear_startify_commands()
+"  }}}
 
 " ===========================================================================
 

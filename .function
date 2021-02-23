@@ -14,6 +14,15 @@ function _git_branch_completion() {
     _describe 'commands' commands
 }
 
+function uuptime() {
+    uptime |\
+        awk '{$1=""; print $0}' |\
+        awk -F ',' '{print $1, "  ,", $2}' |\
+        sed 's:[ ]\{2,\}::g' |\
+        sed 's:^[ ]*up[ ]*::g' |\
+        sed 's/\([0-9]\{1,2\}\):\([0-9]\{2\}\)/ \1 hours, \2 minutes/g'
+}
+
 function brewfo() {
     brew info `brew list | awk '{print $1}' | fzf`
 }
@@ -727,29 +736,8 @@ rco() {
         return
     fi
 
-    local all_remote_branches=""
     local branch=""
-    local cache_file="$(git remote -v | \grep fetch | ack -o '(?<=:)[^ ]*' | sed 's:\.git::g' | sed 's:[/\.]:_:g' | tr '[:upper:]' '[:lower:]')"
-    local cache_dir="$HOME/.cache/rco"
-
-    if [[ $* = *"--rebuild"* || ! -e $cache_dir/$cache_file ]]; then
-        local all_remote_branches="$(git ls-remote --heads origin | grep -o 'refs/heads/.*' | sed 's:refs/heads/::g')"
-
-        if [[ ! -d $cache_dir ]]; then
-            mkdir -p $cache_dir
-        fi
-
-        if [[ ! -e $cache_dir/$cache_file ]]; then
-            touch $cache_dir/$cache_file;
-        fi
-
-        echo "$all_remote_branches" > "$cache_dir/$cache_file"
-
-        echo "Rebuilt rco cache."
-        return
-    else
-        local all_remote_branches="$(cat $cache_dir/$cache_file)"
-    fi
+    local all_remote_branches="$(git ls-remote --heads origin | grep -o 'refs/heads/.*' | sed 's:refs/heads/::g')"
 
     if [[ $@ == "" ]]; then
         branch="$(echo $all_remote_branches | fzf)"
@@ -933,24 +921,34 @@ function feat() {
     echo "$(echo feature-$1 | sed 's/[0-9]//g' | sed 's/\([A-Z]\)/\-\1/g' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g' | sed 's/://g')" | sed -E 's/[\-]{2,}/-/g'
 }
 
+function fuz() {
+    local pre=$*
+    local file="$(git ls-files | fzf -q "$pre")"
+
+    if [[ $file != "" ]]; then
+        $EDITOR $file
+    fi
+}
+
 function dbr(){
-    INPUT=$1
-    read response\?"Are you sure you would like to force delete branch ${INPUT}? [y/n] "
-    # read -r "Are you sure you would like to force delete branch ${INPUT}? [y/n] " response
-    case "$response" in
-        [yY][eE][sS]|[yY])
-            echo "Deleting branch...";
-            git branch -D ${INPUT};
-            ;;
-        *)
-            echo "Branch left untouched."
-            ;;
-    esac
+    for branch in $@; do
+        read response\?"Are you sure you would like to force delete branch ${branch}? [y/n] "
+
+        case "$response" in
+            [yY][eE][sS]|[yY])
+                echo "Deleting branch...";
+                git branch -D ${branch};
+                ;;
+            *)
+                echo "Branch left untouched."
+                ;;
+        esac
+    done
 }
 
 function _git_get_merged() {
     IFS=" "
-    git branch --merged | grep -v "master\|mobile\|staging" | sed 's:^[ ]*::g'
+    git branch --merged | grep -v "master\|mobile\|staging\|\*" | sed 's:^[ ]*::g'
 }
 
 function _dbr() {
@@ -1088,30 +1086,12 @@ function _collabs() {
 gpr() {
     local arg1=$1
     local base=${arg1:-"master"}
-    local assigned=""
-    local label=""
+    local branch=$(git rev-parse --abbrev-ref HEAD)
 
-    if [[ $@ == *"-a"* ]]; then
-        assigned="$(_collabs | fzf --header='Select an assignee:')"
-    fi
-
-    if [[ $@ == *"-l"* ]]; then
-        label="$(_labels | fzf --header='Select a label:')"
-    fi
-
-    if [[ $assigned != "" && $label != "" ]]; then
-        hub pull-request -a $assigned -r $assigned -l $label -b $base
-    elif [[ $assigned != "" && $label = "" ]]; then
-        hub pull-request -a $assigned -r $assigned -b $base
-    elif [[ $assigned = "" && $label != "" ]]; then
-        hub pull-request -l $label -b $base
-    else
-        hub pull-request -b $base
-    fi
+    hub pull-request -b $base
 }
 
 compdef _git_branch_completion gpr
-
 
 mkalias(){
     if [[ $1 ]]; then
@@ -1185,6 +1165,15 @@ function icat() {
         imgcat -w $width --256 -H $1 | cat | $PAGER
     else
         imgcat -w $width --256 -H $1 | cat
+    fi
+}
+
+rdb() {
+    if [[ -e .env && $(cat .env | grep '^DB_DATABASE=') ]]; then
+        name=$(cat .env | sed -n "s:^DB_DATABASE=\(.*\):\1:p")
+        mycli -u root -D $name
+    else
+        mycli -u root
     fi
 }
 
