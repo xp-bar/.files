@@ -9,8 +9,8 @@ fi
 # -- }}}
 
 # -- cask taps -- {{{
-brew tap caskroom/cask
-brew tap caskroom/versions
+brew tap homebrew/cask
+brew tap homebrew/versions
 # -- }}}
 
 # -- sqlcheck tap and install -- {{{
