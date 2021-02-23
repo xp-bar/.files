@@ -38,7 +38,7 @@ brew install jq
 brew install lynx
 brew install mycli
 brew install mysql
-brew install mysql@5.6
+brew install mysql@5.7
 brew install ncurses
 brew install neovim
 brew install newsboat
