@@ -1,11 +1,7 @@
 #! /bin/zsh
 
 # -- INSTALL HOMEBREW -- {{{
-if [[ $(brew which) != "/usr/local/bin/brew" ]] ; then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-else
-    brew update
-fi
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # -- }}}
 
 # -- cask taps -- {{{
