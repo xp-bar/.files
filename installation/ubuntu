@@ -1,4 +1,5 @@
 #! /bin/sh
+
 if test "$USERNAME" = ""; then
     echo "Run export USERNAME first!"
     exit 1
@@ -9,12 +10,23 @@ usermod -aG sudo $USERNAME
 su - $USERNAME
 sudo apt-get update && sudo apt-get upgrade
 sudo apt-get install build-essential curl file git
+
+# -- INSTALL HOMEBREW -- {{{
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+# -- }}}
+
+# -- INSTALL ZSH -- {{{
 brew install gcc
 apt install zsh
+# -- }}}
+
 brew install fortune cowsay figlet toilet
+
+# -- Get antibody -- {{{
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+# -- }}}
+
 curl -sL git.io/antibody | sh -s
 chsh -s /usr/bin/zsh $USERNAME
 
