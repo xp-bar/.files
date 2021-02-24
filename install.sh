@@ -166,9 +166,6 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ./sym.sh
 # -- }}}
 
-
-# Install neovim plugins
-nvim +PluginInstall +qall
-
-# install neovim python 3 module
-pip3 install neovim
+# -- Neovim setup -- {{{
+./neovim.zsh
+# -- }}}
