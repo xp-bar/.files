@@ -81,7 +81,11 @@ brew install gotop
 brew install --cask slack
 brew install --cask postman
 brew install --cask spotify
-brew install --cask keepassx@0.4.4
+
+# keepassx
+brew install --cask keepassx
+# version 0.4.4
+brew install --cask dwihn0r-keepassx
 
 # browsers
 brew install --cask google-chrome
