@@ -1,5 +1,10 @@
 #! /bin/zsh
 
+# script variables
+local xp_node_version=10.15.1
+local xp_php_version=7.4
+local xp_mysql_version=5.7
+
 # -- INSTALL HOMEBREW -- {{{
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 # -- }}}
@@ -42,7 +47,7 @@ brew install jq
 brew install lynx
 brew install mycli
 brew install mysql
-brew install mysql@5.7
+brew install mysql@$xp_mysql_version
 brew install ncurses
 brew install neovim
 brew install newsboat
@@ -50,7 +55,7 @@ brew install nginx
 brew install ninja
 brew install node
 brew install nyancat
-brew install php@7.4
+brew install php@$xp_php_version
 brew install pipes-sh
 brew install pv
 brew install rainbarf
@@ -107,13 +112,15 @@ npm i -g vue-cli
 npm install --global yarn
 # -- }}}
 
-# node version manager
+# -- node version manager -- {{{
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-nvm install 10.15.1
+nvm install $xp_node_version
+nvm use $xp_node_version
+# -- }}}
 
 # git clone installations -- {{{
 DIR=$(pwd)
@@ -128,7 +135,7 @@ rm -rf fonts
 # -- valet installation -- {{{
 composer global require laravel/valet
 valet install
-valet use php@7.4
+valet use php@$xp_php_version
 valet domain localhost
 valet restart
 # -- }}}
