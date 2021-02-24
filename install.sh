@@ -10,7 +10,7 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 # -- cask taps -- {{{
 brew tap homebrew/cask
-brew tap homebrew/versions
+brew tap homebrew/cask-versions
 # -- }}}
 
 # -- sqlcheck tap and install -- {{{
