@@ -106,6 +106,7 @@ brew install --cask firefox-developer-edition
 npm i -g nvm
 npm i -g avn avn-n avn-nvm
 npm i -g vue-cli
+npm install --global yarn
 # -- }}}
 
 # git clone installations -- {{{
