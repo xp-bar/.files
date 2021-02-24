@@ -25,6 +25,7 @@ brew install --cask gwerbin/tap/sqlcheck
 
 # -- homebrew installations -- {{{
 brew install ack
+brew install rg
 brew install antibody
 brew install cmatrix
 brew install cmus
