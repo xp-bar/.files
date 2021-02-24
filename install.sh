@@ -69,6 +69,9 @@ brew install --HEAD universal-ctags/universal-ctags/universal-ctags
 brew install vim
 brew install wp-cli
 brew install zsh
+
+# required for powerline font
+brew install svn
 # -- }}}
 
 # -- gotop -- {{{
@@ -76,6 +79,11 @@ brew tap cjbassi/gotop
 brew install gotop
 # --- }}}
 
+# --- Fonts --- {{{
+brew tap homebrew/cask-fonts
+brew install --cask font-droid-sans-mono-nerd-font
+brew install --cask font-droid-sans-mono-for-powerline
+# --- }}}
 
 # -- cask installs -- {{{
 brew install --cask slack
