@@ -128,6 +128,20 @@ pip install httpie
 pip install http-prompt
 # -- }}}
 
+mkdir -p ~/.config
+mkdir -p ~/.config/nvim/
+
+# -- Install Vundle -- {{{
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
+# -- }}}
+#
 # -- SYMLINKS -- {{{
 ./sym.sh
 # -- }}}
+
+
+# Install neovim plugins
+nvim +PluginInstall +qall
+
+# install neovim python 3 module
+pip3 install neovim

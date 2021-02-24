@@ -8,8 +8,6 @@ ln -sv $PWD/.lynx/ ~
 ln -sv $PWD/.newsboat ~
 ln -sv $PWD/.path ~
 ln -sv $PWD/.tmux.conf ~
-# ln -sv $PWD/.nvim ~/.config/nvim/
-ln -sv $PWD/.nvimrc ~/.vimrc
 ln -sv $PWD/.xvimrc ~
 ln -sv $PWD/.zle ~
 ln -sv $PWD/z/z.sh ~
@@ -17,7 +15,15 @@ ln -sv $PWD/.zsh-plugins ~
 ln -sv $PWD/.zshrc ~
 ln -sv $PWD/.koolaid ~
 ln -sv $PWD/.teamocil ~
-ln -sv $PWD/vim-colors/two.vim ~/.config/nvim/colors/
-ln -sv $PWD/vim-colors/lightline/two.vim ~/.config/nvim/autoload/lightline/colorscheme/
 touch ~/.ignore
 touch ~/.env
+
+
+# NVIM stuff
+[ -d ~/.config/nvim/ ] || mkdir -p ~/.config/nvim/
+ln -sv $PWD/.nvimrc ~/.config/nvim/init.vim
+[ -d ~/.config/nvim/colors/ ] || mkdir -p ~/.config/nvim/colors/
+ln -sv $PWD/vim-colors/two.vim ~/.config/nvim/colors/
+[ -d ~/.config/nvim/autoload/lightline/colorscheme/ ] || mkdir -p ~/.config/nvim/autoload/lightline/colorscheme/
+ln -sv $PWD/vim-colors/lightline/two.vim ~/.config/nvim/autoload/lightline/colorscheme/
+ln -sv ~/.files/vim/packs ~/.config/nvim/pack
