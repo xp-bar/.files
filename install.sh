@@ -156,7 +156,11 @@ mkdir -p ~/.config/nvim/
 # -- Install Vundle -- {{{
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
 # -- }}}
-#
+
+# -- Install TPM -- {{{
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+# -- }}}
+
 # -- SYMLINKS -- {{{
 ./sym.sh
 # -- }}}
