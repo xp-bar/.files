@@ -1,0 +1,19 @@
+#! /bin/zsh
+
+# Don't rearrange spaces based on MRU
+defaults write com.apple.dock mru-spaces -bool false
+
+# Show hidden files
+defaults write com.apple.Finder AppleShowAllFiles -bool true
+
+# Set highlight color to green
+# defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
+
+# Reveal IP address, hostname, OS version, etc. when clicking the clock in the login window
+# sudo defaults write /Library/Preferences/com.apple.loginwindow AdminHostInfo HostName
+
+# disable smart quotes
+# defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+
+# Reload finder to make changes take effect
+killall Finder
