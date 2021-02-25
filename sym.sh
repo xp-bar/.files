@@ -15,6 +15,7 @@ ln -sv $PWD/.zsh-plugins ~
 ln -sv $PWD/.zshrc ~
 ln -sv $PWD/.koolaid ~
 ln -sv $PWD/.teamocil ~
+ln -sv $PWD/.alacritty.yml ~
 touch ~/.ignore
 touch ~/.env
 
