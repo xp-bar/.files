@@ -36,6 +36,9 @@ defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 # Disable smart quotes as they’re annoying when typing code
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
+# Mute the alert sound
+defaults write NSGlobalDomain com.apple.sound.beep.volume -int 0
+
 ###############################################################################
 # Screen                                                                      #
 ###############################################################################
