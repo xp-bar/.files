@@ -1,3 +1,5 @@
+#! /bin/zsh
+
 ln -sv $PWD/.global_gitignore ~/.gitignore
 ln -sv $PWD/.gitconfig ~
 ln -sv $PWD/.colors ~
