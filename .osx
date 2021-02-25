@@ -151,11 +151,33 @@ defaults write com.apple.dock show-recents -bool false
 
 
 ###############################################################################
-# Other                                                                       #
+# Keyboard                                                                    #
 ###############################################################################
 
 # set key repeat to the lowest UI value
 defaults write NSGlobalDomain KeyRepeat -int 2
+
+# Set delay until repeat (in milliseconds)
+# Long: 120
+# Short: 15
+defaults write NSGlobalDomain InitialKeyRepeat -int 10
+
+# Adjust keyboard brightness in low light
+defaults write com.apple.BezelServices kDim -bool true
+defaults write /Library/Preferences/com.apple.iokit.AmbientLightSensor "Automatic Keyboard Enabled" -bool true
+
+# Dim keyboard after idle time (in seconds)
+defaults write com.apple.BezelServices kDimTime -int 300
+defaults write /Library/Preferences/com.apple.iokit.AmbientLightSensor "Keyboard Dim Time" -int 300
+
+# Full Keyboard Access
+# In windows and dialogs, press Tab to move keyboard focus between:
+# 1 : Text boxes and lists only
+# 3 : All controls
+defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
+
+# Stop iTunes from responding to the keyboard media keys
+launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/null
 
 ##############################################################################
 # Kill affected applications                                                  #
