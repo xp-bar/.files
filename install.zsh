@@ -108,6 +108,8 @@ brew install --cask firefox
 brew install --cask firefox-developer-edition
 # -- }}}
 
+brew install --cask messenger
+
 # -- npm installations -- {{{
 npm i -g vue-cli
 npm install --global yarn
