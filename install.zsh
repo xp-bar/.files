@@ -109,6 +109,7 @@ brew install --cask firefox-developer-edition
 # -- }}}
 
 brew install --cask messenger
+brew install --cask discord
 
 # -- npm installations -- {{{
 npm i -g vue-cli
