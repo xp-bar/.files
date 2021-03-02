@@ -152,6 +152,12 @@ defaults write com.apple.dock show-recents -bool false
 # defaults write com.apple.dock wvous-bl-corner -int 5
 # defaults write com.apple.dock wvous-bl-modifier -int 0
 
+###############################################################################
+# Trackpad                                                                    #
+###############################################################################
+
+# trackpad acceleration speed
+defaults write -g com.apple.trackpad.scaling 1
 
 ###############################################################################
 # Keyboard                                                                    #
