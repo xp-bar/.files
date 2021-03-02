@@ -197,6 +197,7 @@ launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/nul
 
 for app in "Activity Monitor" \
 	"cfprefsd" \
+	"Spotlight" \
 	"Dock" \
 	"Finder" \
 	"SystemUIServer"; do
