@@ -156,6 +156,9 @@ defaults write com.apple.dock show-recents -bool false
 # Trackpad                                                                    #
 ###############################################################################
 
+# disable the force click lookup action
+defaults write -g com.apple.trackpad.forceClick -int 0
+
 # trackpad acceleration speed
 defaults write -g com.apple.trackpad.scaling -int 1
 
