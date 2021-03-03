@@ -614,7 +614,7 @@ command! Retag call s:Retag()
 
 " Git wrapper for vim
 Plugin 'tpope/vim-fugitive'
-nnoremap <silent><C-B> :Gblame<cr>
+nnoremap <silent><C-B> :Git blame<cr>
 
 " GV - git log browser
 Plugin 'junegunn/gv.vim'
