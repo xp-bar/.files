@@ -44,6 +44,7 @@ brew install go
 brew install httpie
 brew install hub
 brew install irssi
+brew install eddieantonio/eddieantonio/imgcat
 brew install jq
 brew install lynx
 brew install mycli
