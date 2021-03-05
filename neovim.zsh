@@ -17,6 +17,8 @@ fi
 npm install \
     coc-json \
     coc-phpls \
+    coc-vetur \
+    coc-tsserver \
     --global-style \
     --ignore-scripts \
     --no-bin-links \
