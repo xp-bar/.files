@@ -6,6 +6,9 @@ nvim +PluginInstall +qall
 # install neovim python 3 module
 pip3 install neovim
 
+# vim sessions directory
+mkdir -p ~/vim-sessions
+
 # Coc.nvim setup
 mkdir -p ~/.config/coc/extensions
 cd ~/.config/coc/extensions
