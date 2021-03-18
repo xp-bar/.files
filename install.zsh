@@ -157,8 +157,10 @@ pip install httpie
 pip install http-prompt
 # -- }}}
 
+# -- Directories -- {{{
 mkdir -p ~/.config
 mkdir -p ~/.config/nvim/
+# ---}}}
 
 # -- Install Vundle -- {{{
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.config/nvim/bundle/Vundle.vim
