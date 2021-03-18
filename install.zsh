@@ -107,11 +107,12 @@ brew install --cask google-chrome
 brew install --cask google-chrome-canary
 brew install --cask firefox
 brew install --cask firefox-developer-edition
-# -- }}}
 
+# other
 brew install --cask licecap
 brew install --cask messenger
 brew install --cask discord
+# -- }}}
 
 # -- npm installations -- {{{
 npm i -g vue-cli
