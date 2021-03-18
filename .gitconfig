@@ -24,7 +24,7 @@
 	this = rev-parse --abbrev-ref HEAD
     repo = "! git remote -v | pcregrep -o \"(?<=:).*(?=\\((fetch|push)\\))\" | sed 's:\\.git::g' | awk '!seen[$0]++' | perl -pE 's:([A-z\\/]*)\\n:\\1// :g' | sed 's:[ ]*//[ ]*$::g'"
     din = !git --no-pager diff --name-only
-    last = "![[ -e .git/hooks/LAST_CHECKOUT_TIME ]] && cat .git/hooks/LAST_CHECKOUT_TIME | awk -F '@' '{print $2\"@\"$1}' | sort |  awk -F '@' '{print $2\"@\"$1}' | tail -n 2 | head -n 1 | sed 's:@.*::g'"
+    last = "rev-parse --abbrev-ref @{-1}"
     tag-archived = "! f() { git tag archive/$1 $1; }; f"
     checkout-archived = "! f() { git checkout -b $1 archive/$1; }; f"
 	base = "!git config repo.base-branch || echo \"\""
