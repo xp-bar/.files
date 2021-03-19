@@ -5,9 +5,6 @@
 	ui = true
 	pager = no
 	mergetool = no
-[hub]
-	protocol = ssh
-	token = 9085e229c8cb95af76b1b6224e4aa9c129f5a39c
 [core]
 	editor = nvim
 	excludesfile = /Users/nireland/.gitignore
