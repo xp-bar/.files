@@ -1,0 +1,3 @@
+# RIPGREP Config file
+
+--type-add=vue:*.{vue}
