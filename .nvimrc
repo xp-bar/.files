@@ -862,7 +862,9 @@ augroup END
 "
 " ---- phpDocumentor ---- {{{
 Plugin 'tobyS/vmustache'
-Plugin 'tobyS/pdv'
+" Plugin 'tobyS/pdv'
+" Fork with return types
+Plugin 'YaroslavMolchan/pdv'
 let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 " ---- }}}
 
