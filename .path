@@ -32,3 +32,6 @@ fi
 
 # openssl 1.1
 # export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+
+# ripgrep
+export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
