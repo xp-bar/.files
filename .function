@@ -1088,7 +1088,7 @@ gpr() {
     local base=${arg1:-"master"}
     local branch=$(git rev-parse --abbrev-ref HEAD)
 
-    hub pull-request -b $base
+    hub pull-request -b $base --draft
 }
 
 compdef _git_branch_completion gpr
