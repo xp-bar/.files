@@ -9,7 +9,7 @@ ln -sv $PWD/.function ~
 ln -sv $PWD/.lynx/ ~
 ln -sv $PWD/.newsboat ~
 ln -sv $PWD/.path ~
-ln -sv $PWD/.tmux.conf ~
+ln -sv $PWD/tmux.conf ~
 ln -sv $PWD/.xvimrc ~
 ln -sv $PWD/.zle ~
 ln -sv $PWD/z/z.sh ~
