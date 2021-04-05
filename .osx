@@ -176,11 +176,9 @@ defaults write NSGlobalDomain InitialKeyRepeat -int 10
 
 # Adjust keyboard brightness in low light
 defaults write com.apple.BezelServices kDim -bool true
-defaults write /Library/Preferences/com.apple.iokit.AmbientLightSensor "Automatic Keyboard Enabled" -bool true
 
 # Dim keyboard after idle time (in seconds)
 defaults write com.apple.BezelServices kDimTime -int 300
-defaults write /Library/Preferences/com.apple.iokit.AmbientLightSensor "Keyboard Dim Time" -int 300
 
 # Full Keyboard Access
 # In windows and dialogs, press Tab to move keyboard focus between:
