@@ -6,3 +6,5 @@ valet install
 valet domain localhost
 valet restart
 valet secure
+
+brew services start mysql
