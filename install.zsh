@@ -98,7 +98,8 @@ brew install --cask postman
 brew install --cask spotify
 
 # keepassx
-brew install --cask keepassx
+
+# brew install --cask keepassx
 # version 0.4.4
 brew install --cask dwihn0r-keepassx
 
