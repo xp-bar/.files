@@ -141,10 +141,7 @@ rm -rf fonts
 
 # -- valet installation -- {{{
 composer global require laravel/valet
-valet install
-valet use php@$xp_php_version
-valet domain localhost
-valet restart
+./valet.zsh
 # -- }}}
 
 # -- python installs -- {{{
