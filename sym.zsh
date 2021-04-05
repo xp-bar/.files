@@ -30,4 +30,4 @@ ln -sv $PWD/.nvimrc ~/.config/nvim/init.vim
 ln -sv $PWD/vim-colors/two.vim ~/.config/nvim/colors/
 [ -d ~/.config/nvim/autoload/lightline/colorscheme/ ] || mkdir -p ~/.config/nvim/autoload/lightline/colorscheme/
 ln -sv $PWD/vim-colors/lightline/two.vim ~/.config/nvim/autoload/lightline/colorscheme/
-ln -sv ~/.files/vim/packs ~/.config/nvim/pack
+ln -sv $PWD/vim/packs $HOME/.config/nvim/pack
