@@ -19,7 +19,7 @@ ln -sv $PWD/.koolaid ~
 ln -sv $PWD/.alacritty.yml ~
 ln -sv $PWD/.ackrc ~
 ln -sv $PWD/.rgrc ~
-touch ~/.ignore
+touch ~/.ignored-stuff
 touch ~/.env
 
 

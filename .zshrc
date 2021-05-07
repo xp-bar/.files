@@ -13,7 +13,7 @@ unsetopt BG_NICE
 [[ -e ~/z.sh ]] && source ~/z.sh
 [[ -e ~/.alias ]] && source ~/.alias || echo "Aliases not loaded."
 [[ -e ~/.function ]] && source ~/.function || echo "Functions not loaded."
-[[ -e ~/.ignore ]] && source ~/.ignore
+[[ -e ~/.ignored-stuff ]] && source ~/.ignored-stuff
 [[ -e ~/.extra-aliases ]] && source ~/.extra-aliases
 [[ -e ~/scripts/.script-source ]] && source ~/scripts/.script-source
 # ZLE bindings, vi mode etc.
