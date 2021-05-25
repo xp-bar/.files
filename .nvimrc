@@ -308,7 +308,7 @@ let g:startify_bookmarks = [
         \ {'~' : '~/'},
         \ {'.a' : '~/.alias'},
         \ {'.f' : '~/.function'},
-        \ {'.v' : '~/.vimrc'},
+        \ {'.v' : '~/.config/nvim/init.vim'},
         \ {'.t' : '~/.tmux.conf'},
         \ {'.z' : '~/.zshrc'},
         \ {'.p' : '~/.zsh-plugins'},
