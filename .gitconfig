@@ -28,7 +28,7 @@
     ; stat = "! f() { git --no-pager diff --stat \"$(git merge-base HEAD \"${1:-HEAD^}\")\"; }; f"
     stat = "! f() { \
         git --no-pager diff --stat $(\
-        [[ $1 = *\"-f\"* ]] \
+        [[ $1 = \"-f\" ]] \
             && echo $(git branch | grep -v '\\*' | sed 's:^[ ]*::g' | fzf) \
             || echo $(git merge-base HEAD \"${1:-HEAD^}\")); \
     }; f"
