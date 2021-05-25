@@ -1093,6 +1093,9 @@ function! StatusDiagnostic() abort
     return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
 endfunction
 
+function! CocCurrentFunction()
+    return get(b:, 'coc_current_function', '')
+endfunction
 
 let g:lightline = {
       \ 'colorscheme': 'two',
@@ -1104,7 +1107,7 @@ let g:lightline = {
       \   'right': [
       \     [ 'lineinfo' ],
       \     [ 'percent' ],
-      \     [ 'cocstatus', 'fileformat', 'fileencoding', 'filetype' ]
+      \     [ 'cocstatus', 'cocfunction', 'fileformat', 'fileencoding', 'filetype' ]
       \   ]
       \ },
       \ 'inactive': {
@@ -1117,7 +1120,8 @@ let g:lightline = {
       \ 'component_function': {
       \   'mode': 'LightLineMode',
       \   'gitbranch': 'fugitive#head',
-      \   'cocstatus': 'StatusDiagnostic'
+      \   'cocstatus': 'StatusDiagnostic',
+      \   'cocfunction': 'CocCurrentFunction'
       \ },
       \ 'component_type': {
       \ },
