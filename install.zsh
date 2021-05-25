@@ -41,6 +41,7 @@ brew install fswatch
 brew install fzf
 brew install gnupg
 brew install go
+brew install gzip
 brew install httpie
 brew install hub
 brew install irssi
