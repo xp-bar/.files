@@ -104,6 +104,9 @@ brew install --cask spotify
 # version 0.4.4
 brew install --cask dwihn0r-keepassx
 
+# bitwarden
+brew install --cask bitwarden
+
 # browsers
 brew install --cask google-chrome
 brew install --cask google-chrome-canary
