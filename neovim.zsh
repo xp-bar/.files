@@ -17,6 +17,14 @@ then
   echo '{"dependencies":{}}'> package.json
 fi
 
+# pdv directory
+if [ -d $HOME/.vim/bundle/pdv/templates ]
+then
+    mkdir -p ~/.pdv-templates
+    cp ~/.vim/bundle/pdv/templates/* ~/.pdv-templates/
+    echo "Copied pdv templates"
+fi
+
 npm install \
     coc-json \
     coc-phpls \
