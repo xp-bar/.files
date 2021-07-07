@@ -1,5 +1,4 @@
 .notags
-tags
 tags.*
 .sass-cache/
 .token
