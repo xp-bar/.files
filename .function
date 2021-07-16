@@ -700,6 +700,11 @@ function brwatch(){
     c;
 }
 
+function hublink() {
+    local repo="$(git remote -v | grep fetch | sed 's/^.*://g' | sed 's:\.g.*::g')"
+    echo "https://github.com/$repo/commit/$(git HEAD)"
+}
+
 function co() {
     local all_branches="$(git branch | grep -v "\*")";
     local branch=""
