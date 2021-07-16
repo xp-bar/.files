@@ -398,7 +398,7 @@ let g:NERDTreeIgnore = [
         \ '\.rar$',
         \ '\.DS_Store$',
         \ '__.*$',
-        \ 'ting.*\.php',
+        \ '^ting.*\.php',
         \ ]
         
 " Git File marking for NERDTree
