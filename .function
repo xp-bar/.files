@@ -706,6 +706,9 @@ function hublink() {
 }
 
 function co() {
+    # if the --last argument is passed, checkout the last branch and exit
+    [[ $* = *"--last"* ]] && git checkout @{-1} && return 0;
+
     local all_branches="$(git branch | grep -v "\*")";
     local branch=""
 
