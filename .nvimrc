@@ -597,12 +597,17 @@ let g:easy_align_delimiters = {
 " }}}
 
 " Custom function to wrap a line in debugbar wrappers
-function! s:DebugBar(key)
-    call append(line('.') - 1, ["\\Debugbar::startMeasure('" . a:key . "', '" . a:key . "');"])
-    call append(line('.'), ["\\Debugbar::stopMeasure('" . a:key . "');"])
+function! s:DebugBar(bang, ...)
+    let l:key = get(a:000, '1', 'debugbar')
+    let l:firstline = a:firstline ? a:firstline : getline('.')
+    let l:lastline = a:lastline ? a:lastline : getline('.') - 1
+
+    call append(l:firstline - 1, ["\\Debugbar::startMeasure('" . l:key . "', '" . l:key . "');"])
+    call append(l:lastline + 1, ["\\Debugbar::stopMeasure('" . l:key . "');"])
+    normal vkoj=
 endfunction
 
-command! -nargs=1 DebugBar call s:DebugBar(<f-args>)
+command! -bang -nargs=* -range DebugBar <line1>,<line2>call s:DebugBar('<bang>', <f-args>)
 
 " ---- Tag Manager ---- {{{
 function! s:Retag()
