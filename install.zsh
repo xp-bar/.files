@@ -145,8 +145,15 @@ rm -rf fonts
 # -- }}}
 
 # -- valet installation -- {{{
-composer global require laravel/valet
-./valet.zsh
+read response\?"Install valet? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+		composer global require laravel/valet
+		./valet.zsh
+            ;;
+        *)
+            ;;
+    esac
 # -- }}}
 
 # -- python installs -- {{{
