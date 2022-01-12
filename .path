@@ -5,7 +5,7 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$PATH:$HOME/.config/composer/vendor/bin"
 export PATH="/usr/local/sbin:$PATH"
-export PATH="$PATH:/Users/nireland/Library/Python/2.7/bin"
+export PATH="$PATH:$HOME/Library/Python/2.7/bin"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
