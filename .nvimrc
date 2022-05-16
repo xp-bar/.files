@@ -1054,8 +1054,9 @@ autocmd BufNewFile,BufRead *.swift set syntax=swift | set filetype=swift
 " xdebug for vim
 Plugin 'vim-vdebug/vdebug'
 let g:vdebug_options = {
+        \ 'port': 9003,
         \ 'break_on_open' : '0',
-        \ 'ide_key': 'xdebug'
+        \ 'ide_key': 'PHPSTORM'
         \ }
 
 let g:vdebug_keymap = {
