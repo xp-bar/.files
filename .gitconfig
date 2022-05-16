@@ -7,7 +7,7 @@
 	mergetool = no
 [core]
 	editor = nvim
-	excludesfile = /Users/nireland/.gitignore
+	excludesfile = ~/.gitignore
 	page = nvim -R
 [oh-my-zsh]
 	hide-status = 0
