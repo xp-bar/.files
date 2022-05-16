@@ -3,7 +3,7 @@
 # script variables
 local xp_node_version=10.15.1
 local xp_php_version=7.4
-local xp_mysql_version=5.7
+local xp_mysql_version=8
 
 # -- INSTALL HOMEBREW -- {{{
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
