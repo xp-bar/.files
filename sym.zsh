@@ -25,7 +25,7 @@ touch ~/.env
 [ -d ~/.config/nvim/ ] || mkdir -p ~/.config/nvim/
 ln -sv $PWD/.nvimrc ~/.config/nvim/init.vim
 [ -d ~/.config/nvim/colors/ ] || mkdir -p ~/.config/nvim/colors/
-ln -sv $PWD/vim-colors/two.vim ~/.config/nvim/colors/
+ln -sv $PWD/vim/colors/two.vim ~/.config/nvim/colors/
 [ -d ~/.config/nvim/autoload/lightline/colorscheme/ ] || mkdir -p ~/.config/nvim/autoload/lightline/colorscheme/
-ln -sv $PWD/vim-colors/lightline/two.vim ~/.config/nvim/autoload/lightline/colorscheme/
+ln -sv $PWD/vim/autoload/lightline/colorscheme/two.vim ~/.config/nvim/autoload/lightline/colorscheme/
 ln -sv $PWD/vim/packs $HOME/.config/nvim/pack
