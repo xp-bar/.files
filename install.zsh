@@ -53,7 +53,6 @@ brew install mysql
 brew install mysql@$xp_mysql_version
 brew install ncurses
 brew install neovim
-brew install newsboat
 brew install nginx
 brew install ninja
 brew install node
