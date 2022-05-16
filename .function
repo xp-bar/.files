@@ -764,9 +764,7 @@ rco() {
         read "response?Create a local copy of $(echo -e "\e[34m$branch\e[0m")? "
         case "$response" in
             [yY][eE][sS]|[yY])
-                git checkout -b $branch
-                git pull origin $branch
-                git reset $(rh) --hard
+                git switch $branch
                 ;;
             *)
                 ;;
