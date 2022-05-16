@@ -748,6 +748,7 @@ if executable('fzf')
             \   })
     endfunction
 
+    command! AVendor FZF application/vendor/
     command! Vendor FZF vendor/
     command! Modules FZF node_modules/
     command! -nargs=* GitChanged call s:git_changed(<f-args>)
