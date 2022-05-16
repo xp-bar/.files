@@ -966,6 +966,10 @@ autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 augroup END
 
 
+Plugin 'stephpy/vim-php-cs-fixer'
+
+autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+
 " ---- Conquer of Completion {{{
 Plugin 'neoclide/coc.nvim'
 
