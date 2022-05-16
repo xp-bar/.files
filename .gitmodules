@@ -10,11 +10,11 @@
 [submodule "figlet-fonts"]
 	path = figlet-fonts
 	url = git@github.com:xero/figlet-fonts.git
-[submodule "vim/ftplugin/php"]
-	path = vim/ftplugin/php
+[submodule "nvim/ftplugin/php"]
+	path = nvim/ftplugin/php
 	url = git@github.com:xp-bar/vim-php-folding.git
-[submodule "vim/packs/neovim-xp"]
-	path = vim/packs/neovim-xp
+[submodule "nvim/packs/neovim-xp"]
+	path = nvim/packs/neovim-xp
 	url = git@github.com:xp-bar/neovim-xp.git
 [submodule ".files-jumbleberry"]
 	path = .files-jumbleberry
