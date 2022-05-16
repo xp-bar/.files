@@ -744,6 +744,8 @@ rco() {
         return
     fi
 
+    git fetch --all
+
     local branch=""
     local all_remote_branches="$(git ls-remote --heads origin | grep -o 'refs/heads/.*' | sed 's:refs/heads/::g')"
 
