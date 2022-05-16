@@ -47,7 +47,6 @@ brew install hub
 brew install irssi
 brew install eddieantonio/eddieantonio/imgcat
 brew install jq
-brew install lynx
 brew install mycli
 brew install mysql
 brew install mysql@$xp_mysql_version
