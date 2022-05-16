@@ -16,3 +16,6 @@
 [submodule "vim/packs/neovim-xp"]
 	path = vim/packs/neovim-xp
 	url = git@github.com:xp-bar/neovim-xp.git
+[submodule ".files-jumbleberry"]
+	path = .files-jumbleberry
+	url = git@github.com:xp-bar/.files-jumbleberry.git
