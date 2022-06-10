@@ -1,0 +1,22 @@
+#!/bin/zsh
+
+exec < /dev/tty
+
+files="$(git --no-pager diff --name-only --staged)";
+matches="$(echo $files | xargs ack "mysql://" | ack -v example_dsn)";
+if [[ $? -eq 0 ]]; then
+    echo -e "\n\033[31mYou're trying to commit (possibly) confidential credentials to this repo!\033[0m";
+    echo "$matches\n" | sed 's/:/: /2'
+    read response\?"Continue? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            exit 0;
+            ;;
+        *)
+            exit 1;
+            ;;
+    esac
+
+fi
+
+exit 0;

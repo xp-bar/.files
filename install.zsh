@@ -132,6 +132,10 @@ nvm install $xp_node_version
 nvm use $xp_node_version
 # -- }}}
 
+# setup hooks
+git config --local core.hooksPath .githooks/
+
+
 # git clone installations -- {{{
 DIR=$(pwd)
 cd ~/
