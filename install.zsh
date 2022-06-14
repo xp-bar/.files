@@ -179,6 +179,10 @@ nvm install $xp_node_version
 nvm use $xp_node_version
 # -- }}}
 
+# make sure this repo uses my email, not a work one
+git config --local user.email "nick@nicholasireland.ca"
+git config --local user.name "Nicholas Ireland"
+
 # setup hooks
 git config --local core.hooksPath .githooks/
 
