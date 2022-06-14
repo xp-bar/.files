@@ -148,6 +148,13 @@ function! s:trim_whitespace()
     call winrestview(l:save)
 endfun
 
+let g:format_html = v:true
+function! s:format_html()
+    if (g:format_html)
+        normal gg=G
+    endif
+endfunction
+
 " -- Auto Commands -- {{{
 augroup buffercmds 
     autocmd!
@@ -155,7 +162,7 @@ augroup buffercmds
     autocmd BufNewFile,BufRead .vimrc :setlocal foldlevelstart=0
     
     " Indent HTML files on save
-    autocmd BufWritePre *.html :normal gg=G
+    autocmd BufWritePre *.html :call s:format_html()
 
     " trailing whitespace on save
     autocmd BufWritePre *.php :call s:trim_whitespace()
