@@ -92,18 +92,42 @@ brew install --cask font-droid-sans-mono-for-powerline
 # --- }}}
 
 # -- cask installs -- {{{
-brew install --cask slack
-brew install --cask postman
-brew install --cask spotify
+read response\?"Install Slack? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install --cask slack
+            ;;
+        *)
+            ;;
+    esac
 
-# keepassx
+read response\?"Install Postman? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install --cask postman
+            ;;
+        *)
+            ;;
+    esac
 
-# brew install --cask keepassx
-# version 0.4.4
-brew install --cask dwihn0r-keepassx
+read response\?"Install Spotify? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install --cask spotify
+            ;;
+        *)
+            ;;
+    esac
 
 # bitwarden
-brew install --cask bitwarden
+read response\?"Install Bitwarden? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install --cask bitwarden
+            ;;
+        *)
+            ;;
+    esac
 
 # browsers
 brew install --cask google-chrome
@@ -112,9 +136,32 @@ brew install --cask firefox
 brew install --cask firefox-developer-edition
 
 # other
-brew install --cask licecap
-brew install --cask messenger
-brew install --cask discord
+read response\?"Install LiceCap? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install --cask licecap
+            ;;
+        *)
+            ;;
+    esac
+
+read response\?"Install FB Messenger? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install --cask messenger
+            ;;
+        *)
+            ;;
+    esac
+
+read response\?"Install Discord? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install --cask discord
+            ;;
+        *)
+            ;;
+    esac
 # -- }}}
 
 # -- npm installations -- {{{
