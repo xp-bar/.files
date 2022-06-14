@@ -261,6 +261,14 @@ function rh(){
     git ls-remote --heads origin $(git rev-parse --abbrev-ref HEAD)  | grep $(git rev-parse --abbrev-ref HEAD) | sed 's/refs\/heads\/'$(git this | sed 's:/:\\\/:g')'//g' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//';
 }
 
+function cauth(){
+    local search="$1"
+    local user=$(git log | head -n 1000 | grep Author | sed 's/[ ]*Author: //g' | sort | uniq | fzf -1 -q "$search")
+    local coauth="Co-authored-by: $user"
+    echo $coauth | pbcopy
+    echo -e "Copied to clipboard: \033[2m$coauth\033[0m"
+}
+
 function e(){
     typeset -A dotfiles_that_source=(
         a alias
