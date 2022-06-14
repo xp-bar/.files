@@ -25,8 +25,13 @@ if [[ "$(uname 2> /dev/null)" != "Linux" ]]; then
     # OSX
     export EDITOR="nvim"
     export PAGER="nvim -R"
-    export MANPAGER="nvim -c 'set ft=man' -"
+
+    # older versions of nvim
+    # export MANPAGER="nvim -c 'set ft=man' -"
     # export MANPAGER="nvim -c 'set ft=man' -c 'set ft=man.php' -"
+
+    # new versions of nvim
+    export MANPAGER="nvim +Man\!"
 else
     # LINUX
     export EDITOR="nvim"
