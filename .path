@@ -36,3 +36,6 @@ fi
 
 # ripgrep
 export RIPGREP_CONFIG_PATH="$HOME/.rgrc"
+
+# vagrant aliases
+export VAGRANT_ALIAS_FILE="$HOME/.valias"
