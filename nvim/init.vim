@@ -975,7 +975,15 @@ augroup END
 
 Plugin 'stephpy/vim-php-cs-fixer'
 
-autocmd BufWritePost *.php silent! call PhpCsFixerFixFile()
+let g:phpcs_fix = v:true
+
+function! s:phpcs_fix()
+    if (g:phpcs_fix)
+        call PhpCsFixerFixFile()
+    fi
+endfunction
+
+autocmd BufWritePost *.php silent! call s:phpcs_fix()
 
 " ---- Conquer of Completion {{{
 Plugin 'neoclide/coc.nvim'
