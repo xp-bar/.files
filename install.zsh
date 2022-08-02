@@ -48,7 +48,9 @@ brew install irssi
 brew install eddieantonio/eddieantonio/imgcat
 brew install jq
 brew install mycli
+brew install pgcli
 brew install mysql
+brew install postgres
 brew install mysql@$xp_mysql_version
 brew install ncurses
 brew install neovim
