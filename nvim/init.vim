@@ -36,7 +36,7 @@ set softtabstop=4 " insert/delete 4 spaces when hitting a TAB/BACKSPACE
 set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
 set conceallevel=0
-set smartcase
+set smartcase " for search, use smart casing, only works with ignorecase
 set mousefocus
 set mouse=a
 set hidden
