@@ -57,6 +57,16 @@ set wildignore+=**/public/**
 " Hide -- INSERT --
 set noshowmode
 
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+" from: coc.nvim
+set updatetime=300
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+" from: coc.nvim
+set signcolumn=yes
+
 " Python 3 path for windows
 if (has('macunix'))
     let g:python3_host_prog = '/usr/local/bin/python3'  " Python 3
@@ -271,26 +281,12 @@ let test#php#phpunit#options = {
 \}
 let test#neovim#term_position = "vert botright"
 
-augroup phpunit
-autocmd!
-autocmd FileType php call s:phpunit_test_check()
-augroup END
 
-function! s:phpunit_test_check()
-    let n = 1
-    while getline(n) !~ 'class' && n < line("$")
-        let n = n + 1
-    endwhile
-
-    if getline(n) =~ 'extends\s\(.*\)TestCase'
-        nnoremap <silent> <leader>tn :TestNearest<CR>
-        nnoremap <silent> <leader>tf :TestFile<CR>
-        nnoremap <silent> <leader>ts :TestSuite<CR>
-        nnoremap <silent> <leader>t. :TestLast<CR>
-        nnoremap <silent> <leader>td :TestVisit<CR>
-    endif
-endfun
-
+nnoremap <silent> <leader>tn :TestNearest<CR>
+nnoremap <silent> <leader>tf :TestFile<CR>
+nnoremap <silent> <leader>ts :TestSuite<CR>
+nnoremap <silent> <leader>t. :TestLast<CR>
+nnoremap <silent> <leader>td :TestVisit<CR>
 " --- }}}
 
 " Navigate Tmux and Vim Seamlessly
@@ -325,6 +321,18 @@ let g:startify_bookmarks = [
         \ {'.h' : '.git/hooks/'},
         \ ]
 
+function! s:vim_sessions()
+    let files = systemlist('ls -1t ' . g:sessions_dir . ' | sed "s:.vim::g" | head -n 3')
+    if v:shell_error != 0
+        return []
+    endif
+
+    return map(files, '{
+            \ "line": v:val,
+            \  "cmd": "source " . g:sessions_dir . v:val . ".vim"
+        \ }')
+endfunction
+
 function! s:changed_files()
     let files = systemlist('git --no-pager diff --name-only')
     if v:shell_error != 0
@@ -356,6 +364,7 @@ let g:startify_lists = [
         \ { 'header': ['   Changed Files on: ' . substitute(system('git rev-parse --abbrev-ref HEAD'), '\n', '', 'g')], 'type': function('s:changed_files') },
         \ { 'header': ['   Most Recently Used in '. getcwd()], 'type': 'dir' },
         \ { 'header': ['   Bookmarks'], 'type': 'bookmarks' },
+        \ { 'header': ['   Recent Sessions:'], 'type': function('s:vim_sessions'), 'indices': map(range(1,5), '"s" . v:val')}
         \ ]
 
 let g:toilet_font_dir = "~/.files/figlet-fonts/"
@@ -490,6 +499,7 @@ nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 " --- }}}
 
 " }}}
+
 
 " --- Editor Config --- {{{
 
@@ -699,6 +709,8 @@ if executable('fzf')
     Plugin 'junegunn/fzf'
     Plugin 'junegunn/fzf.vim'
 
+    Plugin 'jesseleite/vim-agriculture'
+
     function! RipgrepFzf(query, fullscreen)
         let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
         let initial_command = printf(command_fmt, shellescape(a:query))
@@ -730,7 +742,25 @@ if executable('fzf')
         \   <bang>0
         \)
 
+    function! s:all_files(query, fullscreen)
+        let spec = {
+        \   'source': 'rg --files --smart-case --no-ignore',
+        \   'sink': 'e',
+        \   'options': [
+        \        '--multi',
+        \        '-i',
+        \        '--preview', 'bat --theme=TwoDark --color=always {}',
+        \    ],
+        \   'window': { 'width': 0.9, 'height': 0.6 }
+        \}
+
+        call fzf#run(fzf#vim#with_preview(spec), a:fullscreen)
+    endfunction
+
+    command! -nargs=* -bang AllFiles call s:all_files(<q-args>, <bang>0)
+
     nnoremap <silent> <C-p> :PFiles<cr>
+    nnoremap <silent> <C-S-P> :AllFiles<cr>
     nnoremap <silent> <M-p> :Buffers<cr>
     nnoremap <silent> <M-S-p> :History<cr>
   
@@ -844,7 +874,7 @@ augroup phpImports
     autocmd FileType php setlocal commentstring=//%s
     autocmd FileType php setlocal makeprg=phpcs\ $*\ --report=csv\ --standard=XpBar\ -n\ %
     autocmd FileType php let &errorformat=errorformat
-    autocmd FileType php inoreabbrev fn function () {<CR>}<Esc>F%s<c-o>:call getchar()<CR>
+    " autocmd FileType php inoreabbrev fn function () {<CR>}<Esc>F%s<c-o>:call getchar()<CR>
 augroup END
 " }}}
 
@@ -852,7 +882,7 @@ augroup END
 function! s:tinker()
     silent execute '!echo "<?php\\n" > $TMPDIR/tinker'
     silent tabnew $TMPDIR/tinker
-    silent setlocal ft=php
+    silent setlocal filetype=php
     silent setlocal makeprg=php\ artisan\ tinker\ %
 
     function! s:make_func(...)
@@ -897,6 +927,25 @@ Plugin 'simnalamburt/vim-mundo'
 
 " html5 omnicomplete
 Plugin 'othree/html5.vim'
+
+" Handlebars
+Plugin 'mustache/vim-mustache-handlebars'
+
+augroup handlebars
+    autocmd BufNewFile,BufRead *.html set filetype=html.handlebars
+augroup END
+
+Plugin 'jyyan/vim-volt-syntax'
+augroup volt
+    autocmd BufNewFile,BufRead *.volt set filetype=html.volt
+augroup END
+
+
+Plugin 'xwsoul/vim-zephir'
+augroup zephir
+    autocmd BufNewFile,BufRead *.zep set filetype=zephir
+augroup END
+
 
 " Scss support
 Plugin 'cakebaker/scss-syntax.vim'
@@ -991,6 +1040,11 @@ autocmd BufWritePost *.php silent! call s:phpcs_fix()
 " ---- Conquer of Completion {{{
 Plugin 'neoclide/coc.nvim'
 
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
 nmap <silent> [g <Plug>(coc-diagnostic-prev)
@@ -1002,6 +1056,14 @@ nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
 nmap <silent> gk <Plug>(coc-codeaction)
+
+xmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
+nmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
+
+nmap <silent> <leader>gf call CocAction('runCommand', 'editor.action.formatDocument')
+
+" xmap <leader>a <Plug>(coc-codeaction-selected)
+" nmap <leader>a <Plug>(coc-codeaction-selected)
 
 " Cursors
 nmap <silent> <leader>c <Plug>(coc-cursors-position)
@@ -1072,9 +1134,25 @@ autocmd BufNewFile,BufRead *.swift set syntax=swift | set filetype=swift
 " xdebug for vim
 Plugin 'vim-vdebug/vdebug'
 let g:vdebug_options = {
-        \ 'port': 9003,
-        \ 'break_on_open' : '0',
-        \ 'ide_key': 'PHPSTORM'
+        \ 'port' : 9003,
+        \ 'timeout' : 20,
+        \ 'server' : 10.0.2.2,
+        \ 'on_close' : 'stop',
+        \ 'break_on_open' : 0,
+        \ 'ide_key' : 'PHPSTORM',
+        \ 'debug_window_level' : 0,
+        \ 'debug_file_level' : 0,
+        \ 'debug_file' : '',
+        \ 'path_maps' : {},
+        \ 'watch_window_style' : 'expanded',
+        \ 'marker_default' : '⬦',
+        \ 'marker_closed_tree' : '▸',
+        \ 'marker_open_tree' : '▾',
+        \ 'sign_breakpoint' : '▷',
+        \ 'sign_current' : '▶',
+        \ 'continuous_mode'  : 1,
+        \ 'simplified_status': 1,
+        \ 'layout': 'horizontal',
         \ }
 
 let g:vdebug_keymap = {
@@ -1150,7 +1228,7 @@ let g:lightline = {
       \   'mode': 'LightLineMode',
       \   'gitbranch': 'fugitive#head',
       \   'cocstatus': 'StatusDiagnostic',
-      \   'cocfunction': 'CocCurrentFunction'
+      \   'cocfunction': 'CocCurrentFunction',
       \ },
       \ 'component_type': {
       \ },
@@ -1197,6 +1275,7 @@ colorscheme two
 syntax on
 
 nnoremap <silent> <C-[> :syn sync fromstart<cr>
+command! BufSync :execute 'bufdo :e' | source $VIMRUNTIME/syntax/syntax.vim
 
 " }}}
 
@@ -1205,8 +1284,77 @@ nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-command! -bang Qa :echom "QUACK!"
-command! Qa1 :echom "QUACK!"
+" command! -bang Qa :echom "QUACK!"
+" command! Qa1 :echom "QUACK!"
+cnoreabbrev Qa qa
+cnoreabbrev QA qa
+
+
+function! s:starts_with(longer, shorter) abort
+  if len(a:shorter) == 0
+      return v:true
+  endif
+
+  return a:longer[0:len(a:shorter)-1] ==# a:shorter
+endfunction
+
+function! s:spotify_cmd(ArgLead, CmdLine, CursorPos)
+    if a:CmdLine =~ 'play'
+        return filter([
+            \ 'album',
+            \ 'artist',
+            \ 'list',
+            \ 'uri'
+        \ ], 's:starts_with(v:val, a:ArgLead)')
+    endif
+
+    if a:CmdLine =~ 'vol'
+        return filter([
+            \ 'up',
+            \ 'down',
+            \ 'show'
+        \ ], 's:starts_with(v:val, a:ArgLead)')
+    endif
+
+    if a:CmdLine =~ 'toggle'
+        return filter([
+            \ 'shuffle',
+            \ 'repeat'
+        \ ], 's:starts_with(v:val, a:ArgLead)')
+    endif
+
+    return filter([
+        \ 'play',
+        \ 'pause',
+        \ 'next',
+        \ 'prev',
+        \ 'replay',
+        \ 'pos',
+        \ 'stop',
+        \ 'quit',
+        \ 'vol',
+        \ 'toggle'
+    \ ], 's:starts_with(v:val, a:ArgLead)')
+endfunction
+
+function! s:spotify(...)
+    if a:0 == 0
+        let l:status = [
+            \ systemlist('spotify status track')[0],
+            \ ' - ',
+            \ systemlist('spotify status artist')[0]
+        \ ]
+
+        echom join(l:status, ' ')
+    else
+        let l:cmd = 'spotify ' . substitute(shellescape(join(a:000, ' ')), "'", '', 'g')
+        let l:result = systemlist(l:cmd)
+        echom substitute(join(l:result, ' '), '\e\[[0-9;]*[mK]*', '', 'g')
+    endif
+
+endfunction
+
+command! -nargs=* -complete=customlist,s:spotify_cmd Spotify call s:spotify(<f-args>)
 " }}}
 
 " --- Remove user (plugin) commands I don't use --- {{{
