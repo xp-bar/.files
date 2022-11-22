@@ -241,3 +241,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # -- Neovim setup -- {{{
 ./neovim.zsh
 # -- }}}
+
+# -- PHP-CS-Fixer setup -- {{{
+cd ./custom-php-cs-fixers && composer install && cd ../
+# -- }}}
