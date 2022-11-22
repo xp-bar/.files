@@ -86,6 +86,8 @@ keyword_casing = auto
 # disabled pager on startup
 enable_pager = True
 
+pager = nvim -R
+
 # Custom colors for the completion menu, toolbar, etc.
 [colors]
 # completion-menu.completion.current = "bg:#ffffff #000000"
