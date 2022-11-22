@@ -724,9 +724,12 @@ function co() {
         branch="$(echo "$all_branches" | fzf --height 25%)"
     else
         local branches="$(echo $all_branches | grep $@)"
+        local exact="$(echo $all_branches | grep "^[ ]*$@$")"
         local wcount=$(echo $branches | wc -l | sed 's/[[:space:]]//g')
 
-        if [[ $wcount == 0 ]]; then
+        if [[ $exact != "" ]]; then
+            branch=$@
+        elif [[ $wcount == 0 ]]; then
             echo -e "\e[31mNo branches found with that name."
             return 1;
         elif [[ $wcount == 1 ]]; then
