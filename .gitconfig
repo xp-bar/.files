@@ -47,3 +47,5 @@
 	tool = vimdiff
 [init]
 	defaultBranch = main
+[includeIf "gitdir:~/Code/"]
+    path = "~/Code/.files/.files-jumbleberry/.gitconfig"
