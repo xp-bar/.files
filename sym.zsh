@@ -17,6 +17,7 @@ ln -sv $PWD/.koolaid ~
 ln -sv $PWD/.alacritty.yml ~
 ln -sv $PWD/.ackrc ~
 ln -sv $PWD/.rgrc ~
+ln -sv $PWD/php-cs-fixer/index.php ~/.php-cs-fixer.php
 touch ~/.ignored-stuff
 touch ~/.env
 

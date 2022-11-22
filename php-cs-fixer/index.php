@@ -1,19 +1,21 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
+$finder = \PhpCsFixer\Finder::create()
     ->exclude('somedir')
     ->notPath('src/Symfony/Component/Translation/Tests/fixtures/resources.php')
     ->in(__DIR__)
 ;
 
-$config = new PhpCsFixer\Config();
+$config = new \PhpCsFixer\Config();
 return $config->setRules([
     /* '@PSR12' => true, */
     /* 'strict_param' => true, */
-    'binary_operator_spaces' => [
+    'binary_operator_spaces'              => [
         'operators' => [
-            '='  => 'align_single_space_minimal', // ALIGN_ASSIGNMENTS
-            '=>' => 'align_single_space_minimal', // ALIGN_KEY_VALUE_PAIRS
+            '='   => 'align_single_space_minimal', // ALIGN_ASSIGNMENTS
+            '=>'  => 'align_single_space_minimal', // ALIGN_KEY_VALUE_PAIRS
+            '??'  => 'align_single_space_minimal',
+            '??=' => 'align_single_space_minimal',
         ],
     ],
     'align_multiline_comment'             => true,
@@ -32,5 +34,6 @@ return $config->setRules([
     'trailing_comma_in_multiline'         => ['elements' => []],
     'trim_array_spaces'                   => true,
     'whitespace_after_comma_in_array'     => true,
+    'not_operator_with_successor_space'   => true
 ])
 ->setFinder($finder);
