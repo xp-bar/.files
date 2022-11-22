@@ -1028,6 +1028,7 @@ augroup END
 Plugin 'stephpy/vim-php-cs-fixer'
 
 let g:phpcs_fix = v:true
+let g:php_cs_fixer_config_file = "/Users/nicholasi/.php-cs-fixer.php"
 
 function! s:phpcs_fix()
     if (g:phpcs_fix)
