@@ -180,6 +180,7 @@ augroup buffercmds
     " trailing whitespace on save
     autocmd BufWritePre *.php :call s:trim_whitespace()
     autocmd BufWritePre *.md :call s:trim_whitespace()
+    autocmd BufWritePre *.volt :call s:trim_whitespace()
     
     " No linewrap html
     autocmd BufNewFile,BufRead *.html setlocal nowrap
@@ -937,7 +938,7 @@ augroup END
 
 Plugin 'jyyan/vim-volt-syntax'
 augroup volt
-    autocmd BufNewFile,BufRead *.volt set filetype=html.volt
+    autocmd BufNewFile,BufRead *.volt set filetype=volt
 augroup END
 
 
