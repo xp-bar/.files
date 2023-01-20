@@ -726,6 +726,12 @@ if has('gui_running') || has('termguicolors') || &t_Co == 88 || &t_Co == 256
   call <sid>X('DbgBreakptSign',             s:hue_1, '', '')
   " }}}
 
+  " Volt (Phalcon Templating Engine) highlighting -------------{{{
+  call <sid>X('voltTagDelim',   s:hue_2,    '', '')
+  call <sid>X('voltVarDelim',   s:hue_5,    '', '')
+  call <sid>X('voltSpecial',    s:hue_1,    '', '')
+  " }}}
+
   " Pug (Formerly Jade) highlighting ----------------------------------------{{{
   call <sid>X('pugAttributesDelimiter',   s:hue_6,    '', '')
   call <sid>X('pugClass',                 s:hue_6,    '', '')
