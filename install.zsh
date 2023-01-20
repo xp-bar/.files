@@ -80,6 +80,9 @@ brew install zsh
 
 # required for powerline font
 brew install svn
+
+brew tap possatti/possatti
+brew install pokemonsay
 # -- }}}
 
 # -- gotop -- {{{
