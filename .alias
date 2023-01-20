@@ -117,3 +117,5 @@ alias epoch="date +%s"
 alias tmuxlayout='tmux list-windows -F "#{window_active} #{window_layout}" | grep "^1" | cut -d " " -f 2 | pbcopy'
 
 alias myip="ifconfig | grep 'inet [0-9.]*' | grep -v '127.0.0.1' | sed 's/inet //g' | sed 's/netmask.*255//g' | tr -d '[:blank:]' | head -n 1";
+
+alias merged-remotes="comm -2 -3 <(git branch | sed 's:^[\\\t \*]*::g') <(git ls-remote --heads origin | gsed 's:^[a-z0-9]*[\\\t ]*refs\/heads\/::g')"
