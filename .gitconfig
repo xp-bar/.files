@@ -45,6 +45,7 @@
 	smudge = git-lfs smudge -- %f
 [diff]
 	tool = vimdiff
+	algorithm = histogram
 [init]
 	defaultBranch = main
 [includeIf "gitdir:~/Code/"]
