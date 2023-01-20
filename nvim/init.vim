@@ -1088,7 +1088,10 @@ nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 augroup phpHold
 autocmd!
 " Highlight symbol under cursor on CursorHold
-autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold *.php silent call CocActionAsync('highlight')
+autocmd CursorHold *.blade.php silent call CocActionAsync('highlight')
+autocmd CursorHold *.vue silent call CocActionAsync('highlight')
+autocmd CursorHold *.js silent call CocActionAsync('highlight')
 augroup END
 
 
