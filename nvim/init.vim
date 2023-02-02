@@ -464,14 +464,6 @@ nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 
 " ---- Movement and resizing ---- {{{
 
-" Move lines like Atom
-nnoremap <C-Down> :m .+1<CR>==
-nnoremap <C-Up> :m .-2<CR>==
-inoremap <C-Down> <Esc>:m .+1<CR>==gi
-inoremap <C-Up> <Esc>:m .-2<CR>==gi
-vnoremap <C-Down> :m '>+1<CR>gv=gv
-vnoremap <C-Up> :m '<-2<CR>gv=gv
-
 " Resize window
 noremap <C-w><C-Up> :res +5<cr> 
 noremap <C-w><C-Down> :res -5<cr> 
