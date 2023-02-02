@@ -74,50 +74,22 @@ elseif (has('unix') && substitute(system('which brew'), "\n", "", "") != "")
     let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'  " Python 3
 endif
 
-" --- indentation options --- {{{
+" PHP Neovim indentation options; sets arrow -> indentation back to classic
+" behaviour instead of aligning
 let g:PHP_noArrowMatching = 1
-" }}}
 
 " OSX stupid backspace fix
 set backspace=indent,eol,start
 
-" --- PHP Folding options --- {{{ 
-" convert '@return ReturnType' to ': ReturnType' in function preview if there is no return type specified in the function declaration
-let g:php_fold_return_comment_as_declaration=1
-
-" convert function access (public, private, protected) to UPPERCASE in preview
-let g:php_fold_uppercase_access_types=0
-
-" if the return type can't be found from an @return tag or a return type declaration, show the return type as ': unknown type' 
-let g:php_fold_show_unknown_types=1
-
-" the maximum length for function comments (accross all lines) before being truncated with '...'
-let g:php_fold_comment_length=60
-
-" show a preview of the first line in the fold, otherwise show the number of hidden lines
-let g:php_fold_show_fold_preview=0
-" --- }}}
-
-
 " Autoread files to watch for changes outside of vim
 set autoread
-augroup autoreload
-    autocmd!
-    " Thanks, Stack Overflow: https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
-     autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
-            \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
-    autocmd FileChangedShellPost *
-      \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
-augroup END
-autocmd filetype crontab setlocal nobackup nowritebackup
 
-autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
-
+" halve the wait time for multi-key keybinds
+set ttm=25
 " --- }}}
 
 " --- General Settings --- {{{
-
-" -- General Mappings -- {{{
+" ---- General Mappings ---- {{{
 map <Space> <leader>
 
 vnoremap <silent> a- <esc>:setl nohlsearch<cr>?[^a-z-]<cr>:normal! ebmk<cr>/[^a-z-]<cr>:normal! beml<cr>:setl hlsearch \| noh<cr>`kv`l
@@ -126,73 +98,26 @@ nmap ,* *<C-O>:%s///gn<CR>
 
 omap <silent> a- :normal Va-<cr>
 
-" -- }}}
+nnoremap <silent><esc><esc> :set nopaste<cr>
 
-" Clear highlight after search
-nnoremap <silent><cr> :noh<CR><CR>:<backspace>
-nnoremap <leader>w :w<cr>
-vnoremap <leader>s :sort<cr>
+cnoreabbrev ww setl wrap!|setl lbr!
 
-" -- Buffers -- {{{
-" Nicer buffer closing {{{
+" ----- Buffers ----- {{{
+" Nicer buffer closing
 Plugin 'moll/vim-bbye'
 nnoremap <leader>q :Bdelete<cr>
-" }}}
 
-" Buffer switching {{{
+" Buffer switching
 nnoremap <silent> <S-j> :bnext<cr>
 nnoremap <silent> <S-k> :bprev<cr>
-" }}}
-" -- }}}
+" ----- }}}
 
-" -- Splits -- {{{
+" ----- Splits ----- {{{
 nnoremap <leader>\| :vsp<cr>
 nnoremap <leader>_ :sp<cr>
 vnoremap <leader>\| :vsp<cr>
 vnoremap <leader>_ :sp<cr>
-" -- }}}
-
-cnoreabbrev ww setl wrap!|setl lbr!
-
-nnoremap <silent><esc><esc> :set nopaste<cr>
-
-function! s:trim_whitespace()
-    let l:save = winsaveview()
-    keeppatterns %s/\s\+$//e
-    call winrestview(l:save)
-endfun
-
-let g:format_html = v:true
-function! s:format_html()
-    if (g:format_html)
-        normal gg=G
-    endif
-endfunction
-
-" -- Auto Commands -- {{{
-augroup buffercmds 
-    autocmd!
-    " Auto allow folds in vimrc file
-    autocmd BufNewFile,BufRead .vimrc :setlocal foldlevelstart=0
-    
-    " Indent HTML files on save
-    autocmd BufWritePre *.html :call s:format_html()
-
-    " trailing whitespace on save
-    autocmd BufWritePre *.php :call s:trim_whitespace()
-    autocmd BufWritePre *.md :call s:trim_whitespace()
-    autocmd BufWritePre *.volt :call s:trim_whitespace()
-    
-    " No linewrap html
-    autocmd BufNewFile,BufRead *.html setlocal nowrap
-    
-    " Spellcheck Markdown 
-    autocmd BufNewFile,BufRead *.md setlocal spell spelllang=en_us
-    
-    " No linewrap html
-    autocmd BufNewFile,BufRead *.php setlocal nowrap
-augroup END
-" }}}
+" ----- }}}
 
 " change between parens
 onoremap in( :<c-u>normal! f(vi(<cr>
@@ -215,7 +140,90 @@ inoremap <esc> <nop>
 inoremap jk <esc>
 vnoremap jk <esc>
 
-" Custom Pack stuff  --- {{{
+" Clear highlight after search
+nnoremap <silent><cr> :noh<CR><CR>:<backspace>
+
+nnoremap <leader>w :w<cr>
+vnoremap <leader>s :sort<cr>
+" ---- }}}
+
+" ---- Auto Commands ---- {{{
+let g:format_html = v:true
+
+function! s:format_html()
+    if (g:format_html)
+        normal gg=G
+    endif
+endfunction
+
+function! s:trim_whitespace()
+    let l:save = winsaveview()
+    keeppatterns %s/\s\+$//e
+    call winrestview(l:save)
+endfun
+
+augroup buffercmds 
+    autocmd!
+    " Auto allow folds in vimrc file
+    autocmd BufNewFile,BufRead .vimrc :setlocal foldlevelstart=0
+    
+    " Indent HTML files on save
+    autocmd BufWritePre *.html :call s:format_html()
+
+    " trailing whitespace on save
+    autocmd BufWritePre *.php :call s:trim_whitespace()
+    autocmd BufWritePre *.md :call s:trim_whitespace()
+    autocmd BufWritePre *.volt :call s:trim_whitespace()
+    
+    " No linewrap html
+    autocmd BufNewFile,BufRead *.html setlocal nowrap
+    
+    " Spellcheck Markdown 
+    autocmd BufNewFile,BufRead *.md setlocal spell spelllang=en_us
+    
+    " No linewrap html
+    autocmd BufNewFile,BufRead *.php setlocal nowrap
+augroup END
+
+augroup autoreload
+    autocmd!
+    " Thanks, Stack Overflow: https://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim/383044#383044
+     autocmd FocusGained,BufEnter,CursorHold,CursorHoldI *
+            \ if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif
+    autocmd FileChangedShellPost *
+      \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
+augroup END
+autocmd filetype crontab setlocal nobackup nowritebackup
+
+autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
+" ---- }}}
+
+" ---- Typewriter mode: follow the cursor ---- {{{
+nnoremap <leader>tt :call TypeWriterToggle()<cr>
+
+function! TypeWriterToggle()
+    if &scrolloff ==# "0"
+        :set scrolloff=99
+        :set sidescrolloff=99
+    else
+        :set scrolloff=0
+        :set sidescrolloff=0
+    endif
+endfunction
+" ---- }}}
+
+" ---- Navigate Tmux and Vim Seamlessly ---- {{{
+Plugin 'christoomey/vim-tmux-navigator'
+let g:tmux_navigator_no_mappings = 1
+let g:tmux_navigator_disable_when_zoomed = 1
+
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+" ---- }}}
+
+" ---- Custom Pack stuff  ---- {{{
 packadd! xp-session
 let g:sessions_dir = '~/vim-sessions/'
 
@@ -223,6 +231,7 @@ packadd! xp-where
 packadd! xp-text-casing
 packadd! xp-changed
 
+" ----- Hidden command ----- {{{
 function! s:hidden(...)
     let l:listchars = ''
     if a:0 == 0
@@ -253,65 +262,9 @@ function! s:hidden(...)
 endfunction
 
 command! -nargs=* Hidden call s:hidden(<f-args>)
-
-" --- }}}
-
-" Act like a typewriter
-" {{{
-nnoremap <leader>tt :call TypeWriterToggle()<cr>
-
-function! TypeWriterToggle()
-    if &scrolloff ==# "0"
-        :set scrolloff=99
-        :set sidescrolloff=99
-    else
-        :set scrolloff=0
-        :set sidescrolloff=0
-    endif
-endfunction
-" }}}
-
-" --- Testing --- {{{
-Plugin 'vim-test/vim-test'
-
-" ----- Default phpunit settings ----- {{{
-let test#strategy = "neovim"
-let test#neovim#term_position = "vert botright"
-let test#php#phpunit#options = {
-  \ 'nearest': '-d memory_limit=2G --testdox',
-  \ 'file':    '-d memory_limit=2G --testdox',
-  \ 'suite':   '-d memory_limit=2G',
-\}
-
-if filereadable($HOME . '/Code/.files-jumbleberry/phpunit.vim')
-    source $HOME/Code/.files-jumbleberry/phpunit.vim
-else
-    let test#php#phpunit#executable = "./vendor/bin/phpunit"
-endif
 " ----- }}}
-
-nnoremap <silent> <leader>tn :TestNearest<CR>
-nnoremap <silent> <leader>tf :TestFile<CR>
-nnoremap <silent> <leader>ts :TestSuite<CR>
-nnoremap <silent> <leader>t. :TestLast<CR>
-nnoremap <silent> <leader>td :TestVisit<CR>
+" ---- }}}
 " --- }}}
-
-" Navigate Tmux and Vim Seamlessly
-" {{{
-Plugin 'christoomey/vim-tmux-navigator'
-let g:tmux_navigator_no_mappings = 1
-let g:tmux_navigator_disable_when_zoomed = 1
-
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-" }}}
-
-" halve the wait time for multi-key keybinds
-set ttm=25
-" }}}
 
 " --- User Interface --- {{{
 
@@ -507,7 +460,6 @@ nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 
 " }}}
 
-
 " --- Editor Config --- {{{
 
 " ---- Movement and resizing ---- {{{
@@ -573,17 +525,6 @@ endfunction
 command! -bang -nargs=* -range Unjoin <line1>,<line2>call LineBreakAt('<bang>', <f-args>)
 " }}}
 
-" Close all buffers except open one
-Plugin 'vim-scripts/BufOnly.vim'
-
-" Tmux-style Pane Zooming
-Plugin 'dhruvasagar/vim-zoom'
-
-nnoremap <leader>+ :<C-u>call zoom#toggle()<cr>
-
-" delimiter assistance
-Plugin 'Raimondi/delimitMate'
-
 " ---- Easy Align ---- {{{
 Plugin 'junegunn/vim-easy-align'
 
@@ -622,6 +563,17 @@ let g:easy_align_delimiters = {
 \ }
 
 " }}}
+
+" Close all buffers except open one
+Plugin 'vim-scripts/BufOnly.vim'
+
+" Tmux-style Pane Zooming
+Plugin 'dhruvasagar/vim-zoom'
+
+nnoremap <leader>+ :<C-u>call zoom#toggle()<cr>
+
+" delimiter assistance
+Plugin 'Raimondi/delimitMate'
 
 " ---- Tag Manager ---- {{{
 function! s:Retag()
@@ -906,6 +858,53 @@ let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 
 Plugin 'simnalamburt/vim-mundo'
 " }}}
+
+" --- Language Config --- {{{
+" ---- PHP Folding options ---- {{{ 
+" convert '@return ReturnType' to ': ReturnType' in function preview if there is no return type specified in the function declaration
+let g:php_fold_return_comment_as_declaration=1
+
+" convert function access (public, private, protected) to UPPERCASE in preview
+let g:php_fold_uppercase_access_types=0
+
+" if the return type can't be found from an @return tag or a return type declaration, show the return type as ': unknown type' 
+let g:php_fold_show_unknown_types=1
+
+" the maximum length for function comments (accross all lines) before being truncated with '...'
+let g:php_fold_comment_length=60
+
+" show a preview of the first line in the fold, otherwise show the number of hidden lines
+let g:php_fold_show_fold_preview=0
+" --- }}}
+
+" --- Testing --- {{{
+Plugin 'vim-test/vim-test'
+
+" ----- Default phpunit settings ----- {{{
+let test#strategy = "neovim"
+let test#neovim#term_position = "vert botright"
+let test#php#phpunit#options = {
+  \ 'nearest': '-d memory_limit=2G --testdox',
+  \ 'file':    '-d memory_limit=2G --testdox',
+  \ 'suite':   '-d memory_limit=2G',
+\}
+
+if filereadable($HOME . '/Code/.files-jumbleberry/phpunit.vim')
+    source $HOME/Code/.files-jumbleberry/phpunit.vim
+else
+    let test#php#phpunit#executable = "./vendor/bin/phpunit"
+endif
+" ----- }}}
+
+nnoremap <silent> <leader>tn :TestNearest<CR>
+nnoremap <silent> <leader>tf :TestFile<CR>
+nnoremap <silent> <leader>ts :TestSuite<CR>
+nnoremap <silent> <leader>t. :TestLast<CR>
+nnoremap <silent> <leader>td :TestVisit<CR>
+" --- }}}
+
+
+" ---- }}}
 
 " --- Syntax --- {{{
 
