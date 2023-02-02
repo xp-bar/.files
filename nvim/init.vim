@@ -638,16 +638,6 @@ nnoremap <silent><C-B> :Git blame<cr>
 " GV - git log browser
 Plugin 'junegunn/gv.vim'
 
-function! s:co_auth()
-    call inputsave()
-    let l:author = input('Author: ')
-    let l:email = input('Email: ')
-    call setline('.', ['Co-authored-by: ' . l:author . ' <' . l:email .'>'])
-    call inputrestore()
-endfunction
-
-command! GitCoAuth call s:co_auth()
-
 augroup gitgroup
     autocmd!
     autocmd FileType diff setlocal foldlevel=1000
