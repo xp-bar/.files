@@ -347,7 +347,6 @@ function! s:changed_files()
         \ }')
 endfunction
 
-
 function! s:untracked_files()
     let files = systemlist('git ls-files --others --exclude-standard')
     if v:shell_error != 0
@@ -1030,7 +1029,7 @@ augroup END
 Plugin 'stephpy/vim-php-cs-fixer'
 
 let g:phpcs_fix = v:true
-let g:php_cs_fixer_config_file = "/Users/nicholasi/.php-cs-fixer.php"
+let g:php_cs_fixer_config = "~/.php-cs-fixer.php"
 
 function! s:phpcs_fix()
     if (g:phpcs_fix)
