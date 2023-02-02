@@ -91,15 +91,15 @@ set ttm=25
 " --- General Settings --- {{{
 " ---- General Mappings ---- {{{
 map <Space> <leader>
-
+nmap ,* *<C-O>:%s///gn<CR>
+omap <silent> a- :normal Va-<cr>
+nnoremap <silent><esc><esc> :set nopaste<cr>
 vnoremap <silent> a- <esc>:setl nohlsearch<cr>?[^a-z-]<cr>:normal! ebmk<cr>/[^a-z-]<cr>:normal! beml<cr>:setl hlsearch \| noh<cr>`kv`l
 
-nmap ,* *<C-O>:%s///gn<CR>
+" change between parens
+onoremap in( :<c-u>normal! f(vi(<cr>
 
-omap <silent> a- :normal Va-<cr>
-
-nnoremap <silent><esc><esc> :set nopaste<cr>
-
+" abbreviations
 cnoreabbrev ww setl wrap!|setl lbr!
 
 " ----- Buffers ----- {{{
@@ -118,9 +118,6 @@ nnoremap <leader>_ :sp<cr>
 vnoremap <leader>\| :vsp<cr>
 vnoremap <leader>_ :sp<cr>
 " ----- }}}
-
-" change between parens
-onoremap in( :<c-u>normal! f(vi(<cr>
 
 " Stop using the Arrow keys in normal mode
 nnoremap <Up> <nop>
