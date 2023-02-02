@@ -464,15 +464,15 @@ nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 
 " ---- Movement and resizing ---- {{{
 
-" Move lines like Atom {{{
+" Move lines like Atom
 nnoremap <C-Down> :m .+1<CR>==
 nnoremap <C-Up> :m .-2<CR>==
 inoremap <C-Down> <Esc>:m .+1<CR>==gi
 inoremap <C-Up> <Esc>:m .-2<CR>==gi
 vnoremap <C-Down> :m '>+1<CR>gv=gv
 vnoremap <C-Up> :m '<-2<CR>gv=gv
-" }}}
 
+" Resize window
 noremap <C-w><C-Up> :res +5<cr> 
 noremap <C-w><C-Down> :res -5<cr> 
 noremap <C-w><C-Left> :vert res +5<cr>
@@ -486,46 +486,7 @@ vnoremap > >gv
 nnoremap gb %
 vnoremap gb %
 
-" Mapped helper {{{
-function! Mapped(fn, l)
-    let new_list = deepcopy(a:l)
-    call map(new_list, string(a:fn) . '(v:val)')
-    return new_list
-endfunction
-" }}}
-
-" https://vim.fandom.com/wiki/Add_a_newline_after_given_patterns
-function! LineBreakAt(bang, ...) range
-    let save_search = @/
-
-    if empty(a:bang)
-        let before = ''
-        let after = '\ze.'
-        let repl = '&\r'
-    else
-        let before = '.\zs'
-        let after = ''
-        let repl = '\r&'
-    endif
-    " let l:pat_list = map(deepcopy(a:000), "escape(v:val, '/\\.*$^~[')")
-    let l:pat_list = map(deepcopy(a:000), "escape(v:val, '/\\.*$^~')")
-    let l:find = empty(l:pat_list) ? @/ : join(l:pat_list, '\|')
-    let l:find = before . '\%(' . l:find . '\)' . after
-    " Example: 10,20s/\%(arg1\|arg2\|arg3\)\ze./&\r/ge
-    execute a:firstline . ',' . a:lastline . 's/'. l:find . '/' . repl . '/ge'
-
-    " reindent the lines
-    mark q
-    normal gvg`q=jk
-    delmarks q
-
-    let @/ = save_search
-endfunction
-
-command! -bang -nargs=* -range Unjoin <line1>,<line2>call LineBreakAt('<bang>', <f-args>)
-" }}}
-
-" ---- Easy Align ---- {{{
+" ----- Easy Align ----- {{{
 Plugin 'junegunn/vim-easy-align'
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
@@ -562,41 +523,10 @@ let g:easy_align_delimiters = {
 \    }
 \ }
 
-" }}}
+" ----- }}}
+" ---- }}}
 
-" Close all buffers except open one
-Plugin 'vim-scripts/BufOnly.vim'
-
-" Tmux-style Pane Zooming
-Plugin 'dhruvasagar/vim-zoom'
-
-nnoremap <leader>+ :<C-u>call zoom#toggle()<cr>
-
-" delimiter assistance
-Plugin 'Raimondi/delimitMate'
-
-" ---- Tag Manager ---- {{{
-function! s:Retag()
-    call system('retag')
-endfunction
-
-command! Retag call s:Retag()
-" }}}
-
-" Git wrapper for vim
-Plugin 'tpope/vim-fugitive'
-nnoremap <silent><C-B> :Git blame<cr>
-
-" GV - git log browser
-Plugin 'junegunn/gv.vim'
-
-augroup gitgroup
-    autocmd!
-    autocmd FileType diff setlocal foldlevel=1000
-    autocmd FileType gitcommit inoreabbrev co- <ESC>:GitCoAuth<CR>
-augroup END
-
-" ---- Tagbar ---- {{{
+" ----- Tagbar ----- {{{
 Plugin 'majutsushi/tagbar'
 
 let s:hidden_all = 1
@@ -629,7 +559,62 @@ endfunction
 command! -bar TagbarFrozen call s:tagbar_autopause()
 nnoremap <silent> <C-s> :TagbarFrozen<cr>
 vnoremap <silent> <C-s> <esc>:TagbarOpen fj<cr> :TagbarCurrentTag<cr>
-" }}}
+" ----- }}}
+
+" ---- Unjoin lines ---- {{{
+" https://vim.fandom.com/wiki/Add_a_newline_after_given_patterns
+function! LineBreakAt(bang, ...) range
+    let save_search = @/
+
+    if empty(a:bang)
+        let before = ''
+        let after = '\ze.'
+        let repl = '&\r'
+    else
+        let before = '.\zs'
+        let after = ''
+        let repl = '\r&'
+    endif
+    " let l:pat_list = map(deepcopy(a:000), "escape(v:val, '/\\.*$^~[')")
+    let l:pat_list = map(deepcopy(a:000), "escape(v:val, '/\\.*$^~')")
+    let l:find = empty(l:pat_list) ? @/ : join(l:pat_list, '\|')
+    let l:find = before . '\%(' . l:find . '\)' . after
+    " Example: 10,20s/\%(arg1\|arg2\|arg3\)\ze./&\r/ge
+    execute a:firstline . ',' . a:lastline . 's/'. l:find . '/' . repl . '/ge'
+
+    " reindent the lines
+    mark q
+    normal gvg`q=jk
+    delmarks q
+
+    let @/ = save_search
+endfunction
+
+command! -bang -nargs=* -range Unjoin <line1>,<line2>call LineBreakAt('<bang>', <f-args>)
+" ---- }}}
+
+" Close all buffers except open one
+Plugin 'vim-scripts/BufOnly.vim'
+
+" Tmux-style Pane Zooming
+Plugin 'dhruvasagar/vim-zoom'
+nnoremap <leader>+ :<C-u>call zoom#toggle()<cr>
+
+" delimiter assistance
+Plugin 'Raimondi/delimitMate'
+
+" Git wrapper for vim
+Plugin 'tpope/vim-fugitive'
+nnoremap <silent><C-B> :Git blame<cr>
+
+" GV - git log browser
+Plugin 'junegunn/gv.vim'
+
+augroup gitgroup
+    autocmd!
+    autocmd FileType diff setlocal foldlevel=1000
+    autocmd FileType gitcommit inoreabbrev co- <ESC>:GitCoAuth<CR>
+augroup END
 
 " Managing quotations, surrounding brackets, etc. Made easier
 Plugin 'tpope/vim-surround'
@@ -731,7 +716,7 @@ if executable('fzf')
 end
 " }}}
 
-" --- Quickfix -- {{{
+" ---- Quickfix ---- {{{
 function! s:RemoveQFItem()
     let curqfidx = line('.') - 1
     let qfall = getqflist()
@@ -761,7 +746,7 @@ command! QfRemove :call s:RemoveQFItem()
 command! -nargs=* Qf :call s:AddQFItem(<f-args>)
 autocmd FileType qf map <buffer> dd :QfRemove<cr>
 nmap <silent> <leader>aq :Qf<cr>
-" }}}
+" ---- }}}
 
 " ---- Ack for Vim ---- {{{
 Plugin 'mileszs/ack.vim'
@@ -772,23 +757,60 @@ nnoremap <leader><C-f> :Ack!<Space>
 vnoremap <leader><C-f> y :Ack!<Space><C-r>"
 nnoremap <C-f> /
 vnoremap <C-f> y /<C-r>"
-" }}}
+" ---- }}}
 
-" ---- Can't live without Emmet ---- {{{
+" ---- Emmet ---- {{{
 Plugin 'mattn/emmet-vim'
 
 let g:user_emmet_leader_key='<leader>' 
 let g:user_emmet_mode='n'
 
 inoremap <C-Return> <cr><cr><C-o>k<Tab>
-" }}}
+" ---- }}}
 
 " ---- Comment and Un-comment lines on the fly ---- {{{
 Plugin 'tpope/vim-commentary'
 " https://stackoverflow.com/questions/9051837/how-to-map-c-to-toggle-comments-in-vim
 " Vim recognizes C-_ as C-/, so control+/ will toggle comments
 noremap <C-_> :Commentary<cr>
-" }}}
+" ---- }}}
+
+" ---- Make command ---- {{{
+function! s:make_func(...)
+    silent exec 'make ' . (a:0 > 0 ? a:1 : '')
+    bot copen
+endfunction
+command! -nargs=* Make call s:make_func(<f-args>)
+cnoreabbrev make Make
+" ---- }}}
+
+Plugin 'simnalamburt/vim-mundo'
+" --- }}}
+
+" --- Language Config --- {{{
+" ---- Add a namespace declaration - php ---- {{{
+augroup phpNamespace
+    autocmd!
+    command! -nargs=* Class call php#php#new_class(<f-args>)
+augroup END
+" ---- }}}
+
+" ---- PHP Folding options ---- {{{ 
+" convert '@return ReturnType' to ': ReturnType' in function preview if there is no return type specified in the function declaration
+let g:php_fold_return_comment_as_declaration=1
+
+" convert function access (public, private, protected) to UPPERCASE in preview
+let g:php_fold_uppercase_access_types=0
+
+" if the return type can't be found from an @return tag or a return type declaration, show the return type as ': unknown type' 
+let g:php_fold_show_unknown_types=1
+
+" the maximum length for function comments (accross all lines) before being truncated with '...'
+let g:php_fold_comment_length=60
+
+" show a preview of the first line in the fold, otherwise show the number of hidden lines
+let g:php_fold_show_fold_preview=0
+" --- }}}
 
 " ---- PHP Namespace and Use Statement support in Vim ---- {{{
 Plugin 'arnaud-lb/vim-php-namespace'
@@ -812,7 +834,7 @@ augroup phpImports
     autocmd FileType php let &errorformat=errorformat
     " autocmd FileType php inoreabbrev fn function () {<CR>}<Esc>F%s<c-o>:call getchar()<CR>
 augroup END
-" }}}
+" ---- }}}
 
 " --- Additional PHP functions --- {{{
 function! s:tinker()
@@ -831,53 +853,7 @@ endfunction
 command! Tinker call s:tinker()
 " --- }}}
 
-" --- Make command --- {{{
-function! s:make_func(...)
-    silent exec 'make ' . (a:0 > 0 ? a:1 : '')
-    bot copen
-endfunction
-command! -nargs=* Make call s:make_func(<f-args>)
-cnoreabbrev make Make
-" }}}
-
-" Add a namespace declaration - php {{{
-augroup phpNamespace
-    autocmd!
-    command! -nargs=* Class call php#php#new_class(<f-args>)
-augroup END
-
-" }}}
-"
-" ---- phpDocumentor ---- {{{
-Plugin 'tobyS/vmustache'
-" Plugin 'tobyS/pdv'
-" Fork with return types
-Plugin 'YaroslavMolchan/pdv'
-let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
-" ---- }}}
-
-Plugin 'simnalamburt/vim-mundo'
-" }}}
-
-" --- Language Config --- {{{
-" ---- PHP Folding options ---- {{{ 
-" convert '@return ReturnType' to ': ReturnType' in function preview if there is no return type specified in the function declaration
-let g:php_fold_return_comment_as_declaration=1
-
-" convert function access (public, private, protected) to UPPERCASE in preview
-let g:php_fold_uppercase_access_types=0
-
-" if the return type can't be found from an @return tag or a return type declaration, show the return type as ': unknown type' 
-let g:php_fold_show_unknown_types=1
-
-" the maximum length for function comments (accross all lines) before being truncated with '...'
-let g:php_fold_comment_length=60
-
-" show a preview of the first line in the fold, otherwise show the number of hidden lines
-let g:php_fold_show_fold_preview=0
-" --- }}}
-
-" --- Testing --- {{{
+" ---- Testing ---- {{{
 Plugin 'vim-test/vim-test'
 
 " ----- Default phpunit settings ----- {{{
@@ -901,10 +877,18 @@ nnoremap <silent> <leader>tf :TestFile<CR>
 nnoremap <silent> <leader>ts :TestSuite<CR>
 nnoremap <silent> <leader>t. :TestLast<CR>
 nnoremap <silent> <leader>td :TestVisit<CR>
-" --- }}}
-
-
 " ---- }}}
+
+" ---- Documentation ---- {{{
+" ----- phpDocumentor ----- {{{
+Plugin 'tobyS/vmustache'
+" Plugin 'tobyS/pdv'
+" Fork with return types
+Plugin 'YaroslavMolchan/pdv'
+let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
+" ----- }}}
+" ---- }}}
+" --- }}}
 
 " --- Syntax --- {{{
 
