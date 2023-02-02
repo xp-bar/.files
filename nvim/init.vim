@@ -274,15 +274,21 @@ endfunction
 " --- Testing --- {{{
 Plugin 'vim-test/vim-test'
 
+" ----- Default phpunit settings ----- {{{
 let test#strategy = "neovim"
-let test#php#phpunit#executable = "./vendor/bin/phpunit"
+let test#neovim#term_position = "vert botright"
 let test#php#phpunit#options = {
   \ 'nearest': '-d memory_limit=2G --testdox',
   \ 'file':    '-d memory_limit=2G --testdox',
   \ 'suite':   '-d memory_limit=2G',
 \}
-let test#neovim#term_position = "vert botright"
 
+if filereadable($HOME . '/Code/.files-jumbleberry/phpunit.vim')
+    source $HOME/Code/.files-jumbleberry/phpunit.vim
+else
+    let test#php#phpunit#executable = "./vendor/bin/phpunit"
+endif
+" ----- }}}
 
 nnoremap <silent> <leader>tn :TestNearest<CR>
 nnoremap <silent> <leader>tf :TestFile<CR>
