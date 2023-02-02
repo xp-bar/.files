@@ -717,17 +717,17 @@ endfunction
 function! s:AddQFItem(...)
     let l:text = (a:0 > 0 ? join(a:000) : getline('.'))
     call setqflist(getqflist(), 'a', {
-                \    'title': 'My List',
-                \    'nr': 0,
-                \    'items': [
-                \       {
-                \           'filename': expand('%'),
-                \           'lnum': line('.'),
-                \           'text': l:text
-                \       }
-                \      ]
-                \   }
-                \   )
+    \    'title': 'My List',
+    \    'nr': 0,
+    \    'items': [
+    \       {
+    \           'filename': expand('%'),
+    \           'lnum': line('.'),
+    \           'text': l:text
+    \       }
+    \      ]
+    \   }
+    \   )
     botright copen
 endfunction
 
