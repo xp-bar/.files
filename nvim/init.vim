@@ -457,6 +457,268 @@ nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 
 " }}}
 
+" --- Syntax --- {{{
+
+" html5 omnicomplete
+Plugin 'othree/html5.vim'
+
+" Handlebars
+Plugin 'mustache/vim-mustache-handlebars'
+
+augroup handlebars
+    autocmd BufNewFile,BufRead *.html set filetype=html.handlebars
+augroup END
+
+Plugin 'jyyan/vim-volt-syntax'
+augroup volt
+    autocmd BufNewFile,BufRead *.volt set filetype=volt
+augroup END
+
+
+Plugin 'xwsoul/vim-zephir'
+augroup zephir
+    autocmd BufNewFile,BufRead *.zep set filetype=zephir
+augroup END
+
+
+" Scss support
+Plugin 'cakebaker/scss-syntax.vim'
+
+" Better PHP Lang Support
+Plugin 'StanAngeloff/php.vim' 
+augroup php
+autocmd!
+autocmd BufNewFile,BufRead *.php setlocal foldlevel=1000
+augroup END
+
+" Javascript
+Plugin 'pangloss/vim-javascript'
+
+inoreabbrev clog console.log();<Left><Left>
+inoreabbrev cgroup console.group();<cr><cr>console.log();<cr><cr>console.groupEnd();
+
+" JS Doc
+Plugin 'heavenshell/vim-jsdoc'
+let g:jsdoc_allow_input_prompt=0
+let g:jsdoc_enable_es6=1
+let g:jsdoc_input_description=1
+let g:jsdoc_return_description=0
+
+" -- Documentation -- {{{
+" See - tobyS/pdv
+" See - heavenshell/vim-jsdoc
+augroup documentors
+    autocmd!
+    autocmd FileType php nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr> 
+    autocmd FileType vue nmap <silent> <leader>d <Plug>(jsdoc)
+    autocmd FileType javascript nmap <silent> <leader>d <Plug>(jsdoc)
+augroup END
+"  }}}
+
+" Typescript and Vue
+Plugin 'posva/vim-vue'
+" let g:vue_disable_pre_processors=1
+let g:vue_pre_processors = ['typescript', 'scss']
+
+command! WebpackImport call vue#snippets#webpack_async_import()
+command! Vue call vue#snippets#vue_files()
+command! Mutator call vue#snippets#set_mutator()
+command! Getter call vue#snippets#get_getter()
+
+augroup syntaxcommands
+    autocmd!
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType scss setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType sass setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd BufEnter,BufRead,BufNewFile *.vue set filetype=vue
+    autocmd FileType vue syntax sync fromstart
+    autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
+    autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ $*\ %
+augroup END
+
+augroup vueabbrevs
+    autocmd!
+    autocmd FileType vue inoreabbrev gscomp : {<CR><Tab>get() {<CR><CR>},<CR>set() {<CR><CR>}<CR>}, <Esc><<F%s<c-o>:call getchar()<CR>
+augroup END
+
+" Laravel
+Plugin 'jwalton512/vim-blade'
+" Workaround to ensure correct filetypes for blade template syntax highlight
+augroup blade
+autocmd!
+autocmd BufNewFile,BufRead *.blade.php setlocal filetype=blade
+augroup END
+
+command! -nargs=* -complete=customlist,php#laravel#blade_list Blade call php#laravel#blade_files(<f-args>)
+
+Plugin 'leafgarland/typescript-vim'
+
+augroup typescript
+autocmd!
+autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+augroup END
+
+
+Plugin 'stephpy/vim-php-cs-fixer'
+
+let g:phpcs_fix = v:true
+let g:php_cs_fixer_config = "~/.php-cs-fixer.php"
+
+function! s:phpcs_fix()
+    if (g:phpcs_fix)
+        call PhpCsFixerFixFile()
+    fi
+endfunction
+
+autocmd BufWritePost *.php silent! call s:phpcs_fix()
+
+" ---- Conquer of Completion {{{
+Plugin 'neoclide/coc.nvim'
+
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice.
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> <leader>gd <Plug>(coc-definition)
+nmap <silent> <leader>gy <Plug>(coc-type-definition)
+nmap <silent> <leader>gi <Plug>(coc-implementation)
+nmap <silent> <leader>gr <Plug>(coc-references)
+nmap <silent> gk <Plug>(coc-codeaction)
+
+xmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
+nmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
+
+nmap <silent> <leader>gf call CocAction('runCommand', 'editor.action.formatDocument')
+
+" xmap <leader>a <Plug>(coc-codeaction-selected)
+" nmap <leader>a <Plug>(coc-codeaction-selected)
+
+" Cursors
+nmap <silent> <leader>c <Plug>(coc-cursors-position)
+nmap <C-c> <Plug>(coc-cursors-operator)
+xmap <silent> <C-c> <Plug>(coc-cursors-range)
+
+nmap <silent> <leader>ga :call php#laravel#goto_attribute()<CR>
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    else
+        call CocActionAsync('doHover')
+    endif
+endfunction
+
+nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
+
+augroup phpHold
+autocmd!
+" Highlight symbol under cursor on CursorHold
+autocmd CursorHold *.php silent call CocActionAsync('highlight')
+autocmd CursorHold *.blade.php silent call CocActionAsync('highlight')
+autocmd CursorHold *.vue silent call CocActionAsync('highlight')
+autocmd CursorHold *.js silent call CocActionAsync('highlight')
+augroup END
+
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects (operator mappings for inner-function,
+" a-function, etc.)
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" eslint
+command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint')['quiet'] ? v:false : v:true)
+" Installation: 
+" run coc#util#install()
+" run :CocInstall coc-phpls
+" ---- }}}
+
+nnoremap <silent> <leader>gl :Lines<CR>
+
+" autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
+
+let g:swift_plugin_directory = $HOME . '/swift/apple/swift'
+
+if isdirectory(g:swift_plugin_directory)
+    Plugin 'file://' . g:swift_plugin_directory,
+                \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
+endif
+
+autocmd BufNewFile,BufRead *.swift set syntax=swift | set filetype=swift
+
+" xdebug for vim
+Plugin 'vim-vdebug/vdebug'
+let g:vdebug_options = {
+        \ 'port' : 9003,
+        \ 'timeout' : 20,
+        \ 'server' : 10.0.2.2,
+        \ 'on_close' : 'stop',
+        \ 'break_on_open' : 0,
+        \ 'ide_key' : 'PHPSTORM',
+        \ 'debug_window_level' : 0,
+        \ 'debug_file_level' : 0,
+        \ 'debug_file' : '',
+        \ 'path_maps' : {},
+        \ 'watch_window_style' : 'expanded',
+        \ 'marker_default' : '⬦',
+        \ 'marker_closed_tree' : '▸',
+        \ 'marker_open_tree' : '▾',
+        \ 'sign_breakpoint' : '▷',
+        \ 'sign_current' : '▶',
+        \ 'continuous_mode'  : 1,
+        \ 'simplified_status': 1,
+        \ 'layout': 'horizontal',
+        \ }
+
+let g:vdebug_keymap = {
+    \ "run" : "<Leader>xr",
+    \ "run_to_cursor" : "<Leader>xc",
+    \ "step_over" : "<Leader>xo",
+    \ "step_into" : "<Leader>xi",
+    \ "step_out" : "<Leader>xu",
+    \ "close" : "<Leader>xs",
+    \ "detach" : "<Leader>xd",
+    \ "set_breakpoint" : "<Leader>xb",
+    \ "get_context" : "<F11>",
+    \ "eval_under_cursor" : "<Leader>xc",
+    \ "eval_visual" : "<Leader>e",
+    \ }
+
+nnoremap <silent> <M-b> :Breakpoint<cr>
+nnoremap <silent> <M-r> :BreakpointRemove *<cr>
+
+" Database Markdown Language Syntax
+Plugin 'jidn/vim-dbml'
+
+augroup dbml
+autocmd!
+autocmd BufNewFile,BufRead *.dbml set syntax=dbml
+augroup END
+" }}}
+
 " --- Editor Config --- {{{
 
 " ---- Movement and resizing ---- {{{
@@ -878,268 +1140,6 @@ let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 " ----- }}}
 " ---- }}}
 " --- }}}
-
-" --- Syntax --- {{{
-
-" html5 omnicomplete
-Plugin 'othree/html5.vim'
-
-" Handlebars
-Plugin 'mustache/vim-mustache-handlebars'
-
-augroup handlebars
-    autocmd BufNewFile,BufRead *.html set filetype=html.handlebars
-augroup END
-
-Plugin 'jyyan/vim-volt-syntax'
-augroup volt
-    autocmd BufNewFile,BufRead *.volt set filetype=volt
-augroup END
-
-
-Plugin 'xwsoul/vim-zephir'
-augroup zephir
-    autocmd BufNewFile,BufRead *.zep set filetype=zephir
-augroup END
-
-
-" Scss support
-Plugin 'cakebaker/scss-syntax.vim'
-
-" Better PHP Lang Support
-Plugin 'StanAngeloff/php.vim' 
-augroup php
-autocmd!
-autocmd BufNewFile,BufRead *.php setlocal foldlevel=1000
-augroup END
-
-" Javascript
-Plugin 'pangloss/vim-javascript'
-
-inoreabbrev clog console.log();<Left><Left>
-inoreabbrev cgroup console.group();<cr><cr>console.log();<cr><cr>console.groupEnd();
-
-" JS Doc
-Plugin 'heavenshell/vim-jsdoc'
-let g:jsdoc_allow_input_prompt=0
-let g:jsdoc_enable_es6=1
-let g:jsdoc_input_description=1
-let g:jsdoc_return_description=0
-
-" -- Documentation -- {{{
-" See - tobyS/pdv
-" See - heavenshell/vim-jsdoc
-augroup documentors
-    autocmd!
-    autocmd FileType php nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr> 
-    autocmd FileType vue nmap <silent> <leader>d <Plug>(jsdoc)
-    autocmd FileType javascript nmap <silent> <leader>d <Plug>(jsdoc)
-augroup END
-"  }}}
-
-" Typescript and Vue
-Plugin 'posva/vim-vue'
-" let g:vue_disable_pre_processors=1
-let g:vue_pre_processors = ['typescript', 'scss']
-
-command! WebpackImport call vue#snippets#webpack_async_import()
-command! Vue call vue#snippets#vue_files()
-command! Mutator call vue#snippets#set_mutator()
-command! Getter call vue#snippets#get_getter()
-
-augroup syntaxcommands
-    autocmd!
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType scss setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType sass setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd BufEnter,BufRead,BufNewFile *.vue set filetype=vue
-    autocmd FileType vue syntax sync fromstart
-    autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
-    autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ $*\ %
-augroup END
-
-augroup vueabbrevs
-    autocmd!
-    autocmd FileType vue inoreabbrev gscomp : {<CR><Tab>get() {<CR><CR>},<CR>set() {<CR><CR>}<CR>}, <Esc><<F%s<c-o>:call getchar()<CR>
-augroup END
-
-" Laravel
-Plugin 'jwalton512/vim-blade'
-" Workaround to ensure correct filetypes for blade template syntax highlight
-augroup blade
-autocmd!
-autocmd BufNewFile,BufRead *.blade.php setlocal filetype=blade
-augroup END
-
-command! -nargs=* -complete=customlist,php#laravel#blade_list Blade call php#laravel#blade_files(<f-args>)
-
-Plugin 'leafgarland/typescript-vim'
-
-augroup typescript
-autocmd!
-autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
-augroup END
-
-
-Plugin 'stephpy/vim-php-cs-fixer'
-
-let g:phpcs_fix = v:true
-let g:php_cs_fixer_config = "~/.php-cs-fixer.php"
-
-function! s:phpcs_fix()
-    if (g:phpcs_fix)
-        call PhpCsFixerFixFile()
-    fi
-endfunction
-
-autocmd BufWritePost *.php silent! call s:phpcs_fix()
-
-" ---- Conquer of Completion {{{
-Plugin 'neoclide/coc.nvim'
-
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> <leader>gd <Plug>(coc-definition)
-nmap <silent> <leader>gy <Plug>(coc-type-definition)
-nmap <silent> <leader>gi <Plug>(coc-implementation)
-nmap <silent> <leader>gr <Plug>(coc-references)
-nmap <silent> gk <Plug>(coc-codeaction)
-
-xmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
-nmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
-
-nmap <silent> <leader>gf call CocAction('runCommand', 'editor.action.formatDocument')
-
-" xmap <leader>a <Plug>(coc-codeaction-selected)
-" nmap <leader>a <Plug>(coc-codeaction-selected)
-
-" Cursors
-nmap <silent> <leader>c <Plug>(coc-cursors-position)
-nmap <C-c> <Plug>(coc-cursors-operator)
-xmap <silent> <C-c> <Plug>(coc-cursors-range)
-
-nmap <silent> <leader>ga :call php#laravel#goto_attribute()<CR>
-
-function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        call CocActionAsync('doHover')
-    endif
-endfunction
-
-nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
-
-augroup phpHold
-autocmd!
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold *.php silent call CocActionAsync('highlight')
-autocmd CursorHold *.blade.php silent call CocActionAsync('highlight')
-autocmd CursorHold *.vue silent call CocActionAsync('highlight')
-autocmd CursorHold *.js silent call CocActionAsync('highlight')
-augroup END
-
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-" Map function and class text objects (operator mappings for inner-function,
-" a-function, etc.)
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
-
-" eslint
-command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint')['quiet'] ? v:false : v:true)
-" Installation: 
-" run coc#util#install()
-" run :CocInstall coc-phpls
-" ---- }}}
-
-nnoremap <silent> <leader>gl :Lines<CR>
-
-" autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
-
-let g:swift_plugin_directory = $HOME . '/swift/apple/swift'
-
-if isdirectory(g:swift_plugin_directory)
-    Plugin 'file://' . g:swift_plugin_directory,
-                \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
-endif
-
-autocmd BufNewFile,BufRead *.swift set syntax=swift | set filetype=swift
-
-" xdebug for vim
-Plugin 'vim-vdebug/vdebug'
-let g:vdebug_options = {
-        \ 'port' : 9003,
-        \ 'timeout' : 20,
-        \ 'server' : 10.0.2.2,
-        \ 'on_close' : 'stop',
-        \ 'break_on_open' : 0,
-        \ 'ide_key' : 'PHPSTORM',
-        \ 'debug_window_level' : 0,
-        \ 'debug_file_level' : 0,
-        \ 'debug_file' : '',
-        \ 'path_maps' : {},
-        \ 'watch_window_style' : 'expanded',
-        \ 'marker_default' : '⬦',
-        \ 'marker_closed_tree' : '▸',
-        \ 'marker_open_tree' : '▾',
-        \ 'sign_breakpoint' : '▷',
-        \ 'sign_current' : '▶',
-        \ 'continuous_mode'  : 1,
-        \ 'simplified_status': 1,
-        \ 'layout': 'horizontal',
-        \ }
-
-let g:vdebug_keymap = {
-    \ "run" : "<Leader>xr",
-    \ "run_to_cursor" : "<Leader>xc",
-    \ "step_over" : "<Leader>xo",
-    \ "step_into" : "<Leader>xi",
-    \ "step_out" : "<Leader>xu",
-    \ "close" : "<Leader>xs",
-    \ "detach" : "<Leader>xd",
-    \ "set_breakpoint" : "<Leader>xb",
-    \ "get_context" : "<F11>",
-    \ "eval_under_cursor" : "<Leader>xc",
-    \ "eval_visual" : "<Leader>e",
-    \ }
-
-nnoremap <silent> <M-b> :Breakpoint<cr>
-nnoremap <silent> <M-r> :BreakpointRemove *<cr>
-
-" Database Markdown Language Syntax
-Plugin 'jidn/vim-dbml'
-
-augroup dbml
-autocmd!
-autocmd BufNewFile,BufRead *.dbml set syntax=dbml
-augroup END
-" }}}
 
 " --- Themimg --- {{{
 
