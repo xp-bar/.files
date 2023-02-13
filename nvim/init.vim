@@ -1130,6 +1130,13 @@ nnoremap <silent> <leader>t. :TestLast<CR>
 nnoremap <silent> <leader>td :TestVisit<CR>
 " ---- }}}
 
+" ---- Markdown ---- {{{
+Plugin 'iamcco/markdown-preview.nvim'
+
+" Installation:
+" call mkdp#util#install()
+" ---- }}}
+
 " ---- Documentation ---- {{{
 " ----- phpDocumentor ----- {{{
 Plugin 'tobyS/vmustache'
