@@ -30,3 +30,7 @@ ln -sv $PWD/nvim/colors/two.vim ~/.config/nvim/colors
 [ -d ~/.config/nvim/autoload/lightline/colorscheme/ ] || mkdir -p ~/.config/nvim/autoload/lightline/colorscheme/
 ln -sv $PWD/nvim/autoload/lightline/colorscheme/two.vim ~/.config/nvim/autoload/lightline/colorscheme
 ln -sv $PWD/nvim/packs $HOME/.config/nvim/pack
+
+[ -d ~/.config/figlet/ ] || mkdir -p ~/.config/figlet/
+# no trailing slash since we're symlinking a folder
+ln -sv $PWD/figlet-fonts/ ~/.config/figlet/fonts

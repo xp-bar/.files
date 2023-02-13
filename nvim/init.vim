@@ -324,7 +324,7 @@ let g:startify_lists = [
         \ { 'header': ['   Recent Sessions:'], 'type': function('s:vim_sessions'), 'indices': map(range(1,5), '"s" . v:val')}
         \ ]
 
-let g:toilet_font_dir = "~/.files/figlet-fonts/"
+let g:toilet_font_dir = "~/.config/figlet/fonts/"
 
 let g:startify_custom_header = 
             \ map(split(system('fortune -s -n $[$(tput cols)/4] computers | toilet -d ' . g:toilet_font_dir . ' -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
