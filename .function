@@ -237,7 +237,7 @@ function din(){
     input=$1
     if [[ $input == "" ]]; then
         base_branch="$(git config repo.base-branch)";
-        default_branch="$([[ $base_branch != "" ]] && echo $base_branch || echo "master")";
+        default_branch="$([[ $base_branch != "" ]] && echo $base_branch || echo "main")";
         git --no-pager diff $default_branch --name-only
     else
         git --no-pager diff $input --name-only
@@ -553,7 +553,7 @@ function dbr(){
 
 function _git_get_merged() {
     IFS=" "
-    git branch --merged | grep -v "master\|mobile\|staging\|\*" | sed 's:^[ ]*::g'
+    git branch --merged | grep -v "main\|mobile\|staging\|\*" | sed 's:^[ ]*::g'
 }
 
 function _dbr() {
@@ -570,7 +570,7 @@ compdef _dbr dbr
 
 function dicount(){
     base_branch="$(git config repo.base-branch)";
-    default_branch="$([[ $base_branch != "" ]] && echo $base_branch || echo "master")";
+    default_branch="$([[ $base_branch != "" ]] && echo $base_branch || echo "main")";
     branch="$([[ $1 != "" ]] && echo $1 || echo $default_branch)";
     local result=`git diff $branch --stat | tail -n 1 | tr , '\n' | sed 's/([+-])//g' | awk '$1=$1'`
 
@@ -677,7 +677,7 @@ function _collabs() {
 
 gpr() {
     local arg1=$1
-    local base=${arg1:-"master"}
+    local base=${arg1:-"main"}
     local branch=$(git rev-parse --abbrev-ref HEAD)
 
     hub pull-request -b $base --draft

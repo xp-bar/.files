@@ -64,7 +64,7 @@ alias vi="nvim"
 alias vim="nvim"
 
 # GIT
-alias master="git checkout master"
+alias main="git checkout main"
 alias aa="git add ."
 alias ra="git reset"
 alias a="git add"
