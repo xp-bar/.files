@@ -1,3 +1,6 @@
 # RIPGREP Config file
 
 --type-add=vue:*.{vue}
+--type-add=blade:*.blade\.php
+--type-add=volt:*.volt
+--type-add=dbml:*.dbml
