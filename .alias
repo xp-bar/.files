@@ -1,14 +1,8 @@
 alias azu="antibody update && source ~/.zshrc"
 alias zu="source ~/.zshrc"
 
-alias start="echo '$(date '+%Y-%m-%d @ %H:%M:%S')' > ~/.time"
-alias wstart="cat ~/.time; echo '' > ~/.time"
-
 #antigen
 alias itheme="antigen theme $1; antigen cleanup -f > /dev/null"
-
-#DB
-alias localdb="mycli -u root -h 127.0.0.1"
 
 #PHPCS
 alias fix="phpcbf --standard=XpBar"
@@ -62,14 +56,12 @@ php artisan view:clear"
 
 alias aql="php artisan queue:listen --tries=3"
 alias aqw="php artisan queue:work --once"
-alias tink="c; art tinker"
+alias tink="clear; php artisan tinker"
 alias c="clear"
 alias bc='bc -l'
 alias now="date '+%I:%M%p, %Y-%m-%d'"
 alias vi="nvim"
 alias vim="nvim"
-alias slack="slack-term"
-alias md="msee"
 
 # GIT
 alias master="git checkout master"
@@ -81,25 +73,18 @@ alias rp="git reset --patch"
 alias an="git add . -N"
 alias dis="git diff --staged"
 alias stash="git stash"
-alias shunk="git stash -p"
 alias pop="git stash pop"
 alias ci="git commit -m"
-alias cmend="git commit --amend"
+alias cm="git commit --amend"
 alias chp="git cherry-pick"
 alias br="git --no-pager branch"
 alias mt="git mergetool"
 alias fe="git fetch --all"
 alias pl="git pull"
 alias sw="git switch"
-alias br-feature="git branch -a | grep -v remotes/ | grep -v master | grep -v staging | grep feature-"
-alias br-bugfix="git branch -a | grep -v remotes/ | grep -v master | grep -v staging | grep bugfix-"
-alias br-merged="git branch --merged | grep -v remotes/ | grep -v master | grep -v staging"
 alias glog="nvim -c 'GV' -c 'set foldlevel=1000' -c 'nnoremap q :qa!<cr>'"
 alias gfl="git log -p"
 alias cisearch="git log -S"
-
-# HUB
-alias pr='hub pr list -f "%pC%>(8)%i%Creset  %t% l%n     Author:    %au%n     Assignees: %as%n     Reviewers: %rs%n%n"'
 
 # VALET
 alias vshare="(valet unsecure; valet share; valet secure) && c"
@@ -107,8 +92,6 @@ alias vshare="(valet unsecure; valet share; valet secure) && c"
 #spotctl
 alias splayer="spotctl player > /dev/null 2>&1"
 
-alias rebash="source ~/.bashrc"
-alias bashrc="atom ~/.dotfiles/"
 alias moon="curl wttr.in/moon"
 
 alias epoch="date +%s"
