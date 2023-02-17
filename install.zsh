@@ -134,6 +134,17 @@ read response\?"Install Bitwarden? [y/n] "
             ;;
     esac
 
+
+# dash
+read response\?"Install Dash? (https://kapeli.com/dash) [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install --cask dash
+            ;;
+        *)
+            ;;
+    esac
+
 # browsers
 brew install --cask google-chrome
 brew install --cask google-chrome-canary
