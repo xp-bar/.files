@@ -38,10 +38,6 @@ function sim() {
     xcrun simctl boot $UUID;
 }
 
-function tempwttr() {
-    echo "`curl -s wttr.in/London,Canada?0FQT`" | sed 's/^.\{15\}//g' | head -n 3 | sed 's:[ ]*$:,:g' | perl -pe 's/,\n/, /g' | sed 's/,[ ]*$//g' | sed 's/\(^.*\),[ ]*\([\-]*[0-9]*\)\-\(.*\),.*$/<< \1 >> [\2 to \3]/g' | sed 's:[^0-9\-]*\]:\]:g'
-}
-
 function hide(){
     tput smcup
     tput sc
@@ -58,45 +54,6 @@ function ldu() {
             echo "$PWD/$in" | sed 's: :\\\ :g'
         done |\
         xargs du $*
-}
-
-# alias pack='npm run watch > __.webpack 2>&1 &; webpack=$!; tput cuu1; echo -e "\e[34mStarting Webpack - PID: $webpack"'
-# alias killpack='kill $webpack'
-
-pack() {
-    trap 'tput rc; tput rmcup; trap - SIGINT SIGQUIT' SIGINT SIGQUIT
-    args=$1;
-    if [[ $args = *"--kill"* ]]; then
-        if [[ $webpack == '' ]]; then
-            ps aux | grep npm | grep -v 'grep';
-            echo "Please run 'kill PID' to kill npm and stop webpack, we lost track of the PID.";
-            return 1;
-        fi
-
-        kill $webpack;
-        webpack=;
-    elif [[ $args = *"--info"* ]]; then
-        echo -e "Webpack, PID: \e[34m$webpack";
-    elif [[ $args = *"--log"* ]]; then
-        tput sc;
-        tput smcup;
-        tput cup 0 0;
-        [[ -e __.webpack ]] && tail -n 50 -f __.webpack;
-    elif [[ $args = "" ]]; then
-        if [[ $webpack != "" ]]; then
-            echo -e "\e[31mWebpack is already running!\e[0m";
-            return 1;
-        fi
-        npm run watch > __.webpack 2>&1 &;
-        webpack=$!;
-        tput cuu1;
-        echo -e "\e[34mStarting Webpack - PID: $webpack";
-    else
-        echo "Usage: pack [--info, --log, --kill]"
-        return 1;
-    fi
-
-    return 0;
 }
 
 function dash(){
@@ -171,31 +128,6 @@ function stashy() {
 
 }
 
-function dirdiff() {
-    dirone=$1
-    dirtwo=$2
-
-    if [[ $dirone == "" || $dirtwo == "" ]]; then
-        echo -e "\e[31mYou need to provide two directories:\e[0m $0 \e[34mdirectory_one \e[33mdirectory_two\e[0m";
-        return 1;
-    fi
-
-    function _difffunc() {
-        git --no-pager diff $(\ls -1d "$dirone"* | sed "s:$dirone::g" | git hash-object -w --stdin) $(\ls -1d "$dirtwo"* | sed "s:$dirtwo::g" | git hash-object -w --stdin);
-    }
-
-    clear;
-
-    _difffunc
-
-    fswatch -0 $dirtwo | while read -d "" event; do
-        clear;
-        _difffunc
-    done
-    clear;
-    unfunction _difffunc
-}
-
 function origin() {
     git remote -v -- | sed 's/^.*git@github.com://g' | sed 's/.git.*$//g' | tr -s " " | awk '!seen[$0]++'
 }
@@ -245,7 +177,6 @@ function brlabel() {
 }
 
 function branches(){
-    # echo -e "\n \e[31mBRANCHES:\e[0m";
     local branches="$(git --no-pager branch |\
         sed 's/[\*]*[ ]//g' |\
         grep -v $(git this) |\
@@ -254,7 +185,6 @@ function branches(){
         done)"
 
     echo "$branches"
-    # echo "";
 }
 
 function rh(){
@@ -269,63 +199,8 @@ function cauth(){
     echo -e "Copied to clipboard: \033[2m$coauth\033[0m"
 }
 
-function e(){
-    typeset -A dotfiles_that_source=(
-        a alias
-        f function
-        i ignore
-        z zshrc
-    );
-    for key value in ${(kv)dotfiles_that_source}; do
-        if [[ $1 = $key ]]; then
-            tput sc;
-            tput cuf 2;
-            tput cuu1;
-            echo -e "Editing \e[33m~/.$value\e[0m..."
-            tput rc;
-            sleep 0.2;
-            nvim $HOME/.$value;
-            source $HOME/.$value;
-            tput sc;
-            tput cuf 2;
-            tput cuu1;
-            echo -e "Sourced \e[32m~/.$value\e[0m!               "
-            tput rc;
-        fi
-    done
-    typeset -A dotfiles_that_dont_source=(
-        v vimrc
-        t tmux.conf
-    );
-    for key value in ${(kv)dotfiles_that_dont_source}; do
-        if [[ $1 = $key ]]; then
-            tput sc;
-            tput cuf 2;
-            tput cuu1;
-            echo -e "Editing \e[33m~/.$value\e[0m..."
-            tput rc;
-            sleep 0.2;
-            nvim $HOME/.$value;
-            tput sc;
-            tput cuf 2;
-            tput cuu1;
-            echo -e "Edited \e[32m~/.$value\e[0m!                "
-            tput rc;
-        fi
-    done
-}
-
 function isdown(){
     curl $1 -s -f -o /dev/null && echo -e "\e[32m$1 is up!" || echo  -e "\e[31m$1 is down...";
-}
-
-fvim(){
-    local search=$1
-    if [[ $search = "" ]]; then
-        nvim $(ack -f | fzf --preview "cat {}")
-    else
-        nvim $(ack -f | grep $search | fzf --preview "cat {}")
-    fi
 }
 
 # fda - including hidden directories
@@ -337,32 +212,6 @@ fda() {
 
 function calc(){
     awk "BEGIN { print $* }";
-}
-
-function loader(){
-    COLS=$(tput cols);
-    AMOUNT=${1:-$COLS};
-    AMOUNT=$[$AMOUNT/100*$COLS]
-    c;
-    hide;
-    POS=$[$COLS%2]
-    for i in `seq 0 $[$AMOUNT%$COLS]`;
-        do
-            tput cup $POS $i;
-            echo -e '\u2503';
-            sleep 0.05;
-        done;
-    read "?Done!";
-    show
-}
-
-function fclock() {
-    while true;
-    do
-        clear;
-        date '+%I:%M%p' | figlet -r -f chunky | lolcat;
-        sleep 60;
-    done
 }
 
 function di() {
@@ -384,58 +233,6 @@ function fdi() {
     git diff $TARGET -- `git diff $TARGET --name-only | fzf --preview "cat {}"`
 }
 
-function idi() {
-    setopt localtraps
-    function clean_up() {
-        tput rc;
-        tput rmcup;
-        tput clear;
-        clear;
-        trap - INT
-        return;
-    }
-    trap clean_up INT
-    tput smcup;
-    tput clear;
-    tput sc;
-    tput cup 0 0;
-    local this=`git rev-parse --abbrev-ref HEAD`
-    local base_branch=`git config repo.base-branch`
-    local input=$1
-    local base=${base_branch:-"master"}
-    local diff_range=${input:-"$base..$this"}
-
-    local files=(${(f)"$(git diff --name-only $diff_range)"})
-    local fcount=$#files
-    local index=1;
-
-    if [[ $fcount -lt 1 ]]; then
-        return 0;
-    fi
-    for file in $files; do
-        echo -e "\n(file \e[33m$index\e[0m of $fcount)";
-        tput cup 0 0;
-        read -k 1 response\?"View the diff for `echo -e "\e[32m$file\e[0m"`? [y/n/q] "
-        case "$response" in
-            [yY][eE][sS]|[yY])
-                git diff $diff_range -- $file;
-                ;;
-            [nN][oO]|[nN])
-                ;;
-            [qQ][uU][iI][tT]|[qQ])
-                break
-                ;;
-            *)
-                ;;
-        esac
-        let "index = $index + 1"
-        tput clear;
-        tput cuu1;
-    done
-    clean_up
-    unfunction clean_up
-}
-
 function din(){
     input=$1
     if [[ $input == "" ]]; then
@@ -448,41 +245,6 @@ function din(){
 }
 
 compdef _git_branch_completion din
-
-function tclock(){
-    DEFAULT_FONT="mono9"
-    if [[ $1 == "" ]]; then
-        FONT=$DEFAULT_FONT
-    else
-        FONT=$1
-    fi
-    clear;
-    while true;
-    do
-        clear;
-        echo -ne "\e[31m"; date '+%I:%M%p' | toilet -f "$(echo -ne $FONT)"; echo -ne "\e[0m";
-        sleep 60;
-    done
-}
-
-function tclockclear(){
-    DEFAULT_FONT="mono9"
-    if [[ $1 == "" ]]; then
-        FONT=$DEFAULT_FONT
-    else
-        FONT=$1
-    fi
-    clear;
-    while true;
-    do
-        clear;
-        tput civis;
-        echo -ne "\e[31m"; date '+%I:%M%p' | toilet -f "$(echo -ne $FONT)"; echo -ne "\e[0m";
-        sleep 60;
-    done
-    tput cnorm;
-}
-
 
 # PHP Artisan
 
@@ -604,108 +366,10 @@ function art:cmds(){
     php artisan list --raw | awk -F ' ' '{print $1}' | gr --color=none ':' | fzf | pbcopy
 }
 
-function logs() {
-    printf '\033[?7h'
-    unset files; 
-    if [ -t 0 ]; then
-        declare -a files
-        ls -1 'storage/logs/' | while read in; do
-            files+=("storage/logs/$in");
-        done
-    else
-        declare -a files
-        while read -r in; do 
-            files+=("$in");
-        done
-    fi
-    for file in $files; do
-        cat $file | sed -n '/[0-9]*-[0-9]*-[0-9]*/p' | sed '/\.php:[0-9]*/ a \'$'\n\\'$'\n' | grep -v 'Next';
-    done | less
-}
-
-TODOLIST=$HOME/todo-list.md
-function todo(){
-    if  [[ "$@" = *"-u"* ]] || [[ "$@" = *"--ugly"* ]]; then
-        DISPLAY=cat
-    else
-        DISPLAY=msee
-    fi
-    if [[ "$@" != *"--inline"* ]]; then
-        hide
-    fi
-    cp $HOME/todo-list.md $HOME/.todo-list.bak >> /dev/null
-    if [[ "$@" = *"-e"* ]] || [[ "$@" = *"--edit"* ]]; then
-        nvim $TODOLIST
-    else
-        if [[ "$@" = *"-a"* ]] || [[ "$@" = *"--add"* ]]; then
-            echo "- "$2 >> $HOME/todo-list.md
-        fi
-        if [[ "$@" = *"--center"* ]]; then
-            LINES=$(wc -l < $TODOLIST)
-            AVAILABLE=$(tput lines)
-            POS=$[$[$[$AVAILABLE - $[$AVAILABLE % 2]]/2] - $[$[$LINES - $[$LINES % 2]]/2]];
-            tput cup $[$POS] 0
-        fi
-        cat $TODOLIST | $DISPLAY
-        if [[ "$@" != *"--inline"* ]]; then
-            read "?"
-        fi
-    fi
-    if [[ "$@" != *"--inline"* ]]; then
-       show
-    fi
-}
-
-function todoloop(){
-    hide;
-    todo --inline;
-    fswatch -0 $TODOLIST | while read -d "" event
-        do
-            show;
-            hide;
-            todo --inline
-        done
-    show;
-}
-
-todorand(){
-    todo -u --inline | NOT '#' | sed 's/^- //' | gshuf -n 1 | cowsay | lolcat;
-}
-
-# search stack overflow
-function stack() {
-    INPUT=$1
-    read response\?"Search StackOverflow for ${INPUT}? [y/n] "
-    # read -r -P "Search StackOverflow for ${INPUT}? [y/n] " response
-    case "$response" in
-        [yY][eE][sS]|[yY])
-        QUERY="${INPUT//' '/+}"
-        echo "Sweet, let's do it!"
-        sleep 1
-        open '/Applications/Vivaldi.app' 'https://stackoverflow.com/search?q='+$QUERY+'&mixed=0'
-        ;;
-        *)
-        echo "Alright, maybe later then."
-        ;;
-    esac
-}
-
 
 # GIT
-
 function pu(){
     git push -u origin $(git rev-parse --abbrev-ref HEAD);
-}
-
-function brwatch(){
-    c;
-    brstatus --all --inline;
-    fswatch -0 .git/refs/heads/ | while read -d "" event;
-        do
-            c;
-            brstatus --all --inline;
-        done;
-    c;
 }
 
 function hublink() {
@@ -810,67 +474,6 @@ function mg() {
 
 compdef _git_branch_completion mg
 
-function brlist(){
-        for x in $(br | NOT \* | NOT master | NOT staging | NOT remote);
-            do
-                if [[ "$@" = *"--notes"* ]] && [[ $(git config branch.$x.note) != "" ]]; then
-                    echo -e "$x : \e[31m\e[1m$(git config branch.$x.note)\n\e[0m";
-                elif [[ "$@" = *"--notes"* ]] && [[ "$@" != *"--only"* ]]; then
-                    echo -e "$x\n";
-                elif [[ "$@" = "" ]] || [[ "$@" = *"--inline"* ]]; then
-                    echo -e "$x\n";
-                fi
-        done | less
-}
-
-function brcount() {
-    i=; git --no-pager branch | while read in; do i=$[i + 1]; done; echo "$i total branches"
-}
-function brnote(){
-    INPUT=$1
-    if [[ $INPUT = --all ]]; then
-        for x in $(git branch -a | grep -v /); do
-            if [[ $(git config branch.$x.note) ]]; then
-                echo -e "\033[0;31m${x} \033[0m";
-                echo -e "$(git config branch.$x.note)\n";
-            fi
-        done;
-    elif [[ $INPUT = --add ]]; then
-        git config branch.$(git symbolic-ref --short HEAD).note "$(git config branch.$(git symbolic-ref --short HEAD).note)
-        $2"
-    else
-        git config branch.$(git symbolic-ref --short HEAD).note $1
-    fi
-}
-
-function brstatus(){
-    INPUT=$1
-    if [[ $INPUT = --all ]]; then
-        if [[ "$@" != *"--inline"* ]]; then
-           hide;
-        fi
-        echo "\n";
-        for x in $(br | NOT master | NOT staging | NOT remote | sed 's/^* //'); do
-            if [[ $(git config branch.$x.ready) = *"waiting"* ]]; then
-                echo -e "${x} \033[0;33m☉ \033[0m\n";
-            elif [[  $(git config branch.$x.ready) = *"ready"* ]]; then
-                echo -e "${x} \033[0;32m✓ \033[0m\n";
-            else
-                echo -e "${x} \033[0;31m✕ \033[0m\n";
-            fi
-        done;
-        if [[ "$@" != *"--inline"* ]]; then
-            show
-            read "?";
-        fi
-        if [[ "$@" = *"--looped"* ]]; then
-            read "?";
-        fi
-    else
-        git config branch.$(git symbolic-ref --short HEAD).ready $1
-    fi
-}
-
 
 function nuke(){
     stty -echo -icanon time 0 min 0
@@ -932,23 +535,6 @@ function mkbr(){
     esac
 }
 
-function bug() {
-    echo "$(echo bugfix-$1 | sed 's/[0-9]//g' | sed 's/\([A-Z]\)/\-\1/g' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g' | sed 's/://g')" | sed -E 's/[\-]{2,}/-/g'
-}
-
-function feat() {
-    echo "$(echo feature-$1 | sed 's/[0-9]//g' | sed 's/\([A-Z]\)/\-\1/g' | tr '[:upper:]' '[:lower:]' | sed 's/ /-/g' | sed 's/://g')" | sed -E 's/[\-]{2,}/-/g'
-}
-
-function fuz() {
-    local pre=$*
-    local file="$(git ls-files | fzf -q "$pre")"
-
-    if [[ $file != "" ]]; then
-        $EDITOR $file
-    fi
-}
-
 function dbr(){
     for branch in $@; do
         read response\?"Are you sure you would like to force delete branch ${branch}? [y/n] "
@@ -982,15 +568,6 @@ function _dbr() {
 # should be registering with: compdef _dbr dbr
 compdef _dbr dbr
 
-function brup(){
-    git push origin $1
-    git branch --set-upstream-to=origin/$1 $1
-}
-
-function whic(){
-    git diff $1 --name-only
-}
-
 function dicount(){
     base_branch="$(git config repo.base-branch)";
     default_branch="$([[ $base_branch != "" ]] && echo $base_branch || echo "master")";
@@ -1014,10 +591,6 @@ function lsearch() {
 
 function disearch(){
     git diff $2 --name-only | grep $1 | while read in; do git diff $2 -- $in; done
-}
-
-function col_line(){
-    for i in `seq 0 $[ $(tput cols) * 3 / 4] `; do echo -n "="; done
 }
 
 function _prs(){
@@ -1148,21 +721,6 @@ function toroman() {
   echo $out
 }
 
-function tasky() {
-    local args=$@
-    tput sc;
-    tput smcup;
-    tput clear;
-    tb $args;
-    fswatch -0 $TASKBOOK | while (read -d "" event || read "?")
-        do
-            tput clear;
-            tb $args;
-        done
-    tput rc;
-    tput rmcup;
-}
-
 function icat() {
     local maxWidth="$(tput cols)" 
     local width=
@@ -1184,15 +742,6 @@ function icat() {
         imgcat -w $width --256 -H $1 | cat | $PAGER
     else
         imgcat -w $width --256 -H $1 | cat
-    fi
-}
-
-rdb() {
-    if [[ -e .env && $(cat .env | grep '^DB_DATABASE=') ]]; then
-        name=$(cat .env | sed -n "s:^DB_DATABASE=\(.*\):\1:p")
-        mycli -u root -D $name
-    else
-        mycli -u root
     fi
 }
 
