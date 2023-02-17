@@ -238,11 +238,11 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # -- }}}
 
 # -- SYMLINKS -- {{{
-./sym.sh
+./installation/generic/sym.sh
 # -- }}}
 
 # -- Neovim setup -- {{{
-./neovim.zsh
+./installation/generic/neovim.zsh
 # -- }}}
 
 # -- PHP-CS-Fixer setup -- {{{
