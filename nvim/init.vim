@@ -145,7 +145,7 @@ vnoremap <leader>s :sort<cr>
 " ---- }}}
 
 " ---- Auto Commands ---- {{{
-let g:format_html = v:true
+let g:format_html = v:false
 
 function! s:format_html()
     if (g:format_html)
