@@ -5,6 +5,10 @@ source $ZSH/oh-my-zsh.sh
 # Prevent nice calls on windows
 unsetopt BG_NICE
 
+setopt NO_BG_NICE # don't nice background tasks
+setopt LOCAL_OPTIONS # allow functions to have local options
+setopt LOCAL_TRAPS # allow functions to have local traps
+
 # aliases, functions, etc. {{{
 [[ -e ~/.antibody ]] && source ~/.antibody || echo "Plugins not loaded."
 [[ -e ~/.env ]] && source ~/.env
