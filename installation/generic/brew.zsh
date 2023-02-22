@@ -168,4 +168,14 @@ read response\?"Install Discord? [y/n] "
         *)
             ;;
     esac
+
+read response\?"Install 1Password CLI? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install --cask 1password/tap/1password-cli
+            ;;
+        *)
+            ;;
+    esac
+
 # -- }}}
