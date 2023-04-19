@@ -37,3 +37,12 @@ npm install \
     --only=prod
 
 nvim +CocUpdateSync +qall
+
+# install the license key
+[ -e ~/.env ] || touch ~/.env
+read -s license\?"Intelephense License Key: [hidden] "
+if [[ $(wc -l ~/.env | awk '{print $1}') -eq 0 ]]; then
+    echo "export INTELEPHENSE_LICENSE_KEY=\"$license\"" > ~/.env
+else
+    gsed -nri "/^export INTELEPHENSE_LICENSE_KEY=/!p;\$aexport INTELEPHENSE_LICENSE_KEY=\"$license\"" ~/.env
+fi

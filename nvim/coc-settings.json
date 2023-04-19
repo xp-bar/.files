@@ -1,0 +1,16 @@
+{
+    "intelephense.licenceKey": "${env:INTELEPHENSE_LICENSE_KEY}",
+    "intelephense.diagnostics.undefinedConstants": false,
+    "intelephense.phpdoc.returnVoid": true,
+    "intelephense.phpdoc.functionTemplate": {
+        "summary": "$SYMBOL_NAME\n",
+        "tags": [
+            "@param ${1:$SYMBOL_TYPE} $SYMBOL_NAME $2",
+            "@return ${1:$SYMBOL_TYPE} $2",
+            "@throws ${1:$SYMBOL_TYPE} $2"
+        ]
+    },
+    "codeLens.enable": true,
+    "codeLens.position": "eol",
+    "javascript.referencesCodeLens.enabled": true
+}
