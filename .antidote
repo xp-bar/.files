@@ -1,0 +1,11 @@
+#! /bin/zsh
+
+# Load the plugin manager itself
+source /usr/local/opt/antidote/share/antidote/antidote.zsh
+
+# oh-my-zsh plugins
+plugins=(
+    vi-mode
+)
+
+antidote load

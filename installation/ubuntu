@@ -27,7 +27,7 @@ brew install fortune cowsay figlet toilet
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 # -- }}}
 
-curl -sL git.io/antibody | sh -s
+git clone --depth=1 https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
 chsh -s /usr/bin/zsh $USERNAME
 
 # packages

@@ -17,7 +17,7 @@ brew install --cask gwerbin/tap/sqlcheck
 # Regular installs
 brew install ack
 brew install rg
-brew install antibody
+brew install antidote
 brew install cmatrix
 brew install cmus
 brew install cointop

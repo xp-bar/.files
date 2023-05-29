@@ -10,7 +10,7 @@ setopt LOCAL_OPTIONS # allow functions to have local options
 setopt LOCAL_TRAPS # allow functions to have local traps
 
 # aliases, functions, etc. {{{
-[[ -e ~/.antibody ]] && source ~/.antibody || echo "Plugins not loaded."
+[[ -e ~/.antidote ]] && source ~/.antidote || echo "Plugins not loaded."
 [[ -e ~/.env ]] && source ~/.env
 [[ -e ~/.path ]] && source ~/.path
 [[ -e ~/.colors ]] && source ~/.colors
