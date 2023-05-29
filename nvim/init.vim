@@ -605,6 +605,18 @@ nmap <silent> <leader>c <Plug>(coc-cursors-position)
 nmap <C-c> <Plug>(coc-cursors-operator)
 xmap <silent> <C-c> <Plug>(coc-cursors-range)
 
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+nmap <leader>re  <Plug>(coc-codeaction-refactor)
+
 nmap <silent> <leader>ga :call php#laravel#goto_attribute()<CR>
 
 function! s:show_documentation()
@@ -625,17 +637,6 @@ autocmd CursorHold *.blade.php silent call CocActionAsync('highlight')
 autocmd CursorHold *.vue silent call CocActionAsync('highlight')
 autocmd CursorHold *.js silent call CocActionAsync('highlight')
 augroup END
-
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
-
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
 
 " Map function and class text objects (operator mappings for inner-function,
 " a-function, etc.)
