@@ -78,6 +78,19 @@ function launch() {
     fi
 }
 
+function vup() {
+    if (! pgrep -f docker > /dev/null); then
+        echo "Starting docker..."
+        open -g /Applications/Docker.app > /dev/null 2>&1;
+    fi
+
+    while (! docker stats --no-stream -a > /dev/null 2>&1); do
+        sleep 1
+    done
+
+    vagrant up
+}
+
 st() {
     if [[ $1 = *"--long"* || $1 = *"-l"* || $1 = *"-v"* ]]; then
         git status;
