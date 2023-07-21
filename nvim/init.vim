@@ -497,6 +497,10 @@ Plugin 'pangloss/vim-javascript'
 inoreabbrev clog console.log();<Left><Left>
 inoreabbrev cgroup console.group();<cr><cr>console.log();<cr><cr>console.groupEnd();
 
+" --- Prettier --- {{{
+Plugin 'prettier/vim-prettier'
+" --- }}}
+
 " JS Doc
 Plugin 'heavenshell/vim-jsdoc'
 let g:jsdoc_allow_input_prompt=0
