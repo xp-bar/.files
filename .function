@@ -206,7 +206,7 @@ function rh(){
 
 function cauth(){
     local search="$1"
-    local user=$(git log | head -n 1000 | grep Author | sed 's/[ ]*Author: //g' | sort | uniq | fzf -1 -q "$search")
+    local user=$(git log | head -n 5000 | grep Author | sed 's/[ ]*Author: //g' | sort | uniq | fzf -1 -q "$search")
     local coauth="Co-authored-by: $user"
     echo $coauth | pbcopy
     echo -e "Copied to clipboard: \033[2m$coauth\033[0m"
@@ -395,10 +395,14 @@ function co() {
     [[ $* = *"--last"* ]] && git checkout @{-1} && return 0;
 
     local all_branches="$(git branch | grep -v "\*")";
+    local recent_branches="$(git reflog | grep checkout: | sed 's,^.*from \([\.A-z0-9_/\-]*\) to \([\.A-z0-9_/\-]*\),\2,g' | awk '!a[$0]++' | head)"
     local branch=""
+
 
     if [[ $@ == "" ]]; then
         branch="$(echo "$all_branches" | fzf --height 25%)"
+    elif [[ $* = *"--recent"* ]]; then
+        branch="$(echo "$recent_branches" | fzf --height 25%)"
     else
         local branches="$(echo $all_branches | grep $@)"
         local exact="$(echo $all_branches | grep "^[ ]*$@$")"
@@ -489,14 +493,14 @@ compdef _git_branch_completion mg
 
 
 function nuke(){
-    stty -echo -icanon time 0 min 0
+    # stty -echo -icanon time 0 min 0
     echo "Branch: $(git rev-parse --abbrev-ref HEAD)"
     echo "Repo: $(git remote -v -- | sed 's/^.*git@github.com://g' | sed 's/.git.*$//g' | tr -s " " | awk '!seen[$0]++')"
     echo ""
-    sleep 0.5 && stty sane
-    read response\?"Are you sure you want to nuke your changes? [y/n] "
+    # sleep 0.5 && stty sane
+    read response\?"Are you sure you want to nuke your changes? [no] "
     case "$response" in
-        [yY][eE][sS]|[yY])
+        [yY][eE][sS])
         git add . >& /dev/null;
         git reset HEAD --hard >& /dev/null;
             tput cuu1;
