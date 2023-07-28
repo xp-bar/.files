@@ -1,7 +1,7 @@
 #! /bin/zsh
 
 # Install neovim plugins
-nvim +PluginInstall +qall
+nvim +'PlugInstall --sync' +qall &> /dev/null < /dev/tty
 
 # install neovim python 3 module
 pip3 install neovim

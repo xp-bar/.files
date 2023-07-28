@@ -1,7 +1,4 @@
 set nocompatible              " be iMproved, required
-filetype off                  " required
-
-set rtp+=~/.config/nvim/bundle/Vundle.vim
 
 if has('linux') && (substitute(system('which brew'), "\n", "", "") != "")
     set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf " fzf unix
@@ -9,7 +6,10 @@ else
     set rtp+=/usr/local/opt/fzf " fzf mac
 endif
 
-call vundle#begin()
+call plug#begin('~/.vim/bundle')
+
+" Only need to install for h: support
+Plug 'junegunn/vim-plug'
 
 " ===========================================================================
 " ===========================================================================
@@ -22,9 +22,6 @@ call vundle#begin()
 " ===========================================================================
 " ===========================================================================
 "       This is my personal .vimrc, built with neovim in mind. Enjoy! 
-
-" Vundle Plugin Manager manages itself, like npm
-Plugin 'VundleVim/Vundle.vim'
 
 " ---- Native Options ---- {{{
 set number numberwidth=4
@@ -104,7 +101,7 @@ cnoreabbrev ww setl wrap!|setl lbr!
 
 " ----- Buffers ----- {{{
 " Nicer buffer closing
-Plugin 'moll/vim-bbye'
+Plug 'moll/vim-bbye'
 nnoremap <leader>q :Bdelete<cr>
 
 " Buffer switching
@@ -210,7 +207,7 @@ endfunction
 " ---- }}}
 
 " ---- Navigate Tmux and Vim Seamlessly ---- {{{
-Plugin 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
 let g:tmux_navigator_disable_when_zoomed = 1
 
@@ -266,7 +263,7 @@ command! -nargs=* Hidden call s:hidden(<f-args>)
 " --- User Interface --- {{{
 
 " ---- Startup Screen ---- {{{
-Plugin 'mhinz/vim-startify'
+Plug 'mhinz/vim-startify'
 " Startify config
 let g:startify_bookmarks = [
         \ {'~' : '~/'},
@@ -344,15 +341,15 @@ nnoremap <leader><C-s> :Startify<cr>
 "  }}}
 
 " -- Switch to absolute numbering when losing focus for a buffer -- {{{
-Plugin 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
 " -- }}}
 
 " -- Visual marks -- {{{
-Plugin 'kshenoy/vim-signature'
+Plug 'kshenoy/vim-signature'
 "  }}}
 
 " ---- Sidebar NERDTree ---- {{{
-Plugin 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 noremap <silent> <C-\> :NERDTreeToggle<CR>
 noremap <leader>\ :NERDTreeFind<CR>
 let g:NERDTreeHijackNetrw = 1
@@ -378,7 +375,7 @@ let g:NERDTreeIgnore = [
         \ ]
         
 " Git File marking for NERDTree
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 
 " Custom indicator mappings for nerdtree-git-plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
@@ -396,7 +393,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 "  }}}
 
 " --- GitGutter --- {{{
-Plugin 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'
 
 let g:gitgutter_highlight_linenrs = 1
 
@@ -424,7 +421,7 @@ command! -nargs=1 Review call s:do_review(<f-args>)
 " --- }}}
 
 " --- Buftabline --- {{{
-Plugin 'ap/vim-buftabline'
+Plug 'ap/vim-buftabline'
 
 " Only show if there are 2+ buffers open (0 = never, 1 = if buffers > 2, 2 = always)
 let g:buftabline_show = 1
@@ -450,7 +447,7 @@ nmap <leader>0 <Plug>BufTabLine.Go(10)
 " --- }}}
 
 " --- Goyo --- {{{
-Plugin 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 let g:goyo_width = 120
 nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 " --- }}}
@@ -460,49 +457,49 @@ nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 " --- Syntax --- {{{
 
 " html5 omnicomplete
-Plugin 'othree/html5.vim'
+Plug 'othree/html5.vim'
 
 " Handlebars
-Plugin 'mustache/vim-mustache-handlebars'
+Plug 'mustache/vim-mustache-handlebars'
 
 augroup handlebars
     autocmd BufNewFile,BufRead *.html set filetype=html.handlebars
 augroup END
 
-Plugin 'jyyan/vim-volt-syntax'
+Plug 'jyyan/vim-volt-syntax'
 augroup volt
     autocmd BufNewFile,BufRead *.volt set filetype=volt
 augroup END
 
 
-Plugin 'xwsoul/vim-zephir'
+Plug 'xwsoul/vim-zephir'
 augroup zephir
     autocmd BufNewFile,BufRead *.zep set filetype=zephir
 augroup END
 
 
 " Scss support
-Plugin 'cakebaker/scss-syntax.vim'
+Plug 'cakebaker/scss-syntax.vim'
 
 " Better PHP Lang Support
-Plugin 'StanAngeloff/php.vim' 
+Plug 'StanAngeloff/php.vim'
 augroup php
 autocmd!
 autocmd BufNewFile,BufRead *.php setlocal foldlevel=1000
 augroup END
 
 " Javascript
-Plugin 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript'
 
 inoreabbrev clog console.log();<Left><Left>
 inoreabbrev cgroup console.group();<cr><cr>console.log();<cr><cr>console.groupEnd();
 
 " --- Prettier --- {{{
-Plugin 'prettier/vim-prettier'
+Plug 'prettier/vim-prettier'
 " --- }}}
 
 " JS Doc
-Plugin 'heavenshell/vim-jsdoc'
+Plug 'heavenshell/vim-jsdoc'
 let g:jsdoc_allow_input_prompt=0
 let g:jsdoc_enable_es6=1
 let g:jsdoc_input_description=1
@@ -520,7 +517,7 @@ augroup END
 "  }}}
 
 " Typescript and Vue
-Plugin 'posva/vim-vue'
+Plug 'posva/vim-vue'
 " let g:vue_disable_pre_processors=1
 let g:vue_pre_processors = ['typescript', 'scss']
 
@@ -546,7 +543,7 @@ augroup vueabbrevs
 augroup END
 
 " Laravel
-Plugin 'jwalton512/vim-blade'
+Plug 'jwalton512/vim-blade'
 " Workaround to ensure correct filetypes for blade template syntax highlight
 augroup blade
 autocmd!
@@ -555,7 +552,7 @@ augroup END
 
 command! -nargs=* -complete=customlist,php#laravel#blade_list Blade call php#laravel#blade_files(<f-args>)
 
-Plugin 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim'
 
 augroup typescript
 autocmd!
@@ -563,7 +560,7 @@ autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
 augroup END
 
 
-Plugin 'stephpy/vim-php-cs-fixer'
+Plug 'stephpy/vim-php-cs-fixer'
 
 let g:phpcs_fix = v:true
 let g:php_cs_fixer_config = "$HOME/.php-cs-fixer.php"
@@ -577,7 +574,7 @@ endfunction
 autocmd BufWritePost *.php silent! call s:phpcs_fix()
 
 " ---- Conquer of Completion {{{
-Plugin 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim'
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -668,14 +665,14 @@ nnoremap <silent> <leader>gl :Lines<CR>
 let g:swift_plugin_directory = $HOME . '/swift/apple/swift'
 
 if isdirectory(g:swift_plugin_directory)
-    Plugin 'file://' . g:swift_plugin_directory,
-                \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
+"    Plug 'file://' . g:swift_plugin_directory,
+"                \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
 endif
 
 autocmd BufNewFile,BufRead *.swift set syntax=swift | set filetype=swift
 
 " xdebug for vim
-Plugin 'vim-vdebug/vdebug'
+Plug 'vim-vdebug/vdebug'
 let g:vdebug_options = {
         \ 'port' : 9003,
         \ 'timeout' : 20,
@@ -716,7 +713,7 @@ nnoremap <silent> <M-b> :Breakpoint<cr>
 nnoremap <silent> <M-r> :BreakpointRemove *<cr>
 
 " Database Markdown Language Syntax
-Plugin 'jidn/vim-dbml'
+Plug 'jidn/vim-dbml'
 
 augroup dbml
 autocmd!
@@ -743,7 +740,7 @@ nnoremap gb %
 vnoremap gb %
 
 " ----- Easy Align ----- {{{
-Plugin 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -786,7 +783,7 @@ let g:easy_align_delimiters = {
 " ---- }}}
 
 " ----- Tagbar ----- {{{
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
 let s:hidden_all = 1
 
@@ -853,21 +850,21 @@ command! -bang -nargs=* -range Unjoin <line1>,<line2>call LineBreakAt('<bang>', 
 " ---- }}}
 
 " Close all buffers except open one
-Plugin 'vim-scripts/BufOnly.vim'
+Plug 'vim-scripts/BufOnly.vim'
 
 " Tmux-style Pane Zooming
-Plugin 'dhruvasagar/vim-zoom'
+Plug 'dhruvasagar/vim-zoom'
 nnoremap <leader>+ :<C-u>call zoom#toggle()<cr>
 
 " delimiter assistance
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 
 " Git wrapper for vim
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 nnoremap <silent><C-B> :Git blame<cr>
 
 " GV - git log browser
-Plugin 'junegunn/gv.vim'
+Plug 'junegunn/gv.vim'
 
 augroup gitgroup
     autocmd!
@@ -876,20 +873,21 @@ augroup gitgroup
 augroup END
 
 " Managing quotations, surrounding brackets, etc. Made easier
-Plugin 'tpope/vim-surround'
+Plug 'tpope/vim-surround'
 
 " The missing motion - sneak
-Plugin 'justinmk/vim-sneak'
+Plug 'justinmk/vim-sneak'
 
 " Should keep me in root dir for commands like fzf
-Plugin 'airblade/vim-rooter'
+Plug 'airblade/vim-rooter'
 
 " ---- FZF Plugins for Fuzzy File Finding ---- {{{
 if executable('fzf')
-    Plugin 'junegunn/fzf'
-    Plugin 'junegunn/fzf.vim'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+    Plug 'junegunn/fzf.vim'
 
-    Plugin 'jesseleite/vim-agriculture'
+    " Add RgRaw and AgRaw
+    Plug 'jesseleite/vim-agriculture'
 
     function! RipgrepFzf(query, fullscreen)
         let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
@@ -1008,7 +1006,7 @@ nmap <silent> <leader>aq :Qf<cr>
 " ---- }}}
 
 " ---- Ack for Vim ---- {{{
-Plugin 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim', {'on': ['Ack', 'Ack!']}
 cnoreabbrev Ack Ack!
 
 " Finding Keybinds for Ack
@@ -1019,7 +1017,7 @@ vnoremap <C-f> y /<C-r>"
 " ---- }}}
 
 " ---- Emmet ---- {{{
-Plugin 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim'
 
 let g:user_emmet_leader_key='<leader>' 
 let g:user_emmet_mode='n'
@@ -1028,7 +1026,7 @@ inoremap <C-Return> <cr><cr><C-o>k<Tab>
 " ---- }}}
 
 " ---- Comment and Un-comment lines on the fly ---- {{{
-Plugin 'tpope/vim-commentary'
+Plug 'tpope/vim-commentary'
 " https://stackoverflow.com/questions/9051837/how-to-map-c-to-toggle-comments-in-vim
 " Vim recognizes C-_ as C-/, so control+/ will toggle comments
 noremap <C-_> :Commentary<cr>
@@ -1042,8 +1040,6 @@ endfunction
 command! -nargs=* Make call s:make_func(<f-args>)
 cnoreabbrev make Make
 " ---- }}}
-
-Plugin 'simnalamburt/vim-mundo'
 " --- }}}
 
 " --- Language Config --- {{{
@@ -1071,23 +1067,12 @@ let g:php_fold_comment_length=60
 let g:php_fold_show_fold_preview=0
 " --- }}}
 
-" ---- PHP Namespace and Use Statement support in Vim ---- {{{
-Plugin 'arnaud-lb/vim-php-namespace'
-
-let g:php_namespace_sort_after_insert=1
-
-function! IPhpInsertUse()
-    call PhpInsertUse()
-    call feedkeys('a',  'n')
-endfunction
-
+" ---- PHP ---- {{{
 augroup phpImports
     autocmd!
     let errorformat =
             \ '%-GFile\,Line\,Column\,Type\,Message\,Source\,Severity%.%#,'.
             \ '"%f"\,%l\,%c\,%t%*[a-zA-Z]\,"%m"\,%*[a-zA-Z0-9_.-]\,%*[0-9]%.%#'
-    autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
-    autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
     autocmd FileType php setlocal commentstring=//%s
     autocmd FileType php setlocal makeprg=phpcs\ $*\ --report=csv\ --standard=XpBar\ -n\ %
     autocmd FileType php let &errorformat=errorformat
@@ -1113,7 +1098,7 @@ command! Tinker call s:tinker()
 " --- }}}
 
 " ---- Testing ---- {{{
-Plugin 'vim-test/vim-test'
+Plug 'vim-test/vim-test'
 
 " ----- Default phpunit settings ----- {{{
 let test#strategy = "neovim"
@@ -1139,7 +1124,7 @@ nnoremap <silent> <leader>td :TestVisit<CR>
 " ---- }}}
 
 " ---- Markdown ---- {{{
-Plugin 'iamcco/markdown-preview.nvim'
+Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown'}
 
 " Installation:
 " call mkdp#util#install()
@@ -1147,10 +1132,10 @@ Plugin 'iamcco/markdown-preview.nvim'
 
 " ---- Documentation ---- {{{
 " ----- phpDocumentor ----- {{{
-Plugin 'tobyS/vmustache'
-" Plugin 'tobyS/pdv'
+Plug 'tobyS/vmustache'
+" Plug 'tobyS/pdv'
 " Fork with return types
-Plugin 'YaroslavMolchan/pdv'
+Plug 'YaroslavMolchan/pdv'
 let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 " ----- }}}
 " ---- }}}
@@ -1160,7 +1145,7 @@ let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 
 " ---- Lightline for Vim ---- {{{
 
-Plugin 'itchyny/lightline.vim'
+Plug 'itchyny/lightline.vim'
 
 function! StatusDiagnostic() abort
     let info = get(b:, 'coc_diagnostic_info', {})
@@ -1350,5 +1335,4 @@ autocmd VimEnter * nested call s:clear_startify_commands()
 
 " ===========================================================================
 
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
