@@ -1040,8 +1040,6 @@ endfunction
 command! -nargs=* Make call s:make_func(<f-args>)
 cnoreabbrev make Make
 " ---- }}}
-
-Plug 'simnalamburt/vim-mundo'
 " --- }}}
 
 " --- Language Config --- {{{
