@@ -1067,23 +1067,12 @@ let g:php_fold_comment_length=60
 let g:php_fold_show_fold_preview=0
 " --- }}}
 
-" ---- PHP Namespace and Use Statement support in Vim ---- {{{
-Plug 'arnaud-lb/vim-php-namespace'
-
-let g:php_namespace_sort_after_insert=1
-
-function! IPhpInsertUse()
-    call PhpInsertUse()
-    call feedkeys('a',  'n')
-endfunction
-
+" ---- PHP ---- {{{
 augroup phpImports
     autocmd!
     let errorformat =
             \ '%-GFile\,Line\,Column\,Type\,Message\,Source\,Severity%.%#,'.
             \ '"%f"\,%l\,%c\,%t%*[a-zA-Z]\,"%m"\,%*[a-zA-Z0-9_.-]\,%*[0-9]%.%#'
-    autocmd FileType php inoremap <Leader>u <Esc>:call IPhpInsertUse()<CR>
-    autocmd FileType php noremap <Leader>u :call PhpInsertUse()<CR>
     autocmd FileType php setlocal commentstring=//%s
     autocmd FileType php setlocal makeprg=phpcs\ $*\ --report=csv\ --standard=XpBar\ -n\ %
     autocmd FileType php let &errorformat=errorformat
