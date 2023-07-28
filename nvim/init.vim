@@ -349,7 +349,7 @@ Plug 'kshenoy/vim-signature'
 "  }}}
 
 " ---- Sidebar NERDTree ---- {{{
-Plug 'scrooloose/nerdtree'
+Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 noremap <silent> <C-\> :NERDTreeToggle<CR>
 noremap <leader>\ :NERDTreeFind<CR>
 let g:NERDTreeHijackNetrw = 1
@@ -375,7 +375,7 @@ let g:NERDTreeIgnore = [
         \ ]
         
 " Git File marking for NERDTree
-Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 
 " Custom indicator mappings for nerdtree-git-plugin
 let g:NERDTreeGitStatusIndicatorMapCustom = {
