@@ -883,9 +883,10 @@ Plug 'airblade/vim-rooter'
 
 " ---- FZF Plugins for Fuzzy File Finding ---- {{{
 if executable('fzf')
-    Plug 'junegunn/fzf'
+    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
 
+    " Add RgRaw and AgRaw
     Plug 'jesseleite/vim-agriculture'
 
     function! RipgrepFzf(query, fullscreen)
@@ -1005,7 +1006,7 @@ nmap <silent> <leader>aq :Qf<cr>
 " ---- }}}
 
 " ---- Ack for Vim ---- {{{
-Plug 'mileszs/ack.vim'
+Plug 'mileszs/ack.vim', {'on': ['Ack', 'Ack!']}
 cnoreabbrev Ack Ack!
 
 " Finding Keybinds for Ack
