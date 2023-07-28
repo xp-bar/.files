@@ -1124,7 +1124,7 @@ nnoremap <silent> <leader>td :TestVisit<CR>
 " ---- }}}
 
 " ---- Markdown ---- {{{
-Plug 'iamcco/markdown-preview.nvim'
+Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown'}
 
 " Installation:
 " call mkdp#util#install()
