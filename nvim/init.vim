@@ -752,6 +752,9 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
 let g:easy_align_delimiters = {
+\    '-': {
+\        'pattern': '-'
+\    },
 \    '>': {
 \        'pattern': '>>\|=>\|->\|>'
 \    },
