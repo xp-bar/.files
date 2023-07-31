@@ -903,38 +903,6 @@ if executable('fzf')
 end
 " }}}
 
-" ---- Quickfix ---- {{{
-function! s:RemoveQFItem()
-    let curqfidx = line('.') - 1
-    let qfall = getqflist()
-    call remove(qfall, curqfidx)
-    call setqflist(qfall, 'r')
-    :copen
-endfunction
-
-function! s:AddQFItem(...)
-    let l:text = (a:0 > 0 ? join(a:000) : getline('.'))
-    call setqflist(getqflist(), 'a', {
-    \    'title': 'My List',
-    \    'nr': 0,
-    \    'items': [
-    \       {
-    \           'filename': expand('%'),
-    \           'lnum': line('.'),
-    \           'text': l:text
-    \       }
-    \      ]
-    \   }
-    \   )
-    botright copen
-endfunction
-
-command! QfRemove :call s:RemoveQFItem()
-command! -nargs=* Qf :call s:AddQFItem(<f-args>)
-autocmd FileType qf map <buffer> dd :QfRemove<cr>
-nmap <silent> <leader>aq :Qf<cr>
-" ---- }}}
-
 " ---- Ack for Vim ---- {{{
 Plug 'mileszs/ack.vim', {'on': ['Ack', 'Ack!']}
 cnoreabbrev Ack Ack!
