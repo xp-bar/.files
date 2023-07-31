@@ -1262,8 +1262,6 @@ nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") .
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
-" command! -bang Qa :echom "QUACK!"
-" command! Qa1 :echom "QUACK!"
 cnoreabbrev Qa qa
 cnoreabbrev QA qa
 
