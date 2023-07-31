@@ -98,6 +98,8 @@ onoremap in( :<c-u>normal! f(vi(<cr>
 
 " abbreviations
 cnoreabbrev ww setl wrap!|setl lbr!
+cnoreabbrev Qa qa
+cnoreabbrev QA qa
 
 " ----- Buffers ----- {{{
 " Nicer buffer closing
@@ -1261,9 +1263,6 @@ command! BufSync :execute 'bufdo :e' | source $VIMRUNTIME/syntax/syntax.vim
 nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-cnoreabbrev Qa qa
-cnoreabbrev QA qa
 " }}}
 
 " --- Remove user (plugin) commands I don't use --- {{{
