@@ -461,9 +461,6 @@ augroup END
 " Javascript
 Plug 'pangloss/vim-javascript'
 
-inoreabbrev clog console.log();<Left><Left>
-inoreabbrev cgroup console.group();<cr><cr>console.log();<cr><cr>console.groupEnd();
-
 " --- Prettier --- {{{
 Plug 'prettier/vim-prettier'
 " --- }}}
