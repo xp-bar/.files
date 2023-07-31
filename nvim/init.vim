@@ -7,6 +7,8 @@ else
     set rtp+=/usr/local/opt/fzf " fzf mac
 endif
 
+lua require('xp-bar')
+
 call plug#begin('~/.vim/bundle')
 
 " Only need to install for h: support
@@ -303,6 +305,7 @@ let g:startify_bookmarks = [
         \ {'.a' : '~/.alias'},
         \ {'.f' : '~/.function'},
         \ {'.v' : '~/.config/nvim/init.vim'},
+        \ {'.x' : '~/.config/nvim/lua/xp-bar.lua'},
         \ {'.t' : '~/.tmux.conf'},
         \ {'.z' : '~/.zshrc'},
         \ {'.p' : '~/.zsh-plugins'},

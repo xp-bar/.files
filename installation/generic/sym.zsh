@@ -25,6 +25,8 @@ touch ~/.env
 # NVIM stuff
 [ -d ~/.config/nvim/ ] || mkdir -p ~/.config/nvim/
 ln -sv $PWD/nvim/init.vim ~/.config/nvim/init.vim
+[ -d ~/.config/nvim/lua/ ] || mkdir -p ~/.config/nvim/lua/
+ln -sv $PWD/nvim/lua/xp-bar.lua ~/.config/nvim/lua/xp-bar.lua
 ln -sv $PWD/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
 [ -d ~/.config/nvim/colors/ ] || mkdir -p ~/.config/nvim/colors/
 ln -sv $PWD/nvim/colors/two.vim ~/.config/nvim/colors
