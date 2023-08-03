@@ -552,11 +552,15 @@ function! s:phpcs_fix()
     fi
 endfunction
 
-autocmd BufWritePost *.php silent! call s:phpcs_fix()
+augroup phpcsfix
+    autocmd!
+    autocmd BufWritePost *.php silent! call s:phpcs_fix()
+augroup END
+
 " ---- }}}
 
 " ---- Conquer of Completion {{{
-Plug 'neoclide/coc.nvim' " { 'do': function('coc#util#install()') }
+Plug 'neoclide/coc.nvim', { 'do': function('coc#util#install') }
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -814,7 +818,7 @@ vnoremap <C-f> y /<C-r>"
 " ---- }}}
 
 " ---- Emmet ---- {{{
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim', {'for': ['html', 'vue']}
 
 let g:user_emmet_leader_key='<leader>' 
 let g:user_emmet_mode='n'
@@ -832,30 +836,6 @@ noremap <C-_> :Commentary<cr>
 " --- }}}
 
 " --- Language Config --- {{{
-" ---- Add a namespace declaration - php ---- {{{
-augroup phpNamespace
-    autocmd!
-    command! -nargs=* Class call php#php#new_class(<f-args>)
-augroup END
-" ---- }}}
-
-" ---- PHP Folding options ---- {{{ 
-" convert '@return ReturnType' to ': ReturnType' in function preview if there is no return type specified in the function declaration
-let g:php_fold_return_comment_as_declaration=1
-
-" convert function access (public, private, protected) to UPPERCASE in preview
-let g:php_fold_uppercase_access_types=0
-
-" if the return type can't be found from an @return tag or a return type declaration, show the return type as ': unknown type' 
-let g:php_fold_show_unknown_types=1
-
-" the maximum length for function comments (accross all lines) before being truncated with '...'
-let g:php_fold_comment_length=60
-
-" show a preview of the first line in the fold, otherwise show the number of hidden lines
-let g:php_fold_show_fold_preview=0
-" --- }}}
-
 " ---- PHP ---- {{{
 augroup phpImports
     autocmd!
@@ -975,24 +955,31 @@ nnoremap <silent> <leader>td :TestVisit<CR>
 " ---- }}}
 
 " ---- Markdown ---- {{{
-Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown'}
-
-" Installation:
-" call mkdp#util#install()
+Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': function('mkdp#util#install')}
 " ---- }}}
 
-" ---- Documentation ---- {{{
-" ----- phpDocumentor ----- {{{
+" ---- Documentation stubs ---- {{{
 Plug 'tobyS/vmustache'
-" Plug 'tobyS/pdv'
-" Fork with return types
+" Fork of 'tobyS/pdv' with return types
 Plug 'YaroslavMolchan/pdv'
 let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
-" ----- }}}
 " ---- }}}
 " --- }}}
 
 " --- Themimg --- {{{
+set background=dark " for the dark version
+colorscheme two
+syntax on
+
+if (has("termguicolors"))
+    set termguicolors
+else
+    set notermguicolors
+endif
+
+" Disable tabline and don't use GUI tabline; we have lightline / buftabline
+set showtabline=0 " 2 to show
+set guioptions-=e  " Don't use GUI tabline
 
 " ---- Lightline for Vim ---- {{{
 
@@ -1057,10 +1044,6 @@ let g:lightline.tabline = {
   \   'right': []
   \ }
 
-set showtabline=0 " 2 to show
-
-set guioptions-=e  " Don't use GUI tabline
-
 
 function! LightLineMode()
   return expand('%:t') ==# '__Tagbar__.1' ? 'Tagbar':
@@ -1074,26 +1057,7 @@ function! LightLineMode()
 endfunction
 " }}}
 
-if (has("termguicolors"))
-    set termguicolors
-else
-    set notermguicolors
-endif
-
-set background=dark " for the dark version
-colorscheme two
-
-syntax on
-
-nnoremap <silent> <C-[> :syn sync fromstart<cr>
 command! BufSync :execute 'bufdo :e' | source $VIMRUNTIME/syntax/syntax.vim
-
-" }}}
-
-" --- Fun Stuff --- {{{
-nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 " }}}
 
 " --- Remove user (plugin) commands I don't use --- {{{
