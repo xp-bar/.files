@@ -143,6 +143,65 @@ nnoremap <leader>w :w<cr>
 vnoremap <leader>s :sort<cr>
 " ---- }}}
 
+" ---- Movement and resizing ---- {{{
+
+" Resize window
+noremap <C-w><C-Up> :res +5<cr> 
+noremap <C-w><C-Down> :res -5<cr> 
+noremap <C-w><C-Left> :vert res +5<cr>
+noremap <C-w><C-Right> :vert res -5<cr>
+
+" visual shifting (builtin-repeat)
+vnoremap < <gv
+vnoremap > >gv
+
+"goto brace
+nnoremap gb %
+vnoremap gb %
+
+" ----- Easy Align ----- {{{
+Plug 'junegunn/vim-easy-align'
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+let g:easy_align_delimiters = {
+\    '-': {
+\        'pattern': '-'
+\    },
+\    '>': {
+\        'pattern': '>>\|=>\|->\|>'
+\    },
+\    '/': {
+\        'pattern':         '//\+\|/\*\|\*/',
+\        'delimiter_align': 'l',
+\        'ignore_groups':   ['!Comment']
+\    },
+\    ']': {
+\        'pattern':       '[[\]]',
+\        'left_margin':   0,
+\        'right_margin':  0,
+\        'stick_to_left': 0
+\    },
+\    ')': {
+\        'pattern':       '[()]',
+\        'left_margin':   0,
+\        'right_margin':  0,
+\        'stick_to_left': 0
+\    },
+\    'd': {
+\        'pattern':      ' \(\S\+\s*[;=]\)\@=',
+\        'left_margin':  0,
+\        'right_margin': 0
+\    }
+\ }
+
+" ----- }}}
+" ---- }}}
+
 " ---- Auto Commands ---- {{{
 let g:format_html = v:false
 
@@ -179,6 +238,9 @@ augroup buffercmds
     
     " No linewrap html
     autocmd BufNewFile,BufRead *.php setlocal nowrap
+    
+    autocmd BufNewFile,BufRead diff setlocal foldlevel=1000
+    autocmd BufNewFile,BufRead php setlocal foldlevel=1000
 augroup END
 
 augroup autoreload
@@ -438,8 +500,14 @@ Plug 'posva/vim-vue'
 " let g:vue_disable_pre_processors=1
 let g:vue_pre_processors = ['typescript', 'scss']
 
+" Typescript
+Plug 'leafgarland/typescript-vim'
+
 " Database Markdown Language Syntax
 Plug 'jidn/vim-dbml'
+
+" Laravel
+Plug 'jwalton512/vim-blade'
 
 " ---- Formatters / Documentation ---- {{{ 
 " Prettier for JS
@@ -479,36 +547,21 @@ augroup syntaxcommands
 
     " New file and Read automds
     autocmd BufNewFile,BufRead *.php set filetype=php
+    autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+    autocmd BufNewFile,BufRead *.blade.php setlocal filetype=blade
     autocmd BufNewFile,BufRead *.dbml set syntax=dbml
     autocmd BufEnter,BufRead,BufNewFile *.vue set filetype=vue
     autocmd BufNewFile,BufRead *.html set filetype=html.handlebars
     autocmd BufNewFile,BufRead *.volt set filetype=volt
     autocmd BufNewFile,BufRead *.zep set filetype=zephir
 augroup END
+" }}}
 
-augroup vueabbrevs
-    autocmd!
-    autocmd FileType vue inoreabbrev gscomp : {<CR><Tab>get() {<CR><CR>},<CR>set() {<CR><CR>}<CR>}, <Esc><<F%s<c-o>:call getchar()<CR>
-augroup END
-
-" Laravel
-Plug 'jwalton512/vim-blade'
-" Workaround to ensure correct filetypes for blade template syntax highlight
-augroup blade
-autocmd!
-autocmd BufNewFile,BufRead *.blade.php setlocal filetype=blade
-augroup END
+" --- Language Servers, Linting and Testing --- {{{
 
 command! -nargs=* -complete=customlist,php#laravel#blade_list Blade call php#laravel#blade_files(<f-args>)
 
-Plug 'leafgarland/typescript-vim'
-
-augroup typescript
-autocmd!
-autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
-augroup END
-
-
+" ---- PHPCS Fixer ---- {{{
 Plug 'stephpy/vim-php-cs-fixer'
 
 let g:phpcs_fix = v:true
@@ -521,9 +574,10 @@ function! s:phpcs_fix()
 endfunction
 
 autocmd BufWritePost *.php silent! call s:phpcs_fix()
+" ---- }}}
 
 " ---- Conquer of Completion {{{
-Plug 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim' " { 'do': function('coc#util#install()') }
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -602,9 +656,6 @@ omap ac <Plug>(coc-classobj-a)
 
 " eslint
 command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint')['quiet'] ? v:false : v:true)
-" Installation: 
-" run coc#util#install()
-" run :CocInstall coc-phpls
 " ---- }}}
 
 nnoremap <silent> <leader>gl :Lines<CR>
@@ -615,109 +666,7 @@ nnoremap <silent> <leader>gl :Lines<CR>
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
-" xdebug for vim
-Plug 'vim-vdebug/vdebug'
-let g:vdebug_options = {
-        \ 'port' : 9003,
-        \ 'timeout' : 20,
-        \ 'server' : 10.0.2.2,
-        \ 'on_close' : 'stop',
-        \ 'break_on_open' : 0,
-        \ 'ide_key' : 'PHPSTORM',
-        \ 'debug_window_level' : 0,
-        \ 'debug_file_level' : 0,
-        \ 'debug_file' : '',
-        \ 'path_maps' : {},
-        \ 'watch_window_style' : 'expanded',
-        \ 'marker_default' : '⬦',
-        \ 'marker_closed_tree' : '▸',
-        \ 'marker_open_tree' : '▾',
-        \ 'sign_breakpoint' : '▷',
-        \ 'sign_current' : '▶',
-        \ 'continuous_mode'  : 1,
-        \ 'simplified_status': 1,
-        \ 'layout': 'horizontal',
-        \ }
-
-let g:vdebug_keymap = {
-    \ "run" : "<Leader>xr",
-    \ "run_to_cursor" : "<Leader>xc",
-    \ "step_over" : "<Leader>xo",
-    \ "step_into" : "<Leader>xi",
-    \ "step_out" : "<Leader>xu",
-    \ "close" : "<Leader>xs",
-    \ "detach" : "<Leader>xd",
-    \ "set_breakpoint" : "<Leader>xb",
-    \ "get_context" : "<F11>",
-    \ "eval_under_cursor" : "<Leader>xc",
-    \ "eval_visual" : "<Leader>e",
-    \ }
-
-nnoremap <silent> <M-b> :Breakpoint<cr>
-nnoremap <silent> <M-r> :BreakpointRemove *<cr>
-
-" }}}
-
 " --- Editor Config --- {{{
-
-" ---- Movement and resizing ---- {{{
-
-" Resize window
-noremap <C-w><C-Up> :res +5<cr> 
-noremap <C-w><C-Down> :res -5<cr> 
-noremap <C-w><C-Left> :vert res +5<cr>
-noremap <C-w><C-Right> :vert res -5<cr>
-
-" visual shifting (builtin-repeat)
-vnoremap < <gv
-vnoremap > >gv
-
-"goto brace
-nnoremap gb %
-vnoremap gb %
-
-" ----- Easy Align ----- {{{
-Plug 'junegunn/vim-easy-align'
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-let g:easy_align_delimiters = {
-\    '-': {
-\        'pattern': '-'
-\    },
-\    '>': {
-\        'pattern': '>>\|=>\|->\|>'
-\    },
-\    '/': {
-\        'pattern':         '//\+\|/\*\|\*/',
-\        'delimiter_align': 'l',
-\        'ignore_groups':   ['!Comment']
-\    },
-\    ']': {
-\        'pattern':       '[[\]]',
-\        'left_margin':   0,
-\        'right_margin':  0,
-\        'stick_to_left': 0
-\    },
-\    ')': {
-\        'pattern':       '[()]',
-\        'left_margin':   0,
-\        'right_margin':  0,
-\        'stick_to_left': 0
-\    },
-\    'd': {
-\        'pattern':      ' \(\S\+\s*[;=]\)\@=',
-\        'left_margin':  0,
-\        'right_margin': 0
-\    }
-\ }
-
-" ----- }}}
-" ---- }}}
 
 " ----- Tagbar ----- {{{
 Plug 'majutsushi/tagbar'
@@ -803,12 +752,6 @@ nnoremap <silent><C-B> :Git blame<cr>
 " GV - git log browser
 Plug 'junegunn/gv.vim'
 
-augroup gitgroup
-    autocmd!
-    autocmd FileType diff setlocal foldlevel=1000
-    autocmd FileType gitcommit inoreabbrev co- <ESC>:GitCoAuth<CR>
-augroup END
-
 " Managing quotations, surrounding brackets, etc. Made easier
 Plug 'tpope/vim-surround'
 
@@ -822,6 +765,8 @@ Plug 'airblade/vim-rooter'
 if executable('fzf')
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
+
+    nnoremap <silent> <leader>gl :Lines<CR>
 
     " Add RgRaw and AgRaw
     Plug 'jesseleite/vim-agriculture'
@@ -973,7 +918,6 @@ augroup phpImports
     autocmd FileType php setlocal commentstring=//%s
     autocmd FileType php setlocal makeprg=phpcs\ $*\ --report=csv\ --standard=XpBar\ -n\ %
     autocmd FileType php let &errorformat=errorformat
-    " autocmd FileType php inoreabbrev fn function () {<CR>}<Esc>F%s<c-o>:call getchar()<CR>
 augroup END
 " ---- }}}
 
