@@ -490,7 +490,7 @@ Plug 'jwalton512/vim-blade'
 
 " ---- Formatters / Documentation ---- {{{ 
 " Prettier for JS
-Plug 'prettier/vim-prettier'
+Plug 'prettier/vim-prettier', {'on': 'Prettier', 'for': ['javascript', 'vue', 'typescript']}
 
 " JS Doc
 Plug 'heavenshell/vim-jsdoc'
@@ -541,7 +541,7 @@ augroup END
 command! -nargs=* -complete=customlist,php#laravel#blade_list Blade call php#laravel#blade_files(<f-args>)
 
 " ---- PHPCS Fixer ---- {{{
-Plug 'stephpy/vim-php-cs-fixer'
+Plug 'stephpy/vim-php-cs-fixer', {'for': 'php', 'on': 'PhpCsFixerFixFile'}
 
 let g:phpcs_fix = v:true
 let g:php_cs_fixer_config = "$HOME/.php-cs-fixer.php"
@@ -560,7 +560,7 @@ augroup END
 " ---- }}}
 
 " ---- Conquer of Completion {{{
-Plug 'neoclide/coc.nvim', { 'do': function('coc#util#install') }
+Plug 'neoclide/coc.nvim', { 'do': function('coc#util#install'), 'for': ['json', 'php', 'html', 'vue', 'typescript', 'sql'] }
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -849,7 +849,7 @@ augroup END
 " ---- }}}
 
 " ---- Testing ---- {{{
-Plug 'vim-test/vim-test'
+Plug 'vim-test/vim-test', {'for': 'php'}
 
 function! s:goto_test()
     let l:root = "application/"
