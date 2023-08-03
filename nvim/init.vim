@@ -239,8 +239,8 @@ augroup buffercmds
     " No linewrap html
     autocmd BufNewFile,BufRead *.php setlocal nowrap
     
-    autocmd BufNewFile,BufRead diff setlocal foldlevel=1000
-    autocmd BufNewFile,BufRead php setlocal foldlevel=1000
+    autocmd Filetype diff setlocal foldlevel=1000
+    autocmd Filetype php setlocal foldlevel=1000
 augroup END
 
 augroup autoreload
