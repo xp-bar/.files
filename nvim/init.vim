@@ -418,38 +418,32 @@ Plug 'othree/html5.vim'
 " Handlebars
 Plug 'mustache/vim-mustache-handlebars'
 
-augroup handlebars
-    autocmd BufNewFile,BufRead *.html set filetype=html.handlebars
-augroup END
-
+" Volt
 Plug 'jyyan/vim-volt-syntax'
-augroup volt
-    autocmd BufNewFile,BufRead *.volt set filetype=volt
-augroup END
 
-
+" Zephir
 Plug 'xwsoul/vim-zephir'
-augroup zephir
-    autocmd BufNewFile,BufRead *.zep set filetype=zephir
-augroup END
-
 
 " Scss support
 Plug 'cakebaker/scss-syntax.vim'
 
 " Better PHP Lang Support
 Plug 'StanAngeloff/php.vim'
-augroup php
-autocmd!
-autocmd BufNewFile,BufRead *.php setlocal foldlevel=1000
-augroup END
 
 " Javascript
 Plug 'pangloss/vim-javascript'
 
-" --- Prettier --- {{{
+" Typescript and Vue
+Plug 'posva/vim-vue'
+" let g:vue_disable_pre_processors=1
+let g:vue_pre_processors = ['typescript', 'scss']
+
+" Database Markdown Language Syntax
+Plug 'jidn/vim-dbml'
+
+" ---- Formatters / Documentation ---- {{{ 
+" Prettier for JS
 Plug 'prettier/vim-prettier'
-" --- }}}
 
 " JS Doc
 Plug 'heavenshell/vim-jsdoc'
@@ -458,21 +452,15 @@ let g:jsdoc_enable_es6=1
 let g:jsdoc_input_description=1
 let g:jsdoc_return_description=0
 
-" -- Documentation -- {{{
-" See - tobyS/pdv
-" See - heavenshell/vim-jsdoc
+" Documentation Keybinds (pdv, vim-jsdoc)
 augroup documentors
     autocmd!
     autocmd FileType php nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr> 
     autocmd FileType vue nmap <silent> <leader>d <Plug>(jsdoc)
     autocmd FileType javascript nmap <silent> <leader>d <Plug>(jsdoc)
 augroup END
-"  }}}
 
-" Typescript and Vue
-Plug 'posva/vim-vue'
-" let g:vue_disable_pre_processors=1
-let g:vue_pre_processors = ['typescript', 'scss']
+" ---- }}}
 
 command! WebpackImport call vue#snippets#webpack_async_import()
 command! Vue call vue#snippets#vue_files()
@@ -481,13 +469,21 @@ command! Getter call vue#snippets#get_getter()
 
 augroup syntaxcommands
     autocmd!
+    " Filetype autocmds
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType scss setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType sass setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd BufEnter,BufRead,BufNewFile *.vue set filetype=vue
     autocmd FileType vue syntax sync fromstart
     autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
     autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ $*\ %
+
+    " New file and Read automds
+    autocmd BufNewFile,BufRead *.php set filetype=php
+    autocmd BufNewFile,BufRead *.dbml set syntax=dbml
+    autocmd BufEnter,BufRead,BufNewFile *.vue set filetype=vue
+    autocmd BufNewFile,BufRead *.html set filetype=html.handlebars
+    autocmd BufNewFile,BufRead *.volt set filetype=volt
+    autocmd BufNewFile,BufRead *.zep set filetype=zephir
 augroup END
 
 augroup vueabbrevs
@@ -628,13 +624,6 @@ autocmd BufNewFile,BufRead *.swift set syntax=swift | set filetype=swift
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
-" Database Markdown Language Syntax
-Plug 'jidn/vim-dbml'
-
-augroup dbml
-autocmd!
-autocmd BufNewFile,BufRead *.dbml set syntax=dbml
-augroup END
 " }}}
 
 " --- Editor Config --- {{{
