@@ -7,8 +7,6 @@ else
     set rtp+=/usr/local/opt/fzf " fzf mac
 endif
 
-lua require('xp-bar')
-
 call plug#begin('~/.vim/bundle')
 
 " Only need to install for h: support
@@ -562,8 +560,11 @@ augroup END
 
 " ---- }}}
 
+Plug 'gfanto/fzf-lsp.nvim'
+Plug 'nvim-lua/plenary.nvim'
+
 " ---- Conquer of Completion {{{
-Plug 'neoclide/coc.nvim', { 'do': function('coc#util#install'), 'for': ['json', 'php', 'html', 'vue', 'typescript', 'sql'] }
+Plug 'neoclide/coc.nvim', { 'do': function('coc#util#install') }
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -576,11 +577,17 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> <leader>gd <Plug>(coc-definition)
-nmap <silent> <leader>gy <Plug>(coc-type-definition)
-nmap <silent> <leader>gi <Plug>(coc-implementation)
-nmap <silent> <leader>gr <Plug>(coc-references)
-nmap <silent> gk <Plug>(coc-codeaction)
+" nmap <silent> <leader>gd <Plug>(coc-definition)
+" nmap <silent> <leader>gy <Plug>(coc-type-definition)
+" nmap <silent> <leader>gi <Plug>(coc-implementation)
+" nmap <silent> <leader>gr <Plug>(coc-references)
+" nmap <silent> gk <Plug>(coc-codeaction)
+
+nmap <silent> <leader>gd :Definitions<CR>
+nmap <silent> <leader>gy :TypeDefinitions<CR>
+nmap <silent> <leader>gi :Implementations<CR>
+nmap <silent> <leader>gr :References<CR>
+nmap <silent> gk :CodeActions<CR>
 
 xmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
 nmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
@@ -1077,7 +1084,8 @@ function! s:clear_startify_commands()
 endfunction
 
 autocmd VimEnter * nested call s:clear_startify_commands()
-"  }}}
+
+Plug 'neovim/nvim-lspconfig'
 
 " Work Config
 if filereadable($HOME . '/jbx.vim')
@@ -1090,3 +1098,4 @@ call plug#end()
 
 " lua scripts
 lua require('nvim-dap-config')
+lua require('xp-bar')

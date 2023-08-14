@@ -63,6 +63,8 @@ alias now="date '+%I:%M%p, %Y-%m-%d'"
 alias vi="nvim"
 alias vim="nvim"
 
+alias bat="bat --theme=TwoDark"
+
 # GIT
 alias main="git checkout main"
 alias aa="git add ."
