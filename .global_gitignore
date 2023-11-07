@@ -1,5 +1,6 @@
 .notags
 tags.*
+!tags.php
 .sass-cache/
 .token
 .mock/*
