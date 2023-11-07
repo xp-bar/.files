@@ -1100,6 +1100,24 @@ command! Tinker call s:tinker()
 " ---- Testing ---- {{{
 Plug 'vim-test/vim-test'
 
+function! s:goto_test()
+    let l:root = "application/"
+    let l:test_root = "tests/unit/"
+    let l:filename = expand('%')
+    let l:result = substitute(l:filename, l:root, l:test_root, '')
+    let l:result = substitute(l:result, '.php', 'Test.php', '')
+
+    if !filereadable(l:result)
+        echoe "No test file found: " . l:result
+        return
+    endif
+
+    execute 'edit ' . l:result
+endfunction
+
+command! GotoTest call s:goto_test(<f-args>)
+nnoremap <silent><leader>gt :GotoTest<cr>
+
 " ----- Default phpunit settings ----- {{{
 let test#strategy = "neovim"
 let test#neovim#term_position = "vert botright"
