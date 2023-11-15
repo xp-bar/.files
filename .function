@@ -610,46 +610,6 @@ function disearch(){
     git diff $2 --name-only | grep $1 | while read in; do git diff $2 -- $in; done
 }
 
-function _prs(){
-    #!/bin/bash
-    # set -x
-    emulate -L bash
-    unset URL;
-    LOGIN="$(git config user.email):"$GITHUB_TOKEN
-    DATE=`date -v-12H +"%Y-%m-%dT%H:%M:%SZ"`
-    # TODAY=`date -v-12H +"%Y-%m-%d"`
-    USER=$GITHUB_USERNAME
-    BASEURL="https://api.github.com/repos/"
-    REPO=$GITHUB_REPO
-    CREATOR="issues?creator="
-    ASSIGNEE="issues?assignee="
-    case "$1" in
-    "given")
-        TITLE="\033[1;37m PULL REQUESTS \033[0;32mCREATED\033[1;37m BY YOU:";
-        URL="$BASEURL$REPO$CREATOR$USER";
-        ;;
-    "assigned")
-        TITLE="\033[1;37m PULL REQUESTS \033[0;31mASSIGNED\033[1;37m TO YOU:";
-        URL=$BASEURL$REPO$ASSIGNEE$USER;
-        ;;
-    *)
-        ;;
-    esac
-    if [[ $URL ]]; then
-        RESULT=$(curl -s -u $LOGIN $URL);
-        LENGTH=$(echo $RESULT | jq '[.]' | jq '[.][][] | length');
-        echo -e "\n --------------------------------- \n $TITLE \n ---------------------------------";
-		echo -e "\033[0;34m $(echo $URL | sed -E 's/(\/repos)//g' | sed -E 's/(api.)//g' | sed 's/\\//g' | sed -E 's/issues/pulls/g')\n";
-        for i in `seq 0 $[$LENGTH - 1]`; do
-            echo -e "\033[0;31m $(echo $RESULT | jq -r '[.]' | jq -r '[.][][]['$i'].title')" &&
-            echo -e "\033[0;32m $(echo $RESULT | jq -r '[.]' | jq -r '[.][][]['$i'].html_url')" &&
-            DATETIME=$(echo $RESULT | jq -r '[.]' | jq -r '[.][][]['$i'].updated_at');
-            DATE=$(expr "$DATETIME" : '\(.*\)T');
-            echo -e "\033[0;34m Updated: $DATE\033[1;37m \n";
-        done
-    fi
-}
-
 function _labels() {
     #!/bin/bash
     emulate -L bash
