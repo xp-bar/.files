@@ -30,6 +30,7 @@ brew install figlet
 brew install fortune
 brew install fswatch
 brew install fzf
+brew install gh
 brew install gnupg
 brew install go
 brew install gzip
