@@ -1,7 +1,7 @@
 -- vim: set ts=2 sw=2:
 local function load_dap()
   local ok, dap = pcall(require, 'dap')
-  assert(ok, 'nvim-dap is required to use dap-python')
+  assert(ok, 'nvim-dap could not be loaded')
   return dap
 end
 
@@ -26,5 +26,8 @@ dap.configurations.php = {
     log = true
   }
 }
+
+vim.keymap.set('n', '<leader>dk', function() dap.continue() end)
+vim.keymap.set('n', '<leader>b', function() dap.toggle_breakpoint() end)
 
 require("dapui").setup()
