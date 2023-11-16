@@ -1085,8 +1085,8 @@ nnoremap <silent><leader>gt :GotoTest<cr>
 let test#strategy = "neovim"
 let test#neovim#term_position = "vert botright"
 let test#php#phpunit#options = {
-  \ 'nearest': '-d memory_limit=2G --testdox',
-  \ 'file':    '-d memory_limit=2G --testdox',
+  \ 'nearest': '-d memory_limit=2G --testdox --xdebug',
+  \ 'file':    '-d memory_limit=2G --testdox --xdebug',
   \ 'suite':   '-d memory_limit=2G',
 \}
 
@@ -1096,11 +1096,6 @@ else
     let test#php#phpunit#executable = "./vendor/bin/phpunit"
 endif
 " ----- }}}
-
-let test#php#phpunit#options = {
-    \ 'nearest': '--xdebug',
-    \ 'file': '--xdebug'
-\ }
 
 nnoremap <silent> <leader>tn :TestNearest<CR>
 nnoremap <silent> <leader>tf :TestFile<CR>
