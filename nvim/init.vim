@@ -671,46 +671,9 @@ endif
 
 autocmd BufNewFile,BufRead *.swift set syntax=swift | set filetype=swift
 
-" xdebug for vim
-Plug 'vim-vdebug/vdebug'
-let g:vdebug_options = {
-        \ 'port' : 9003,
-        \ 'timeout' : 20,
-        \ 'server' : 10.0.2.2,
-        \ 'on_close' : 'stop',
-        \ 'break_on_open' : 0,
-        \ 'ide_key' : 'PHPSTORM',
-        \ 'debug_window_level' : 0,
-        \ 'debug_file_level' : 0,
-        \ 'debug_file' : '',
-        \ 'path_maps' : {},
-        \ 'watch_window_style' : 'expanded',
-        \ 'marker_default' : '⬦',
-        \ 'marker_closed_tree' : '▸',
-        \ 'marker_open_tree' : '▾',
-        \ 'sign_breakpoint' : '▷',
-        \ 'sign_current' : '▶',
-        \ 'continuous_mode'  : 1,
-        \ 'simplified_status': 1,
-        \ 'layout': 'horizontal',
-        \ }
-
-let g:vdebug_keymap = {
-    \ "run" : "<Leader>xr",
-    \ "run_to_cursor" : "<Leader>xc",
-    \ "step_over" : "<Leader>xo",
-    \ "step_into" : "<Leader>xi",
-    \ "step_out" : "<Leader>xu",
-    \ "close" : "<Leader>xs",
-    \ "detach" : "<Leader>xd",
-    \ "set_breakpoint" : "<Leader>xb",
-    \ "get_context" : "<F11>",
-    \ "eval_under_cursor" : "<Leader>xc",
-    \ "eval_visual" : "<Leader>e",
-    \ }
-
-nnoremap <silent> <M-b> :Breakpoint<cr>
-nnoremap <silent> <M-r> :BreakpointRemove *<cr>
+" NVIM DAP (config in lua) and DAP UI
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
 
 " Database Markdown Language Syntax
 Plug 'jidn/vim-dbml'
@@ -1134,6 +1097,11 @@ else
 endif
 " ----- }}}
 
+let test#php#phpunit#options = {
+    \ 'nearest': '--xdebug',
+    \ 'file': '--xdebug'
+\ }
+
 nnoremap <silent> <leader>tn :TestNearest<CR>
 nnoremap <silent> <leader>tf :TestFile<CR>
 nnoremap <silent> <leader>ts :TestSuite<CR>
@@ -1354,3 +1322,6 @@ autocmd VimEnter * nested call s:clear_startify_commands()
 " ===========================================================================
 
 call plug#end()
+
+" lua scripts
+lua require('nvim-dap-config')
