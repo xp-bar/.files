@@ -1088,5 +1088,4 @@ endif
 call plug#end()
 
 " lua scripts
-lua require('nvim-dap-config')
 lua require('xp-bar')
