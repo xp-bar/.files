@@ -1057,13 +1057,79 @@ endfunction
 command! GotoTest call s:goto_test(<f-args>)
 nnoremap <silent><leader>gt :GotoTest<cr>
 
+Plug 'tpope/vim-dispatch'
+Plug 'skywind3000/asyncrun.vim'
+
+Plug 'afternoon/vim-phpunit'
+
 " ----- Default phpunit settings ----- {{{
-let test#strategy = "neovim"
-let test#neovim#term_position = "vert botright"
+"  See vim-test/autoload/test/strategy.vim +222
+function! s:execute_with_compiler(cmd, script) abort
+  try
+    let default_makeprg = &l:makeprg
+    let default_errorformat = &l:errorformat
+    let default_compiler = get(b:, 'current_compiler', '')
+
+    if exists(':Dispatch')
+      let compiler = dispatch#compiler_for_program(a:cmd)
+      if !empty(compiler)
+        execute 'compiler ' . compiler
+      endif
+    endif
+
+    let &l:makeprg = a:cmd
+
+    execute a:script
+  finally
+    let &l:makeprg = default_makeprg
+    let &l:errorformat = default_errorformat
+    if empty(default_compiler)
+      unlet! b:current_compiler
+    else
+      let b:current_compiler = default_compiler
+    endif
+  endtry
+endfunction
+
+function! Mapqfitems(key, val)
+    let l:result = copy(a:val)
+    let l:result['filename'] = substitute(bufname(a:val['bufnr']), '/var/www/jbx/', '', 'g')
+    unlet l:result['bufnr']
+    return l:result
+endfunction
+
+function! FinishTestAsyncRun()
+    if (g:asyncrun_code)
+        echo "Failure"
+        return
+    endif
+
+    let l:errors = getqflist()
+    if (len(l:errors))
+        copen
+        call setqflist([], 'r', {
+            \ 'title': 'Test Result',
+            \ 'items': map(l:errors, function('Mapqfitems'))
+        \ })
+    else
+        echom 'All tests passed!'
+    endif
+endfunction
+
+function! AsyncrunBackgroundUpdatedStrategy(cmd)
+  echom 'Running tests...'
+  let g:test#strategy#cmd = a:cmd
+  call test#strategy#asyncrun_setup_unlet_global_autocmd()
+  call s:execute_with_compiler(a:cmd, 'AsyncRun -strip -mode=async -silent -post=call\ FinishTestAsyncRun()'.' '.a:cmd)
+endfunction
+
+let g:test#custom_strategies = {'asyncrun_bg_updated': function('AsyncrunBackgroundUpdatedStrategy')}
+let g:test#strategy = 'asyncrun_bg_updated'
+let g:dispatch_compilers = {}
 let test#php#phpunit#options = {
-  \ 'nearest': '-d memory_limit=2G --testdox --xdebug',
-  \ 'file':    '-d memory_limit=2G --testdox --xdebug',
-  \ 'suite':   '-d memory_limit=2G',
+  \ 'nearest': '-d memory_limit=2G --colors=never --xdebug',
+  \ 'file':    '-d memory_limit=2G --colors=never --xdebug',
+  \ 'suite':   '-d memory_limit=2G --testdox',
 \}
 
 if filereadable($HOME . '/Code/.files-jumbleberry/phpunit.vim')
