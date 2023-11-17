@@ -1,11 +1,12 @@
 -- vim: set ts=2 sw=2:
-local function load_dap()
-  local ok, dap = pcall(require, 'dap')
-  assert(ok, 'nvim-dap could not be loaded')
-  return dap
+local function loadpkg(package)
+  local ok, pkg = pcall(require, package)
+  assert(ok, package .. ' could not be loaded')
+  return pkg
 end
 
-local dap = load_dap()
+local dapui = loadpkg('dapui')
+local dap = loadpkg('dap')
 
 dap.adapters.php = {
   type = "executable",
@@ -18,7 +19,6 @@ dap.configurations.php = {
     name = 'Listen for Xdebug',
     type = 'php',
     request = 'launch',
-    -- hostname = 'host.docker.internal',
     port = 9003,
     pathMappings = {
         ['/var/www/jbx'] = '${workspaceFolder}'
@@ -28,9 +28,18 @@ dap.configurations.php = {
 }
 
 vim.keymap.set('n', '<leader>dk', function() dap.continue() end)
+vim.keymap.set('n', '<leader>db', function() dap.toggle_breakpoint() end)
 vim.keymap.set('n', '<leader>b', function() dap.toggle_breakpoint() end)
+vim.keymap.set('n', '<leader>dn', function() require('dap').step_over() end)
+vim.keymap.set('n', '<leader>di', function() require('dap').step_into() end)
+vim.keymap.set('n', '<leader>do', function() require('dap').step_out() end)
+vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
+vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
 
-require("dapui").setup({
+vim.keymap.set('n', '<leader>dt', function() dapui.toggle() end)
+
+dapui.setup({
   controls = {
     element = "repl",
     enabled = true,
