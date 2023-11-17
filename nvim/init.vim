@@ -12,17 +12,16 @@ call plug#begin('~/.vim/bundle')
 " Only need to install for h: support
 Plug 'junegunn/vim-plug'
 
-" ===========================================================================
-" ===========================================================================
+" ._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"._/"._/"._/"._/"._/"-.
+" ============================================================================
 "
-"               ▌ ▌        ▛▀▖      ▝▌            ▗
-"               ▝▞ ▛▀▖     ▙▄▘▝▀▖▙▀▖▝▞▀▘       ▌ ▌▄ ▛▚▀▖▙▀▖▞▀▖
-"               ▞▝▖▙▄▘     ▌ ▌▞▀▌▌   ▝▀▖     ▗▖▐▐ ▐ ▌▐ ▌▌  ▌ ▖
-"               ▘ ▘▌   ▀▀▀ ▀▀ ▝▀▘▘   ▀▀      ▝▘ ▘ ▀▘▘▝ ▘▘  ▝▀
+"                ▌ ▌▛▀▖   ▛▀▖▞▀▖▛▀▖▝▌▞▀▖    ▜▘▙ ▌▜▘▀▛▘ ▌ ▌▜▘▙▗▌
+"                ▝▞ ▙▄▘▄▄▖▙▄▘▙▄▌▙▄▘▝ ▚▄     ▐ ▌▌▌▐  ▌  ▚▗▘▐ ▌▘▌
+"                ▞▝▖▌     ▌ ▌▌ ▌▌▚   ▖ ▌    ▐ ▌▝▌▐  ▌▗▖▝▞ ▐ ▌ ▌
+"                ▘ ▘▘     ▀▀ ▘ ▘▘ ▘  ▝▀     ▀▘▘ ▘▀▘ ▘▝▘ ▘ ▀▘▘ ▘
 "
-" ===========================================================================
-" ===========================================================================
-"       This is my personal .vimrc, built with neovim in mind. Enjoy! 
+" ============================================================================
+" ._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"._/"._/"._/"._/"._/"-.
 
 " ---- Native Options ---- {{{
 set number numberwidth=4
@@ -99,6 +98,8 @@ onoremap in( :<c-u>normal! f(vi(<cr>
 
 " abbreviations
 cnoreabbrev ww setl wrap!|setl lbr!
+cnoreabbrev Qa qa
+cnoreabbrev QA qa
 
 " ----- Buffers ----- {{{
 " Nicer buffer closing
@@ -142,6 +143,65 @@ nnoremap <leader>w :w<cr>
 vnoremap <leader>s :sort<cr>
 " ---- }}}
 
+" ---- Movement and resizing ---- {{{
+
+" Resize window
+noremap <C-w><C-Up> :res +5<cr> 
+noremap <C-w><C-Down> :res -5<cr> 
+noremap <C-w><C-Left> :vert res +5<cr>
+noremap <C-w><C-Right> :vert res -5<cr>
+
+" visual shifting (builtin-repeat)
+vnoremap < <gv
+vnoremap > >gv
+
+"goto brace
+nnoremap gb %
+vnoremap gb %
+
+" ----- Easy Align ----- {{{
+Plug 'junegunn/vim-easy-align'
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+let g:easy_align_delimiters = {
+\    '-': {
+\        'pattern': '-'
+\    },
+\    '>': {
+\        'pattern': '>>\|=>\|->\|>'
+\    },
+\    '/': {
+\        'pattern':         '//\+\|/\*\|\*/',
+\        'delimiter_align': 'l',
+\        'ignore_groups':   ['!Comment']
+\    },
+\    ']': {
+\        'pattern':       '[[\]]',
+\        'left_margin':   0,
+\        'right_margin':  0,
+\        'stick_to_left': 0
+\    },
+\    ')': {
+\        'pattern':       '[()]',
+\        'left_margin':   0,
+\        'right_margin':  0,
+\        'stick_to_left': 0
+\    },
+\    'd': {
+\        'pattern':      ' \(\S\+\s*[;=]\)\@=',
+\        'left_margin':  0,
+\        'right_margin': 0
+\    }
+\ }
+
+" ----- }}}
+" ---- }}}
+
 " ---- Auto Commands ---- {{{
 let g:format_html = v:false
 
@@ -178,6 +238,9 @@ augroup buffercmds
     
     " No linewrap html
     autocmd BufNewFile,BufRead *.php setlocal nowrap
+    
+    autocmd Filetype diff setlocal foldlevel=1000
+    autocmd Filetype php setlocal foldlevel=1000
 augroup END
 
 augroup autoreload
@@ -225,39 +288,8 @@ let g:sessions_dir = '~/vim-sessions/'
 packadd! xp-where
 packadd! xp-text-casing
 packadd! xp-changed
-
-" ----- Hidden command ----- {{{
-function! s:hidden(...)
-    let l:listchars = ''
-    if a:0 == 0
-        let l:listchars='tab:>\ ,space:·,nbsp:␣,trail:-,eol:$'
-    else
-        for i in a:000
-            if i == 'tab'
-                let l:listchars = l:listchars . 'tab:>\ ,'
-            elseif i == 'space'
-                let l:listchars = l:listchars . 'space:·,'
-            elseif i == 'nbsp'
-                let l:listchars = l:listchars . 'nbsp:␣,'
-            elseif i == 'trail'
-                let l:listchars = l:listchars . 'trail:-,'
-            elseif i == 'eol'
-                let l:listchars = l:listchars . 'eol:$,'
-            endif
-        endfor
-    endif
-
-    let &listchars = substitute(l:listchars, ',$', '', '')
-
-    if &list == 'nolist'
-        set list
-    else
-        set nolist
-    endif
-endfunction
-
-command! -nargs=* Hidden call s:hidden(<f-args>)
-" ----- }}}
+packadd! xp-hidden
+packadd! xp-unjoin
 " ---- }}}
 " --- }}}
 
@@ -271,6 +303,7 @@ let g:startify_bookmarks = [
         \ {'.a' : '~/.alias'},
         \ {'.f' : '~/.function'},
         \ {'.v' : '~/.config/nvim/init.vim'},
+        \ {'.x' : '~/.config/nvim/lua/xp-bar.lua'},
         \ {'.t' : '~/.tmux.conf'},
         \ {'.z' : '~/.zshrc'},
         \ {'.p' : '~/.zsh-plugins'},
@@ -397,28 +430,6 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
 Plug 'airblade/vim-gitgutter'
 
 let g:gitgutter_highlight_linenrs = 1
-
-function! s:do_review(branch)
-    let l:base_sha = substitute(system('git rev-parse ' . a:branch), '[^A-z0-9]', '', 'g')
-    let g:gitgutter_diff_base = l:base_sha
-
-    :GitGutterLineHighlightsEnable
-
-    set foldmethod=manual
-    set foldlevel=2
-
-    let l:files = systemlist('git diff --name-only ' . a:branch)
-
-    for file in l:files
-        exec 'e ' . file
-    endfor
-
-    " sleep 500m
-
-    " bufdo GitGutterFold
-endfunction
-
-command! -nargs=1 Review call s:do_review(<f-args>)
 " --- }}}
 
 " --- Buftabline --- {{{
@@ -431,20 +442,6 @@ let g:buftabline_show = 1
 let g:buftabline_number = 1
 
 let g:buftabline_indicators = 1
-
-" -- Keymap -- {{{
-nmap <leader>1 <Plug>BufTabLine.Go(1)
-nmap <leader>2 <Plug>BufTabLine.Go(2)
-nmap <leader>3 <Plug>BufTabLine.Go(3)
-nmap <leader>4 <Plug>BufTabLine.Go(4)
-nmap <leader>5 <Plug>BufTabLine.Go(5)
-nmap <leader>6 <Plug>BufTabLine.Go(6)
-nmap <leader>7 <Plug>BufTabLine.Go(7)
-nmap <leader>8 <Plug>BufTabLine.Go(8)
-nmap <leader>9 <Plug>BufTabLine.Go(9)
-nmap <leader>0 <Plug>BufTabLine.Go(10)
-" -- }}}
-
 " --- }}}
 
 " --- Goyo --- {{{
@@ -463,41 +460,38 @@ Plug 'othree/html5.vim'
 " Handlebars
 Plug 'mustache/vim-mustache-handlebars'
 
-augroup handlebars
-    autocmd BufNewFile,BufRead *.html set filetype=html.handlebars
-augroup END
-
+" Volt
 Plug 'jyyan/vim-volt-syntax'
-augroup volt
-    autocmd BufNewFile,BufRead *.volt set filetype=volt
-augroup END
 
-
+" Zephir
 Plug 'xwsoul/vim-zephir'
-augroup zephir
-    autocmd BufNewFile,BufRead *.zep set filetype=zephir
-augroup END
-
 
 " Scss support
 Plug 'cakebaker/scss-syntax.vim'
 
 " Better PHP Lang Support
 Plug 'StanAngeloff/php.vim'
-augroup php
-autocmd!
-autocmd BufNewFile,BufRead *.php setlocal foldlevel=1000
-augroup END
 
 " Javascript
 Plug 'pangloss/vim-javascript'
 
-inoreabbrev clog console.log();<Left><Left>
-inoreabbrev cgroup console.group();<cr><cr>console.log();<cr><cr>console.groupEnd();
+" Typescript and Vue
+Plug 'posva/vim-vue'
+" let g:vue_disable_pre_processors=1
+let g:vue_pre_processors = ['typescript', 'scss']
 
-" --- Prettier --- {{{
-Plug 'prettier/vim-prettier'
-" --- }}}
+" Typescript
+Plug 'leafgarland/typescript-vim'
+
+" Database Markdown Language Syntax
+Plug 'jidn/vim-dbml'
+
+" Laravel
+Plug 'jwalton512/vim-blade'
+
+" ---- Formatters / Documentation ---- {{{ 
+" Prettier for JS
+Plug 'prettier/vim-prettier', {'on': 'Prettier', 'for': ['javascript', 'vue', 'typescript']}
 
 " JS Doc
 Plug 'heavenshell/vim-jsdoc'
@@ -506,21 +500,15 @@ let g:jsdoc_enable_es6=1
 let g:jsdoc_input_description=1
 let g:jsdoc_return_description=0
 
-" -- Documentation -- {{{
-" See - tobyS/pdv
-" See - heavenshell/vim-jsdoc
+" Documentation Keybinds (pdv, vim-jsdoc)
 augroup documentors
     autocmd!
     autocmd FileType php nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr> 
     autocmd FileType vue nmap <silent> <leader>d <Plug>(jsdoc)
     autocmd FileType javascript nmap <silent> <leader>d <Plug>(jsdoc)
 augroup END
-"  }}}
 
-" Typescript and Vue
-Plug 'posva/vim-vue'
-" let g:vue_disable_pre_processors=1
-let g:vue_pre_processors = ['typescript', 'scss']
+" ---- }}}
 
 command! WebpackImport call vue#snippets#webpack_async_import()
 command! Vue call vue#snippets#vue_files()
@@ -529,39 +517,32 @@ command! Getter call vue#snippets#get_getter()
 
 augroup syntaxcommands
     autocmd!
+    " Filetype autocmds
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType scss setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType sass setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd BufEnter,BufRead,BufNewFile *.vue set filetype=vue
     autocmd FileType vue syntax sync fromstart
     autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
     autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ $*\ %
-augroup END
 
-augroup vueabbrevs
-    autocmd!
-    autocmd FileType vue inoreabbrev gscomp : {<CR><Tab>get() {<CR><CR>},<CR>set() {<CR><CR>}<CR>}, <Esc><<F%s<c-o>:call getchar()<CR>
+    " New file and Read automds
+    autocmd BufNewFile,BufRead *.php set filetype=php
+    autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
+    autocmd BufNewFile,BufRead *.blade.php setlocal filetype=blade
+    autocmd BufNewFile,BufRead *.dbml set syntax=dbml
+    autocmd BufEnter,BufRead,BufNewFile *.vue set filetype=vue
+    autocmd BufNewFile,BufRead *.html set filetype=html.handlebars
+    autocmd BufNewFile,BufRead *.volt set filetype=volt
+    autocmd BufNewFile,BufRead *.zep set filetype=zephir
 augroup END
+" }}}
 
-" Laravel
-Plug 'jwalton512/vim-blade'
-" Workaround to ensure correct filetypes for blade template syntax highlight
-augroup blade
-autocmd!
-autocmd BufNewFile,BufRead *.blade.php setlocal filetype=blade
-augroup END
+" --- Language Servers, Linting and Testing --- {{{
 
 command! -nargs=* -complete=customlist,php#laravel#blade_list Blade call php#laravel#blade_files(<f-args>)
 
-Plug 'leafgarland/typescript-vim'
-
-augroup typescript
-autocmd!
-autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
-augroup END
-
-
-Plug 'stephpy/vim-php-cs-fixer'
+" ---- PHPCS Fixer ---- {{{
+Plug 'stephpy/vim-php-cs-fixer', {'for': 'php', 'on': 'PhpCsFixerFixFile'}
 
 let g:phpcs_fix = v:true
 let g:php_cs_fixer_config = "$HOME/.php-cs-fixer.php"
@@ -572,10 +553,15 @@ function! s:phpcs_fix()
     fi
 endfunction
 
-autocmd BufWritePost *.php silent! call s:phpcs_fix()
+augroup phpcsfix
+    autocmd!
+    autocmd BufWritePost *.php silent! call s:phpcs_fix()
+augroup END
+
+" ---- }}}
 
 " ---- Conquer of Completion {{{
-Plug 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim', { 'do': function('coc#util#install') }
 
 " Make <CR> to accept selected completion item or notify coc.nvim to format
 " <C-g>u breaks current undo, please make your own choice.
@@ -654,97 +640,17 @@ omap ac <Plug>(coc-classobj-a)
 
 " eslint
 command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint')['quiet'] ? v:false : v:true)
-" Installation: 
-" run coc#util#install()
-" run :CocInstall coc-phpls
 " ---- }}}
 
 nnoremap <silent> <leader>gl :Lines<CR>
 
 " autocmd FileType qf nnoremap <buffer> <CR> <CR>:cclose<CR>
 
-let g:swift_plugin_directory = $HOME . '/swift/apple/swift'
-
-if isdirectory(g:swift_plugin_directory)
-"    Plug 'file://' . g:swift_plugin_directory,
-"                \ {'rtp': 'utils/vim/','name': 'Swift-Syntax'}
-endif
-
-autocmd BufNewFile,BufRead *.swift set syntax=swift | set filetype=swift
-
 " NVIM DAP (config in lua) and DAP UI
 Plug 'mfussenegger/nvim-dap'
 Plug 'rcarriga/nvim-dap-ui'
 
-" Database Markdown Language Syntax
-Plug 'jidn/vim-dbml'
-
-augroup dbml
-autocmd!
-autocmd BufNewFile,BufRead *.dbml set syntax=dbml
-augroup END
-" }}}
-
 " --- Editor Config --- {{{
-
-" ---- Movement and resizing ---- {{{
-
-" Resize window
-noremap <C-w><C-Up> :res +5<cr> 
-noremap <C-w><C-Down> :res -5<cr> 
-noremap <C-w><C-Left> :vert res +5<cr>
-noremap <C-w><C-Right> :vert res -5<cr>
-
-" visual shifting (builtin-repeat)
-vnoremap < <gv
-vnoremap > >gv
-
-"goto brace
-nnoremap gb %
-vnoremap gb %
-
-" ----- Easy Align ----- {{{
-Plug 'junegunn/vim-easy-align'
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-let g:easy_align_delimiters = {
-\    '-': {
-\        'pattern': '-'
-\    },
-\    '>': {
-\        'pattern': '>>\|=>\|->\|>'
-\    },
-\    '/': {
-\        'pattern':         '//\+\|/\*\|\*/',
-\        'delimiter_align': 'l',
-\        'ignore_groups':   ['!Comment']
-\    },
-\    ']': {
-\        'pattern':       '[[\]]',
-\        'left_margin':   0,
-\        'right_margin':  0,
-\        'stick_to_left': 0
-\    },
-\    ')': {
-\        'pattern':       '[()]',
-\        'left_margin':   0,
-\        'right_margin':  0,
-\        'stick_to_left': 0
-\    },
-\    'd': {
-\        'pattern':      ' \(\S\+\s*[;=]\)\@=',
-\        'left_margin':  0,
-\        'right_margin': 0
-\    }
-\ }
-
-" ----- }}}
-" ---- }}}
 
 " ----- Tagbar ----- {{{
 Plug 'majutsushi/tagbar'
@@ -781,38 +687,6 @@ nnoremap <silent> <C-s> :TagbarFrozen<cr>
 vnoremap <silent> <C-s> <esc>:TagbarOpen fj<cr> :TagbarCurrentTag<cr>
 " ----- }}}
 
-" ---- Unjoin lines ---- {{{
-" https://vim.fandom.com/wiki/Add_a_newline_after_given_patterns
-function! LineBreakAt(bang, ...) range
-    let save_search = @/
-
-    if empty(a:bang)
-        let before = ''
-        let after = '\ze.'
-        let repl = '&\r'
-    else
-        let before = '.\zs'
-        let after = ''
-        let repl = '\r&'
-    endif
-    " let l:pat_list = map(deepcopy(a:000), "escape(v:val, '/\\.*$^~[')")
-    let l:pat_list = map(deepcopy(a:000), "escape(v:val, '/\\.*$^~')")
-    let l:find = empty(l:pat_list) ? @/ : join(l:pat_list, '\|')
-    let l:find = before . '\%(' . l:find . '\)' . after
-    " Example: 10,20s/\%(arg1\|arg2\|arg3\)\ze./&\r/ge
-    execute a:firstline . ',' . a:lastline . 's/'. l:find . '/' . repl . '/ge'
-
-    " reindent the lines
-    mark q
-    normal gvg`q=jk
-    delmarks q
-
-    let @/ = save_search
-endfunction
-
-command! -bang -nargs=* -range Unjoin <line1>,<line2>call LineBreakAt('<bang>', <f-args>)
-" ---- }}}
-
 " Close all buffers except open one
 Plug 'vim-scripts/BufOnly.vim'
 
@@ -830,12 +704,6 @@ nnoremap <silent><C-B> :Git blame<cr>
 " GV - git log browser
 Plug 'junegunn/gv.vim'
 
-augroup gitgroup
-    autocmd!
-    autocmd FileType diff setlocal foldlevel=1000
-    autocmd FileType gitcommit inoreabbrev co- <ESC>:GitCoAuth<CR>
-augroup END
-
 " Managing quotations, surrounding brackets, etc. Made easier
 Plug 'tpope/vim-surround'
 
@@ -849,6 +717,8 @@ Plug 'airblade/vim-rooter'
 if executable('fzf')
     Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
     Plug 'junegunn/fzf.vim'
+
+    nnoremap <silent> <leader>gl :Lines<CR>
 
     " Add RgRaw and AgRaw
     Plug 'jesseleite/vim-agriculture'
@@ -937,38 +807,6 @@ if executable('fzf')
 end
 " }}}
 
-" ---- Quickfix ---- {{{
-function! s:RemoveQFItem()
-    let curqfidx = line('.') - 1
-    let qfall = getqflist()
-    call remove(qfall, curqfidx)
-    call setqflist(qfall, 'r')
-    :copen
-endfunction
-
-function! s:AddQFItem(...)
-    let l:text = (a:0 > 0 ? join(a:000) : getline('.'))
-    call setqflist(getqflist(), 'a', {
-    \    'title': 'My List',
-    \    'nr': 0,
-    \    'items': [
-    \       {
-    \           'filename': expand('%'),
-    \           'lnum': line('.'),
-    \           'text': l:text
-    \       }
-    \      ]
-    \   }
-    \   )
-    botright copen
-endfunction
-
-command! QfRemove :call s:RemoveQFItem()
-command! -nargs=* Qf :call s:AddQFItem(<f-args>)
-autocmd FileType qf map <buffer> dd :QfRemove<cr>
-nmap <silent> <leader>aq :Qf<cr>
-" ---- }}}
-
 " ---- Ack for Vim ---- {{{
 Plug 'mileszs/ack.vim', {'on': ['Ack', 'Ack!']}
 cnoreabbrev Ack Ack!
@@ -981,7 +819,7 @@ vnoremap <C-f> y /<C-r>"
 " ---- }}}
 
 " ---- Emmet ---- {{{
-Plug 'mattn/emmet-vim'
+Plug 'mattn/emmet-vim', {'for': ['html', 'vue']}
 
 let g:user_emmet_leader_key='<leader>' 
 let g:user_emmet_mode='n'
@@ -999,30 +837,6 @@ noremap <C-_> :Commentary<cr>
 " --- }}}
 
 " --- Language Config --- {{{
-" ---- Add a namespace declaration - php ---- {{{
-augroup phpNamespace
-    autocmd!
-    command! -nargs=* Class call php#php#new_class(<f-args>)
-augroup END
-" ---- }}}
-
-" ---- PHP Folding options ---- {{{ 
-" convert '@return ReturnType' to ': ReturnType' in function preview if there is no return type specified in the function declaration
-let g:php_fold_return_comment_as_declaration=1
-
-" convert function access (public, private, protected) to UPPERCASE in preview
-let g:php_fold_uppercase_access_types=0
-
-" if the return type can't be found from an @return tag or a return type declaration, show the return type as ': unknown type' 
-let g:php_fold_show_unknown_types=1
-
-" the maximum length for function comments (accross all lines) before being truncated with '...'
-let g:php_fold_comment_length=60
-
-" show a preview of the first line in the fold, otherwise show the number of hidden lines
-let g:php_fold_show_fold_preview=0
-" --- }}}
-
 " ---- PHP ---- {{{
 augroup phpImports
     autocmd!
@@ -1032,12 +846,11 @@ augroup phpImports
     autocmd FileType php setlocal commentstring=//%s
     autocmd FileType php setlocal makeprg=phpcs\ $*\ --report=csv\ --standard=XpBar\ -n\ %
     autocmd FileType php let &errorformat=errorformat
-    " autocmd FileType php inoreabbrev fn function () {<CR>}<Esc>F%s<c-o>:call getchar()<CR>
 augroup END
 " ---- }}}
 
 " ---- Testing ---- {{{
-Plug 'vim-test/vim-test'
+Plug 'vim-test/vim-test', {'for': 'php'}
 
 function! s:goto_test()
     let l:root = "application/"
@@ -1143,24 +956,31 @@ nnoremap <silent> <leader>td :TestVisit<CR>
 " ---- }}}
 
 " ---- Markdown ---- {{{
-Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown'}
-
-" Installation:
-" call mkdp#util#install()
+Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': function('mkdp#util#install')}
 " ---- }}}
 
-" ---- Documentation ---- {{{
-" ----- phpDocumentor ----- {{{
+" ---- Documentation stubs ---- {{{
 Plug 'tobyS/vmustache'
-" Plug 'tobyS/pdv'
-" Fork with return types
+" Fork of 'tobyS/pdv' with return types
 Plug 'YaroslavMolchan/pdv'
 let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
-" ----- }}}
 " ---- }}}
 " --- }}}
 
 " --- Themimg --- {{{
+set background=dark " for the dark version
+colorscheme two
+syntax on
+
+if (has("termguicolors"))
+    set termguicolors
+else
+    set notermguicolors
+endif
+
+" Disable tabline and don't use GUI tabline; we have lightline / buftabline
+set showtabline=0 " 2 to show
+set guioptions-=e  " Don't use GUI tabline
 
 " ---- Lightline for Vim ---- {{{
 
@@ -1225,10 +1045,6 @@ let g:lightline.tabline = {
   \   'right': []
   \ }
 
-set showtabline=0 " 2 to show
-
-set guioptions-=e  " Don't use GUI tabline
-
 
 function! LightLineMode()
   return expand('%:t') ==# '__Tagbar__.1' ? 'Tagbar':
@@ -1242,98 +1058,7 @@ function! LightLineMode()
 endfunction
 " }}}
 
-if (has("termguicolors"))
-    set termguicolors
-else
-    set notermguicolors
-endif
-
-set background=dark " for the dark version
-colorscheme two
-
-syntax on
-
-nnoremap <silent> <C-[> :syn sync fromstart<cr>
 command! BufSync :execute 'bufdo :e' | source $VIMRUNTIME/syntax/syntax.vim
-
-" }}}
-
-" --- Fun Stuff --- {{{
-nnoremap <leader>[ :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-" command! -bang Qa :echom "QUACK!"
-" command! Qa1 :echom "QUACK!"
-cnoreabbrev Qa qa
-cnoreabbrev QA qa
-
-
-function! s:starts_with(longer, shorter) abort
-  if len(a:shorter) == 0
-      return v:true
-  endif
-
-  return a:longer[0:len(a:shorter)-1] ==# a:shorter
-endfunction
-
-function! s:spotify_cmd(ArgLead, CmdLine, CursorPos)
-    if a:CmdLine =~ 'play'
-        return filter([
-            \ 'album',
-            \ 'artist',
-            \ 'list',
-            \ 'uri'
-        \ ], 's:starts_with(v:val, a:ArgLead)')
-    endif
-
-    if a:CmdLine =~ 'vol'
-        return filter([
-            \ 'up',
-            \ 'down',
-            \ 'show'
-        \ ], 's:starts_with(v:val, a:ArgLead)')
-    endif
-
-    if a:CmdLine =~ 'toggle'
-        return filter([
-            \ 'shuffle',
-            \ 'repeat'
-        \ ], 's:starts_with(v:val, a:ArgLead)')
-    endif
-
-    return filter([
-        \ 'play',
-        \ 'pause',
-        \ 'next',
-        \ 'prev',
-        \ 'replay',
-        \ 'pos',
-        \ 'stop',
-        \ 'quit',
-        \ 'vol',
-        \ 'toggle'
-    \ ], 's:starts_with(v:val, a:ArgLead)')
-endfunction
-
-function! s:spotify(...)
-    if a:0 == 0
-        let l:status = [
-            \ systemlist('spotify status track')[0],
-            \ ' - ',
-            \ systemlist('spotify status artist')[0]
-        \ ]
-
-        echom join(l:status, ' ')
-    else
-        let l:cmd = 'spotify ' . substitute(shellescape(join(a:000, ' ')), "'", '', 'g')
-        let l:result = systemlist(l:cmd)
-        echom substitute(join(l:result, ' '), '\e\[[0-9;]*[mK]*', '', 'g')
-    endif
-
-endfunction
-
-command! -nargs=* -complete=customlist,s:spotify_cmd Spotify call s:spotify(<f-args>)
 " }}}
 
 " --- Remove user (plugin) commands I don't use --- {{{
@@ -1350,7 +1075,8 @@ function! s:clear_startify_commands()
 endfunction
 
 autocmd VimEnter * nested call s:clear_startify_commands()
-"  }}}
+
+Plug 'neovim/nvim-lspconfig'
 
 " Work Config
 if filereadable($HOME . '/jbx.vim')
@@ -1363,3 +1089,4 @@ call plug#end()
 
 " lua scripts
 lua require('nvim-dap-config')
+lua require('xp-bar')
