@@ -564,12 +564,7 @@ augroup END
 Plug 'stephpy/vim-php-cs-fixer'
 
 let g:phpcs_fix = v:true
-
-if filereadable($HOME . '/Code/.files-jumbleberry/phpcsfixer.vim')
-    source $HOME/Code/.files-jumbleberry/phpcsfixer.vim
-else
-    let g:php_cs_fixer_config = "$HOME/.php-cs-fixer.php"
-endif
+let g:php_cs_fixer_config = "$HOME/.php-cs-fixer.php"
 
 function! s:phpcs_fix()
     if (g:phpcs_fix)
@@ -1137,11 +1132,7 @@ let test#php#phpunit#options = {
   \ 'suite':   '-d memory_limit=2G --testdox',
 \}
 
-if filereadable($HOME . '/Code/.files-jumbleberry/phpunit.vim')
-    source $HOME/Code/.files-jumbleberry/phpunit.vim
-else
-    let test#php#phpunit#executable = "./vendor/bin/phpunit"
-endif
+let test#php#phpunit#executable = "./vendor/bin/phpunit"
 " ----- }}}
 
 nnoremap <silent> <leader>tn :TestNearest<CR>
@@ -1360,6 +1351,11 @@ endfunction
 
 autocmd VimEnter * nested call s:clear_startify_commands()
 "  }}}
+
+" Work Config
+if filereadable($HOME . '/jbx.vim')
+    source $HOME/jbx.vim
+endif
 
 " ===========================================================================
 
