@@ -564,7 +564,12 @@ augroup END
 Plug 'stephpy/vim-php-cs-fixer'
 
 let g:phpcs_fix = v:true
-let g:php_cs_fixer_config = "$HOME/.php-cs-fixer.php"
+
+if filereadable($HOME . '/Code/.files-jumbleberry/phpcsfixer.vim')
+    source $HOME/Code/.files-jumbleberry/phpcsfixer.vim
+else
+    let g:php_cs_fixer_config = "$HOME/.php-cs-fixer.php"
+endif
 
 function! s:phpcs_fix()
     if (g:phpcs_fix)
