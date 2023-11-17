@@ -560,6 +560,9 @@ augroup END
 
 " ---- }}}
 
+Plug 'gfanto/fzf-lsp.nvim'
+Plug 'nvim-lua/plenary.nvim'
+
 " ---- Conquer of Completion {{{
 Plug 'neoclide/coc.nvim', { 'do': function('coc#util#install') }
 
@@ -579,6 +582,12 @@ nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 nmap <silent> <leader>gr <Plug>(coc-references)
 nmap <silent> gk <Plug>(coc-codeaction)
+
+nmap <silent> <leader>gd :Definitions<CR>
+nmap <silent> <leader>gy :TypeDefinitions<CR>
+nmap <silent> <leader>gi :Implementations<CR>
+nmap <silent> <leader>gr :References<CR>
+nmap <silent> gk :CodeActions<CR>
 
 xmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
 nmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
