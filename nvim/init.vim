@@ -1,3 +1,4 @@
+" vim: set ts=2 sw=2:
 set nocompatible              " be iMproved, required
 
 if has('linux') && (substitute(system('which brew'), "\n", "", "") != "")
