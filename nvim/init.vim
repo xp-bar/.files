@@ -996,14 +996,6 @@ Plug 'tpope/vim-commentary'
 noremap <C-_> :Commentary<cr>
 " ---- }}}
 
-" ---- Make command ---- {{{
-function! s:make_func(...)
-    silent exec 'make ' . (a:0 > 0 ? a:1 : '')
-    bot copen
-endfunction
-command! -nargs=* Make call s:make_func(<f-args>)
-cnoreabbrev make Make
-" ---- }}}
 " --- }}}
 
 " --- Language Config --- {{{
@@ -1043,23 +1035,6 @@ augroup phpImports
     " autocmd FileType php inoreabbrev fn function () {<CR>}<Esc>F%s<c-o>:call getchar()<CR>
 augroup END
 " ---- }}}
-
-" --- Additional PHP functions --- {{{
-function! s:tinker()
-    silent execute '!echo "<?php\\n" > $TMPDIR/tinker'
-    silent tabnew $TMPDIR/tinker
-    silent setlocal filetype=php
-    silent setlocal makeprg=php\ artisan\ tinker\ %
-
-    function! s:make_func(...)
-        silent exec 'make ' . (a:0 > 0 ? a:1 : '')
-        vert copen 100
-    endfunction
-    command! -nargs=* Make call s:make_func(<f-args>)
-endfunction
-
-command! Tinker call s:tinker()
-" --- }}}
 
 " ---- Testing ---- {{{
 Plug 'vim-test/vim-test'
