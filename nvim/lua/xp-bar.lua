@@ -3,6 +3,7 @@ require('nvim-dap-config')
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
+      "diff",
       "html",
       "javascript",
       "lua",
@@ -70,6 +71,9 @@ require("onedarkpro").setup({
       ['@keyword.dollar.phpdoc'] = { fg = '${red}'},
       ['@type.primitive.phpdoc'] = { fg = '${purple}'},
       ['@code.phpdoc'] = { fg = '${purple}'},
+
+      ['@text.diff.delete.diff'] = { fg = '${red}'},
+      ['@text.diff.add.diff'] = { fg = '${green}'},
   },
 })
 
