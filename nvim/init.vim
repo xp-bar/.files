@@ -1066,6 +1066,8 @@ call plug#end()
 " lua scripts
 lua require('xp-bar')
 
+nmap <silent> <leader>i :Inspect<cr>
+
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
 set nofoldenable
