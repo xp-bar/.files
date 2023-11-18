@@ -454,6 +454,9 @@ nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 
 " --- Syntax --- {{{
 
+"  Treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 " html5 omnicomplete
 Plug 'othree/html5.vim'
 
