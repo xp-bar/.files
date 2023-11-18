@@ -971,8 +971,8 @@ let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 " --- }}}
 
 " --- Themimg --- {{{
-set background=dark " for the dark version
-colorscheme two
+Plug 'olimorris/onedarkpro.nvim'
+
 syntax on
 
 if (has("termguicolors"))
