@@ -56,6 +56,20 @@ require("onedarkpro").setup({
     none = "NONE",
   },
   highlights = {
+      ['@variable.builtin'] = { fg = '${red}'},
+
+      ['@variable.builtin.vim'] = { fg = '${red}'},
+      ['@function.macro.vim'] = { fg = '${orange}'},
+      ['@function.macro.call.vim'] = { fg = '${yellow}'},
+      ['@function.vim'] = { fg = '${cyan}'},
+      ['@function.call.vim'] = { fg = '${blue}'},
+      ['@function.internal.call.vim'] = { fg = '${purple}'},
+      ['@namespace.vim'] = { fg = '${red}'},
+      ['@keycode.vim'] = { fg = '${blue}'},
+      ['@constant.vim'] = { fg = '${yellow}'},
+      ['@punctuation.bracket.vim'] = { fg = '${gray}'},
+      -- vimContinue = { fg = '${gray}', bg = '${gray}' },
+
       ['@constant.access.php'] = { fg = '${red}'},
       ['@constant.builtin.php'] = { fg = '${purple}'},
       ['@constant.class.keyword.php'] = { fg = '${purple}'},
