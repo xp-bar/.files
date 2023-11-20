@@ -1,4 +1,6 @@
 -- xp-bar.lua
+-- vim: set ts=2 sw=2:
+
 require('nvim-dap-config')
 
 require'nvim-treesitter.configs'.setup {
@@ -65,6 +67,7 @@ require("onedarkpro").setup({
       ['@type.original.php'] = { fg = '${white}'},
       ['@type.builtin.php'] = { fg = '${purple}'},
       ['@variable.builtin.php'] = { fg = '${red}'},
+      CocUnusedHighlight = { fg = '${gray}' },
 
       ['@keyword.phpdoc'] = { fg = '${white}'},
       ['@keyword.pipe.phpdoc'] = { fg = '${white}'},
