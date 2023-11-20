@@ -1065,6 +1065,7 @@ call plug#end()
 lua require('xp-bar')
 
 nmap <silent> <leader>i :Inspect<cr>
+nmap <silent> <leader>I :InspectTree<cr>
 
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
