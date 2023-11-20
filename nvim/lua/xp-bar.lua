@@ -18,7 +18,7 @@ require'nvim-treesitter.configs'.setup {
       "typescript",
       "vim",
       "vimdoc",
-      "vue"
+      "vue",
   },
   sync_install = false,
   auto_install = true,
@@ -50,12 +50,17 @@ require("onedarkpro").setup({
     purple = "#c678dd",
     white = "#abb2bf",
     black = "#282c34",
+    lightgray = "#828997",
     gray = "#5c6370",
+    darkgray = "#4b5263",
     highlight = "#e2be7d",
     comment = "#7f848e",
     none = "NONE",
   },
   highlights = {
+      Operator = { fg = '${red}' },
+      MatchParen = { fg = '${red}', bg = '${black}', italic = true },
+
       ['@variable.builtin'] = { fg = '${red}'},
 
       ['@variable.builtin.vim'] = { fg = '${red}'},
@@ -100,16 +105,33 @@ require("onedarkpro").setup({
       GitGutterDeleteLine = { fg = '${red}', bg = '${gray}' },
       GitGutterChangeDelete = { fg = '${red}', bg = '${gray}' },
 
-      DbgCurrentLine = {},
-      DbgCurrentSign = { fg = '${green}'},
-      DbgBreakptLine = {},
-      DbgBreakptSign = { fg = '${cyan}'},
-
       CocErrorFloat = { fg = '${red}'},
       CocWarningFloat = { fg = '${yellow}'},
       CocInfoFloat = { fg = '${cyan}'},
       CocCursorRange = { fg = '${gray}'},
       CocUnusedHighlight = { fg = '${gray}' },
+
+      StartifyBracket = { fg = '${blue}' },
+      StartifyFile = { fg = '${red}' },
+      StartifyFooter = { fg = '${fg}' },
+      StartifyHeader = { fg = '${fg}' },
+      StartifyNumber = { fg = '${orange}' },
+      StartifyPath = { fg = '${blue}' },
+      StartifySlash = { fg = '${blue}' },
+      StartifySection = { fg = '${purple}' },
+      StartifySelect = { fg = '${cyan}' },
+      StartifySpecial = { fg = '${gray}' },
+
+      zshVariableDef = { fg = '${orange}' },
+      zshTypes = { fg = '${purple}' },
+      zshPreProc = { fg = '${red}' },
+      zshKSHFunction = { fg = '${cyan}' },
+      zshFunction = { fg = '${cyan}' },
+      zshSubstQuoted = { fg = 'gray' },
+      zshOldSubst = { fg = '${red}' },
+      zshSubstDelim = { fg = '${gray}' },
+      zshDeref = { fg = '${red}'},
+      zshShortDeref = { fg = '${red}'},
   },
 })
 
