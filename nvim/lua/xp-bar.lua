@@ -68,7 +68,6 @@ require("onedarkpro").setup({
       ['@keycode.vim'] = { fg = '${blue}'},
       ['@constant.vim'] = { fg = '${yellow}'},
       ['@punctuation.bracket.vim'] = { fg = '${gray}'},
-      -- vimContinue = { fg = '${gray}', bg = '${gray}' },
 
       ['@constant.access.php'] = { fg = '${red}'},
       ['@constant.builtin.php'] = { fg = '${purple}'},
@@ -81,7 +80,6 @@ require("onedarkpro").setup({
       ['@type.original.php'] = { fg = '${white}'},
       ['@type.builtin.php'] = { fg = '${purple}'},
       ['@variable.builtin.php'] = { fg = '${red}'},
-      CocUnusedHighlight = { fg = '${gray}' },
 
       ['@keyword.phpdoc'] = { fg = '${white}'},
       ['@keyword.pipe.phpdoc'] = { fg = '${white}'},
@@ -91,6 +89,27 @@ require("onedarkpro").setup({
 
       ['@text.diff.delete.diff'] = { fg = '${red}'},
       ['@text.diff.add.diff'] = { fg = '${green}'},
+
+      GitGutterAdd = { fg = '${green}' },
+      GitGutterChange = { fg = '${orange}' },
+      GitGutterDelete = { fg = '${red}' },
+      GitGutterChangeDelete = { fg = '${red}' },
+
+      GitGutterAddLine = { fg = '${green}', bg = '${gray}' },
+      GitGutterChangeLine = { fg = '${orange}', bg = '${gray}' },
+      GitGutterDeleteLine = { fg = '${red}', bg = '${gray}' },
+      GitGutterChangeDelete = { fg = '${red}', bg = '${gray}' },
+
+      DbgCurrentLine = {},
+      DbgCurrentSign = { fg = '${green}'},
+      DbgBreakptLine = {},
+      DbgBreakptSign = { fg = '${cyan}'},
+
+      CocErrorFloat = { fg = '${red}'},
+      CocWarningFloat = { fg = '${yellow}'},
+      CocInfoFloat = { fg = '${cyan}'},
+      CocCursorRange = { fg = '${gray}'},
+      CocUnusedHighlight = { fg = '${gray}' },
   },
 })
 
