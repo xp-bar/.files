@@ -42,6 +42,7 @@ require("onedarkpro").setup({
     bg = "#282c34",
     fg = "#abb2bf",
     red = "#e06c75",
+    darkred = "#be5046",
     orange = "#d19a66",
     yellow = "#e5c07b",
     green = "#98c379",
@@ -50,9 +51,9 @@ require("onedarkpro").setup({
     purple = "#c678dd",
     white = "#abb2bf",
     black = "#282c34",
-    lightgray = "#828997",
+    lightgray = "#4b5263",
     gray = "#5c6370",
-    darkgray = "#4b5263",
+    darkgray = "#828997",
     highlight = "#e2be7d",
     comment = "#7f848e",
     none = "NONE",
@@ -60,6 +61,7 @@ require("onedarkpro").setup({
   highlights = {
       Operator = { fg = '${red}' },
       MatchParen = { fg = '${red}', bg = '${black}', italic = true },
+      NormalFloat = { bg = '${black}' },
 
       ['@variable.builtin'] = { fg = '${red}'},
 
@@ -104,6 +106,19 @@ require("onedarkpro").setup({
       GitGutterChangeLine = { fg = '${orange}', bg = '${gray}' },
       GitGutterDeleteLine = { fg = '${red}', bg = '${gray}' },
       GitGutterChangeDelete = { fg = '${red}', bg = '${gray}' },
+
+      DiagnosticError = { fg = '${darkred}' },
+      DiagnosticUnderlineError = { fg = 'NONE', underline = true },
+      DiagnosticVirtualTextError = { fg = '${darkred}', italic = true },
+
+      DiagnosticWarn = { fg = '${yellow}'},
+      DiagnosticUnderlineWarn = { fg = '${yellow}', underline = true},
+      DiagnosticInfo = { fg = '${green}'},
+      DiagnosticUnderlineInfo = { fg = '${green}', underline = true},
+      DiagnosticHint = { fg = '${blue}'},
+      DiagnosticUnderlineHint = { fg = '${blue}', underline = true},
+      DiagnosticOk = { fg = '${cyan}'},
+      DiagnosticUnderlineOk = { fg = '${cyan}', underline = true},
 
       CocErrorFloat = { fg = '${red}'},
       CocWarningFloat = { fg = '${yellow}'},
