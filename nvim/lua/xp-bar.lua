@@ -78,7 +78,8 @@ require("onedarkpro").setup({
 
       ['@constant.access.php'] = { fg = '${red}'},
       ['@constant.builtin.php'] = { fg = '${purple}'},
-      ['@constant.class.keyword.php'] = { fg = '${purple}'},
+      ['@constant.class.keyword.php'] = { link = '@keyword.php' },
+      ['@scope.keyword.php'] = { link = '@keyword.php' },
       ['@namespace.php'] = { fg = '${white}'},
       ['@operator.php'] = { fg = '${white}'},
       ['@method.call.php'] = { fg = '${white}'},

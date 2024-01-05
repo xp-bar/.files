@@ -9,6 +9,16 @@
   (name) @constant.access
 )
 
+(scoped_call_expression
+  [
+    scope: (relative_scope) @scope.keyword
+    name: (name)
+  ]
+  (#any-of? @scope.keyword
+    "parent"
+  )
+)
+
 (namespace_use_declaration
   (namespace_use_clause
     (qualified_name
