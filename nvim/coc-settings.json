@@ -1,4 +1,6 @@
 {
+    "diagnostic.virtualText": true,
+    "diagnostic.virtualTextCurrentLineOnly": false,
     "intelephense.licenceKey": "${env:INTELEPHENSE_LICENSE_KEY}",
     "intelephense.diagnostics.undefinedConstants": false,
     "intelephense.phpdoc.returnVoid": true,
