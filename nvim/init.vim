@@ -913,10 +913,13 @@ function! AsyncrunBackgroundUpdatedStrategy(cmd)
 endfunction
 
 let g:test#custom_strategies = {'asyncrun_bg_updated': function('AsyncrunBackgroundUpdatedStrategy')}
-let g:test#strategy = 'asyncrun_bg_updated'
+" let g:test#strategy = 'asyncrun_bg_updated'
+let g:test#strategy = 'neovim'
+let test#neovim#term_position = "vert botright"
 let g:dispatch_compilers = {}
+  " \ 'nearest': '-d memory_limit=2G --colors=never --xdebug',
 let test#php#phpunit#options = {
-  \ 'nearest': '-d memory_limit=2G --colors=never --xdebug',
+  \ 'nearest': '-d memory_limit=2G --colors=always --testdox --xdebug',
   \ 'file':    '-d memory_limit=2G --colors=never --xdebug',
   \ 'suite':   '-d memory_limit=2G --testdox',
 \}
