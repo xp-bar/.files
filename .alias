@@ -33,10 +33,6 @@ alias locate='glocate'
 alias updatedb='gupdatedb'
 fi
 
-if [ $(which bat 2<&1 1>/dev/null; echo $?) -eq 0 ]; then
-alias bat="bat --pager none -m .alias:bash -m .function:bash"
-fi
-
 # FZF
 alias fzf="fzf --prompt='\$ ' --tabstop=4 --color=dark,prompt:$mono_4,bg:-1,fg:$mono_3,bg+:-1,fg+:#fefefe,pointer:$hue_5,hl:$hue_4,hl+:$hue_4"
 
@@ -62,8 +58,6 @@ alias bc='bc -l'
 alias now="date '+%I:%M%p, %Y-%m-%d'"
 alias vi="nvim"
 alias vim="nvim"
-
-alias bat="bat --theme=TwoDark"
 
 # GIT
 alias main="git checkout main"
