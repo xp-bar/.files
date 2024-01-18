@@ -454,40 +454,16 @@ nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 
 " --- Syntax --- {{{
 
-" html5 omnicomplete
-Plug 'othree/html5.vim'
+"  Treesitter
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
-" Handlebars
-Plug 'mustache/vim-mustache-handlebars'
+" NOTE: Need to replace these at some point, not supported in treesitter currently
 
-" Volt
-Plug 'jyyan/vim-volt-syntax'
-
-" Zephir
-Plug 'xwsoul/vim-zephir'
-
-" Scss support
-Plug 'cakebaker/scss-syntax.vim'
-
-" Better PHP Lang Support
-Plug 'StanAngeloff/php.vim'
-
-" Javascript
-Plug 'pangloss/vim-javascript'
-
-" Typescript and Vue
-Plug 'posva/vim-vue'
-" let g:vue_disable_pre_processors=1
-let g:vue_pre_processors = ['typescript', 'scss']
-
-" Typescript
-Plug 'leafgarland/typescript-vim'
-
-" Database Markdown Language Syntax
-Plug 'jidn/vim-dbml'
-
-" Laravel
-Plug 'jwalton512/vim-blade'
+" Plug 'mustache/vim-mustache-handlebars'
+" Plug 'jyyan/vim-volt-syntax'
+" Plug 'xwsoul/vim-zephir'
+" Plug 'jidn/vim-dbml'
+" Plug 'jwalton512/vim-blade'
 
 " ---- Formatters / Documentation ---- {{{ 
 " Prettier for JS
@@ -937,10 +913,13 @@ function! AsyncrunBackgroundUpdatedStrategy(cmd)
 endfunction
 
 let g:test#custom_strategies = {'asyncrun_bg_updated': function('AsyncrunBackgroundUpdatedStrategy')}
-let g:test#strategy = 'asyncrun_bg_updated'
+" let g:test#strategy = 'asyncrun_bg_updated'
+let g:test#strategy = 'neovim'
+let test#neovim#term_position = "vert botright"
 let g:dispatch_compilers = {}
+  " \ 'nearest': '-d memory_limit=2G --colors=never --xdebug',
 let test#php#phpunit#options = {
-  \ 'nearest': '-d memory_limit=2G --colors=never --xdebug',
+  \ 'nearest': '-d memory_limit=2G --colors=always --testdox --xdebug',
   \ 'file':    '-d memory_limit=2G --colors=never --xdebug',
   \ 'suite':   '-d memory_limit=2G --testdox',
 \}
@@ -968,8 +947,8 @@ let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 " --- }}}
 
 " --- Themimg --- {{{
-set background=dark " for the dark version
-colorscheme two
+Plug 'olimorris/onedarkpro.nvim'
+
 syntax on
 
 if (has("termguicolors"))
@@ -1076,8 +1055,6 @@ endfunction
 
 autocmd VimEnter * nested call s:clear_startify_commands()
 
-Plug 'neovim/nvim-lspconfig'
-
 " Work Config
 if filereadable($HOME . '/jbx.vim')
     source $HOME/jbx.vim
@@ -1089,3 +1066,13 @@ call plug#end()
 
 " lua scripts
 lua require('xp-bar')
+
+nmap <silent> <leader>i :Inspect<cr>
+nmap <silent> <leader>I :InspectTree<cr>
+nnoremap <leader>IH :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
+\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
+\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
+
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set nofoldenable
