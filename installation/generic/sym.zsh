@@ -40,3 +40,6 @@ ln -sv $PWD/figlet-fonts/ ~/.config/figlet/fonts
 
 [ -d ~/.config/bat/ ] || mkdir -p ~/.config/bat/
 ln -sv $PWD/.batconfig ~/.config/bat/config
+
+[ -d ~/.config/wtf/ ] || mkdir -p ~/.config/wtf/
+ln -sv $PWD/.wtfconfig.yml ~/.config/wtf/config.yml

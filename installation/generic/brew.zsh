@@ -9,6 +9,11 @@ brew tap homebrew/cask
 brew tap homebrew/cask-versions
 # -- }}}
 
+# -- WTFutil -- {{{
+brew tap wtfutil/wtfutil
+brew install wtfutil
+# }}}
+
 # -- sqlcheck tap and install -- {{{
 brew tap gwerbin/tap
 brew install --cask gwerbin/tap/sqlcheck
