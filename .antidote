@@ -1,7 +1,8 @@
 #! /bin/zsh
 
 # Load the plugin manager itself
-source /usr/local/opt/antidote/share/antidote/antidote.zsh
+[ -d /home/linuxbrew/ ] && source /home/linuxbrew/.linuxbrew/opt/antidote/share/antidote/antidote.zsh
+[ -d /usr/local/opt/antidote/ ] && source /usr/local/opt/antidote/share/antidote/antidote.zsh
 
 # oh-my-zsh plugins
 plugins=(
