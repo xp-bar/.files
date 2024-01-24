@@ -94,8 +94,6 @@ alias vup="vagrant up"
 #spotctl
 alias splayer="spotctl player > /dev/null 2>&1"
 
-alias moon="curl wttr.in/moon"
-
 alias epoch="date +%s"
 
 # Tmux
