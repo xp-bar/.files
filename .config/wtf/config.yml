@@ -1,0 +1,105 @@
+# vim: set ts=2 sw=2 foldmethod=indent foldnestmax=3 foldlevel=0:
+wtf:
+  colors:
+    border:
+      focusable: darkslateblue
+      focused: orange
+      normal: gray
+  grid:
+    columns: [32, 32, 32]
+    rows: [10, 6, 10, 10, 10, 20, 10, 10, 10, 80]
+  refreshInterval: 1
+  mods:
+    # row 1
+    clocks_a:
+      colors:
+        rows:
+          even: "blue"
+          odd: "lightblue"
+      enabled: true
+      locations:
+        UTC: "Etc/UTC"
+        Toronto: "America/Toronto"
+        Vancouver: "America/Vancouver"
+      position:
+        top: 0
+        left: 0
+        height: 1
+        width: 1
+      refreshInterval: 15
+      sort: "chronological"
+      title: ""
+      type: "clocks"
+    ipinfo:
+      title: "IP"
+      colors:
+        name: "lightblue"
+        value: "white"
+      enabled: true
+      position:
+        top: 0
+        left: 1
+        height: 1
+        width: 2
+      refreshInterval: 150
+    # row 2
+    power:
+      enabled: true
+      position:
+        top: 1
+        left: 0
+        height: 1
+        width: 1
+      refreshInterval: 15
+      title: " ⚡️"
+    # row 3
+    spotify:
+      title: "SPOTIFY"
+      enabled: true
+      colors:
+        label: "green"
+        text: "white"
+      position:
+        top: 2
+        left: 0
+        height: 1
+        width: 2
+      refreshInterval: 3
+    weather:
+      title: ""
+      args: ["wttr.in?0ATQ"]
+      cmd: "curl"
+      enabled: true
+      position:
+        top: 2
+        left: 2
+        height: 1
+        width: 1
+      refreshInterval: 120
+      type: cmdrunner
+    # row 4
+    docker:
+      title: "DOCKER"
+      type: docker
+      enabled: true
+      labelColor: blue
+      position:
+        top: 3
+        left: 0
+        height: 2
+        width: 1
+      refreshInterval: 1s
+    # row 5
+    git:
+      commitCount: 5
+      commitFormat: "[forestgreen]%h [grey]%cd [white]%s [grey]%an[white]"
+      dateFormat: "%H:%M %d %b %y"
+      enabled: true
+      position:
+        top: 5
+        left: 0
+        height: 1
+        width: 2
+      refreshInterval: 8s
+      repositories:
+        - "/Users/nicholasi/Code/Chef/www/jbx/"

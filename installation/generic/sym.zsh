@@ -42,4 +42,5 @@ ln -sv $PWD/figlet-fonts/ ~/.config/figlet/fonts
 ln -sv $PWD/.batconfig ~/.config/bat/config
 
 [ -d ~/.config/wtf/ ] || mkdir -p ~/.config/wtf/
-ln -sv $PWD/.wtfconfig.yml ~/.config/wtf/config.yml
+ln -sv $PWD/.config/wtf/config.yml ~/.config/wtf/config.yml
+ln -sv $PWD/.config/wtf/scripts/ ~/.config/wtf/
