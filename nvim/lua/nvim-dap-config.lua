@@ -11,7 +11,7 @@ local dap = loadpkg('dap')
 dap.adapters.php = {
   type = "executable",
   command = "node",
-  args = { os.getenv("HOME") .. "/Code/.files/vscode-php-debug/out/phpDebug.js" }
+  args = { os.getenv("HOME") .. "/.config/nvim/dependencies/vscode-php-debug/out/phpDebug.js" }
 }
 
 dap.configurations.php = {

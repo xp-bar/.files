@@ -19,9 +19,9 @@
 [submodule "custom-php-cs-fixers"]
 	path = custom-php-cs-fixers
 	url = git@github.com:xp-bar/Custom-PHP-CS-Fixers.git
-[submodule "vscode-php-debug"]
-	path = vscode-php-debug
-	url = git@github.com:xdebug/vscode-php-debug.git
 [submodule ".config/figlet/fonts"]
 	path = .config/figlet/fonts
 	url = git@github.com:xero/figlet-fonts.git
+[submodule "nvim/dependencies/vscode-php-debug"]
+	path = nvim/dependencies/vscode-php-debug
+	url = git@github.com:xdebug/vscode-php-debug.git
