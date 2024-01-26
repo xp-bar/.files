@@ -7,9 +7,6 @@
 [submodule "z"]
 	path = z
 	url = git@github.com:rupa/z.git
-[submodule "figlet-fonts"]
-	path = figlet-fonts
-	url = git@github.com:xero/figlet-fonts.git
 [submodule "nvim/ftplugin/php"]
 	path = nvim/ftplugin/php
 	url = git@github.com:xp-bar/vim-php-folding.git
@@ -25,3 +22,6 @@
 [submodule "vscode-php-debug"]
 	path = vscode-php-debug
 	url = git@github.com:xdebug/vscode-php-debug.git
+[submodule ".config/figlet/fonts"]
+	path = .config/figlet/fonts
+	url = git@github.com:xero/figlet-fonts.git
