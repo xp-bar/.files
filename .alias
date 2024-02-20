@@ -105,6 +105,6 @@ alias merged-remotes="comm -2 -3 <(git branch | sed 's:^[\\\t \*]*::g') <(git ls
 
 alias tmuxreset="\\rm ~/.tmux/resurrect/last && ln -sv ~/.tmux/resurrect/jbx.txt ~/.tmux/resurrect/last > /dev/null"
 
-alias ttmux="killall -SIGUSR1 tmux && tmux a || tmux new"
+alias tmuxx="killall -SIGUSR1 tmux > /dev/null 2>&1 && tmux a || tmux new"
 
 alias v="vagrant"
