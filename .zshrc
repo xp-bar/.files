@@ -8,6 +8,7 @@ unsetopt BG_NICE
 setopt NO_BG_NICE # don't nice background tasks
 setopt LOCAL_OPTIONS # allow functions to have local options
 setopt LOCAL_TRAPS # allow functions to have local traps
+setopt COMPLETE_ALIASES # completion for aliases
 
 # aliases, functions, etc. {{{
 [[ -e ~/.antidote ]] && source ~/.antidote || echo "Plugins not loaded."
@@ -52,3 +53,8 @@ export FZF_DEFAULT_COMMAND='rg --files --smart-case'
 export GITHUB_TOKEN=$(<~/.github-token)
 
 [[ -e ~/.jumbleberry ]] && source ~/.jumbleberry
+
+# >>>> Vagrant command completion (start)
+fpath=(/opt/vagrant/embedded/gems/2.3.4/gems/vagrant-2.3.4/contrib/zsh $fpath)
+compinit
+# <<<<  Vagrant command completion (end)
