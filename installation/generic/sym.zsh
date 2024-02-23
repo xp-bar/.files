@@ -13,6 +13,7 @@ ln -sv $PWD/.xvimrc ~
 ln -sv $PWD/.zle ~
 ln -sv $PWD/z/z.sh ~
 ln -sv $PWD/.zshrc ~
+ln -sv $PWD/.valias ~
 ln -sv $PWD/.koolaid ~
 ln -sv $PWD/.alacritty.yml ~
 ln -sv $PWD/.ackrc ~

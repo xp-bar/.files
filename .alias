@@ -85,12 +85,6 @@ alias cisearch="git log -S"
 # VALET
 alias vshare="(valet unsecure; valet share; valet secure) && c"
 
-# vagrant
-alias vssh="vagrant ssh"
-alias vgs="vagrant global-status"
-alias vhalt="vagrant halt"
-alias vup="vagrant up"
-
 #spotctl
 alias splayer="spotctl player > /dev/null 2>&1"
 
