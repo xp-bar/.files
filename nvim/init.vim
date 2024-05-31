@@ -1080,4 +1080,5 @@ nnoremap <leader>IH :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") 
 
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
+set foldtext=nvim_treesitter#foldtext()
 set nofoldenable
