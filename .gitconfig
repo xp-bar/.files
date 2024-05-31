@@ -35,7 +35,7 @@
     ancestor = "!zsh -c 'git show $([[ ${#@} -gt 1 ]] && echo ${@:1:-1}) $(diff -u <(git rev-list --first-parent \"${@[-1]:-main}\") <(git rev-list --first-parent \"${2:-HEAD}\") | sed -ne \"s/^ //p\" | head -1)' -"
     tree = "!git log --oneline HEAD --pretty=format:'%d' --not main | ack -v '^[ ]*$' | awk -F ',' '{print $1}' | sed -E 's:^[ ]*(\\(HEAD ->[ ]|\\(origin/)::g' | gsed '$a main' | awk '{for(c=1;c<NR-1;c++) printf \" \"} NR>1 {printf \" ﬌ \"} {printf $0\"\\n\"}' | gsed '1i\\ ' | gsed '$a\\ '"
 [mergetool "fugitive"]
-	cmd = nvim -f \"$MERGED\"
+	cmd = "nvim -f \"$MERGED\""
 [merge]
 	tool = fugitive
 [filter "lfs"]
