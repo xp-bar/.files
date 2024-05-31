@@ -206,10 +206,22 @@ function rh(){
 
 function cauth(){
     local search="$1"
-    local user=$(git log | head -n 5000 | grep Author | sed 's/[ ]*Author: //g' | sort | uniq | fzf -1 -q "$search")
+    local users="$(\
+        git log --since=$(gdate -d "4 months ago" +"%Y-%m-%d") --no-merges --pretty='format:%aN <%ae>' \
+        | awk -F ' ' '!seen[$1]++' \
+        | sort \
+    )"
+
+    if [[ $1 = *"--print"* ]]; then
+        echo "$users";
+        return 0;
+    fi
+
+    local user=$(echo "$users" | fzf -1 -q "${search:-}")
     local coauth="Co-authored-by: $user"
-    echo $coauth | pbcopy
-    echo -e "Copied to clipboard: \033[2m$coauth\033[0m"
+    echo -e "Copied to clipboard: \033[2m"
+    echo $coauth | tee >(pbcopy)
+    echo -e "\033[0m"
 }
 
 function isdown(){

@@ -81,6 +81,7 @@ alias sw="git switch"
 alias glog="nvim -c 'GV' -c 'set foldlevel=1000' -c 'nnoremap q :qa!<cr>'"
 alias gfl="git log -p"
 alias cisearch="git log -S"
+alias merged-remotes="comm -2 -3 <(git branch | sed 's:^[\\\t \*]*::g') <(git ls-remote --heads origin | gsed 's:^[a-z0-9]*[\\\t ]*refs\/heads\/::g')"
 
 # VALET
 alias vshare="(valet unsecure; valet share; valet secure) && c"
