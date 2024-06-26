@@ -110,6 +110,7 @@ require("onedarkpro").setup({
     blue = "#61afef",
     purple = "#c678dd",
     white = "#abb2bf",
+    lightblack = "#3E4451",
     black = "#282c34",
     lightgray = "#4b5263",
     gray = "#5c6370",
@@ -176,6 +177,12 @@ require("onedarkpro").setup({
       DiagnosticUnderlineWarn = { fg = '${yellow}', underline = true},
       DiagnosticVirtualTextError = { fg = '${darkred}', italic = true },
       DiagnosticWarn = { fg = '${yellow}'},
+
+      FzfLuaHeaderBind = { fg = '${red}'},
+      FzfLuaHeaderText = { fg = '${yellow}'},
+      FzfLuaCursor = { fg = 'NONE'},
+      FzfLuaCursorLine = { bg = '${lightblack}'},
+      FzfLuaSearch = { fg = '${red}', underline = true },
 
       GitGutterAdd = { fg = '${green}' },
       GitGutterAddLine = { fg = '${green}', bg = '${gray}' },
