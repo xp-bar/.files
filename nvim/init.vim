@@ -382,6 +382,12 @@ Plug 'jeffkreeftmeijer/vim-numbertoggle'
 Plug 'kshenoy/vim-signature'
 "  }}}
 
+" -- fzf-lua -- {{{
+Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
+" optional for icon support
+Plug 'nvim-tree/nvim-web-devicons'
+" }}}
+
 " ---- Sidebar NERDTree ---- {{{
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 noremap <silent> <C-\> :NERDTreeToggle<CR>
@@ -479,7 +485,7 @@ let g:jsdoc_return_description=0
 " Documentation Keybinds (pdv, vim-jsdoc)
 augroup documentors
     autocmd!
-    autocmd FileType php nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr> 
+    " autocmd FileType php nnoremap <silent> <leader>d :call pdv#DocumentCurrentLine()<cr> 
     autocmd FileType vue nmap <silent> <leader>d <Plug>(jsdoc)
     autocmd FileType javascript nmap <silent> <leader>d <Plug>(jsdoc)
 augroup END
@@ -536,6 +542,10 @@ augroup END
 
 " ---- }}}
 
+" -- LSP Setup -- {{{
+Plug 'neovim/nvim-lspconfig'
+" -- }}}
+
 " ---- Conquer of Completion {{{
 Plug 'neoclide/coc.nvim', { 'do': function('coc#util#install') }
 
@@ -550,11 +560,11 @@ nmap <silent> [g <Plug>(coc-diagnostic-prev)
 nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
-nmap <silent> <leader>gd <Plug>(coc-definition)
+" nmap <silent> <leader>gd <Plug>(coc-definition)
 nmap <silent> <leader>gy <Plug>(coc-type-definition)
 nmap <silent> <leader>gi <Plug>(coc-implementation)
-nmap <silent> <leader>gr <Plug>(coc-references)
-nmap <silent> gk <Plug>(coc-codeaction)
+" nmap <silent> <leader>gr <Plug>(coc-references)
+" nmap <silent> gk <Plug>(coc-codeaction)
 
 xmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
 nmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
@@ -570,11 +580,11 @@ nmap <C-c> <Plug>(coc-cursors-operator)
 xmap <silent> <C-c> <Plug>(coc-cursors-range)
 
 " Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
@@ -587,7 +597,7 @@ function! s:show_documentation()
     if (index(['vim','help'], &filetype) >= 0)
         execute 'h '.expand('<cword>')
     else
-        call CocActionAsync('doHover')
+        :lua vim.lsp.buf.hover()
     endif
 endfunction
 
@@ -596,6 +606,9 @@ nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 augroup phpHold
 autocmd!
 " Highlight symbol under cursor on CursorHold
+" autocmd CursorHold *.php silent call <SID>show_documentation()
+" autocmd CursorHold *.vue silent call <SID>show_documentation()
+" autocmd CursorHold *.js silent call <SID>show_documentation()
 autocmd CursorHold *.php silent call CocActionAsync('highlight')
 autocmd CursorHold *.blade.php silent call CocActionAsync('highlight')
 autocmd CursorHold *.vue silent call CocActionAsync('highlight')
@@ -605,14 +618,14 @@ augroup END
 " Map function and class text objects (operator mappings for inner-function,
 " a-function, etc.)
 " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-xmap if <Plug>(coc-funcobj-i)
-omap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
-omap af <Plug>(coc-funcobj-a)
-xmap ic <Plug>(coc-classobj-i)
-omap ic <Plug>(coc-classobj-i)
-xmap ac <Plug>(coc-classobj-a)
-omap ac <Plug>(coc-classobj-a)
+" xmap if <Plug>(coc-funcobj-i)
+" omap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap af <Plug>(coc-funcobj-a)
+" xmap ic <Plug>(coc-classobj-i)
+" omap ic <Plug>(coc-classobj-i)
+" xmap ac <Plug>(coc-classobj-a)
+" omap ac <Plug>(coc-classobj-a)
 
 " eslint
 command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint')['quiet'] ? v:false : v:true)
@@ -691,80 +704,19 @@ Plug 'airblade/vim-rooter'
 
 " ---- FZF Plugins for Fuzzy File Finding ---- {{{
 if executable('fzf')
-    Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-    Plug 'junegunn/fzf.vim'
+    nnoremap <silent> <C-p> :FzfLua files<cr>
+    nnoremap <silent> <M-p> :FzfLua buffers<CR>
+    nnoremap <silent> <leader>gl :FzfLua lines<CR>
 
-    nnoremap <silent> <leader>gl :Lines<CR>
+    " nmap <silent> <leader>gd :FzfLua lsp_definitions<CR>
+    nmap <silent> <leader>gd :lua vim.lsp.buf.definition()<CR>
+    nmap <silent> <leader>gr :FzfLua lsp_references<CR>
+    nmap <silent> <leader>gk :FzfLua lsp_code_actions<CR>
 
-    " Add RgRaw and AgRaw
-    Plug 'jesseleite/vim-agriculture'
+    nmap <silent> <leader>f :FzfLua<CR>
+    nmap <silent> <leader>rn :lua vim.lsp.buf.rename()<CR>
 
-    function! RipgrepFzf(query, fullscreen)
-        let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-        let initial_command = printf(command_fmt, shellescape(a:query))
-        let reload_command = printf(command_fmt, '{q}')
-        let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-        call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-    endfunction
-
-    command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
-
-    command! -nargs=* -bang Rg call fzf#vim#grep(
-                \"rg --column --line-number --no-heading --color=always --smart-case -- ".shellescape(<q-args>),
-                \1,
-                \fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}),
-                \<bang>0)
-    
-    command! -bang -nargs=? -complete=dir PFiles call fzf#vim#files(
-        \   <q-args>,
-        \   fzf#vim#with_preview(
-        \       {
-        \           'options': [
-        \               '--multi',
-        \               '-i',
-        \               '--preview', 'bat --theme=TwoDark --color=always {}',
-        \           ],
-        \          'window': { 'width': 0.9, 'height': 0.6 }
-        \       }
-        \   ),
-        \   <bang>0
-        \)
-
-    function! s:all_files(query, fullscreen)
-        let spec = {
-        \   'source': 'rg --files --smart-case --no-ignore',
-        \   'sink': 'e',
-        \   'options': [
-        \        '--multi',
-        \        '-i',
-        \        '--preview', 'bat --theme=TwoDark --color=always {}',
-        \    ],
-        \   'window': { 'width': 0.9, 'height': 0.6 }
-        \}
-
-        call fzf#run(fzf#vim#with_preview(spec), a:fullscreen)
-    endfunction
-
-    command! -nargs=* -bang AllFiles call s:all_files(<q-args>, <bang>0)
-
-    nnoremap <silent> <C-p> :PFiles<cr>
-    nnoremap <silent> <C-S-P> :AllFiles<cr>
-    nnoremap <silent> <M-p> :Buffers<cr>
-    nnoremap <silent> <M-S-p> :History<cr>
-  
-    let g:fzf_nvim_statusline = 0
-
-    function! s:build_quickfix_list(lines)
-        call setqflist(map(copy(a:lines), '{ "filename": v:val }'))
-        copen
-        cc
-    endfunction
-
-    let g:fzf_action = {
-          \ 'ctrl-q': function('s:build_quickfix_list'),
-          \ 'ctrl-s': 'split',
-          \ 'ctrl-v': 'vsplit'
-          \ }
+    command! -nargs=* -bang Rg :FzfLua grep_project
 
     function! s:git_changed(...)
         let l:source = (a:0 > 0 ? 'git diff --name-only ' . join(a:000) : 'git diff --name-only --diff-filter=d')
@@ -776,9 +728,6 @@ if executable('fzf')
             \   })
     endfunction
 
-    command! AVendor FZF application/vendor/
-    command! Vendor FZF vendor/
-    command! Modules FZF node_modules/
     command! -nargs=* GitChanged call s:git_changed(<f-args>)
 end
 " }}}

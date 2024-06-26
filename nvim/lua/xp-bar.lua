@@ -3,6 +3,66 @@
 
 require('nvim-dap-config')
 
+require'lspconfig'.intelephense.setup{
+  init_options = {
+    licenceKey = os.getenv('INTELEPHENSE_LICENSE_KEY'),
+  }
+}
+
+local actions = require "fzf-lua.actions"
+require('fzf-lua').setup({'default',
+  fzf_opts = {
+    ['--layout'] = false,
+  },
+  fzf_colors = {
+    ["bg"]      = "-1",
+    ["fg"]      = "#5c6370",
+    ["bg+"]     = "-1",
+    ["fg+"]     = "#fefefe",
+    ["pointer"] = "#e06c75",
+    ["hl"]      = "#98c379",
+    ["hl+"]     = "#98c379",
+  },
+  file_icons = false,
+  actions = {
+    files = {
+      ["default"]     = actions.file_edit_or_qf,
+      ["ctrl-s"]      = actions.file_split,
+      ["ctrl-v"]      = actions.file_vsplit,
+      ["ctrl-t"]      = actions.file_tabedit,
+      -- ["alt-q"]       = actions.file_sel_to_qf,
+      -- ["alt-l"]       = actions.file_sel_to_ll,
+      ["ctrl-q"]       = actions.file_sel_to_qf,
+      ["ctrl-l"]       = actions.file_sel_to_ll,
+    },
+    buffers = {
+      -- providers that inherit these actions:
+      --   buffers, tabs, lines, blines
+      ["default"]     = actions.buf_edit,
+      ["ctrl-s"]      = actions.buf_split,
+      ["ctrl-v"]      = actions.buf_vsplit,
+      ["ctrl-t"]      = actions.buf_tabedit,
+    }
+  },
+  files = {
+    previewer = 'bat',
+    file_icons = false,
+  },
+  grep = {
+    rg_opts = "--column --line-number --no-heading --color=always --smart-case"
+  },
+  lsp = {
+    includeDeclaration = false,
+    symbols = {
+      -- false: disable, 1: icon+kind, 2: icon only, 3: kind only
+      symbol_style = 3
+    },
+    -- actions = {
+    --   ["default"] = actions.file_edit_or_qf
+    -- }
+  }
+})
+
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
       "diff",
