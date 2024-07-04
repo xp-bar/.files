@@ -47,9 +47,18 @@ require('fzf-lua').setup({'default',
   files = {
     previewer = 'bat',
     file_icons = false,
+    cmd = 'rg --files',
+    RIPGREP_CONFIG_PATH = vim.env.RIPGREP_CONFIG_PATH,
+    toggle_ignore_flag = "--no-ignore",
+    actions = {
+      ["ctrl-g"] = { actions.toggle_ignore }
+    }
   },
   grep = {
-    rg_opts = "--column --line-number --no-heading --color=always --smart-case"
+    actions = {
+      ["ctrl-g"] = { actions.toggle_ignore },
+      ["ctrl-r"] = { actions.grep_lgrep }
+    },
   },
   lsp = {
     includeDeclaration = false,
