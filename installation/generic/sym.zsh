@@ -9,12 +9,10 @@ ln -sv $PWD/.zsh_plugins.txt ~
 ln -sv $PWD/.function ~
 ln -sv $PWD/.path ~
 ln -sv $PWD/tmux.conf ~
-ln -sv $PWD/.xvimrc ~
 ln -sv $PWD/.zle ~
 ln -sv $PWD/z/z.sh ~
 ln -sv $PWD/.zshrc ~
 ln -sv $PWD/.valias ~
-ln -sv $PWD/.koolaid ~
 ln -sv $PWD/.alacritty.yml ~
 ln -sv $PWD/.ackrc ~
 ln -sv $PWD/.rgrc ~
