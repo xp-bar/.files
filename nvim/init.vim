@@ -467,7 +467,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Plug 'mustache/vim-mustache-handlebars'
 " Plug 'jyyan/vim-volt-syntax'
-" Plug 'xwsoul/vim-zephir'
+Plug 'fuyedong/vim-zephir'
 " Plug 'jidn/vim-dbml'
 " Plug 'jwalton512/vim-blade'
 
