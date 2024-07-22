@@ -405,17 +405,16 @@ function co() {
     [[ $* = *"--last"* ]] && git checkout @{-1} && return 0;
 
     local all_branches="$(git branch | grep -v "\*")";
-    local recent_branches="$(git reflog | grep checkout: | sed 's,^.*from \([\.A-z0-9_/\-]*\) to \([\.A-z0-9_/\-]*\),\2,g' | awk '!a[$0]++' | head)"
+    local recent_branches="$(git reflog | grep checkout: | sed 's,^.*from \([\.A-z0-9_/\-]*\) to \([\.A-z0-9_/\-]*\),\2,g' | awk '!a[$0]++')"
     local branch=""
 
-
     if [[ $@ == "" ]]; then
-        branch="$(echo "$all_branches" | fzf --height 25%)"
-    elif [[ $* = *"--recent"* ]]; then
         branch="$(echo "$recent_branches" | fzf --height 25%)"
+    elif [[ $* = *"--all"* ]]; then
+        branch="$(echo "$all_branches" | sort -fdu | fzf --layout=reverse)"
     else
-        local branches="$(echo $all_branches | grep $@)"
-        local exact="$(echo $all_branches | grep "^[ ]*$@$")"
+        local branches="$(echo $recent_branches | grep $@)"
+        local exact="$(echo $recent_branches | grep "^[ ]*$@$")"
         local wcount=$(echo $branches | wc -l | sed 's/[[:space:]]//g')
 
         if [[ $exact != "" ]]; then
@@ -426,7 +425,7 @@ function co() {
         elif [[ $wcount == 1 ]]; then
             branch="$(echo $branches | head -n 1)"
         else
-            branch="$(echo "$branches" | fzf --height 15% -q "$@")"
+            branch="$(echo "$recent_branches" | fzf --height 15% -q "$@")"
         fi
     fi
 
