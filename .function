@@ -466,48 +466,6 @@ function disearch(){
     git diff $2 --name-only | grep $1 | while read in; do git diff $2 -- $in; done
 }
 
-function _labels() {
-    #!/bin/bash
-    emulate -L bash
-    unset URL;
-    LOGIN="$(git config user.email):"$GITHUB_TOKEN
-    DATE=`date -v-12H +"%Y-%m-%dT%H:%M:%SZ"`
-    USER=$GITHUB_USERNAME
-    BASEURL="https://api.github.com/repos/"
-    REPO=$GITHUB_REPO
-    LABELS="labels"
-    URL="$BASEURL$REPO$LABELS";
-
-    if [[ $URL ]]; then
-        RESULT=$(curl -s -u $LOGIN $URL);
-        LENGTH=$(echo $RESULT | jq '[.]' | jq '[.][][] | length');
-        for i in `seq 0 $[$LENGTH - 1]`; do
-            echo -e "$(echo $RESULT | jq -r '[.]' | jq -r '[.][][]['$i'].name')" &&
-        done
-    fi
-}
-
-function _collabs() {
-    #!/bin/bash
-    emulate -L bash
-    unset URL;
-    LOGIN="$(git config user.email):"$GITHUB_TOKEN
-    DATE=`date -v-12H +"%Y-%m-%dT%H:%M:%SZ"`
-    USER=$GITHUB_USERNAME
-    BASEURL="https://api.github.com/orgs/"
-    ORG=$GITHUB_ORGANIZATION
-    MEMBERS="/members"
-    URL=$BASEURL$ORG$MEMBERS;
-    COMMAND="curl -s -u $LOGIN $URL"
-    if [[ $URL ]]; then
-        RESULT=$($COMMAND);
-        LENGTH=$(echo $RESULT | jq '[.]' | jq '[.][][] | length');
-        for i in `seq 0 $[$LENGTH - 1]`; do
-            echo "$(echo $RESULT | jq -r '[.]' | jq -r '[.][][]['$i'].login')";
-        done
-    fi
-}
-
 gpr() {
     local arg1=$1
     local base=${arg1:-"main"}
