@@ -64,8 +64,6 @@ function dash(){
     fi
 }
 
-[[ -e $HOME/.koolaid ]] && source $HOME/.koolaid
-
 function launch() {
     if [[ $@ == "" ]]; then
         local app=$(\ls -1 /Applications | sed 's:\.app::g' | fzf);
