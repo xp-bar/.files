@@ -80,33 +80,6 @@ function stashy() {
 
 }
 
-function origin() {
-    git remote -v -- | sed 's/^.*git@github.com://g' | sed 's/.git.*$//g' | tr -s " " | awk '!seen[$0]++'
-}
-
-function af() {
-    local files="`git status --short | sed 's/^.* \(.*$\)/\1/g'`"
-    local selected="$(echo "$files" | fzf --multi --preview "git --no-pager diff --color=always HEAD {} 1>&2 2> /dev/null")"
-
-    if [[ $selected != "" ]]; then
-        echo "$selected" | while read in; do
-            echo -e "\e[32mAdd: \e[0m$in";
-            git add "$in"
-        done
-    fi
-}
-
-function branches(){
-    local branches="$(git --no-pager branch |\
-        sed 's/[\*]*[ ]//g' |\
-        grep -v $(git this) |\
-        while read in; do
-            echo "$(git config branch.$in.label || echo "\e[90m[ ]\e[0m") $in";
-        done)"
-
-    echo "$branches"
-}
-
 function rh(){
     git ls-remote --heads origin $(git rev-parse --abbrev-ref HEAD)  | grep $(git rev-parse --abbrev-ref HEAD) | sed 's/refs\/heads\/'$(git this | sed 's:/:\\\/:g')'//g' | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//';
 }
