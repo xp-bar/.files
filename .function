@@ -529,105 +529,11 @@ function icat() {
     fi
 }
 
-function rgo() {
-    if [[ $(php artisan > /dev/null; echo $?) != 0 ]]; then
-        echo "Sorry, artisan not found.";
-        return 1;
-    fi
-
-    local cache_dir="$HOME/.cache/rgo"
-    local file_name="$(basename $(pwd))"
-
-    if [[ $* = *"--rebuild"* ]]; then
-        if [[ ! -d $cache_dir ]]; then
-            mkdir -p $cache_dir
-        fi
-        if [[ -e $cache_dir/.cache ]]; then
-            echo "" > $cache_dir/.cache;
-        else
-            touch $cache_dir/.cache;
-        fi
-    fi
-
-    if [[ ! -d $cache_dir ]]; then
-        echo "please run with --rebuild first."
-        return 1;
-    fi
-
-    local url=""
-
-    if [[ -e $cache_dir/.cache && $(cat $cache_dir/.cache) != "" ]]; then
-        url="$(cat $cache_dir/.cache)";
-    else
-        echo "Building...";
-        url="$(\
-            php artisan route:list \
-                | grep GET\|HEAD \
-                | sed 's:[ ]|[ ]: # :g' \
-                | sed 's:|$:#:g' \
-                | sed 's:^|:#:g' \
-                | awk -F '#' '{print $4}' \
-                | sed 's:^[ ]*::g' \
-                | sed 's:[ ]*$::g' \
-                | sed 's:}::g' \
-                | sed 's/{/:/g' \
-            )";
-        touch $cache_dir/.cache;
-        echo "$url" > $cache_dir/.cache;
-    fi
-
-    local i=0
-    local fzf_search=""
-
-    while [[ $i -lt $# ]]; do
-        i=$[$i+1]
-        local argument=$argv[$i]
-
-        if [[ $argument != *"--"* ]]; then
-            fzf_search=$argument
-            i=$#
-        fi
-    done
-
-    fzf_search="$(echo $fzf_search | sed 's/{/:/g' | sed 's:}::g')"
-
-    if [[ $fzf_search != "" ]]; then
-        url="$(echo "$url" | fzf -q "$fzf_search")"
-    else
-        url="$(echo "$url" | fzf)"
-    fi
-
-    local fill_ins="$(\
-        echo $url | \grep -o ':[a-z\-_]*[\/]*' \
-            | sed 's:\/::g' \
-            | sed 's/://g' \
-        )"
-
-    if [[ $fill_ins != "" ]]; then
-        while read in; do
-            printf "Replace '$in' with:\n"
-            read -u 1 "resp?"
-            url="$(echo $url | sed "s/:$in/$resp/g")"
-        done <<< $fill_ins
-    fi
-
-    if [[ $url != "" ]]; then
-        url="$(echo "$url" | sed 's:^/::g')"
-        local base_url=`grep "^APP_URL" .env | head -n 1 | sed 's:^APP_URL=::g'`
-        local full_url="$base_url/$url"
-        echo -e "\e[34mOpening: $full_url"
-        /usr/bin/open $full_url
-    else
-        echo "Sorry, that url didn't work."
-    fi
-}
-
 unalias z 2> /dev/null
 z() {
   [ $# -gt 0 ] && _z "$*" && return
   cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
 }
-
 
 function totoilet()
 {
