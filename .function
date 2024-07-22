@@ -156,11 +156,6 @@ function pu(){
     git push -u origin $(git rev-parse --abbrev-ref HEAD);
 }
 
-function hublink() {
-    local repo="$(git remote -v | grep fetch | sed 's/^.*://g' | sed 's:\.g.*::g')"
-    echo "https://github.com/$repo/commit/$(git HEAD)"
-}
-
 function co() {
     # if the --last argument is passed, checkout the last branch and exit
     [[ $* = *"--last"* ]] && git checkout @{-1} && return 0;
@@ -349,7 +344,6 @@ function _dbr() {
     commands=(`_git_get_merged`)
 
     _describe 'commands' commands
-    # _arguments -C $commands
 }
 
 # should be registering with: compdef _dbr dbr
