@@ -155,38 +155,6 @@ function af() {
     fi
 }
 
-function brlabel() {
-    local branch="$3"
-    local color="$2"
-    local label="$1"
-    case "$color" in
-        "red")
-           label="[\e[31m$label\e[0m]" 
-        ;;
-        "blue")
-           label="[\e[34m$label\e[0m]" 
-        ;;
-        "green")
-           label="[\e[32m$label\e[0m]" 
-        ;;
-        "orange")
-           label="[\e[33m$label\e[0m]"
-        ;;
-        "magenta")
-           label="[\e[35m$label\e[0m]"
-        ;;
-        *)
-           label="[$label]" 
-        ;;
-    esac
-
-    if [[ $branch = "" ]]; then
-        branch="$(git symbolic-ref --short HEAD)"
-    fi
-
-    git config branch.$branch.label $label
-}
-
 function branches(){
     local branches="$(git --no-pager branch |\
         sed 's/[\*]*[ ]//g' |\
