@@ -14,40 +14,6 @@ function _git_branch_completion() {
     _describe 'commands' commands
 }
 
-function uuptime() {
-    uptime |\
-        awk '{$1=""; print $0}' |\
-        awk -F ',' '{print $1, "  ,", $2}' |\
-        sed 's:[ ]\{2,\}::g' |\
-        sed 's:^[ ]*up[ ]*::g' |\
-        sed 's/\([0-9]\{1,2\}\):\([0-9]\{2\}\)/ \1 hours, \2 minutes/g'
-}
-
-function brewfo() {
-    brew info `brew list | awk '{print $1}' | fzf`
-}
-
-function sim() {
-    device=$(xcrun simctl list | grep -E '^[ ]{1,}' |  grep -v unavailable | sed 's:^[ ]*\(.\):\1:g' | sed 's:\()\) (.*$:\1:g' | fzf);
-    if [[ $device == "" ]]; then
-        return 1;
-    fi
-    UUID=$(echo $device | grep -E -o -i "([0-9a-f]{8}-([0-9a-f]{4}-){3}[0-9a-f]{12})");
-    name=$(echo $device | sed 's:(.*$::g');
-    echo -e "Starting \e[33m$name";
-    xcrun simctl boot $UUID;
-}
-
-function hide(){
-    tput smcup
-    tput sc
-    tput cup 0 0
-}
-function show(){
-    tput rc;
-    tput rmcup;
-}
-
 function ldu() {
     ls -d1 -- *(/) |\
         while read in; do
@@ -62,31 +28,6 @@ function dash(){
     else
         open dash://{$1}
     fi
-}
-
-function launch() {
-    if [[ $@ == "" ]]; then
-        local app=$(\ls -1 /Applications | sed 's:\.app::g' | fzf);
-        if [[ $app != "" ]]; then
-            echo -e "Opening \e[33m$app\e[0m"
-            open /Applications/$app.app > /dev/null 2>&1;
-        fi
-    else
-        open /Applications/$@.app
-    fi
-}
-
-function vup() {
-    if (! pgrep -f docker > /dev/null); then
-        echo "Starting docker..."
-        open -g /Applications/Docker.app > /dev/null 2>&1;
-    fi
-
-    while (! docker stats --no-stream -a > /dev/null 2>&1); do
-        sleep 1
-    done
-
-    vagrant up
 }
 
 st() {
