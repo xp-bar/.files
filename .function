@@ -476,13 +476,6 @@ gpr() {
 
 compdef _git_branch_completion gpr
 
-mkalias(){
-    if [[ $1 ]]; then
-        echo "alias $1='$2'" >> $HOME/.extra-aliases
-    fi
-    source $HOME/.extra-aliases
-}
-
 function fromroman () {
   local max=0 sum i j
   local -A conv
