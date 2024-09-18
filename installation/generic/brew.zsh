@@ -63,6 +63,7 @@ brew install reattach-to-user-namespace
 brew install rig
 brew install rlwrap
 brew install rtv
+brew install ruby
 brew install screenfetch
 brew install shpotify
 brew install telnet
