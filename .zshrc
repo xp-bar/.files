@@ -52,8 +52,6 @@ fpath=(~/.zsh.d/ $fpath)
 export FZF_DEFAULT_COMMAND='rg --files --smart-case'
 export GITHUB_TOKEN=$(<~/.github-token)
 
-[[ -e ~/.jumbleberry ]] && source ~/.jumbleberry
-
 # >>>> Vagrant command completion (start)
 fpath=(/opt/vagrant/embedded/gems/2.3.4/gems/vagrant-2.3.4/contrib/zsh $fpath)
 compinit
