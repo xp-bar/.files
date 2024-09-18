@@ -100,6 +100,8 @@ require('fzf-lua').setup({'default',
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
+      "css",
+      "scss",
       "diff",
       "html",
       "javascript",
