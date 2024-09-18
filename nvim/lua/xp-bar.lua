@@ -27,6 +27,8 @@ require'lspconfig'.lua_ls.setup{
     }
   }
 }
+
+require'lspconfig'.somesass_ls.setup{}
 require'lspconfig'.intelephense.setup{
   init_options = {
     licenceKey = os.getenv('INTELEPHENSE_LICENSE_KEY'),
