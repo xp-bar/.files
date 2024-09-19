@@ -25,3 +25,6 @@
 [submodule "nvim/dependencies/vscode-php-debug"]
 	path = nvim/dependencies/vscode-php-debug
 	url = git@github.com:xdebug/vscode-php-debug.git
+[submodule "nvim/dependencies/tree-sitter-embedded-template"]
+	path = nvim/dependencies/tree-sitter-embedded-template
+	url = git@github.com:tree-sitter/tree-sitter-embedded-template.git
