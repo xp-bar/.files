@@ -113,8 +113,8 @@ parser_config.erb = {
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
       "css",
-      "scss",
       "diff",
+      "erb",
       "html",
       "javascript",
       "lua",
@@ -124,7 +124,7 @@ require'nvim-treesitter.configs'.setup {
       "phpdoc",
       "query",
       "ruby",
-      "erb",
+      "scss",
       "sql",
       "typescript",
       "vim",
