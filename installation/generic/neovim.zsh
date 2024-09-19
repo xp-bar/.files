@@ -46,3 +46,6 @@ if [[ $(wc -l ~/.env | awk '{print $1}') -eq 0 ]]; then
 else
     gsed -nri "/^export INTELEPHENSE_LICENSE_KEY=/!p;\$aexport INTELEPHENSE_LICENSE_KEY=\"$license\"" ~/.env
 fi
+
+# install ruby-lsp
+gem install ruby-lsp

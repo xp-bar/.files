@@ -27,8 +27,8 @@ require'lspconfig'.lua_ls.setup{
     }
   }
 }
-
 require'lspconfig'.somesass_ls.setup{}
+require'lspconfig'.ruby_lsp.setup{}
 require'lspconfig'.intelephense.setup{
   init_options = {
     licenceKey = os.getenv('INTELEPHENSE_LICENSE_KEY'),
@@ -123,6 +123,7 @@ require'nvim-treesitter.configs'.setup {
       "php",
       "phpdoc",
       "query",
+      "ruby",
       "erb",
       "sql",
       "typescript",
