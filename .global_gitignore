@@ -1,6 +1,8 @@
 .notags
 tags.*
 !tags.php
+!tags.yml
+!tags.rb
 .sass-cache/
 .token
 .mock/*
