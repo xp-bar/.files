@@ -25,18 +25,8 @@ then
     echo "Copied pdv templates"
 fi
 
-npm install \
-    coc-json \
-    coc-phpls \
-    coc-vetur \
-    coc-tsserver \
-    --global-style \
-    --ignore-scripts \
-    --no-bin-links \
-    --no-package-lock \
-    --only=prod
+pnpm install -g intelephense
 
-nvim +CocUpdateSync +qall
 
 # install the license key
 [ -e ~/.env ] || touch ~/.env
