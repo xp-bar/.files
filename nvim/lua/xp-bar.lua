@@ -3,7 +3,49 @@
 
 require('nvim-dap-config')
 
+-- nvim-cmp setup
+local cmp = require 'cmp'
+cmp.setup {
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      vim.snippet.expand(args.body) -- For native neovim snippets (Neovim v0.10+)
+    end,
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
+    ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
+    -- C-b (back) C-f (forward) for snippet placeholder navigation.
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<CR>'] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Replace,
+      select = true,
+    },
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      else
+        fallback()
+      end
+    end, { 'i', 's' }),
+  }),
+  sources = {
+    { name = 'nvim_lsp' },
+  },
+}
+
+-- Set up lspconfig.
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 require'lspconfig'.lua_ls.setup{
+  capabilities = capabilities,
   settings = {
     Lua = {
       runtime = {
@@ -27,9 +69,14 @@ require'lspconfig'.lua_ls.setup{
     }
   }
 }
-require'lspconfig'.somesass_ls.setup{}
-require'lspconfig'.ruby_lsp.setup{}
+require'lspconfig'.somesass_ls.setup{
+  capabilities = capabilities,
+}
+require'lspconfig'.ruby_lsp.setup{
+  capabilities = capabilities,
+}
 require'lspconfig'.intelephense.setup{
+  capabilities = capabilities,
   init_options = {
     licenceKey = os.getenv('INTELEPHENSE_LICENSE_KEY'),
   }
@@ -238,11 +285,14 @@ require("onedarkpro").setup({
       GitGutterAdd = { fg = '${green}' },
       GitGutterAddLine = { fg = '${green}', bg = '${gray}' },
       GitGutterChange = { fg = '${orange}' },
-      GitGutterChangeDelete = { fg = '${red}' },
       GitGutterChangeDelete = { fg = '${red}', bg = '${gray}' },
       GitGutterChangeLine = { fg = '${orange}', bg = '${gray}' },
       GitGutterDelete = { fg = '${red}' },
       GitGutterDeleteLine = { fg = '${red}', bg = '${gray}' },
+
+      LspReferenceText = {},
+      LspReferenceRead = { bg = '${gray}'},
+      LspReferenceWrite = { bg = '${gray}', underline = true},
 
       StartifyBracket = { fg = '${blue}' },
       StartifyFile = { fg = '${red}' },

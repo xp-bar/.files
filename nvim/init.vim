@@ -545,52 +545,8 @@ augroup END
 
 " -- LSP Setup -- {{{
 Plug 'neovim/nvim-lspconfig'
-" -- }}}
-
-" ---- Conquer of Completion {{{
-Plug 'neoclide/coc.nvim', { 'do': function('coc#util#install') }
-
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-" nmap <silent> <leader>gd <Plug>(coc-definition)
-nmap <silent> <leader>gy <Plug>(coc-type-definition)
-nmap <silent> <leader>gi <Plug>(coc-implementation)
-" nmap <silent> <leader>gr <Plug>(coc-references)
-" nmap <silent> gk <Plug>(coc-codeaction)
-
-xmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
-nmap <silent> <leader>gk <Plug>(coc-codeaction-selected)
-
-nmap <silent> <leader>gf call CocAction('runCommand', 'editor.action.formatDocument')
-
-" xmap <leader>a <Plug>(coc-codeaction-selected)
-" nmap <leader>a <Plug>(coc-codeaction-selected)
-
-" Cursors
-nmap <silent> <leader>c <Plug>(coc-cursors-position)
-nmap <C-c> <Plug>(coc-cursors-operator)
-xmap <silent> <C-c> <Plug>(coc-cursors-range)
-
-" Remap for rename current word
-" nmap <leader>rn <Plug>(coc-rename)
-
-" Formatting selected code.
-" xmap <leader>f  <Plug>(coc-format-selected)
-" nmap <leader>f  <Plug>(coc-format-selected)
-
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
-
-nmap <leader>re  <Plug>(coc-codeaction-refactor)
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
 
 nmap <silent> <leader>ga :call php#laravel#goto_attribute()<CR>
 
@@ -604,32 +560,14 @@ endfunction
 
 nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 
-augroup phpHold
+augroup holdfuncs
 autocmd!
 " Highlight symbol under cursor on CursorHold
-" autocmd CursorHold *.php silent call <SID>show_documentation()
-" autocmd CursorHold *.vue silent call <SID>show_documentation()
-" autocmd CursorHold *.js silent call <SID>show_documentation()
-autocmd CursorHold *.php silent call CocActionAsync('highlight')
-autocmd CursorHold *.blade.php silent call CocActionAsync('highlight')
-autocmd CursorHold *.vue silent call CocActionAsync('highlight')
-autocmd CursorHold *.js silent call CocActionAsync('highlight')
+autocmd CursorHold  *.rb,*.php,*.js,*.vue,*.ts lua vim.lsp.buf.document_highlight()
+autocmd CursorHoldI *.rb,*.php,*.js,*.vue,*.ts lua vim.lsp.buf.document_highlight()
+autocmd CursorMoved *.rb,*.php,*.js,*.vue,*.ts lua vim.lsp.buf.clear_references()
+
 augroup END
-
-" Map function and class text objects (operator mappings for inner-function,
-" a-function, etc.)
-" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
-" xmap if <Plug>(coc-funcobj-i)
-" omap if <Plug>(coc-funcobj-i)
-" xmap af <Plug>(coc-funcobj-a)
-" omap af <Plug>(coc-funcobj-a)
-" xmap ic <Plug>(coc-classobj-i)
-" omap ic <Plug>(coc-classobj-i)
-" xmap ac <Plug>(coc-classobj-a)
-" omap ac <Plug>(coc-classobj-a)
-
-" eslint
-command! EslintQuiet call coc#config('eslint.quiet', coc#util#get_config('eslint')['quiet'] ? v:false : v:true)
 " ---- }}}
 
 nnoremap <silent> <leader>gl :Lines<CR>
