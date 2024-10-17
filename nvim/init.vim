@@ -954,11 +954,6 @@ endfunction
 
 autocmd VimEnter * nested call s:clear_startify_commands()
 
-" Work Config
-if filereadable($HOME . '/jbx.vim')
-    source $HOME/jbx.vim
-endif
-
 " ===========================================================================
 
 call plug#end()
