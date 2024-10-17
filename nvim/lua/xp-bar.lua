@@ -72,7 +72,7 @@ require'lspconfig'.lua_ls.setup{
 require'lspconfig'.somesass_ls.setup{
   capabilities = capabilities,
 }
-require'lspconfig'.ruby_lsp.setup{
+require'lspconfig'.solargraph.setup{
   capabilities = capabilities,
 }
 require'lspconfig'.intelephense.setup{
