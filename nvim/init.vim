@@ -714,7 +714,7 @@ augroup END
 " ---- }}}
 
 " ---- Testing ---- {{{
-Plug 'vim-test/vim-test', {'for': 'php'}
+Plug 'vim-test/vim-test', { 'for': [ 'php', 'ruby' ] }
 
 function! s:goto_test()
     let l:root = "application/"
@@ -805,11 +805,17 @@ let g:test#custom_strategies = {'asyncrun_bg_updated': function('AsyncrunBackgro
 let g:test#strategy = 'neovim'
 let test#neovim#term_position = "vert botright"
 let g:dispatch_compilers = {}
-  " \ 'nearest': '-d memory_limit=2G --colors=never --xdebug',
+
 let test#php#phpunit#options = {
   \ 'nearest': '-d memory_limit=2G --colors=always --testdox --xdebug',
   \ 'file':    '-d memory_limit=2G --colors=always --testdox --xdebug',
   \ 'suite':   '-d memory_limit=2G --testdox',
+\}
+
+let test#ruby#rails#options = {
+  \ 'nearest': '-vp',
+  \ 'file':    '-vp',
+  \ 'suite':   '-vp',
 \}
 
 let test#php#phpunit#executable = "./vendor/bin/phpunit"
