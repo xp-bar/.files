@@ -157,12 +157,22 @@ parser_config.erb = {
   filetype = "eruby", -- if filetype does not match the parser name
 }
 
+parser_config.blade = {
+  install_info = {
+    url = "https://github.com/EmranMR/tree-sitter-blade",
+    files = {"src/parser.c"},
+    branch = "main",
+  },
+  filetype = "blade"
+}
+
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
       "css",
       "diff",
       "erb",
       "html",
+      "blade",
       "javascript",
       "lua",
       "markdown",
