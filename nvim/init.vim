@@ -683,7 +683,7 @@ vnoremap <C-f> y /<C-r>"
 " ---- }}}
 
 " ---- Emmet ---- {{{
-Plug 'mattn/emmet-vim', {'for': ['html', 'vue', 'eruby']}
+Plug 'mattn/emmet-vim', {'for': ['html', 'vue', 'eruby', 'blade.php']}
 
 let g:user_emmet_leader_key='<leader>' 
 let g:user_emmet_mode='n'
