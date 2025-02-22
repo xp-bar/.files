@@ -580,6 +580,7 @@ nnoremap <silent> <leader>gl :Lines<CR>
 
 " NVIM DAP (config in lua) and DAP UI
 Plug 'mfussenegger/nvim-dap'
+Plug 'nvim-neotest/nvim-nio'
 Plug 'rcarriga/nvim-dap-ui'
 
 " --- Editor Config --- {{{
