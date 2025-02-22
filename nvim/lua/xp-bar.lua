@@ -233,6 +233,8 @@ require("onedarkpro").setup({
       NormalFloat = { bg = '${black}' },
 
       ['@variable.builtin'] = { fg = '${red}'},
+      ['@punctuation.bracket'] = { fg = '${white}'},
+      ['@operator'] = { fg = '${white}'},
 
       ['@variable.builtin.vim'] = { fg = '${red}'},
       ['@function.macro.vim'] = { fg = '${orange}'},
@@ -250,6 +252,7 @@ require("onedarkpro").setup({
       ['@constant.class.keyword.php'] = { link = '@keyword.php' },
       ['@scope.keyword.php'] = { link = '@keyword.php' },
       ['@namespace.php'] = { fg = '${white}'},
+      ['@namespace.separator.php'] = { fg = '${darkgray}'},
       ['@operator.php'] = { fg = '${white}'},
       ['@method.call.php'] = { fg = '${white}'},
       ['@function.internal.call.php'] = { fg = '${cyan}'},
@@ -257,6 +260,8 @@ require("onedarkpro").setup({
       ['@type.original.php'] = { fg = '${white}'},
       ['@type.builtin.php'] = { fg = '${purple}'},
       ['@variable.builtin.php'] = { fg = '${red}'},
+      ['@module.php'] = { fg = '${white}'},
+      ['@php_tag'] = { fg = '${cyan}'},
 
       ['@keyword.phpdoc'] = { fg = '${white}'},
       ['@keyword.pipe.phpdoc'] = { fg = '${white}'},

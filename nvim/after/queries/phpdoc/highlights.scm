@@ -1,10 +1,14 @@
 ; inherits: phpdoc
 ; vim: set ts=2 sw=2:
 
-(tag
-  (type_list
-    (primitive_type) @type.primitive
-  )
-)
+(primitive_type) @type.primitive
+
+(array_type ["<" ">"] @punctuation.bracket)
 
 (variable_name "$" @parameter)
+
+(union_type
+  "|" @keyword.pipe)
+
+(variable_name
+  "$" @keyword.dollar)

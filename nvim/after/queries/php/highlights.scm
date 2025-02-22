@@ -22,22 +22,18 @@
 (namespace_use_declaration
   (namespace_use_clause
     (qualified_name
-      (namespace_name_as_prefix
-        (namespace_name) @use_namespace
-      )
+      prefix: (namespace_name ["\\"] @namespace.separator)
     )
   )
 )
 
-(namespace_use_declaration
-  (namespace_use_clause
-    (qualified_name
-      (namespace_name_as_prefix)
-      (name) @type.original
-    )
-   (namespace_aliasing_clause)
-  )
-)
+; overwrite the default query: https://github.com/nvim-treesitter/nvim-treesitter/blob/d0ba96c3dc5b8c040412ee366cf7c596ae430416/queries/php_only/highlights.scm#L178-L179
+; to have a higher priority so it can be highlighted the same as a method arg
+((name) @constant.builtin
+  (#lua-match? @constant.builtin "^__[A-Z][A-Z%d_]+__$")
+  (#set! priority 105))
+
+((php_tag) @php_tag)
 
 (function_call_expression
   function: (name) @function.internal.call
