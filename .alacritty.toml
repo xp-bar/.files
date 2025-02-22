@@ -1,5 +1,5 @@
-background_opacity = 1
-tabspaces = 4
+# background_opacity = 1
+# tabspaces = 4
 
 [[keyboard.bindings]]
 action = "Paste"
@@ -607,13 +607,13 @@ background = "0x272c33"
 foreground = "0xb9bfca"
 
 [cursor]
-blinking = "Never"
+# blinking = "Never"
 style = "Beam"
 unfocused_hollow = true
 
 [font]
 size = 12.0
-use_thin_strokes = false
+# use_thin_strokes = false
 
 [font.bold]
 family = "DroidSansMono Nerd Font"
@@ -635,23 +635,23 @@ y = 0
 [mouse]
 hide_when_typing = false
 
-[mouse.double_click]
-threshold = 300
+# [mouse.double_click]
+# threshold = 300
 
-[mouse.hints.urls]
-command = "open"
-hyperlinks = true
-post_processing = true
+# [mouse.hints.urls]
+# command = "open"
+# hyperlinks = true
+# post_processing = true
 
-[mouse.hints.urls.mouse]
-enabled = true
-mods = "Control|Shift"
+# [mouse.hints.urls.mouse]
+# enabled = true
+# mods = "Control|Shift"
 
-[mouse.triple_click]
-threshold = 300
+# [mouse.triple_click]
+# threshold = 300
 
 [scrolling]
-auto_scroll = false
+# auto_scroll = false
 history = 10000
 multiplier = 3
 
