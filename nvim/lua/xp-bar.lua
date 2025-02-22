@@ -74,6 +74,14 @@ require'lspconfig'.somesass_ls.setup{
 }
 require'lspconfig'.solargraph.setup{
   capabilities = capabilities,
+  init_options = {
+    formatting = false
+  },
+  settings = {
+    solargraph = {
+      diagnostics = false
+    }
+  }
 }
 require'lspconfig'.intelephense.setup{
   capabilities = capabilities,
