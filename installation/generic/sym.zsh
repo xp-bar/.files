@@ -14,7 +14,7 @@ ln -sv $PWD/.zle ~
 ln -sv $PWD/z/z.sh ~
 ln -sv $PWD/.zshrc ~
 ln -sv $PWD/.valias ~
-ln -sv $PWD/.alacritty.yml ~
+ln -sv $PWD/.alacritty.toml ~
 ln -sv $PWD/.ackrc ~
 ln -sv $PWD/.rgrc ~
 ln -sv $PWD/custom-php-cs-fixers/index.php ~/.php-cs-fixer.php
