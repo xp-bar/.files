@@ -946,6 +946,7 @@ command! BufSync :execute 'bufdo :e' | source $VIMRUNTIME/syntax/syntax.vim
 " --- Remove user (plugin) commands I don't use --- {{{
 function! s:clear_startify_commands()
     " ---- Startify ---- {{{
+    delcommand Start
     delcommand SLoad
     delcommand SSave
     delcommand SDelete
