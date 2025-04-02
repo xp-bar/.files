@@ -104,3 +104,6 @@ alias love="/Applications/love.app/Contents/MacOS/love"
 
 # ruby
 alias rtest="rails test -vp"
+
+# Godot
+alias godot="/Applications/Godot.app/Contents/MacOS/Godot"
