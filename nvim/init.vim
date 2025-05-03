@@ -386,8 +386,6 @@ Plug 'kshenoy/vim-signature'
 
 " -- fzf-lua -- {{{
 Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
-" optional for icon support
-Plug 'nvim-tree/nvim-web-devicons'
 " }}}
 
 " ---- Sidebar NERDTree ---- {{{
@@ -450,6 +448,10 @@ let g:buftabline_show = 1
 let g:buftabline_number = 1
 
 let g:buftabline_indicators = 1
+" --- }}}
+
+" --- Coloured Icon Support (dependency of multiple plugins) --- {{{
+Plug 'nvim-tree/nvim-web-devicons'
 " --- }}}
 
 " --- Goyo --- {{{
