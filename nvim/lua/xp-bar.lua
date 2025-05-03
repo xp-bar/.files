@@ -45,7 +45,8 @@ cmp.setup {
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 
-require'lspconfig'.lua_ls.setup{
+vim.lsp.enable('lua_ls')
+vim.lsp.config('lua_ls', {
   capabilities = capabilities,
   settings = {
     Lua = {
@@ -69,25 +70,32 @@ require'lspconfig'.lua_ls.setup{
       }
     }
   }
-}
+})
 
-require'lspconfig'.ts_ls.setup{
+vim.lsp.enable('ts_ls')
+vim.lsp.config('ts_ls', {
   capabilities = capabilities,
-}
+})
 
--- require'lspconfig'.cssls.setup{
+-- vim.lsp.enable('cssls')
+-- vim.lsp.config('cssls', {
 --   capabilities = capabilities,
--- }
-require'lspconfig'.cssmodules_ls.setup{
-  capabilities = capabilities,
-}
-require'lspconfig'.somesass_ls.setup{
-  capabilities = capabilities,
-}
--- require'lspconfig'.ruby_lsp.setup{
+-- })
+-- vim.lsp.enable('cssmodules_ls')
+-- vim.lsp.config('cssmodules_ls', {
 --   capabilities = capabilities,
--- }
-require'lspconfig'.solargraph.setup{
+-- })
+-- vim.lsp.enable('somesass_ls')
+-- vim.lsp.config('somesass_ls', {
+--   capabilities = capabilities,
+-- })
+-- vim.lsp.enable('ruby_lsp')
+-- vim.lsp.config('ruby_lsp', {
+--   capabilities = capabilities,
+-- })
+
+vim.lsp.enable('solargraph')
+vim.lsp.config('solargraph', {
   capabilities = capabilities,
   init_options = {
     formatting = false
@@ -97,16 +105,20 @@ require'lspconfig'.solargraph.setup{
       diagnostics = false
     }
   }
-}
--- require'lspconfig'.sorbet.setup{
+})
+
+-- vim.lsp.enable('sorbet')
+-- vim.lsp.config('sorbet', {
 --   capabilities = capabilities,
--- }
-require'lspconfig'.intelephense.setup{
+-- })
+
+vim.lsp.enable('intelephense')
+vim.lsp.config('intelephense', {
   capabilities = capabilities,
   init_options = {
     licenceKey = os.getenv('INTELEPHENSE_LICENSE_KEY'),
   }
-}
+})
 
 local actions = require "fzf-lua.actions"
 require('fzf-lua').setup({'default',
