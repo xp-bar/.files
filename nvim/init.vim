@@ -438,18 +438,6 @@ Plug 'airblade/vim-gitgutter'
 let g:gitgutter_highlight_linenrs = 1
 " --- }}}
 
-" --- Buftabline --- {{{
-Plug 'ap/vim-buftabline'
-
-" Only show if there are 2+ buffers open (0 = never, 1 = if buffers > 2, 2 = always)
-let g:buftabline_show = 1
-
-" Numbers beside buffers (0 = none, 1 = internal buffer number, 2 = ordinal)
-let g:buftabline_number = 1
-
-let g:buftabline_indicators = 1
-" --- }}}
-
 " --- Coloured Icon Support (dependency of multiple plugins) --- {{{
 Plug 'nvim-tree/nvim-web-devicons'
 " --- }}}
@@ -863,13 +851,12 @@ else
     set notermguicolors
 endif
 
-" Disable tabline and don't use GUI tabline; we have lightline / buftabline
-set showtabline=0 " 2 to show
-set guioptions-=e  " Don't use GUI tabline
-
 " ---- Lightline for Vim ---- {{{
 
 Plug 'itchyny/lightline.vim'
+Plug 'mengelbrecht/lightline-bufferline'
+
+set showtabline=2
 
 function! StatusDiagnostic() abort
     let info = get(b:, 'coc_diagnostic_info', {})
@@ -901,6 +888,10 @@ let g:lightline = {
       \     [ 'cocstatus', 'cocfunction', 'fileformat', 'fileencoding', 'filetype' ]
       \   ]
       \ },
+      \ 'tabline': {
+      \   'left': [ ['buffers'] ],
+      \   'right': [ ]
+      \ },
       \ 'inactive': {
       \   'left': [ [ 'mode', 'paste' ] ],
       \   'right': [
@@ -914,7 +905,11 @@ let g:lightline = {
       \   'cocstatus': 'StatusDiagnostic',
       \   'cocfunction': 'CocCurrentFunction',
       \ },
+      \ 'component_expand': {
+      \   'buffers': 'lightline#bufferline#buffers'
+      \ },
       \ 'component_type': {
+      \   'buffers': 'tabsel'
       \ },
       \ }
 
@@ -925,10 +920,12 @@ let g:lightline.subseparator = {
 	\   'left': '', 'right': '' 
   \}
 
-let g:lightline.tabline = {
-  \   'left': [],
-  \   'right': []
-  \ }
+" Used w/ `g:lightline#bufferline#clickable` to allow clickable tabs
+let g:lightline.component_raw = {'buffers': 1}
+let g:lightline#bufferline#clickable = v:true
+let g:lightline#bufferline#enable_devicons = v:true
+let g:lightline#bufferline#min_buffer_count = 2
+let g:lightline#bufferline#reverse_buffers = v:true
 
 
 function! LightLineMode()
