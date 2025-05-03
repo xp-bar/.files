@@ -1,7 +1,7 @@
 -- xp-bar.lua
 -- vim: set ts=2 sw=2:
 
-require('nvim-dap-config')
+-- require('nvim-dap-config')
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
@@ -43,6 +43,7 @@ cmp.setup {
 
 -- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 require'lspconfig'.lua_ls.setup{
   capabilities = capabilities,
@@ -69,9 +70,23 @@ require'lspconfig'.lua_ls.setup{
     }
   }
 }
+
+require'lspconfig'.ts_ls.setup{
+  capabilities = capabilities,
+}
+
+-- require'lspconfig'.cssls.setup{
+--   capabilities = capabilities,
+-- }
+require'lspconfig'.cssmodules_ls.setup{
+  capabilities = capabilities,
+}
 require'lspconfig'.somesass_ls.setup{
   capabilities = capabilities,
 }
+-- require'lspconfig'.ruby_lsp.setup{
+--   capabilities = capabilities,
+-- }
 require'lspconfig'.solargraph.setup{
   capabilities = capabilities,
   init_options = {
@@ -83,6 +98,9 @@ require'lspconfig'.solargraph.setup{
     }
   }
 }
+-- require'lspconfig'.sorbet.setup{
+--   capabilities = capabilities,
+-- }
 require'lspconfig'.intelephense.setup{
   capabilities = capabilities,
   init_options = {
