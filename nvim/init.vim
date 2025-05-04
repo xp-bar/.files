@@ -925,7 +925,6 @@ let g:lightline.component_raw = {'buffers': 1}
 let g:lightline#bufferline#clickable = v:true
 let g:lightline#bufferline#enable_devicons = v:true
 let g:lightline#bufferline#min_buffer_count = 2
-let g:lightline#bufferline#reverse_buffers = v:true
 
 
 function! LightLineMode()
