@@ -1,8 +1,8 @@
 " =============================================================================
 " Filename: autoload/lightline/colorscheme/two.vim
-" Author: Zoltan Dalmadi
+" Author: Zoltan Dalmadi (modifications by Nicholas Ireland)
 " License: MIT License
-" Last Change: 2017/11/28 21:53:01.
+" Last Change: 2025/05/04 15:39:00.
 " =============================================================================
 
 " Common colors
@@ -57,7 +57,7 @@ let s:p.normal.warning = [ [ s:yellow, s:bg ] ]
 let s:p.insert.right   = [ [ s:bg, s:blue, 'bold' ], [ s:bg, s:blue, 'bold' ] ]
 let s:p.replace.right  = [ [ s:bg, s:red1, 'bold' ], [ s:bg, s:red1, 'bold' ] ]
 let s:p.visual.right   = [ [ s:bg, s:purple, 'bold' ], [ s:bg, s:purple, 'bold' ] ]
-let s:p.tabline.left   = [ [ s:bg, s:gray3 ] ]
+let s:p.tabline.left   = [ [ s:fg, s:bg ] ]
 let s:p.tabline.tabsel = [ [ s:bg, s:purple, 'bold' ] ]
 let s:p.tabline.middle = [ [ s:gray3, s:gray2 ] ]
 let s:p.tabline.right  = copy(s:p.normal.right)
