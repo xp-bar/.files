@@ -41,7 +41,6 @@ require('fzf-lua').setup({'default',
   files = {
     previewer = 'bat',
     file_icons = false,
-    cmd = 'rg --files',
     RIPGREP_CONFIG_PATH = vim.env.RIPGREP_CONFIG_PATH,
     toggle_ignore_flag = "--no-ignore",
     actions = {
