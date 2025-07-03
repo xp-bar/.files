@@ -103,6 +103,9 @@ require("onedarkpro").setup({
       GitGutterDelete = { fg = '${red}' },
       GitGutterDeleteLine = { fg = '${red}', bg = '${gray}' },
 
+      IndentLine = { fg = '${lightblack}', bg = 'NONE' },
+      IndentLineCurrent = { fg = '${gray}', bg = 'NONE' },
+
       LspReferenceText = {},
       LspReferenceRead = { bg = '${gray}'},
       LspReferenceWrite = { bg = '${gray}', underline = true},
@@ -132,3 +135,27 @@ require("onedarkpro").setup({
 })
 
 vim.cmd("colorscheme onedark")
+
+require('ibl').setup({
+  scope = { enabled = true },
+  indent = {
+    char = '▏',
+  },
+  exclude = {
+    filetypes = {
+      --defaults
+      'lspinfo',
+      'packer',
+      'checkhealth',
+      'help',
+      'man',
+      'gitcommit',
+      'TelescopePrompt',
+      'TelescopeResults',
+      -- additions
+      'startify',
+      'markdown',
+      'xxx'
+    }
+  },
+})
