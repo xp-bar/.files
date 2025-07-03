@@ -106,6 +106,9 @@ require("onedarkpro").setup({
       IndentLine = { fg = '${lightblack}', bg = 'NONE' },
       IndentLineCurrent = { fg = '${gray}', bg = 'NONE' },
 
+      IblIndent = { fg = '${lightblack}', bg = 'NONE' },
+      IblScope = { fg = '${gray}', bg = 'NONE' },
+
       LspReferenceText = {},
       LspReferenceRead = { bg = '${gray}'},
       LspReferenceWrite = { bg = '${gray}', underline = true},
@@ -137,7 +140,14 @@ require("onedarkpro").setup({
 vim.cmd("colorscheme onedark")
 
 require('ibl').setup({
-  scope = { enabled = true },
+  scope = {
+    enabled = true,
+    exclude = {
+      language = {
+        'css', 'scss', 'sass'
+      }
+    }
+  },
   indent = {
     char = '▏',
   },
