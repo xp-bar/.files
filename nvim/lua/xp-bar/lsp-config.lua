@@ -147,3 +147,7 @@ vim.lsp.config('intelephense', {
     licenceKey = os.getenv('INTELEPHENSE_LICENSE_KEY'),
   }
 })
+
+vim.diagnostic.config({
+  virtual_text = true,
+})
