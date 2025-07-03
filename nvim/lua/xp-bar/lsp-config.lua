@@ -73,6 +73,29 @@ vim.lsp.config('lua_ls', {
 vim.lsp.enable('ts_ls')
 vim.lsp.config('ts_ls', {
   capabilities = capabilities,
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = os.getenv('NVM_BIN') .. '/../lib/@vue/typescript-plugin',
+        languages = {"javascript", "typescript", "vue"},
+      },
+    },
+  },
+  filetypes = {
+    "javascript",
+    "typescript",
+    "javascriptreact",
+    "typescriptreact",
+    "vue",
+  },
+})
+
+vim.lsp.enable('vue_ls')
+vim.lsp.config('vue_ls', {
+  capabilities = capabilities,
+  cmd = { "pnpm", "vue-language-server", "--stdio" },
+  filetypes = { 'vue' },
 })
 
 -- vim.lsp.enable('cssls')
