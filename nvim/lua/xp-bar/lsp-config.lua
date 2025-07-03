@@ -98,10 +98,17 @@ vim.lsp.config('vue_ls', {
   filetypes = { 'vue' },
 })
 
--- vim.lsp.enable('cssls')
--- vim.lsp.config('cssls', {
---   capabilities = capabilities,
--- })
+vim.lsp.enable('cssls')
+vim.lsp.config('cssls', {
+  capabilities = capabilities,
+  filetypes = {
+    'css',
+    'sass',
+    'scss',
+    'vue'
+  }
+})
+--
 -- vim.lsp.enable('cssmodules_ls')
 -- vim.lsp.config('cssmodules_ls', {
 --   capabilities = capabilities,
