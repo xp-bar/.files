@@ -1,7 +1,10 @@
 #! /bin/zsh
 
 # -- INSTALL HOMEBREW -- {{{
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+which brew >> /dev/null
+if [[ $? != 0 ]]; then
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
 # -- }}}
 
 # -- cask taps -- {{{
@@ -18,69 +21,145 @@ brew install wtfutil
 brew tap gwerbin/tap
 brew install --cask gwerbin/tap/sqlcheck
 # }}}
+#
+# -- cli tools installation -- {{{
+read response\?"Install CLI tools (ack, rg, etc.)? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install ack
+            brew install rg
+            brew install antidote
+            brew install cmatrix
+            brew install cowsay
+            brew install coreutils
+            brew install fd
+            brew install figlet
+            brew install fortune
+            brew install fzf
+            brew install gzip
+            brew install jq
+            brew install mycli
+            brew install pgcli
+            brew install ncurses
+            brew install neovim
+            brew install tmux
+            brew install toilet
+            brew install tree
+            brew install vim
+            brew install zsh
 
-# Regular installs
-brew install ack
-brew install rg
-brew install antidote
-brew install cmatrix
-brew install cmus
-brew install cointop
-brew install composer
-brew install cowsay
-brew install coreutils
-brew install dep
-brew install fd
-brew install figlet
-brew install fortune
-brew install fswatch
-brew install fzf
-brew install gh
-brew install gnupg
-brew install go
-brew install gzip
-brew install httpie
-brew install hub
-brew install irssi
-brew install eddieantonio/eddieantonio/imgcat
-brew install jq
-brew install mycli
-brew install pgcli
-brew install mysql
-brew install postgres
-brew install mysql@$XP_MYSQL_VERSION
-brew install ncurses
-brew install neovim
-brew install nginx
-brew install ninja
-brew install node
-brew install nyancat
-brew install php@$XP_PHP_VERSION
-brew install pipes-sh
-brew install pv
-brew install rainbarf
-brew install reattach-to-user-namespace
-brew install rig
-brew install rlwrap
-brew install rtv
-brew install ruby
-brew install screenfetch
-brew install shpotify
-brew install telnet
-brew install thefuck
-brew install tmux
-brew install toilet
-brew install tree
-brew install --HEAD universal-ctags/universal-ctags/universal-ctags
-brew install vim
-brew install wp-cli
-brew install zsh
+            # brew install reattach-to-user-namespace
+            brew install rig
+            brew install rlwrap
+
+            brew install pipes-sh
+            brew install pv
+
+            # Github
+            brew install gh
+            brew install hub
+
+            # Other
+            brew install fswatch
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
+
+# -- PHP tools installation -- {{{
+read response\?"Install PHP and PHP tools (composer, etc.)? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install php@$XP_PHP_VERSION
+            brew install composer
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
+
+# -- PHP tools installation -- {{{
+read response\?"Install wp-cli ? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install wp-cli
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
+
+# -- Go tools installation -- {{{
+read response\?"Install Go and Go tools (dep, etc.)? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install go
+            brew install dep
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
+
+# -- MySQL installation -- {{{
+read response\?"Install MySQL? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install mysql
+            brew install mysql@$XP_MYSQL_VERSION
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
+
+# -- MySQL installation -- {{{
+read response\?"Install PostgreSQL? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install postgres
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
+
+# -- Node installation -- {{{
+read response\?"Install Node? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install node
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
+
+# -- Node installation -- {{{
+read response\?"Install nginx? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install nginx
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
+
+# -- Ruby installation -- {{{
+read response\?"Install ruby? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install ruby
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
 
 # required for powerline font
 brew install svn
-
-brew tap possatti/possatti
-brew install pokemonsay
 
 # -- gotop -- {{{
 brew tap cjbassi/gotop
@@ -143,10 +222,17 @@ read response\?"Install Dash? (https://kapeli.com/dash) [y/n] "
     esac
 
 # browsers
-brew install --cask google-chrome
-brew install --cask google-chrome-canary
-brew install --cask firefox
-brew install --cask firefox-developer-edition
+read response\?"Install Browsers? (Chrome, Firefox) [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install --cask google-chrome
+            brew install --cask google-chrome-canary
+            brew install --cask firefox
+            brew install --cask firefox-developer-edition
+            ;;
+        *)
+            ;;
+    esac
 
 # other
 read response\?"Install LiceCap? [y/n] "
@@ -184,5 +270,19 @@ read response\?"Install 1Password CLI? [y/n] "
         *)
             ;;
     esac
+
+# -- Fun things installation -- {{{
+read response\?"Install Fun stuff? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+            brew install eddieantonio/eddieantonio/imgcat
+            brew install rainbarf
+            brew tap possatti/possatti
+            brew install pokemonsay
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
 
 # -- }}}

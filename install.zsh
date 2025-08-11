@@ -15,17 +15,23 @@ sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.
 
 # -- npm installations -- {{{
 npm i -g vue-cli
-npm install --global yarn
+npm i -g yarn
 # -- }}}
 
-# -- node version manager -- {{{
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-nvm install $xp_node_version
-nvm use $xp_node_version
+# -- NVM installation -- {{{
+read response\?"Install NVM? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+        nvm install $xp_node_version
+        nvm use $xp_node_version
+            ;;
+        *)
+            ;;
+    esac
 # -- }}}
 
 # make sure this repo uses my email, not a work one
@@ -37,13 +43,14 @@ git config --local core.hooksPath .githooks/
 
 
 # git clone installations -- {{{
-DIR=$(pwd)
-cd ~/
-git clone https://github.com/powerline/fonts.git --depth=1
-cd fonts
-./install.sh
-cd ..
-rm -rf fonts
+# DIR=$(pwd)
+# cd ~/
+# git clone https://github.com/powerline/fonts.git --depth=1
+# cd fonts
+# ./install.sh
+# cd ~/
+# rm -rf fonts
+# cd $DIR
 # -- }}}
 
 # -- valet installation -- {{{
@@ -56,16 +63,6 @@ read response\?"Install valet? [y/n] "
         *)
             ;;
     esac
-# -- }}}
-
-# -- python installs -- {{{
-# get pip {{{
-curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
-python get-pip.py
-# }}}
-
-pip install httpie
-pip install http-prompt
 # -- }}}
 
 # -- Directories -- {{{
@@ -91,5 +88,12 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # -- }}}
 
 # -- PHP-CS-Fixer setup -- {{{
-cd ./custom-php-cs-fixers && composer install && cd ../
+read response\?"Install custom PHP-CS-Fixers? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+        cd ./custom-php-cs-fixers && composer install && cd ../
+            ;;
+        *)
+            ;;
+    esac
 # -- }}}
