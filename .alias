@@ -107,3 +107,6 @@ alias rtest="rails test -vp"
 
 # Godot
 alias godot="/Applications/Godot.app/Contents/MacOS/Godot"
+
+# Docker-Compose
+alias dce="docker-compose exec"
