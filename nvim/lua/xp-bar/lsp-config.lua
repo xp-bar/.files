@@ -77,7 +77,7 @@ vim.lsp.config('ts_ls', {
     plugins = {
       {
         name = "@vue/typescript-plugin",
-        location = os.getenv('NVM_BIN') .. '/../lib/@vue/typescript-plugin',
+        location = (os.getenv('NVM_BIN') or '') .. '/../lib/@vue/typescript-plugin',
         languages = {"javascript", "typescript", "vue"},
       },
     },
@@ -153,7 +153,7 @@ vim.lsp.enable('intelephense')
 vim.lsp.config('intelephense', {
   capabilities = capabilities,
   init_options = {
-    licenceKey = os.getenv('INTELEPHENSE_LICENSE_KEY'),
+    licenceKey = (os.getenv('INTELEPHENSE_LICENSE_KEY') or ''),
   }
 })
 
