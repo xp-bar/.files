@@ -95,7 +95,7 @@ alias epoch="date +%s"
 alias tmuxlayout='tmux list-windows -F "#{window_active} #{window_layout}" | grep "^1" | cut -d " " -f 2 | pbcopy'
 alias tmuxreset="\\rm ~/.tmux/resurrect/last && ln -sv ~/.tmux/resurrect/jbx.txt ~/.tmux/resurrect/last > /dev/null"
 alias tf="$HOME/.tmux/plugins/tmux-fzf/main.sh"
-alias tx="killall -SIGUSR1 tmux > /dev/null 2>&1 && tmux a || tmux new"
+alias tx="killall -SIGUSR1 tmux > /dev/null 2>&1 && tmux a || tmux new-session zsh"
 
 alias v="vagrant"
 # alias myip="ifconfig | grep 'inet [0-9.]*' | grep -v '127.0.0.1' | sed 's/inet //g' | sed 's/netmask.*255//g' | tr -d '[:blank:]' | head -n 1";
