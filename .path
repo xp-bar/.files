@@ -10,6 +10,9 @@ export PATH="/usr/local/sbin:$PATH"
 export PATH="$PATH:$HOME/Library/Python/2.7/bin"
 export PATH="$PATH:$HOME/Library/Python/3.9/bin"
 
+# additional homebrew paths
+export PATH="/opt/homebrew/bin:$PATH"
+
 # include homebrew ruby
 export PATH="/usr/local/opt/ruby/bin:$PATH"
 export PATH="/usr/local/lib/ruby/gems/3.4.0/bin:$PATH"
