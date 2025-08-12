@@ -31,6 +31,7 @@ read response\?"Install CLI tools (ack, rg, etc.)? [y/n] "
     case "$response" in
         [yY][eE][sS]|[yY])
             brew install ack
+            brew install bat
             brew install rg
             brew install antidote
             brew install cmatrix
