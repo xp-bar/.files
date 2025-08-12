@@ -1,4 +1,8 @@
 #! /bin/zsh
+#
+export XP_NODE_VERSION=10.15.1
+export XP_PHP_VERSION=7.4
+export XP_MYSQL_VERSION=8
 
 # -- INSTALL HOMEBREW -- {{{
 which brew >> /dev/null
@@ -61,6 +65,23 @@ read response\?"Install CLI tools (ack, rg, etc.)? [y/n] "
 
             # Other
             brew install fswatch
+            ;;
+        *)
+            ;;
+    esac
+# -- }}}
+
+# -- NVM installation -- {{{
+read response\?"Install NVM (recommended)? [y/n] "
+    case "$response" in
+        [yY][eE][sS]|[yY])
+        # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+        brew install nvm
+        export NVM_DIR="$HOME/.nvm"
+        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+        nvm install $xp_node_version
+        nvm use $xp_node_version
             ;;
         *)
             ;;

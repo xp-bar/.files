@@ -19,7 +19,7 @@ npm i -g yarn
 # -- }}}
 
 # -- NVM installation -- {{{
-read response\?"Install NVM? [y/n] "
+read response\?"Install NVM via curl? [y/n] "
     case "$response" in
         [yY][eE][sS]|[yY])
         curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
