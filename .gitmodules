@@ -13,9 +13,6 @@
 [submodule "nvim/packs/neovim-xp"]
 	path = nvim/packs/neovim-xp
 	url = git@github.com:xp-bar/neovim-xp.git
-[submodule ".files-jumbleberry"]
-	path = .files-jumbleberry
-	url = git@github.com:xp-bar/.files-jumbleberry.git
 [submodule "custom-php-cs-fixers"]
 	path = custom-php-cs-fixers
 	url = git@github.com:xp-bar/Custom-PHP-CS-Fixers.git
