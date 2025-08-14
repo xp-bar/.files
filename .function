@@ -455,8 +455,22 @@ function icat() {
 
 unalias z 2> /dev/null
 z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+    local function __z_fzf() {
+        fzf --height 40% \
+            --style minimal \
+            --reverse \
+            --info=hidden \
+            +s \
+            --tac \
+            --prompt="$(echo -e "\uf105") " \
+            --query "${*##-* }"
+        }
+
+    [ $# -gt 0 ] && _z "$*" && unfunction __z_fzf && return
+    local directories=$(_z -l 2>&1 | sed 's/^[0-9,.]* *//')
+    cd "$(echo $directories | __z_fzf)"
+    clear;
+    unfunction __z_fzf
 }
 
 function totoilet()
