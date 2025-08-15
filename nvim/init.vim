@@ -763,12 +763,10 @@ nnoremap <silent> <leader>td :TestVisit<CR>
 " ---- }}}
 
 " ---- Markdown ---- {{{
-" Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': function('mkdp#util#install')}
 " Fork with latest version of mermaid
-Plug 'sherocktong/markdown-preview.nvim', {'for': 'markdown', 'do': function('mkdp#util#install')}
+" Plug 'sherocktong/markdown-preview.nvim', {'for': 'markdown', 'do': function('mkdp#util#install')}
+Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': function('mkdp#util#install')}
 let g:mkdp_markdown_css = '~/Code/.files/nvim/dependencies/markdown/custom.css'
-" '<,'>s/- \zs\(.*\)\ze$/\="["..submatch(0).."](#"..substitute(tolower(submatch(0)), ' ', '-', 'g')..")""
-" '<,'>s/^[ ]*/\=repeat('#', strlen(submatch(0)))/g
 " ---- }}}
 
 " ---- Documentation stubs ---- {{{
