@@ -771,8 +771,7 @@ let g:mkdp_markdown_css = '~/Code/.files/nvim/dependencies/markdown/custom.css'
 
 " ---- Documentation stubs ---- {{{
 Plug 'tobyS/vmustache'
-" Fork of 'tobyS/pdv' with return types
-Plug 'YaroslavMolchan/pdv'
+Plug 'tobyS/pdv'
 let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
 " ---- }}}
 " --- }}}
