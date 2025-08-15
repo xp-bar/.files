@@ -715,22 +715,18 @@ augroup END
 " ---- Testing ---- {{{
 Plug 'vim-test/vim-test', { 'for': [ 'php', 'ruby' ] }
 
-function! s:goto_test()
-    let l:root = "application/"
-    let l:test_root = "tests/unit/"
-    let l:filename = expand('%')
-    let l:result = substitute(l:filename, l:root, l:test_root, '')
-    let l:result = substitute(l:result, '.php', 'Test.php', '')
-
-    if !filereadable(l:result)
-        echoe "No test file found: " . l:result
-        return
-    endif
-
-    execute 'edit ' . l:result
+function! DockerTransform(cmd) abort
+  let s:project_dir = substitute(findfile("Dockerfile.dev", ";~/Code/"), "Dockerfile.dev", "", "")
+  return 'docker-compose --project-directory="'. s:project_dir . '" exec core-app ' . a:cmd
 endfunction
 
-command! GotoTest call s:goto_test(<f-args>)
+let g:test#custom_transformations = {
+    \ 'docker': function('DockerTransform')
+\ }
+
+let g:test#transformation = 'docker'
+" ----- }}}
+
 nnoremap <silent><leader>gt :GotoTest<cr>
 
 Plug 'tpope/vim-dispatch'
@@ -739,68 +735,7 @@ Plug 'skywind3000/asyncrun.vim'
 Plug 'afternoon/vim-phpunit'
 
 " ----- Default phpunit settings ----- {{{
-"  See vim-test/autoload/test/strategy.vim +222
-function! s:execute_with_compiler(cmd, script) abort
-  try
-    let default_makeprg = &l:makeprg
-    let default_errorformat = &l:errorformat
-    let default_compiler = get(b:, 'current_compiler', '')
 
-    if exists(':Dispatch')
-      let compiler = dispatch#compiler_for_program(a:cmd)
-      if !empty(compiler)
-        execute 'compiler ' . compiler
-      endif
-    endif
-
-    let &l:makeprg = a:cmd
-
-    execute a:script
-  finally
-    let &l:makeprg = default_makeprg
-    let &l:errorformat = default_errorformat
-    if empty(default_compiler)
-      unlet! b:current_compiler
-    else
-      let b:current_compiler = default_compiler
-    endif
-  endtry
-endfunction
-
-function! Mapqfitems(key, val)
-    let l:result = copy(a:val)
-    let l:result['filename'] = substitute(bufname(a:val['bufnr']), '/var/www/jbx/', '', 'g')
-    unlet l:result['bufnr']
-    return l:result
-endfunction
-
-function! FinishTestAsyncRun()
-    if (g:asyncrun_code)
-        echo "Failure"
-        return
-    endif
-
-    let l:errors = getqflist()
-    if (len(l:errors))
-        copen
-        call setqflist([], 'r', {
-            \ 'title': 'Test Result',
-            \ 'items': map(l:errors, function('Mapqfitems'))
-        \ })
-    else
-        echom 'All tests passed!'
-    endif
-endfunction
-
-function! AsyncrunBackgroundUpdatedStrategy(cmd)
-  echom 'Running tests...'
-  let g:test#strategy#cmd = a:cmd
-  call test#strategy#asyncrun_setup_unlet_global_autocmd()
-  call s:execute_with_compiler(a:cmd, 'AsyncRun -strip -mode=async -silent -post=call\ FinishTestAsyncRun()'.' '.a:cmd)
-endfunction
-
-let g:test#custom_strategies = {'asyncrun_bg_updated': function('AsyncrunBackgroundUpdatedStrategy')}
-" let g:test#strategy = 'asyncrun_bg_updated'
 let g:test#strategy = 'neovim'
 let test#neovim#term_position = "vert botright"
 let g:dispatch_compilers = {}
