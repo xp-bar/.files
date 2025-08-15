@@ -741,8 +741,8 @@ let test#neovim#term_position = "vert botright"
 let g:dispatch_compilers = {}
 
 let test#php#phpunit#options = {
-  \ 'nearest': '-d memory_limit=2G --colors=always --testdox --xdebug',
-  \ 'file':    '-d memory_limit=2G --colors=always --testdox --xdebug',
+  \ 'nearest': '-d memory_limit=2G --colors=always --testdox',
+  \ 'file':    '-d memory_limit=2G --colors=always --testdox',
   \ 'suite':   '-d memory_limit=2G --testdox',
 \}
 
