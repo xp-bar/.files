@@ -282,6 +282,20 @@ function mkbr(){
         echo -e "\e[31mSorry, you need to provide a branch name.";
         return 1;
     fi
+
+    if [[ $(echo -n $INPUT | wc -c) -ge 32 ]]; then
+        read contin\?"`echo -e "\e[33mWarning:\e[0m"` your branch name is longer than 32 characters. Continue anyway? [y/n] "
+        case "$contin" in
+            [yY][eE][sS]|[yY])
+                echo -e "\e[33mContinuing anyways - you've been warned\!";
+                ;;
+            *)
+                echo -e "\e[31mAborting branch creation.";
+                return 1;
+                ;;
+        esac
+    fi
+
     git checkout -b ${INPUT}
     if [[ $? -ne 0 ]]; then
         echo -e "\e[31mSorry, something went wrong there";
