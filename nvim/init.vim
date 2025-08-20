@@ -308,7 +308,7 @@ let g:startify_bookmarks = [
         \ {'.x' : '~/.config/nvim/lua/xp-bar.lua'},
         \ {'.t' : '~/.tmux.conf'},
         \ {'.z' : '~/.zshrc'},
-        \ {'.p' : '~/.zsh-plugins'},
+        \ {'.ax' : '~/.antidote'},
         \ {'.h' : '.git/hooks/'},
         \ ]
 
