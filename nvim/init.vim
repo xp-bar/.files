@@ -720,6 +720,13 @@ function! DockerTransform(cmd) abort
   return 'docker-compose --project-directory="'. s:project_dir . '" exec core-app ' . a:cmd
 endfunction
 
+function! CustomVimTestPath()
+  let s:project_dir = substitute(finddir(".git", ";~/Code/"), ".git", "", "")
+  return s:project_dir
+endfunction
+
+let test#project_root = function('CustomVimTestPath')
+
 let g:test#custom_transformations = {
     \ 'docker': function('DockerTransform')
 \ }
