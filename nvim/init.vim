@@ -638,7 +638,8 @@ Plug 'tpope/vim-surround'
 Plug 'justinmk/vim-sneak'
 
 " Should keep me in root dir for commands like fzf
-Plug 'airblade/vim-rooter', { 'for': [ 'php', 'ruby', 'vue', 'javascript', 'typescript' ] }
+Plug 'airblade/vim-rooter'
+let g:rooter_patterns = ['.git', 'Makefile', '>Code', '=Code']
 
 " ---- FZF Plugins for Fuzzy File Finding ---- {{{
 if executable('fzf')
