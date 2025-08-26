@@ -5,6 +5,11 @@
 
 local actions = require "fzf-lua.actions"
 require('fzf-lua').setup({'default',
+  win_opts = {
+    preview = {
+      default = "bat"
+    }
+  },
   fzf_opts = {
     ['--layout'] = false,
   },
@@ -63,4 +68,52 @@ require('fzf-lua').setup({'default',
     --   ["default"] = actions.file_edit_or_qf
     -- }
   }
+})
+
+local grep_project = require"fzf-lua.providers.grep".grep_project
+vim.api.nvim_create_user_command('Rg', function (args)
+  local paths = {}
+
+  for k, a in pairs(args.fargs) do
+    if not a:find('^%-') then
+      table.insert(paths, a)
+    end
+  end
+
+  local opts = {
+    search_paths = paths
+  }
+
+  grep_project(opts)
+end, {
+  nargs = '*',
+  complete = 'file'
+})
+
+local git_diff = require"fzf-lua.providers.git".diff
+vim.api.nvim_create_user_command('Diff', function (args)
+  local a = args.args
+  local ref = (a and string.len(a) > 0) and args.args or 'HEAD'
+
+  git_diff({ref = ref})
+end, {
+    bang = true,
+    nargs = '?',
+    complete  = function (arglead, cmdline, cursorpos)
+      local cmd = 'git branch'
+      if string.len(arglead) > 0 then
+        cmd = cmd .. ' -l ' .. arglead
+      end
+
+      local output = vim.fn.system(cmd)
+      local branches = {}
+      for s in output:gmatch("[^\r\n]+") do
+        local branch = s:gsub("%s+", "")
+        if not branch:find("^*") then
+          table.insert(branches, branch)
+        end
+      end
+
+      return branches
+    end
 })
