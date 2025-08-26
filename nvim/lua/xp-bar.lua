@@ -12,3 +12,6 @@ require('xp-bar.fzf')
 -- -- Set up treesitter.
 require('xp-bar.treesitter')
 require('xp-bar.theme')
+
+-- -- Set up plugins
+require('xp-bar.plugins')
