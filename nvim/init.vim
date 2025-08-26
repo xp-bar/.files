@@ -579,40 +579,8 @@ Plug 'rcarriga/nvim-dap-ui'
 
 " --- Editor Config --- {{{
 
-" ----- Tagbar ----- {{{
-Plug 'majutsushi/tagbar'
-
-let s:hidden_all = 1
-
-function! s:tagbar_autopause()
-    let l:open = 0
-    let tagbarwinnr = -1
-
-    try
-        let tagbarwinnr = bufwinnr(t:tagbar_buf_name)
-    catch /^Vim(\a\+):E121:/
-        :TagbarOpen
-        :TagbarTogglePause
-        return
-    endtry
-
-    if tagbarwinnr != -1
-        let l:open = 1
-    endif
-
-    if l:open && winnr() == tagbarwinnr
-        :TagbarClose
-    elseif l:open && winnr() != tagbarwinnr
-        :TagbarOpen fj
-    elseif !l:open
-        :TagbarOpen
-    endif
-endfunction
-
-command! -bar TagbarFrozen call s:tagbar_autopause()
-nnoremap <silent> <C-s> :TagbarFrozen<cr>
-vnoremap <silent> <C-s> <esc>:TagbarOpen fj<cr> :TagbarCurrentTag<cr>
-" ----- }}}
+" Aerial.nvim
+Plug 'stevearc/aerial.nvim'
 
 " Close all buffers except open one
 Plug 'vim-scripts/BufOnly.vim'
