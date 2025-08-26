@@ -61,6 +61,7 @@ vim.lsp.config('lua_ls', {
       },
       workspace = {
         library = {
+          vim.env.VIMRUNTIME,
           vim.fn.expand'~/.luarocks/share/lua/5.3',
           '/usr/share/lua/5.3',
           '${3rd}/love2d/library'
