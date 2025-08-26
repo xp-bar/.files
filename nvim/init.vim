@@ -609,22 +609,6 @@ Plug 'justinmk/vim-sneak'
 Plug 'airblade/vim-rooter'
 let g:rooter_patterns = ['.git']
 
-" ---- FZF Plugins for Fuzzy File Finding ---- {{{
-if executable('fzf')
-    nnoremap <silent> <C-p> :FzfLua files<cr>
-    nnoremap <silent> <M-p> :FzfLua buffers<CR>
-    nnoremap <silent> <leader>gl :FzfLua lines<CR>
-
-    " nmap <silent> <leader>gd :FzfLua lsp_definitions<CR>
-    nmap <silent> <leader>gd :lua vim.lsp.buf.definition()<CR>
-    nmap <silent> <leader>gr :FzfLua lsp_references<CR>
-    nmap <silent> <leader>gk :FzfLua lsp_code_actions<CR>
-
-    nmap <silent> <leader>f :FzfLua<CR>
-    nmap <silent> <leader>rn :lua vim.lsp.buf.rename()<CR>
-end
-" }}}
-
 " ---- Ack for Vim ---- {{{
 Plug 'mileszs/ack.vim', {'on': ['Ack', 'Ack!']}
 cnoreabbrev Ack Ack!

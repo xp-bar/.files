@@ -70,6 +70,16 @@ require('fzf-lua').setup({'default',
   }
 })
 
+vim.keymap.set("n", "<C-p>", "<cmd>FzfLua files<CR>")
+vim.keymap.set("n", "<M-p>", "<cmd>FzfLua buffers<CR>")
+vim.keymap.set("n", "<C-f>", "<cmd>FzfLua lines<CR>")
+-- goto definition handled by native LSP
+vim.keymap.set("n", "<leader>gr", "<cmd>FzfLua lsp_references<CR>")
+vim.keymap.set("n", "<leader>gk", "<cmd>FzfLua lsp_code_actions<CR>")
+-- rename handled by native LSP
+
+vim.keymap.set("n", "<leader>f", "<cmd>FzfLua<CR>")
+
 local grep_project = require"fzf-lua.providers.grep".grep_project
 vim.api.nvim_create_user_command('Rg', function (args)
   local paths = {}

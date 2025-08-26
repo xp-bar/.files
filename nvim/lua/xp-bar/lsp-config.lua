@@ -170,3 +170,6 @@ vim.lsp.config('intelephense', {
 vim.diagnostic.config({
   virtual_text = true,
 })
+
+vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition)
+vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename)
