@@ -607,7 +607,7 @@ Plug 'justinmk/vim-sneak'
 
 " Should keep me in root dir for commands like fzf
 Plug 'airblade/vim-rooter'
-let g:rooter_patterns = ['.git', 'Makefile', '>Code', '=Code']
+let g:rooter_patterns = ['.git']
 
 " ---- FZF Plugins for Fuzzy File Finding ---- {{{
 if executable('fzf')
