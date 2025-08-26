@@ -25,9 +25,6 @@ then
     echo "Copied pdv templates"
 fi
 
-pnpm install -g intelephense
-
-
 # install the license key
 [ -e ~/.env ] || touch ~/.env
 read -s license\?"Intelephense License Key: [hidden] "
@@ -37,5 +34,5 @@ else
     gsed -nri "/^export INTELEPHENSE_LICENSE_KEY=/!p;\$aexport INTELEPHENSE_LICENSE_KEY=\"$license\"" ~/.env
 fi
 
-# install ruby-lsp
-gem install ruby-lsp
+# LSP Setup
+./installation/generic/neovim.zsh
