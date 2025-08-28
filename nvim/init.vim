@@ -609,17 +609,6 @@ Plug 'justinmk/vim-sneak'
 Plug 'airblade/vim-rooter'
 let g:rooter_patterns = ['.git']
 
-" ---- Ack for Vim ---- {{{
-Plug 'mileszs/ack.vim', {'on': ['Ack', 'Ack!']}
-cnoreabbrev Ack Ack!
-
-" Finding Keybinds for Ack
-nnoremap <leader><C-f> :Ack!<Space>
-vnoremap <leader><C-f> y :Ack!<Space><C-r>"
-nnoremap <C-f> /
-vnoremap <C-f> y /<C-r>"
-" ---- }}}
-
 " ---- Emmet ---- {{{
 Plug 'mattn/emmet-vim', {'for': ['html', 'vue', 'eruby', 'blade.php', 'typescriptreact']}
 
