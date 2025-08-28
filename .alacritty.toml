@@ -564,6 +564,11 @@ key = "Q"
 mods = "Control"
 
 [[keyboard.bindings]]
+chars = "\u001b[83;5u"
+key = "S"
+mods = "Control|Shift"
+
+[[keyboard.bindings]]
 chars = "\u001F"
 key = "Slash"
 mods = "Control"
