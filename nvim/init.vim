@@ -653,11 +653,6 @@ let g:test#transformation = 'docker'
 
 nnoremap <silent><leader>gt :GotoTest<cr>
 
-Plug 'tpope/vim-dispatch'
-Plug 'skywind3000/asyncrun.vim'
-
-Plug 'afternoon/vim-phpunit'
-
 " ----- Default phpunit settings ----- {{{
 
 let g:test#strategy = 'neovim'
@@ -786,7 +781,6 @@ let g:lightline#bufferline#clickable = v:true
 let g:lightline#bufferline#enable_devicons = v:true
 let g:lightline#bufferline#min_buffer_count = 2
 
-
 function! LightLineMode()
   return expand('%:t') ==# '__Tagbar__.1' ? 'Tagbar':
         \ expand('%:t') ==# 'ControlP' ? 'CtrlP' :
@@ -805,7 +799,6 @@ command! BufSync :execute 'bufdo :e' | source $VIMRUNTIME/syntax/syntax.vim
 " --- Remove user (plugin) commands I don't use --- {{{
 function! s:clear_startify_commands()
     " ---- Startify ---- {{{
-    delcommand Start
     delcommand SLoad
     delcommand SSave
     delcommand SDelete
