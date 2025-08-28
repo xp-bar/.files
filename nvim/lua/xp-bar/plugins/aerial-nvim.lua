@@ -10,7 +10,7 @@ aerial.setup({
 })
 
 -- You probably also want to set a keymap to toggle aerial
-vim.keymap.set("n", "<C-s>", "<cmd>AerialToggle!<CR>")
+vim.keymap.set("n", "<C-s>", "<cmd>AerialToggle!<CR>", {noremap = true})
 
 vim.api.nvim_create_user_command('FzfAerial', aerial.fzf_lua_picker, {})
-vim.keymap.set("n", "<C-S>", "<cmd>FzfAerial<CR>")
+vim.keymap.set("n", "<C-S-s>", "<cmd>FzfAerial<CR>", {noremap = true})
