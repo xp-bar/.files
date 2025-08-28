@@ -40,7 +40,10 @@ set hidden
 set shell=zsh
 set tagcase=smart
 set complete+=t
-set foldmethod=marker
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+set foldtext=nvim_treesitter#foldtext()
+set nofoldenable
 set foldlevel=0
 set nowrap
 set undofile
@@ -827,8 +830,3 @@ nmap <silent> <leader>I :InspectTree<cr>
 nnoremap <leader>IH :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
 \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
 \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set foldtext=nvim_treesitter#foldtext()
-set nofoldenable
