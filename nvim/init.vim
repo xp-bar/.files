@@ -313,29 +313,6 @@ Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
 
 " ---- Sidebar NERDTree ---- {{{
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
-noremap <silent> <C-\> :NERDTreeToggle<CR>
-noremap <leader>\ :NERDTreeFind<CR>
-let g:NERDTreeHijackNetrw = 1
-let g:NERDTreeQuitOnOpen = 1
-let g:NERDTreeIgnore = [
-        \ '\.png$',
-        \ '\.jpg$',
-        \ '\.gif$',
-        \ '\.mp3$',
-        \ '\.flac$',
-        \ '\.ogg$',
-        \ '\.mp4$',
-        \ '\.avi$',
-        \ '.webm$',
-        \ '.mkv$',
-        \ '\.pdf$',
-        \ '\.zip$',
-        \ '\.tar.gz$',
-        \ '\.rar$',
-        \ '\.DS_Store$',
-        \ '__.*$',
-        \ '^ting.*\.php',
-        \ ]
         
 " Git File marking for NERDTree
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
