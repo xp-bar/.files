@@ -296,84 +296,8 @@ packadd! xp-unjoin
 
 " --- User Interface --- {{{
 
-" ---- Startup Screen ---- {{{
+" -- Startify
 Plug 'mhinz/vim-startify'
-" Startify config
-let g:startify_bookmarks = [
-        \ {'~' : '~/'},
-        \ {'.a' : '~/.alias'},
-        \ {'.f' : '~/.function'},
-        \ {'.v' : '~/.config/nvim/init.vim'},
-        \ {'.x' : '~/.config/nvim/lua/xp-bar.lua'},
-        \ {'.t' : '~/.tmux.conf'},
-        \ {'.z' : '~/.zshrc'},
-        \ {'.ax' : '~/.antidote'},
-        \ {'.h' : '.git/hooks/'},
-        \ ]
-
-function! s:vim_sessions()
-    let files = systemlist('ls -1t ' . g:sessions_dir . ' | sed "s:.vim::g" | head -n 3')
-    if v:shell_error != 0
-        return []
-    endif
-
-    return map(files, '{
-            \ "line": v:val,
-            \  "cmd": "source " . g:sessions_dir . v:val . ".vim"
-        \ }')
-endfunction
-
-function! s:changed_files()
-    let files = systemlist('git --no-pager diff --name-only')
-    if v:shell_error != 0
-        return []
-    endif
-
-    return map(files, '{
-            \ "line": v:val,
-            \  "cmd": "edit ". v:val
-        \ }')
-endfunction
-
-function! s:untracked_files()
-    let files = systemlist('git ls-files --others --exclude-standard')
-    if v:shell_error != 0
-        return []
-    endif
-
-    return map(files, '{
-            \ "line": v:val,
-            \  "cmd": "edit ". v:val
-        \ }')
-endfunction
-
-
-let g:startify_lists = [
-        \ { 'header': ['   Untracked Files:'], 'type': function('s:untracked_files') },
-        \ { 'header': ['   Changed Files on: ' . substitute(system('git rev-parse --abbrev-ref HEAD'), '\n', '', 'g')], 'type': function('s:changed_files') },
-        \ { 'header': ['   Most Recently Used in '. getcwd()], 'type': 'dir' },
-        \ { 'header': ['   Bookmarks'], 'type': 'bookmarks' },
-        \ { 'header': ['   Recent Sessions:'], 'type': function('s:vim_sessions'), 'indices': map(range(1,5), '"s" . v:val')}
-        \ ]
-
-let g:toilet_font_dir = "~/.config/figlet/fonts/"
-
-let g:startify_custom_header = 
-            \ map(split(system('fortune -s -n $[$(tput cols)/4] computers | toilet -d ' . g:toilet_font_dir . ' -f "Stick Letters" -w $[$(tput cols) + 100]'), '\n'), '"   ". v:val')
-
-let g:startify_custom_footer =
-        \ map(
-        \    split(
-        \        system(
-        \            'fortune -l computers | cowsay -W 80 -f tux'
-        \        ),
-        \        '\n'
-        \    ),
-        \    '"   ". v:val'
-        \ )
-
-nnoremap <leader><C-s> :Startify<cr>
-"  }}}
 
 " -- Switch to absolute numbering when losing focus for a buffer -- {{{
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
