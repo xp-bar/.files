@@ -28,17 +28,6 @@ function M.get_footer()
     )
 end
 
-function M.map_bookmarks(bookmarks)
-    local mapped_bookmarks = {}
-    for shortcut, path in pairs(bookmarks) do
-        -- Each bookmark entry must be it's own list
-
-        table.insert(mapped_bookmarks, {[shortcut] = path})
-    end
-
-    return mapped_bookmarks
-end
-
 function M.map_lines_to_startify_list(lines)
     return map(lines, function (line) return {
         line = line,
