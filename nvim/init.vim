@@ -317,11 +317,7 @@ Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 " Git File marking for NERDTree
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 
-" --- GitGutter --- {{{
-Plug 'airblade/vim-gitgutter'
-
-let g:gitgutter_highlight_linenrs = 1
-" --- }}}
+Plug 'lewis6991/gitsigns.nvim'
 
 " --- Coloured Icon Support (dependency of multiple plugins) --- {{{
 Plug 'nvim-tree/nvim-web-devicons'

@@ -113,6 +113,21 @@ require("onedarkpro").setup({
       LspReferenceRead = { bg = '${gray}'},
       LspReferenceWrite = { bg = '${gray}', underline = true},
 
+      GitSignsAdd = { fg = '${green}', bg = '' },
+      GitSignsStagedAdd = { fg = '', bg = '${green}'},
+
+      GitSignsChange = { fg = '${orange}', bg = '' },
+      GitSignsStagedChange = { fg = '', bg = '${orange}' },
+
+      GitSignsChangedelete = { fg = '${orange}', bg = '' },
+      GitSignsStagedChangedelete = { fg = '', bg = '${orange}' },
+
+      GitSignsDelete = { fg = '${red}', bg = '' },
+      GitSignsStagedDelete = { fg = '', bg = '${red}' },
+
+      GitSignsTopDelete = { fg = '${red}', bg = '' },
+      GitSignsStagedTopDelete = { fg = '', bg = '${red}' },
+
       StartifyBracket = { fg = '${blue}' },
       StartifyFile = { fg = '${red}' },
       StartifyFooter = { fg = '${fg}' },
