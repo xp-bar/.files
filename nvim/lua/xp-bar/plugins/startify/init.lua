@@ -8,8 +8,8 @@ local git_diff = require('xp-bar.plugins.helpers').git.diff
 local git_untracked = require('xp-bar.plugins.helpers').git.untracked
 
 local homepage_lists = {
-  ['Untracked Files'] = git_diff,
-  ['Changed Files on: ' .. git_branch()] = git_untracked,
+  ['Untracked Files'] = git_untracked,
+  ['Changed Files on: ' .. git_branch()] = git_diff,
   ['Most recently used:'] = 'dir',
   ['Bookmarks'] = 'bookmarks',
 }
