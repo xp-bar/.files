@@ -317,21 +317,6 @@ Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 " Git File marking for NERDTree
 Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 
-" Custom indicator mappings for nerdtree-git-plugin
-let g:NERDTreeGitStatusIndicatorMapCustom = {
-        \ "Modified"  : "*",
-        \ "Staged"    : "+",
-        \ "Untracked" : "",
-        \ "Renamed"   : ">",
-        \ "Unmerged"  : "═",
-        \ "Deleted"   : "-",
-        \ "Dirty"     : "~",
-        \ "Clean"     : "",
-        \ 'Ignored'   : '',
-        \ "Unknown"   : ""
-        \ }
-"  }}}
-
 " --- GitGutter --- {{{
 Plug 'airblade/vim-gitgutter'
 
