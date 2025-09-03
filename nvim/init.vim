@@ -162,6 +162,9 @@ vnoremap > >gv
 nnoremap gb %
 vnoremap gb %
 
+nnoremap <C-f> /
+vnoremap <C-f> y /<C-r>"
+
 " ----- Easy Align ----- {{{
 Plug 'junegunn/vim-easy-align'
 

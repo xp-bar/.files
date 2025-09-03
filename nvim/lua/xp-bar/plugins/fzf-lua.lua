@@ -72,7 +72,6 @@ require('fzf-lua').setup({'default',
 
 vim.keymap.set("n", "<C-p>", "<cmd>FzfLua files<CR>")
 vim.keymap.set("n", "<M-p>", "<cmd>FzfLua buffers<CR>")
-vim.keymap.set("n", "<C-f>", "<cmd>FzfLua lines<CR>")
 -- goto definition handled by native LSP
 vim.keymap.set("n", "<leader>gr", "<cmd>FzfLua lsp_references<CR>")
 vim.keymap.set("n", "<leader>gk", "<cmd>FzfLua lsp_code_actions<CR>")
