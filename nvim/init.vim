@@ -475,7 +475,7 @@ Plug 'Raimondi/delimitMate'
 
 " Git wrapper for vim
 Plug 'tpope/vim-fugitive'
-nnoremap <silent><C-B> :Git blame<cr>
+nnoremap <silent><C-b> :Git blame<cr>
 
 " GV - git log browser
 Plug 'junegunn/gv.vim'
