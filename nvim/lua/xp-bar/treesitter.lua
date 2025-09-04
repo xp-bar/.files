@@ -3,6 +3,9 @@
 --
 -- My treesitter configs.
 
+vim.keymap.set('n', '<leader>i', '<cmd>Inspect<cr>', {silent = true})
+vim.keymap.set('n', '<leader>I', '<cmd>InspectTree<cr>', {silent = true})
+
 local parser_config = require "nvim-treesitter.parsers".get_parser_configs()
 parser_config.erb = {
   install_info = {
