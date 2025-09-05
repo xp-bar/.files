@@ -48,23 +48,13 @@ set foldlevel=0
 set nowrap
 set undofile
 set colorcolumn=120
-
 set path+=./**
 set wildmenu
 set wildignore+=**/node_modules/**
 set wildignore+=**/vendor/**
 set wildignore+=**/public/**
-" Hide -- INSERT --
 set noshowmode
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-" from: coc.nvim
 set updatetime=300
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-" from: coc.nvim
 set signcolumn=yes
 
 " Python 3 path for windows
@@ -556,23 +546,6 @@ Plug 'mengelbrecht/lightline-bufferline'
 
 set showtabline=2
 
-function! StatusDiagnostic() abort
-    let info = get(b:, 'coc_diagnostic_info', {})
-    if empty(info) | return '' | endif
-    let msgs = []
-    if get(info, 'error', 0)
-        call add(msgs, 'E' . info['error'])
-    endif
-    if get(info, 'warning', 0)
-        call add(msgs, 'W' . info['warning'])
-    endif
-    return join(msgs, ' ') . ' ' . get(g:, 'coc_status', '')
-endfunction
-
-function! CocCurrentFunction()
-    return get(b:, 'coc_current_function', '')
-endfunction
-
 let g:lightline = {
       \ 'colorscheme': 'two',
       \ 'active': {
@@ -583,7 +556,7 @@ let g:lightline = {
       \   'right': [
       \     [ 'lineinfo' ],
       \     [ 'percent' ],
-      \     [ 'cocstatus', 'cocfunction', 'fileformat', 'fileencoding', 'filetype' ]
+      \     ['fileformat', 'fileencoding', 'filetype' ]
       \   ]
       \ },
       \ 'tabline': {
@@ -600,8 +573,6 @@ let g:lightline = {
       \ 'component_function': {
       \   'mode': 'LightLineMode',
       \   'gitbranch': 'fugitive#head',
-      \   'cocstatus': 'StatusDiagnostic',
-      \   'cocfunction': 'CocCurrentFunction',
       \ },
       \ 'component_expand': {
       \   'buffers': 'lightline#bufferline#buffers'
