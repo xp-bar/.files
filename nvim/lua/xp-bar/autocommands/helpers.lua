@@ -1,10 +1,10 @@
 local M = {}
 
-function M.aug(name, pattern, callback, options)
+function M.aug(name, callback, options)
     options = options or {}
     local group = vim.api.nvim_create_augroup(name, options)
 
-    callback(function(events, param)
+    callback(function(events, pattern, param)
         return M.au(events, group, pattern, param)
     end
 )
