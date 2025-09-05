@@ -327,7 +327,6 @@ augroup syntaxcommands
     autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ $*\ %
 
     " New file and Read automds
-    autocmd BufNewFile,BufRead *.php set filetype=php
     autocmd BufNewFile,BufRead *.ts setlocal filetype=typescript
     autocmd BufNewFile,BufRead *.blade.php setlocal filetype=blade.php
     autocmd BufNewFile,BufRead *.dbml set syntax=dbml

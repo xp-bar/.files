@@ -6,5 +6,6 @@ aug('filetypes.php', '*.php', function (au)
     end)
     au({'BufNewFile','BufRead'}, function()
         vim.opt_local.nowrap = true
+        vim.opt.filetype = 'php'
     end)
 end)
