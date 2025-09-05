@@ -13,6 +13,28 @@ function M.map(list, func)
     return result
 end
 
+function M.flatten(item, key, result)
+    key = key or ''
+    result = result or {}
+
+    if type(item) == 'table' then
+        for k, v in pairs(item) do
+            -- if the key of an item starts with __, don't flatten it
+            if k:find('^%_%_') then
+                key = key:gsub('^%#', '')
+                result[key .. "#" .. k:gsub('^%_%_', '')] = item[k]
+            else
+                M.flatten(v, key .. "#" .. k, result)
+            end
+        end
+    else
+        key = key:gsub('^%#', '')
+        result[key] = item
+    end
+
+    return result
+end
+
 M.git = {}
 
 function M.git.branch()
