@@ -1,5 +1,4 @@
-" vim: set ts=2 sw=2:
-set nocompatible              " be iMproved, required
+set nocompatible
 
 if has('linux') && (substitute(system('which brew'), "\n", "", "") != "")
     set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf " fzf unix
@@ -26,10 +25,6 @@ Plug 'junegunn/vim-plug'
 " ---- Native Options ---- {{{
 set number numberwidth=4
 set number relativenumber
-set shiftwidth=4  " operation >> indents 4 columns; << unindents 4 columns
-set tabstop=4     " a hard TAB displays as 4 columns
-set expandtab     " insert spaces when hitting TABs
-set softtabstop=4 " insert/delete 4 spaces when hitting a TAB/BACKSPACE
 set shiftround    " round indent to multiple of 'shiftwidth'
 set autoindent    " align the new line indent with the previous line
 set conceallevel=0
@@ -56,6 +51,19 @@ set wildignore+=**/public/**
 set noshowmode
 set updatetime=300
 set signcolumn=yes
+
+" -- .editorconfig fallback options -- {{{
+" overwritten by .editorconfig's 'indent_size'
+set shiftwidth=4
+set softtabstop=4
+
+" overwritten by .editorconfig's 'indent_size' if 'indent_style' != 'tab' and
+" 'indent_size' is not set.
+set tabstop=4
+
+" overwritten by .editorconfig's 'indent_style'
+set expandtab
+" --}}}
 
 " Python 3 path for windows
 if (has('macunix'))
