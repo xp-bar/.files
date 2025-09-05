@@ -10,5 +10,8 @@ require('xp-bar.lsp-config')
 require('xp-bar.treesitter')
 require('xp-bar.theme')
 
+-- -- autocommands
+require('xp-bar.autocommands')
+
 -- -- Set up plugins
 require('xp-bar.plugins')
