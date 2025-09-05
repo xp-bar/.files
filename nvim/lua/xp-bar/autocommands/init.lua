@@ -13,3 +13,13 @@ aug('cursor hold functions', function (au)
         vim.lsp.buf.clear_references()
     end)
 end)
+
+aug('yank', function (au)
+    au({'TextYankPost'}, '*', function ()
+        vim.highlight.on_yank {
+            higroup="IncSearch",
+            timeout=150,
+            on_visual=true
+        }
+    end)
+end)
