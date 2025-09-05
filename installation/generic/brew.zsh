@@ -52,6 +52,7 @@ read response\?"Install CLI tools (ack, rg, etc.)? [y/n] "
             brew install tree
             brew install vim
             brew install zsh
+            brew install gawk
 
             # brew install reattach-to-user-namespace
             brew install rig
