@@ -198,7 +198,6 @@ augroup autoreload
     autocmd FileChangedShellPost *
       \ echohl WarningMsg | echo "File changed on disk. Buffer reloaded." | echohl None
 augroup END
-autocmd filetype crontab setlocal nobackup nowritebackup
 
 autocmd TextYankPost * lua vim.highlight.on_yank {higroup="IncSearch", timeout=150, on_visual=true}
 " ---- }}}
