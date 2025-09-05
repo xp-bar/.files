@@ -376,15 +376,6 @@ function! s:show_documentation()
 endfunction
 
 nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
-
-augroup holdfuncs
-autocmd!
-" Highlight symbol under cursor on CursorHold
-autocmd CursorHold  *.rb,*.php,*.js,*.vue,*.ts lua vim.lsp.buf.document_highlight()
-autocmd CursorHoldI *.rb,*.php,*.js,*.vue,*.ts lua vim.lsp.buf.document_highlight()
-autocmd CursorMoved *.rb,*.php,*.js,*.vue,*.ts lua vim.lsp.buf.clear_references()
-
-augroup END
 " ---- }}}
 
 nnoremap <silent> <leader>gl :Lines<CR>
