@@ -521,50 +521,8 @@ augroup phpImports
 augroup END
 " ---- }}}
 
-" ---- Testing ---- {{{
+" Vim-test
 Plug 'vim-test/vim-test', { 'for': [ 'php', 'ruby' ] }
-
-function! DockerTransform(cmd) abort
-  let s:project_dir = substitute(findfile("Dockerfile.dev", ";~/Code/"), "Dockerfile.dev", "", "")
-  return 'docker-compose --project-directory="'. s:project_dir . '" exec core-app ' . a:cmd
-endfunction
-
-let g:test#custom_transformations = {
-    \ 'docker': function('DockerTransform')
-\ }
-
-let g:test#transformation = 'docker'
-" ----- }}}
-
-nnoremap <silent><leader>gt :GotoTest<cr>
-
-" ----- Default phpunit settings ----- {{{
-
-let g:test#strategy = 'neovim'
-let test#neovim#term_position = "vert botright"
-let g:dispatch_compilers = {}
-
-let test#php#phpunit#options = {
-  \ 'nearest': '-d memory_limit=2G --colors=always --testdox',
-  \ 'file':    '-d memory_limit=2G --colors=always --testdox',
-  \ 'suite':   '-d memory_limit=2G --testdox',
-\}
-
-let test#ruby#rails#options = {
-  \ 'nearest': '-vp',
-  \ 'file':    '-vp',
-  \ 'suite':   '-vp',
-\}
-
-let test#php#phpunit#executable = "./vendor/bin/phpunit"
-" ----- }}}
-
-nnoremap <silent> <leader>tn :TestNearest<CR>
-nnoremap <silent> <leader>tf :TestFile<CR>
-nnoremap <silent> <leader>ts :TestSuite<CR>
-nnoremap <silent> <leader>t. :TestLast<CR>
-nnoremap <silent> <leader>td :TestVisit<CR>
-" ---- }}}
 
 " ---- Markdown ---- {{{
 " Fork with latest version of mermaid
