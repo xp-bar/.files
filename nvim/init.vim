@@ -187,13 +187,8 @@ augroup buffercmds
     " No linewrap html
     autocmd BufNewFile,BufRead *.html setlocal nowrap
     
-    " Spellcheck Markdown 
-    " autocmd BufNewFile,BufRead *.md setlocal spell spelllang=en_us
-    
     " No linewrap html
     autocmd BufNewFile,BufRead *.php setlocal nowrap
-
-    " autocmd BufNewFile,BufRead *.tsx setlocal tabstop=2 softtabstop=2 shiftwidth=2
     
     autocmd Filetype diff setlocal foldlevel=1000
     autocmd Filetype php setlocal foldlevel=1000
