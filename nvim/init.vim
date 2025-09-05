@@ -168,12 +168,6 @@ function! s:format_html()
     endif
 endfunction
 
-function! s:trim_whitespace()
-    let l:save = winsaveview()
-    keeppatterns %s/\s\+$//e
-    call winrestview(l:save)
-endfun
-
 augroup buffercmds 
     autocmd!
     " Auto allow folds in vimrc file
@@ -181,11 +175,6 @@ augroup buffercmds
     
     " Indent HTML files on save
     autocmd BufWritePre *.html :call s:format_html()
-
-    " trailing whitespace on save
-    autocmd BufWritePre *.php :call s:trim_whitespace()
-    autocmd BufWritePre *.md :call s:trim_whitespace()
-    autocmd BufWritePre *.volt :call s:trim_whitespace()
     
     " No linewrap html
     autocmd BufNewFile,BufRead *.html setlocal nowrap
