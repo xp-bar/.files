@@ -6,6 +6,10 @@ aug('filetypes.typescript', function (au)
         vim.bo.filetype = 'typescript'
     end)
 
+    au({'BufNewFile', 'BufRead'}, '*.tsx', function()
+        vim.bo.filetype = 'typescriptreact'
+    end)
+
     au({'Filetype'}, 'javascript', function()
         vim.o.makeprg = 'eslint'
     end)
