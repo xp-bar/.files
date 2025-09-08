@@ -23,3 +23,17 @@ aug('yank', function (au)
         }
     end)
 end)
+
+aug('nvim.configfile', function (au)
+    au({'BufNewFile', 'BufRead'}, '.vimrc, init.vim, init.lua', function()
+        vim.wo.foldlevelstart=0
+    end)
+end)
+
+aug('autoreload', function (au)
+    au({'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI'}, '*', "if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif")
+
+    au({'FileChangedShellPost'}, '*', function()
+        vim.notify("File changed on disk; buffer reloaded.", vim.log.levels.WARN)
+    end)
+end)
