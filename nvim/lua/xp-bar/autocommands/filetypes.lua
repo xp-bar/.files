@@ -24,3 +24,11 @@ aug('filetypes.md', function (au)
         vim.opt_local.spell = true
     end)
 end)
+
+-- Vue.js
+aug('filetypes.vue', function (au)
+    au({'Filetype'}, 'vue', function()
+        -- syntax sync fromstart
+        vim.o.makeprg = 'eslint'
+    end)
+end)

@@ -319,8 +319,6 @@ augroup syntaxcommands
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType scss setlocal omnifunc=csscomplete#CompleteCSS
     autocmd FileType sass setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType vue syntax sync fromstart
-    autocmd FileType vue setlocal makeprg=eslint\ --format=unix\ $*\ %
     autocmd FileType javascript setlocal makeprg=eslint\ --format=unix\ $*\ %
 
     " New file and Read automds
