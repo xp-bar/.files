@@ -8,6 +8,7 @@ aug('filetypes.vue', function (au)
 
     au({'Filetype'}, 'vue', function()
         vim.o.makeprg = 'eslint'
+        vim.bo.commentstring="<!--%s-->"
         vim.keymap.set('n', '<leader>d', '<Plug>(jsdoc)', {silent = true})
     end)
 end)
