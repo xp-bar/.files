@@ -13,5 +13,8 @@ require('xp-bar.theme')
 -- -- autocommands
 require('xp-bar.autocommands')
 
+-- -- filetype-specific configs
+require('xp-bar.filetypes')
+
 -- -- Set up plugins
 require('xp-bar.plugins')

@@ -1,5 +1,3 @@
-require('xp-bar.autocommands.filetypes')
-
 local aug = require('xp-bar.autocommands.helpers').aug
 
 -- Pop references when holding the cursor
@@ -25,13 +23,15 @@ aug('yank', function (au)
 end)
 
 aug('nvim.configfile', function (au)
-    au({'BufNewFile', 'BufRead'}, '.vimrc, init.vim, init.lua', function()
+    local pattern = '.vimrc, init.vim, init.lua'
+    au({'BufNewFile', 'BufRead'}, pattern, function()
         vim.wo.foldlevelstart=0
     end)
 end)
 
 aug('autoreload', function (au)
-    au({'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI'}, '*', "if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif")
+    local cmd = "if mode() !~ '\v(c|r.?|!|t)' && getcmdwintype() == '' | checktime | endif"
+    au({'FocusGained', 'BufEnter', 'CursorHold', 'CursorHoldI'}, '*', cmd)
 
     au({'FileChangedShellPost'}, '*', function()
         vim.notify("File changed on disk; buffer reloaded.", vim.log.levels.WARN)
