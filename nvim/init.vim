@@ -167,20 +167,6 @@ vnoremap <C-f> y /<C-r>"
 Plug 'junegunn/vim-easy-align'
 " ---- }}}
 
-" ---- Typewriter mode: follow the cursor ---- {{{
-nnoremap <leader>tt :call TypeWriterToggle()<cr>
-
-function! TypeWriterToggle()
-    if &scrolloff ==# "0"
-        :set scrolloff=99
-        :set sidescrolloff=99
-    else
-        :set scrolloff=0
-        :set sidescrolloff=0
-    endif
-endfunction
-" ---- }}}
-
 " ---- Navigate Tmux and Vim Seamlessly ---- {{{
 Plug 'christoomey/vim-tmux-navigator'
 " ---- }}}
@@ -194,6 +180,7 @@ packadd! xp-text-casing
 packadd! xp-changed
 packadd! xp-hidden
 packadd! xp-unjoin
+packadd! xp-typewriter-toggle
 " ---- }}}
 " --- }}}
 
