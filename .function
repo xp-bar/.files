@@ -120,6 +120,7 @@ function calc(){
 }
 
 function di() {
+    [[ $* = *"--last"* ]] && git diff HEAD^..HEAD && return 0;
     if [[ $@ == "" ]]; then
         git diff HEAD
     else
