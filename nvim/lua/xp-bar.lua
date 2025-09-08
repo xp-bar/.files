@@ -1,5 +1,7 @@
 -- xp-bar.lua
 -- vim: set ts=2 sw=2:
+--
+require('xp-bar.options')
 
 -- require('xp-bar.nvim-dap-config')
 

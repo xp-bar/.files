@@ -23,47 +23,10 @@ Plug 'junegunn/vim-plug'
 " ._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"._/"._/"._/"._/"._/"-.
 
 " ---- Native Options ---- {{{
-set number numberwidth=4
-set number relativenumber
-set shiftround    " round indent to multiple of 'shiftwidth'
-set autoindent    " align the new line indent with the previous line
-set conceallevel=0
-set smartcase " for search, use smart casing, only works with ignorecase
-set mousefocus
-set mouse=a
-set hidden
-set shell=zsh
-set tagcase=smart
-set complete+=t
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
-set foldtext=nvim_treesitter#foldtext()
-set nofoldenable
-set foldlevel=0
-set nowrap
-set undofile
-set colorcolumn=120
 set path+=./**
-set wildmenu
 set wildignore+=**/node_modules/**
 set wildignore+=**/vendor/**
 set wildignore+=**/public/**
-set noshowmode
-set updatetime=300
-set signcolumn=yes
-
-" -- .editorconfig fallback options -- {{{
-" overwritten by .editorconfig's 'indent_size'
-set shiftwidth=4
-set softtabstop=4
-
-" overwritten by .editorconfig's 'indent_size' if 'indent_style' != 'tab' and
-" 'indent_size' is not set.
-set tabstop=4
-
-" overwritten by .editorconfig's 'indent_style'
-set expandtab
-" --}}}
 
 " Python 3 path for windows
 if (has('macunix'))
@@ -71,19 +34,6 @@ if (has('macunix'))
 elseif (has('unix') && substitute(system('which brew'), "\n", "", "") != "")
     let g:python3_host_prog = '/home/linuxbrew/.linuxbrew/bin/python3'  " Python 3
 endif
-
-" PHP Neovim indentation options; sets arrow -> indentation back to classic
-" behaviour instead of aligning
-let g:PHP_noArrowMatching = 1
-
-" OSX stupid backspace fix
-set backspace=indent,eol,start
-
-" Autoread files to watch for changes outside of vim
-set autoread
-
-" halve the wait time for multi-key keybinds
-set ttm=25
 " --- }}}
 
 " --- General Settings --- {{{

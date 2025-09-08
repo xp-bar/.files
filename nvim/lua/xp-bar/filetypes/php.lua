@@ -1,5 +1,7 @@
 local aug = require('xp-bar.autocommands.helpers').aug
 
+vim.g.PHP_noArrowMatching = true
+
 -- PHP
 aug('filetypes.php', function (au)
     au({'Filetype'}, 'php', function()
