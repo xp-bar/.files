@@ -16,3 +16,6 @@ spelling_language = en-CA
 
 [*.tsx]
 indent_size = 2
+
+[*.css,*.scss,*.sass]
+indent_size = 2
