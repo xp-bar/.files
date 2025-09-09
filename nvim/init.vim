@@ -129,7 +129,7 @@ endfunction
 nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 " ---- }}}
 
-nnoremap <silent> <leader>gl :Lines<CR>
+nnoremap <silent> <leader>gl :FzfLua lines<CR>
 
 " NVIM DAP (config in lua) and DAP UI
 Plug 'mfussenegger/nvim-dap'
