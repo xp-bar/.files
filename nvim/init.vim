@@ -105,9 +105,6 @@ Plug 'heavenshell/vim-jsdoc'
 " }}}
 
 " --- Language Servers, Linting and Testing --- {{{
-
-command! -nargs=* -complete=customlist,php#laravel#blade_list Blade call php#laravel#blade_files(<f-args>)
-
 " PHPCS Fixer
 Plug 'stephpy/vim-php-cs-fixer', {'for': 'php', 'on': 'PhpCsFixerFixFile'}
 
@@ -115,8 +112,6 @@ Plug 'stephpy/vim-php-cs-fixer', {'for': 'php', 'on': 'PhpCsFixerFixFile'}
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
-
-nmap <silent> <leader>ga :call php#laravel#goto_attribute()<CR>
 " ---- }}}
 
 " NVIM DAP (config in lua) and DAP UI
