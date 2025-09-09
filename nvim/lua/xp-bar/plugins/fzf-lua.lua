@@ -126,3 +126,7 @@ end, {
       return branches
     end
 })
+
+vim.keymap.set('n', '<leader>gl', function()
+  return require('fzf-lua').files()
+end, {silent = true})
