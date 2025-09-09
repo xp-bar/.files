@@ -70,19 +70,16 @@ packadd! xp-typewriter-toggle
 " -- Startify
 Plug 'mhinz/vim-startify'
 
-" -- Switch to absolute numbering when losing focus for a buffer -- {{{
+" -- Switch to absolute numbering when losing focus for a buffer
 Plug 'jeffkreeftmeijer/vim-numbertoggle'
-" -- }}}
 
-" -- Visual marks -- {{{
+" -- Visual marks
 Plug 'kshenoy/vim-signature'
-"  }}}
 
-" -- fzf-lua -- {{{
+" -- fzf-lua
 Plug 'ibhagwan/fzf-lua', {'branch': 'main'}
-" }}}
 
-" ---- Sidebar NERDTree ---- {{{
+" ---- Sidebar NERDTree
 Plug 'preservim/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
         
 " Git File marking for NERDTree
@@ -90,17 +87,14 @@ Plug 'Xuyuanp/nerdtree-git-plugin', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 
 Plug 'lewis6991/gitsigns.nvim'
 
-" --- Coloured Icon Support (dependency of multiple plugins) --- {{{
+" --- Coloured Icon Support (dependency of multiple plugins)
 Plug 'nvim-tree/nvim-web-devicons'
-" --- }}}
 
-" --- Goyo --- {{{
+" --- Goyo
 Plug 'junegunn/goyo.vim', {'for': 'markdown', 'on': 'Goyo'}
-" --- }}}
 "
-" --- Indentation Markers --- {{{
+" --- Indentation Markers
 Plug 'lukas-reineke/indent-blankline.nvim'
-" --- }}}
 
 " }}}
 
