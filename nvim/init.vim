@@ -102,11 +102,6 @@ Plug 'prettier/vim-prettier', {'on': 'Prettier', 'for': ['javascript', 'vue', 't
 " JS Doc
 Plug 'heavenshell/vim-jsdoc'
 " ---- }}}
-
-command! WebpackImport call vue#snippets#webpack_async_import()
-command! Vue call vue#snippets#vue_files()
-command! Mutator call vue#snippets#set_mutator()
-command! Getter call vue#snippets#get_getter()
 " }}}
 
 " --- Language Servers, Linting and Testing --- {{{
