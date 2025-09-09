@@ -96,8 +96,6 @@ Plug 'nvim-tree/nvim-web-devicons'
 
 " --- Goyo --- {{{
 Plug 'junegunn/goyo.vim', {'for': 'markdown', 'on': 'Goyo'}
-let g:goyo_width = 120
-nnoremap <silent><leader>y :Goyo \| call buftabline#update(0)<cr>
 " --- }}}
 "
 " --- Indentation Markers --- {{{
