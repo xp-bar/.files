@@ -117,16 +117,6 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 
 nmap <silent> <leader>ga :call php#laravel#goto_attribute()<CR>
-
-function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<cword>')
-    else
-        :lua vim.lsp.buf.hover()
-    endif
-endfunction
-
-nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 " ---- }}}
 
 " NVIM DAP (config in lua) and DAP UI

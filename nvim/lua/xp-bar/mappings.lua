@@ -67,3 +67,11 @@ vim.keymap.set('v', '<C-f>', 'y /<C-r>"')
 
 -- ??? something I had mapped near emmet
 vim.keymap.set('i', '<C-Return>', '<cr><cr><C-o>k<Tab>')
+
+vim.keymap.set('n', '<leader>k', function()
+    if vim.bo.filetype == 'vim' or vim.bo.filetype == 'help' then
+        vim.cmd('help ' .. vim.fn.expand('<cword>'))
+    else
+        vim.lsp.buf.hover()
+    end
+end)
