@@ -108,24 +108,8 @@ Plug 'heavenshell/vim-jsdoc'
 
 command! -nargs=* -complete=customlist,php#laravel#blade_list Blade call php#laravel#blade_files(<f-args>)
 
-" ---- PHPCS Fixer ---- {{{
+" PHPCS Fixer
 Plug 'stephpy/vim-php-cs-fixer', {'for': 'php', 'on': 'PhpCsFixerFixFile'}
-
-let g:phpcs_fix = v:true
-let g:php_cs_fixer_config = "$HOME/.php-cs-fixer.php"
-
-function! s:phpcs_fix()
-    if (g:phpcs_fix)
-        call PhpCsFixerFixFile()
-    fi
-endfunction
-
-augroup phpcsfix
-    autocmd!
-    autocmd BufWritePost *.php silent! call s:phpcs_fix()
-augroup END
-
-" ---- }}}
 
 " -- LSP Setup -- {{{
 Plug 'neovim/nvim-lspconfig'
