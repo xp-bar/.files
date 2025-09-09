@@ -47,10 +47,10 @@ vim.keymap.set('n', '<leader>w', ':w<cr>')
 vim.keymap.set('v', '<leader>s', ':sort<cr>')
 
 -- Resize window
-vim.keymap.set('n', '<C-w><C-Up>', ':res +5<cr>')
-vim.keymap.set('n', '<C-w><C-Down>', ':res -5<cr>')
-vim.keymap.set('n', '<C-w><C-Left>', ':vert res +5<cr>')
-vim.keymap.set('n', '<C-w><C-Right>', ':vert res -5<cr>')
+vim.keymap.set('n', '<C-w><C-Up>', ':res +2<cr>')
+vim.keymap.set('n', '<C-w><C-Down>', ':res -2<cr>')
+vim.keymap.set('n', '<C-w><C-,>', ':vert res +2<cr>')
+vim.keymap.set('n', '<C-w><C-.>', ':vert res -2<cr>')
 
 -- shift lines indent levels in visual mode
 vim.keymap.set('v', '<', '<gv')
