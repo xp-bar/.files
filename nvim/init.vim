@@ -44,9 +44,8 @@ Plug 'moll/vim-bbye'
 " Easy Align
 Plug 'junegunn/vim-easy-align'
 
-" ---- Navigate Tmux and Vim Seamlessly ---- {{{
+" Navigate Tmux and Vim Seamlessly
 Plug 'christoomey/vim-tmux-navigator'
-" ---- }}}
 " --- }}}
 
 " --- User Interface --- {{{
