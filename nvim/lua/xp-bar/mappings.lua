@@ -64,3 +64,6 @@ vim.keymap.set('n', '<C-f>', '/')
 
 -- quick find selected range
 vim.keymap.set('v', '<C-f>', 'y /<C-r>"')
+
+-- ??? something I had mapped near emmet
+vim.keymap.set('i', '<C-Return>', '<cr><cr><C-o>k<Tab>')

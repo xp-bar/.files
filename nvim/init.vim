@@ -180,14 +180,12 @@ Plug 'vim-scripts/BufOnly.vim'
 
 " Tmux-style Pane Zooming
 Plug 'dhruvasagar/vim-zoom'
-nnoremap <leader>+ :<C-u>call zoom#toggle()<cr>
 
 " delimiter assistance
 Plug 'Raimondi/delimitMate'
 
 " Git wrapper for vim
 Plug 'tpope/vim-fugitive'
-nnoremap <silent><C-b> :Git blame<cr>
 
 " GV - git log browser
 Plug 'junegunn/gv.vim'
@@ -200,23 +198,12 @@ Plug 'justinmk/vim-sneak'
 
 " Should keep me in root dir for commands like fzf
 Plug 'airblade/vim-rooter'
-let g:rooter_patterns = ['.git']
 
-" ---- Emmet ---- {{{
+" Emmet
 Plug 'mattn/emmet-vim', {'for': ['html', 'vue', 'eruby', 'blade.php', 'typescriptreact']}
 
-let g:user_emmet_leader_key='<leader>' 
-let g:user_emmet_mode='n'
-
-inoremap <C-Return> <cr><cr><C-o>k<Tab>
-" ---- }}}
-
-" ---- Comment and Un-comment lines on the fly ---- {{{
+" Toggle line comments
 Plug 'tpope/vim-commentary'
-" https://stackoverflow.com/questions/9051837/how-to-map-c-to-toggle-comments-in-vim
-" Vim recognizes C-_ as C-/, so control+/ will toggle comments
-noremap <C-_> :Commentary<cr>
-" ---- }}}
 
 " --- }}}
 
@@ -224,18 +211,12 @@ noremap <C-_> :Commentary<cr>
 " Vim-test
 Plug 'vim-test/vim-test', { 'for': [ 'php', 'ruby' ] }
 
-" ---- Markdown ---- {{{
-" Fork with latest version of mermaid
-" Plug 'sherocktong/markdown-preview.nvim', {'for': 'markdown', 'do': function('mkdp#util#install')}
+" Markdown
 Plug 'iamcco/markdown-preview.nvim', {'for': 'markdown', 'do': function('mkdp#util#install')}
-let g:mkdp_markdown_css = '~/Code/.files/nvim/dependencies/markdown/custom.css'
-" ---- }}}
 
-" ---- Documentation stubs ---- {{{
+" Documentation stubs
 Plug 'tobyS/vmustache'
 Plug 'tobyS/pdv'
-let g:pdv_template_dir=expand($HOME) . "/.pdv-templates"
-" ---- }}}
 " --- }}}
 
 " --- Themimg --- {{{
