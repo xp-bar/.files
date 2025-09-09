@@ -252,12 +252,6 @@ Plug 'olimorris/onedarkpro.nvim'
 
 syntax on
 
-if (has("termguicolors"))
-    set termguicolors
-else
-    set notermguicolors
-endif
-
 " ---- Lightline for Vim ---- {{{
 
 Plug 'itchyny/lightline.vim'

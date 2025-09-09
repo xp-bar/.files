@@ -21,6 +21,7 @@ vim.o.showtabline    = 2
 vim.o.signcolumn     = 'yes'
 vim.o.smartcase      = true
 vim.o.tagcase        = "smart"
+vim.o.termguicolors  = vim.fn.has('termguicolors') == 1
 vim.o.ttm            = 25
 vim.o.undofile       = true
 vim.o.updatetime     = 300
