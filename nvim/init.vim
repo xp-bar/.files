@@ -47,18 +47,6 @@ Plug 'junegunn/vim-easy-align'
 " ---- Navigate Tmux and Vim Seamlessly ---- {{{
 Plug 'christoomey/vim-tmux-navigator'
 " ---- }}}
-
-" ---- Custom Pack stuff  ---- {{{
-packadd! xp-session
-let g:sessions_dir = '~/vim-sessions/'
-
-packadd! xp-where
-packadd! xp-text-casing
-packadd! xp-changed
-packadd! xp-hidden
-packadd! xp-unjoin
-packadd! xp-typewriter-toggle
-" ---- }}}
 " --- }}}
 
 " --- User Interface --- {{{
