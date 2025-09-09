@@ -129,8 +129,6 @@ command! WebpackImport call vue#snippets#webpack_async_import()
 command! Vue call vue#snippets#vue_files()
 command! Mutator call vue#snippets#set_mutator()
 command! Getter call vue#snippets#get_getter()
-
-set omnifunc=v:lua.vim.lsp.omnifunc
 " }}}
 
 " --- Language Servers, Linting and Testing --- {{{

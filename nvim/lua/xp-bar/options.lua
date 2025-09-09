@@ -12,6 +12,7 @@ vim.o.mouse          = "a"
 vim.o.mousefocus     = true
 vim.o.number         = true
 vim.o.numberwidth    = 4
+vim.o.omnifunc       = 'v:lua.vim.lsp.omnifunc'
 vim.o.relativenumber = true
 vim.o.shell          = "zsh"
 vim.o.shiftround     = true
