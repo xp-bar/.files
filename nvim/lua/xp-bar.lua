@@ -3,6 +3,7 @@
 --
 require('xp-bar.options')
 require('xp-bar.mappings')
+require('xp-bar.abbrev')
 
 -- require('xp-bar.nvim-dap-config')
 

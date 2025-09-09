@@ -37,10 +37,6 @@ endif
 " --- }}}
 
 " --- General Settings ---
-" abbreviations
-cnoreabbrev ww setl wrap!|setl lbr!
-cnoreabbrev Qa qa
-cnoreabbrev QA qa
 
 " Nicer buffer closing
 Plug 'moll/vim-bbye'
