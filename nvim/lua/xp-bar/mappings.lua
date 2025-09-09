@@ -18,7 +18,7 @@ vim.keymap.set('n', '<S-j>', ':bnext<cr>', {silent = true})
 vim.keymap.set('n', '<S-k>', ':bprev<cr>', {silent = true})
 
 -- splits
-vim.keymap.set({'n', 'v'}, '<leader>\\|', ':vsp<cr>', {silent = true})
+vim.keymap.set({'n', 'v'}, '<leader>|', ':vsp<cr>', {silent = true})
 vim.keymap.set({'n', 'v'}, '<leader>_', ':sp<cr>', {silent = true})
 
 -- unset arrow keys in normal mode
