@@ -36,86 +36,17 @@ elseif (has('unix') && substitute(system('which brew'), "\n", "", "") != "")
 endif
 " --- }}}
 
-" --- General Settings --- {{{
-" ---- General Mappings ---- {{{
-map <Space> <leader>
-nmap ,* *<C-O>:%s///gn<CR>
-omap <silent> a- :normal Va-<cr>
-nnoremap <silent><esc><esc> :set nopaste<cr>
-vnoremap <silent> a- <esc>:setl nohlsearch<cr>?[^a-z-]<cr>:normal! ebmk<cr>/[^a-z-]<cr>:normal! beml<cr>:setl hlsearch \| noh<cr>`kv`l
-
-" change between parens
-onoremap in( :<c-u>normal! f(vi(<cr>
-
+" --- General Settings ---
 " abbreviations
 cnoreabbrev ww setl wrap!|setl lbr!
 cnoreabbrev Qa qa
 cnoreabbrev QA qa
 
-" ----- Buffers ----- {{{
 " Nicer buffer closing
 Plug 'moll/vim-bbye'
-nnoremap <leader>q :Bdelete<cr>
-
-" Buffer switching
-nnoremap <silent> <S-j> :bnext<cr>
-nnoremap <silent> <S-k> :bprev<cr>
-" ----- }}}
-
-" ----- Splits ----- {{{
-nnoremap <leader>\| :vsp<cr>
-nnoremap <leader>_ :sp<cr>
-vnoremap <leader>\| :vsp<cr>
-vnoremap <leader>_ :sp<cr>
-" ----- }}}
-
-" Stop using the Arrow keys in normal mode
-nnoremap <Up> <nop>
-nnoremap <Down> <nop>
-nnoremap <Left> <nop>
-nnoremap <Right> <nop>
-
-" Stop using C-q for visual block, use <C-v>
-nnoremap <C-q> <nop>
-
-" Map Leader space to commands
-noremap <leader><Space> :
-
-" Unbind <esc>
-inoremap <esc> <nop>
-" Use jk instead of <esc> 
-inoremap jk <esc>
-vnoremap jk <esc>
-
-" Clear highlight after search
-nnoremap <silent><cr> :noh<CR><CR>:<backspace>
-
-nnoremap <leader>w :w<cr>
-vnoremap <leader>s :sort<cr>
-" ---- }}}
-
-" ---- Movement and resizing ---- {{{
-
-" Resize window
-noremap <C-w><C-Up> :res +5<cr> 
-noremap <C-w><C-Down> :res -5<cr> 
-noremap <C-w><C-Left> :vert res +5<cr>
-noremap <C-w><C-Right> :vert res -5<cr>
-
-" visual shifting (builtin-repeat)
-vnoremap < <gv
-vnoremap > >gv
-
-"goto brace
-nnoremap gb %
-vnoremap gb %
-
-nnoremap <C-f> /
-vnoremap <C-f> y /<C-r>"
 
 " Easy Align
 Plug 'junegunn/vim-easy-align'
-" ---- }}}
 
 " ---- Navigate Tmux and Vim Seamlessly ---- {{{
 Plug 'christoomey/vim-tmux-navigator'

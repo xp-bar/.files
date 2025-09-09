@@ -2,6 +2,7 @@
 -- vim: set ts=2 sw=2:
 --
 require('xp-bar.options')
+require('xp-bar.mappings')
 
 -- require('xp-bar.nvim-dap-config')
 
