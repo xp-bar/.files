@@ -17,6 +17,7 @@ vim.o.relativenumber = true
 vim.o.shell          = "zsh"
 vim.o.shiftround     = true
 vim.o.showmode       = false
+vim.o.showtabline    = 2
 vim.o.signcolumn     = 'yes'
 vim.o.smartcase      = true
 vim.o.tagcase        = "smart"

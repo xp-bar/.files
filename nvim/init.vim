@@ -263,8 +263,6 @@ endif
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
 
-set showtabline=2
-
 let g:lightline = {
       \ 'colorscheme': 'two',
       \ 'active': {
