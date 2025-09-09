@@ -114,11 +114,6 @@ Plug 'prettier/vim-prettier', {'on': 'Prettier', 'for': ['javascript', 'vue', 't
 
 " JS Doc
 Plug 'heavenshell/vim-jsdoc'
-let g:jsdoc_allow_input_prompt=0
-let g:jsdoc_enable_es6=1
-let g:jsdoc_input_description=1
-let g:jsdoc_return_description=0
-
 " ---- }}}
 
 command! WebpackImport call vue#snippets#webpack_async_import()
