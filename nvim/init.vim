@@ -149,8 +149,6 @@ Plug 'tobyS/pdv'
 " --- Themimg --- {{{
 Plug 'olimorris/onedarkpro.nvim'
 
-syntax on
-
 " ---- Lightline for Vim ---- {{{
 
 Plug 'itchyny/lightline.vim'

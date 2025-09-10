@@ -24,3 +24,4 @@ require('xp-bar.autocommands')
 -- -- filetype-specific configs
 require('xp-bar.filetypes')
 
+vim.cmd('syntax on')
