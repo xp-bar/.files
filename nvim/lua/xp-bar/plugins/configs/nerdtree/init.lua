@@ -26,4 +26,4 @@ vim.g.NERDTreeIgnore = {
 vim.keymap.set("n", "<C-\\>", "<cmd>NERDTreeToggle<CR>", {noremap = true, silent = true})
 vim.keymap.set("n", "<leader>\\", "<cmd>NERDTreeFind<CR>", {noremap = true, silent = true})
 
-require('xp-bar.plugins.nerdtree.git-plugin')
+require('xp-bar.plugins.configs.nerdtree.git-plugin')

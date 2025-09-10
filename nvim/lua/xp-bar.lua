@@ -1,10 +1,13 @@
 -- xp-bar.lua
 -- vim: set ts=2 sw=2:
---
+
 require('xp-bar.options')
 require('xp-bar.mappings')
 require('xp-bar.abbrev')
 require('xp-bar.packs')
+
+-- -- Set up plugins
+require('xp-bar.plugins')
 
 -- require('xp-bar.nvim-dap-config')
 
@@ -21,5 +24,3 @@ require('xp-bar.autocommands')
 -- -- filetype-specific configs
 require('xp-bar.filetypes')
 
--- -- Set up plugins
-require('xp-bar.plugins')

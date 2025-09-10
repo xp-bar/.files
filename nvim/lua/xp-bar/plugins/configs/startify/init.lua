@@ -1,8 +1,7 @@
 -- startify.lua
 -- vim: set ts=2 sw=2:
 
-local helpers = require('xp-bar.plugins.startify.helpers')
-local map = require('xp-bar.plugins.helpers').map
+local helpers = require('xp-bar.plugins.configs.startify.helpers')
 local git_branch = require('xp-bar.plugins.helpers').git.branch
 local git_diff = require('xp-bar.plugins.helpers').git.diff
 local git_untracked = require('xp-bar.plugins.helpers').git.untracked
