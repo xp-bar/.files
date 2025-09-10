@@ -1,11 +1,5 @@
 set nocompatible
 
-if has('linux') && (substitute(system('which brew'), "\n", "", "") != "")
-    set rtp+=/home/linuxbrew/.linuxbrew/opt/fzf " fzf unix
-else
-    set rtp+=/usr/local/opt/fzf " fzf mac
-endif
-
 call plug#begin('~/.vim/bundle')
 
 " Only need to install for h: support
