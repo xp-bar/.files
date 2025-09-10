@@ -49,4 +49,23 @@ function M.git.untracked()
     return vim.fn.systemlist('git ls-files --others --exclude-standard 2>/dev/null')
 end
 
+M.plugins = {}
+
+function M.plugins.start(opts)
+    opts = opts or nil
+    vim.call("plug#begin", opts)
+end
+
+function M.plugins.finish()
+    vim.call("plug#end")
+end
+
+function M.plugins.install(plugin, opts)
+    if opts then
+        vim.fn['plug#'](plugin, opts)
+    else
+        vim.fn['plug#'](plugin)
+    end
+end
+
 return M
