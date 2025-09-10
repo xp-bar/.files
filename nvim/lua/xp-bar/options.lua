@@ -29,11 +29,9 @@ vim.o.wildmenu       = true
 vim.o.wrap           = false
 vim.wo.foldexpr      = 'v:lua.vim.treesitter.foldexpr()'
 
--- not quite sure how to move over yet --
--- vim.o.path           += './**'
--- vim.o.wildignore     += **/node_modules/**
--- vim.o.wildignore     += **/vendor/**
--- vim.o.wildignore     += **/public/**
+-- set list-style options
+vim.opt.path:append('./**')
+vim.opt.wildignore:append({'**/node_modules/**', '**/vendor/**', '**/public/**'})
 
 -- .editorconfig fallback options --
 vim.o.expandtab      = true

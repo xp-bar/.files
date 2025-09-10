@@ -23,10 +23,6 @@ Plug 'junegunn/vim-plug'
 " ._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"-._/"._/"._/"._/"._/"._/"-.
 
 " ---- Native Options ---- {{{
-set path+=./**
-set wildignore+=**/node_modules/**
-set wildignore+=**/vendor/**
-set wildignore+=**/public/**
 
 " Python 3 path for windows
 if (has('macunix'))
