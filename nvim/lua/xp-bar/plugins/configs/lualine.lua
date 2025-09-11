@@ -18,7 +18,7 @@ require('lualine').setup {
     },
     ignore_focus = {},
     always_divide_middle = true,
-    always_show_tabline = true,
+    always_show_tabline = false,
     globalstatus = false,
     refresh = {
       statusline = 1000,
@@ -57,11 +57,19 @@ require('lualine').setup {
   },
   tabline = {
     lualine_a = {
-        -- main thing we're missing from lightline is a "minimum count before shown" for bufferline
-        {'buffers', buffers_color = {
+        {
+          'buffers',
+          -- see: https://github.com/nvim-lualine/lualine.nvim/issues/1294#issuecomment-2487409554
+          cond = function()
+            local cond = #vim.fn.getbufinfo { buflisted = 1 } > 1
+            vim.opt.showtabline = cond and 2 or 1
+            return cond
+          end,
+          buffers_color = {
             active = {bg = '#c678dd', fg = '#282c34'},
             inactive = {bg = '#282c34', fg = '#abb2bf'},
-        }}
+          }
+        }
     },
   },
   winbar = {},
