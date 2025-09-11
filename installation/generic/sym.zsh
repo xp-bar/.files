@@ -28,8 +28,6 @@ touch ~/.env
 ln -sv $PWD/nvim/init.vim ~/.config/nvim/init.vim
 [ -d ~/.config/nvim/lua/ ] || ln -sv $PWD/nvim/lua ~/.config/nvim/lua
 ln -sv $PWD/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
-[ -d ~/.config/nvim/colors/ ] || mkdir -p ~/.config/nvim/colors/
-ln -sv $PWD/nvim/colors/two.vim ~/.config/nvim/colors
 ln -sv $PWD/nvim/packs $HOME/.config/nvim/pack
 [ -e ~/.config/nvim/dependencies/ ] || ln -sv $PWD/nvim/dependencies/ ~/.config/nvim/dependencies
 
