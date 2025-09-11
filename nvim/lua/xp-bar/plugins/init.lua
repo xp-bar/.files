@@ -43,6 +43,7 @@ Plugins.install('iamcco/markdown-preview.nvim', {['for'] = 'markdown', ['do'] = 
 Plugins.install('tobyS/vmustache') -- documentation stubs
 Plugins.install('tobyS/pdv') -- documentation stubs
 Plugins.install('olimorris/onedarkpro.nvim') -- theme
+Plugins.install('nvim-lualine/lualine.nvim') -- bottom line and bufferline
 
 Plugins.finish()
 
