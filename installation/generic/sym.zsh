@@ -25,7 +25,7 @@ touch ~/.env
 
 # NVIM stuff
 [ -d ~/.config/nvim/ ] || mkdir -p ~/.config/nvim/
-ln -sv $PWD/nvim/init.vim ~/.config/nvim/init.vim
+ln -sv $PWD/nvim/init.lua ~/.config/nvim/init.lua
 [ -d ~/.config/nvim/lua/ ] || ln -sv $PWD/nvim/lua ~/.config/nvim/lua
 ln -sv $PWD/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
 ln -sv $PWD/nvim/packs $HOME/.config/nvim/pack
