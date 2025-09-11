@@ -1,6 +1,7 @@
 -- startify.lua
 -- vim: set ts=2 sw=2:
 
+local aug = require('xp-bar.autocommands.helpers').aug
 local helpers = require('xp-bar.plugins.configs.startify.helpers')
 local git_branch = require('xp-bar.plugins.helpers').git.branch
 local git_diff = require('xp-bar.plugins.helpers').git.diff
@@ -29,3 +30,23 @@ vim.g.toilet_font_dir = '~/.config/figlet/fonts/'
 vim.g.startify_custom_header = helpers.get_header()
 vim.g.startify_custom_footer = helpers.get_footer()
 vim.g.startify_lists = helpers.startify_lists(homepage_lists)
+
+aug('clear startify commands', function (au)
+  au({'VimEnter'}, '*', function()
+    -- these don't work the way I expect
+    -- vim.api.nvim_del_user_command('SLoad')
+    -- vim.api.nvim_del_user_command('SSave')
+    -- vim.api.nvim_del_user_command('SDelete')
+    -- vim.api.nvim_del_user_command('SClose')
+    -- vim.api.nvim_del_user_command('SExplore')
+    -- vim.api.nvim_del_user_command('StartifyDebug')
+
+    -- so we're using vim.cmd instead:
+    vim.cmd('delcommand SLoad')
+    vim.cmd('delcommand SSave')
+    vim.cmd('delcommand SDelete')
+    vim.cmd('delcommand SClose')
+    vim.cmd('delcommand StartifyDebug')
+    vim.cmd('delcommand Sexplore')
+  end)
+end)
