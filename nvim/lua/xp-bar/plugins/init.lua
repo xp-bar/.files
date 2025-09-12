@@ -37,6 +37,7 @@ Plugins.install('tpope/vim-surround') -- surround a text object w/ chars
 Plugins.install('justinmk/vim-sneak') -- extra movement motions
 Plugins.install('airblade/vim-rooter') -- find project root
 Plugins.install('mattn/emmet-vim', {['for'] = {'html', 'vue', 'eruby', 'blade.php', 'typescriptreact'}})
+Plugins.install('numToStr/Comment.nvim') -- comments
 Plugins.install('vim-test/vim-test', {['for'] = { 'php', 'ruby' } }) -- testing
 Plugins.install('iamcco/markdown-preview.nvim', {['for'] = 'markdown', ['do'] = function() vim.fn['mkdp#util#install']() end})
 Plugins.install('tobyS/vmustache') -- documentation stubs
