@@ -12,6 +12,12 @@ require('zen-mode').setup({
         twilight = true,
         gitsigns = true,
     },
+    on_open = function(win)
+        require('ibl').update({enabled = false})
+    end,
+    on_close = function()
+        require('ibl').update({enabled = true})
+    end,
 })
 
 vim.keymap.set({'n', 'v'}, '<leader>y', ':ZenMode<cr>', {silent = true})
