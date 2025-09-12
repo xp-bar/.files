@@ -13,7 +13,6 @@ Plugins.install('preservim/nerdtree', { ['on'] = {'NERDTreeToggle', 'NERDTreeFin
 Plugins.install('Xuyuanp/nerdtree-git-plugin', { ['on'] = {'NERDTreeToggle', 'NERDTreeFind'} })
 Plugins.install('lewis6991/gitsigns.nvim') -- git signs in the gutter
 Plugins.install('nvim-tree/nvim-web-devicons') -- dependency for some plugins
-Plugins.install('junegunn/goyo.vim', {['for'] = 'markdown', ['on'] = 'Goyo'}) -- focus mode
 Plugins.install('lukas-reineke/indent-blankline.nvim') -- indentation markers
 Plugins.install('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'}) -- treesitter
 Plugins.install('fuyedong/vim-zephir') -- syntax for zephir
