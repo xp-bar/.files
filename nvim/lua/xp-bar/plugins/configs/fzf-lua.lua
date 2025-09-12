@@ -7,7 +7,7 @@ local actions = require "fzf-lua.actions"
 local filter = require('xp-bar.plugins.helpers').filter
 local git_diff = require"fzf-lua.providers.git".diff
 local grep_project = require"fzf-lua.providers.grep".grep_project
-local keys = require('xp-bar.plugins.helpers').keys
+local map = require('xp-bar.plugins.helpers').map
 
 require('fzf-lua').setup({'default',
   win_opts = {
@@ -134,46 +134,26 @@ vim.keymap.set('n', '<leader>gl', function()
   return require('fzf-lua').files()
 end, {silent = true})
 
-local lsp_cmd_map = {
-    ['references']            = 'lsp_references',
-    ['definitions']           = 'lsp_definitions',
-    ['decarations']           = 'lsp_declarations',
-    ['types']                 = 'lsp_typedefs',
-    ['implementations']       = 'lsp_implementations',
-    ['document symbols']      = 'lsp_document_symbols',
-    ['workspace symbols']     = 'lsp_workspace_symbols',
-    ['code actions']          = 'lsp_code_actions',
-    ['document diagnostics']  = 'lsp_document_diagnostics',
-    ['workspace diagnostics'] = 'lsp_workspace_diagnostics',
-    -- not using
-    -- lsp_finder
-    -- lsp_live_workspace_symbols
-    -- lsp_incoming_calls
-    -- lsp_outgoing_calls
-}
-local regexes = {
-    ['^r[eferences]*']                  = 'references',
-    ['^def[initions]*']                 = 'definitions',
-    ['^dec[larations]*']                = 'declarations',
-    ['^t[ypes]*']                       = 'types',
-    ['^im[plementations]*']             = 'implementations',
-    ['^d[ocument]*[ ]*s[ymbols]*']      = 'document symbols',
-    ['^w[orkspace]*[ ]*s[ymbols]*']     = 'workspace symbols',
-    ['^c[ode actions]*']                = 'code actions',
-    ['^d[ocument]*[ ]*d[iagnostics]*']  = 'document diagnostics',
-    ['^w[orkspace]*[ ]*d[iagnostics]*'] = 'workspace diagnostics',
+local fzfLua = require('fzf-lua')
+local cmd_map = {
+ {'references',            '^r[eferences]*',                  fzfLua.lsp_references},
+ {'definitions',           '^def[initions]*',                 fzfLua.lsp_definitions},
+ {'declarations',          '^dec[larations]*',                fzfLua.lsp_declarations},
+ {'types',                 '^t[ypes]*',                       fzfLua.lsp_typedefs},
+ {'implementations',       '^im[plementations]*',             fzfLua.lsp_implementations},
+ {'document symbols',      '^d[ocument]*[ ]*s[ymbols]*',      fzfLua.lsp_document_symbols},
+ {'workspace symbols',     '^w[orkspace]*[ ]*s[ymbols]*',     fzfLua.lsp_workspace_symbols},
+ {'code actions',          '^c[ode actions]*',                fzfLua.lsp_code_actions},
+ {'document diagnostics',  '^d[ocument]*[ ]*d[iagnostics]*',  fzfLua.lsp_document_diagnostics},
+ {'workspace diagnostics', '^w[orkspace]*[ ]*d[iagnostics]*', fzfLua.lsp_workspace_diagnostics},
 }
 
-local completions = keys(lsp_cmd_map);
+local completions = map(cmd_map, function (l) return l[1] end);
 vim.api.nvim_create_user_command('Lsp', function (cmd)
-    local args = cmd.args
-
-    for regex, l in pairs(regexes) do
-        if args:match(regex) then
-            local lsp_cmd = lsp_cmd_map[l] or nil
-            -- swap to providers
-            return require('fzf-lua')[lsp_cmd]()
-        end
+    for i, value in ipairs(cmd_map) do
+      if cmd.args:match(value[2]) then
+          return value[3]()
+      end
     end
 end, {
     nargs = '*',
@@ -183,11 +163,8 @@ end, {
             return completions
         else
             return filter(completions, function (value, key)
-                -- could use a rewrite
-                local s, e = string.find(value, '^'..arglead)
-                if s then return true end
-                s, e = string.find(value, '[ ]'..arglead)
-                if s then return true else return false end
+                return string.find(value, '^'..arglead)
+                  or string.find(value, '[ ]'..arglead)
             end)
         end
     end
