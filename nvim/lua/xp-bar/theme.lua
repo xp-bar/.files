@@ -128,6 +128,8 @@ require("onedarkpro").setup({
       GitSignsTopDelete = { fg = '${red}', bg = '' },
       GitSignsStagedTopDelete = { fg = '', bg = '${red}' },
 
+      LeapLabel = { fg = '${bg}', bg = '${fg}'},
+
       StartifyBracket = { fg = '${blue}' },
       StartifyFile = { fg = '${red}' },
       StartifyFooter = { fg = '${fg}' },
