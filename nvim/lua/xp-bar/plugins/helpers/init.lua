@@ -13,6 +13,29 @@ function M.map(list, func)
     return result
 end
 
+function M.filter(list, func)
+    local result = {}
+    for key, value in pairs(list) do
+        if (func(value, key)) then
+            result[key] = value
+        end
+    end
+
+    return result
+end
+
+function M.keys(list)
+    local keys={}
+    local n=0
+
+    for k,v in pairs(list) do
+        n=n+1
+        keys[n]=k
+    end
+
+    return keys
+end
+
 function M.flatten(item, key, result)
     key = key or ''
     result = result or {}
