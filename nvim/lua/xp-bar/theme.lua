@@ -141,6 +141,8 @@ require("onedarkpro").setup({
       StartifySlash = { fg = '${blue}' },
       StartifySpecial = { fg = '${gray}' },
 
+      ZenBg = { bg = '' },
+
       zshDeref = { fg = '${red}'},
       zshFunction = { fg = '${cyan}' },
       zshKSHFunction = { fg = '${cyan}' },
