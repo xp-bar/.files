@@ -3,7 +3,7 @@
 exec < /dev/tty
 
 files="$(git --no-pager diff --name-only --staged)";
-matches="$(echo $files | xargs ack "mysql://" | ack -v example_dsn)";
+matches="$(echo $files | xargs ack "mysql://|TOKEN" | ack -v example_dsn)";
 if [[ $? -eq 0 ]]; then
     echo -e "\n\033[31mYou're trying to commit (possibly) confidential credentials to this repo!\033[0m";
     echo "$matches\n" | sed 's/:/: /2'
