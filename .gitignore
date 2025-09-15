@@ -1,9 +1,5 @@
 .ignore
 .env
 *.lock
-.newsboat/cache.db
-.newsboat/history.cmdline
-.newsboat/history.search
-.newsboat/queue
 .DS_Store
 .myclirc-e
