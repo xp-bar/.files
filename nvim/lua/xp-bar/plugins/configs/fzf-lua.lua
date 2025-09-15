@@ -57,6 +57,11 @@ require('fzf-lua').setup({'default',
       ["ctrl-g"] = { actions.toggle_ignore }
     }
   },
+  marks = {
+    preview   = false,
+    previewer = false,
+    marks = "%a", -- filter vim marks with a lua pattern
+  },
   grep = {
     actions = {
       ["ctrl-g"] = { actions.toggle_ignore },
