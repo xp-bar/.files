@@ -4,6 +4,7 @@ Plugins.start('~/.vim/bundle')
 Plugins.install('junegunn/vim-plug') -- plugin docs
 Plugins.install('moll/vim-bbye') -- easier buffer closing
 Plugins.install('junegunn/vim-easy-align') -- align around chars
+Plugins.install('numToStr/Navigator.nvim') -- navigate panes tmux / nvim
 Plugins.install('mhinz/vim-startify') -- start screen
 Plugins.install('jeffkreeftmeijer/vim-numbertoggle') -- switch to abs numbering when losing focus
 Plugins.install('kshenoy/vim-signature') -- visual mark helper
