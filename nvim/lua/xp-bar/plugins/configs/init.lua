@@ -2,7 +2,6 @@
 -- vim: set ts=2 sw=2:
 require('xp-bar.plugins.configs.aerial-nvim')
 require('xp-bar.plugins.configs.fzf-lua')
-require('xp-bar.plugins.configs.vim-tmux-navigator')
 require('xp-bar.plugins.configs.startify')
 require('xp-bar.plugins.configs.nerdtree')
 require('xp-bar.plugins.configs.gitsigns')
