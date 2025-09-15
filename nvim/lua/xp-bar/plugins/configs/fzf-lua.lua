@@ -89,6 +89,14 @@ vim.keymap.set("n", "<leader>gk", "<cmd>FzfLua lsp_code_actions<CR>")
 
 vim.keymap.set("n", "<leader>f", "<cmd>FzfLua<CR>")
 
+vim.api.nvim_create_user_command('Marks', function (args)
+  require('fzf-lua').marks({
+    fzf_opts = {
+      ['--multi'] = true
+    }
+  })
+end, {})
+
 vim.api.nvim_create_user_command('Rg', function (args)
   local paths = {}
 
