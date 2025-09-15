@@ -1,9 +1,0 @@
-# vim: ft=csh
-
-gs = global-status
-start = up
-stop = halt
-
-# vbox = !clear && vagrant ssh vbox -vvv -p -- -l root -t "sudo /bin/bash -c 'cd /var/www/jbx && /bin/bash'"
-# docker = !vagrant ssh docker -- -t 'cd /var/www/jbx; bash --login'
-
