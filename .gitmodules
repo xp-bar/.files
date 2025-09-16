@@ -25,3 +25,6 @@
 [submodule "nvim/dependencies/tree-sitter-embedded-template"]
 	path = nvim/dependencies/tree-sitter-embedded-template
 	url = git@github.com:tree-sitter/tree-sitter-embedded-template.git
+[submodule ".files-work"]
+	path = .files-work
+	url = git@github.com:xp-bar/.files-work.git
