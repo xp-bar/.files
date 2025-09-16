@@ -56,6 +56,7 @@ fpath=(~/.zsh.d/ $fpath)
 
 export FZF_DEFAULT_COMMAND='rg --files --smart-case'
 [[ -e ~/.github-token ]] && export GITHUB_TOKEN=$(<~/.github-token)
+[[ -e ~/.work ]] && source ~/.work
 
 # >>>> Vagrant command completion (start)
 # fpath=(/opt/vagrant/embedded/gems/2.3.4/gems/vagrant-2.3.4/contrib/zsh $fpath)
