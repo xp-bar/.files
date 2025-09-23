@@ -45,6 +45,7 @@ Plugins.install('tobyS/vmustache') -- documentation stubs
 Plugins.install('tobyS/pdv') -- documentation stubs
 Plugins.install('olimorris/onedarkpro.nvim') -- theme
 Plugins.install('nvim-lualine/lualine.nvim') -- bottom line and bufferline
+Plugins.install('hat0uma/csvview.nvim') -- CSV / TSV viewer and editor mode
 
 Plugins.finish()
 
