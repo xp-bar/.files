@@ -168,6 +168,8 @@ vim.api.nvim_create_user_command('Lsp', function (cmd)
           return value[3]()
       end
     end
+
+    return require('fzf-lua').global()
 end, {
     nargs = '*',
     range = '%',
