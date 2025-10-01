@@ -115,3 +115,7 @@ alias dk="docker"
 alias dke="docker exec"
 alias dkc="docker-compose"
 alias dkce="docker-compose exec"
+
+# yarn
+alias y="yarn"
+alias yd="yarn && yarn dev"
