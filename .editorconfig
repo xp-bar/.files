@@ -14,10 +14,10 @@ trim_trailing_whitespace = true
 [*.md]
 spelling_language = en-CA
 
-[*.tsx]
+[*.{tsx,ts}]
 indent_size = 2
 
-[*.css,*.scss,*.sass]
+[*.{css,scss,sass}]
 indent_size = 2
 
 [*.vue]
