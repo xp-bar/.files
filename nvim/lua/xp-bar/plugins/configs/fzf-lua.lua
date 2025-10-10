@@ -80,11 +80,11 @@ require('fzf-lua').setup({'default',
   }
 })
 
-vim.keymap.set("n", "<C-p>", "<cmd>FzfLua files<CR>")
-vim.keymap.set("n", "<M-p>", "<cmd>FzfLua buffers<CR>")
+vim.keymap.set("n", "<C-p>", require('fzf-lua').files, {silent = true})
+vim.keymap.set("n", "<M-p>", require('fzf-lua').buffers, {silent = true})
 -- goto definition handled by native LSP
-vim.keymap.set("n", "<leader>gr", "<cmd>FzfLua lsp_references<CR>")
-vim.keymap.set("n", "<leader>gk", "<cmd>FzfLua lsp_code_actions<CR>")
+vim.keymap.set("n", "<leader>gr", require('fzf-lua').lsp_references, {silent = true})
+vim.keymap.set("n", "<leader>gk", require('fzf-lua').lsp_code_actions, {silent = true})
 -- rename handled by native LSP
 vim.keymap.set('n', '<leader>gi', require('fzf-lua').lsp_implementations, {silent = true})
 vim.keymap.set("n", "<leader>f", "<cmd>FzfLua<CR>")
