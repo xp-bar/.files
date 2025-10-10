@@ -17,8 +17,8 @@ require('xp-bar.plugins')
 
 -- require('xp-bar.nvim-dap-config')
 
--- Set up lspconfig.
-require('xp-bar.lsp-config')
+-- Set up lsp
+require('xp-bar.lsp')
 
 -- -- Set up treesitter.
 require('xp-bar.treesitter')
