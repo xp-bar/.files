@@ -82,7 +82,7 @@ require('fzf-lua').setup({'default',
 
 vim.keymap.set("n", "<C-p>", require('fzf-lua').files, {silent = true})
 vim.keymap.set("n", "<M-p>", require('fzf-lua').buffers, {silent = true})
--- goto definition handled by native LSP
+vim.keymap.set("n", "<leader>gd", require('fzf-lua').lsp_definitions, {silent = true})
 vim.keymap.set("n", "<leader>gr", require('fzf-lua').lsp_references, {silent = true})
 vim.keymap.set("n", "<leader>gk", require('fzf-lua').lsp_code_actions, {silent = true})
 -- rename handled by native LSP
