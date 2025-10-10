@@ -86,7 +86,7 @@ vim.keymap.set("n", "<M-p>", "<cmd>FzfLua buffers<CR>")
 vim.keymap.set("n", "<leader>gr", "<cmd>FzfLua lsp_references<CR>")
 vim.keymap.set("n", "<leader>gk", "<cmd>FzfLua lsp_code_actions<CR>")
 -- rename handled by native LSP
-
+vim.keymap.set('n', '<leader>gi', require('fzf-lua').lsp_implementations, {silent = true})
 vim.keymap.set("n", "<leader>f", "<cmd>FzfLua<CR>")
 
 vim.api.nvim_create_user_command('Marks', function (args)
