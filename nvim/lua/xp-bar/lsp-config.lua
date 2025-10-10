@@ -1,9 +1,4 @@
--- xp-lsp-config.lua
--- vim: set ts=2 sw=2:
-
--- Set up lspconfig.
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 vim.lsp.enable('lua_ls')
 vim.lsp.config('lua_ls', {
@@ -70,15 +65,6 @@ vim.lsp.config('html', {
   },
 })
 
--- vim.lsp.enable('cssls')
--- vim.lsp.config('cssls', {
---   capabilities = capabilities,
--- })
---
--- vim.lsp.enable('cssmodules_ls')
--- vim.lsp.config('cssmodules_ls', {
---   capabilities = capabilities,
--- })
 vim.lsp.enable('somesass_ls')
 vim.lsp.config('somesass_ls', {
   capabilities = capabilities,
@@ -89,10 +75,6 @@ vim.lsp.config('somesass_ls', {
     'vue'
   },
 })
--- vim.lsp.enable('ruby_lsp')
--- vim.lsp.config('ruby_lsp', {
---   capabilities = capabilities,
--- })
 
 vim.lsp.enable('solargraph')
 vim.lsp.config('solargraph', {
@@ -106,11 +88,6 @@ vim.lsp.config('solargraph', {
     }
   }
 })
-
--- vim.lsp.enable('sorbet')
--- vim.lsp.config('sorbet', {
---   capabilities = capabilities,
--- })
 
 vim.lsp.enable('intelephense')
 vim.lsp.config('intelephense', {
