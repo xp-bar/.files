@@ -1,0 +1,75 @@
+#!/bin/zsh
+
+local help verbose cmd=(default)
+local script_dir="$(dirname $(realpath $0))"
+
+zparseopts -D -K -- \
+    {h,-help}=help       \
+    {v,-verbose}=verbose
+
+function errorhandler() {
+    unfunction _s_print_help
+}
+
+function _s_print_help() {
+    print -rC1 --      \
+        "$0 [-h|--help]" \
+        "$0 [-v|--verbose] [<command...>]"
+    return
+}
+
+if (( $#help )); then
+    _s_print_help
+fi
+
+cmd="${(q+)^@[1]}"
+sub_cmd="${(q+)^@[2]}"
+
+if [[ $cmd == "status" ]]; then
+    if (( $#verbose )); then
+        print "Running: osascript $script_dir/current_track.scpt"
+    fi
+    local s_status="$(osascript $script_dir/current_track.scpt)"
+    local s_status_arr=("${(@s[|])s_status}")
+
+    local s_state="${s_status_arr[1]}"
+    local s_title="${s_status_arr[2]}"
+    local s_artist="${s_status_arr[3]}"
+    local s_album="${s_status_arr[4]}"
+
+    if [[ $sub_cmd != "''" ]]; then
+        case "$sub_cmd" in
+            state)
+                echo "$s_state"
+                ;;
+            track)
+                echo "$s_title"
+                ;;
+            artist)
+                echo "$s_artist"
+                ;;
+            album)
+                echo "$s_album"
+                ;;
+            *)
+                ;;
+        esac
+    else
+        case "$s_state" in
+            playing)
+                echo "Now playing: $s_title | $s_artist | $s_album"
+                ;;
+            paused)
+                echo "Paused: $s_title | $s_artist | $s_album"
+                ;;
+            stopped)
+                echo "Stopped."
+                ;;
+            *)
+                echo "Stopped."
+                ;;
+        esac
+    fi
+else
+    _s_print_help
+fi
