@@ -26,6 +26,7 @@ Plugins.install('neovim/nvim-lspconfig')
 Plugins.install('hrsh7th/nvim-cmp')
 Plugins.install('hrsh7th/cmp-nvim-lsp')
 Plugins.install('hrsh7th/cmp-nvim-lsp-signature-help')
+Plugins.install('mfussenegger/nvim-lint') -- ALE-style, diagnostic-based linting
 Plugins.install('mfussenegger/nvim-dap') -- debug adapter
 Plugins.install('nvim-neotest/nvim-nio') -- debug adapter dependency
 Plugins.install('rcarriga/nvim-dap-ui')  -- debug adapter viewer
