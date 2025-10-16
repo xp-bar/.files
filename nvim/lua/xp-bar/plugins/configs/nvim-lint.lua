@@ -1,10 +1,10 @@
 local lint = require('lint')
 
 lint.linters_by_ft = {
-    php = {'php', 'docker_phpstan'}
+    php = {'dphpstan'}
 }
 
-lint.linters.docker_phpstan = {
+lint.linters.dphpstan = {
   cmd = 'docker-compose',
   stdin = false, -- or false if it doesn't support content input via stdin. In that case the filename is automatically added to the arguments.
   append_fname = false, -- Automatically append the file name to `args` if `stdin = false` (default: true)
