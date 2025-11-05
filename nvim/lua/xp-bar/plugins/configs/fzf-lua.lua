@@ -10,9 +10,10 @@ local grep_project = require"fzf-lua.providers.grep".grep_project
 local map = require('xp-bar.plugins.helpers').map
 
 require('fzf-lua').setup({'default',
-  win_opts = {
+  winopts = {
     preview = {
-      default = "bat"
+      default = "bat",
+      vertical = "up:70%"
     }
   },
   fzf_opts = {
@@ -74,10 +75,12 @@ require('fzf-lua').setup({'default',
       -- false: disable, 1: icon+kind, 2: icon only, 3: kind only
       symbol_style = 3
     },
-    -- actions = {
-    --   ["default"] = actions.file_edit_or_qf
-    -- }
-  }
+    winopts = {
+      preview = {
+        layout = 'vertical'
+      },
+    },
+  },
 })
 
 vim.keymap.set("n", "<C-p>", require('fzf-lua').files, {silent = true})
@@ -149,23 +152,23 @@ end, {silent = true})
 
 local fzfLua = require('fzf-lua')
 local cmd_map = {
- {'references',            '^r[eferences]*',                  fzfLua.lsp_references},
- {'definitions',           '^def[initions]*',                 fzfLua.lsp_definitions},
- {'declarations',          '^dec[larations]*',                fzfLua.lsp_declarations},
- {'types',                 '^t[ypes]*',                       fzfLua.lsp_typedefs},
- {'implementations',       '^im[plementations]*',             fzfLua.lsp_implementations},
- {'document symbols',      '^d[ocument]*[ ]*s[ymbols]*',      fzfLua.lsp_document_symbols},
- {'workspace symbols',     '^w[orkspace]*[ ]*s[ymbols]*',     fzfLua.lsp_workspace_symbols},
- {'code actions',          '^c[ode actions]*',                fzfLua.lsp_code_actions},
- {'document diagnostics',  '^d[ocument]*[ ]*d[iagnostics]*',  fzfLua.lsp_document_diagnostics},
- {'workspace diagnostics', '^w[orkspace]*[ ]*d[iagnostics]*', fzfLua.lsp_workspace_diagnostics},
+ {'references',               '^r[eferences]*',                  fzfLua.lsp_references,             {}},
+ {'definitions',              '^def[initions]*',                 fzfLua.lsp_definitions,            {}},
+ {'declarations',             '^dec[larations]*',                fzfLua.lsp_declarations,           {}},
+ {'types',                    '^t[ypes]*',                       fzfLua.lsp_typedefs,               {}},
+ {'implementations',          '^im[plementations]*',             fzfLua.lsp_implementations,        {}},
+ {'document symbols',         '^d[ocument]*[ ]*s[ymbols]*',      fzfLua.lsp_document_symbols,       {}},
+ {'workspace symbols (live)', '^w[orkspace]*[ ]*s[ymbols]*',     fzfLua.lsp_live_workspace_symbols, {}},
+ {'code actions',             '^c[ode actions]*',                fzfLua.lsp_code_actions,           {}},
+ {'document diagnostics',     '^d[ocument]*[ ]*d[iagnostics]*',  fzfLua.lsp_document_diagnostics,   {}},
+ {'workspace diagnostics',    '^w[orkspace]*[ ]*d[iagnostics]*', fzfLua.lsp_workspace_diagnostics,  {}},
 }
 
 local completions = map(cmd_map, function (l) return l[1] end);
 vim.api.nvim_create_user_command('Lsp', function (cmd)
     for i, value in ipairs(cmd_map) do
       if cmd.args:match(value[2]) then
-          return value[3]()
+          return value[3](value[4])
       end
     end
 
