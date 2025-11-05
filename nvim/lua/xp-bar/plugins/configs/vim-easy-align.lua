@@ -1,7 +1,13 @@
 -- xp-bar/plugins/vim-easy-align.lua
--- vim: set ts=2 sw=2:
 
 vim.g.easy_align_delimiters = {
+    [' '] = {
+      ['pattern'] = ' ',
+      ['left_margin'] = 0,
+      ['right_margin'] = 0,
+      ['stick_to_left'] = false,
+      ['ignore_groups']   = {},
+    },
     ['-'] = {
         ['pattern'] = '-'
     },
