@@ -3,6 +3,7 @@
 --
 -- My fzf config.
 
+local colors = require('xp-bar.modules.colors').colors
 local actions = require "fzf-lua.actions"
 local filter = require('xp-bar.plugins.helpers').filter
 local git_diff = require"fzf-lua.providers.git".diff
@@ -21,12 +22,12 @@ require('fzf-lua').setup({'default',
   },
   fzf_colors = {
     ["bg"]      = "-1",
-    ["fg"]      = "#5c6370",
+    ["fg"]      = colors.paynes_grey_1,
     ["bg+"]     = "-1",
-    ["fg+"]     = "#fefefe",
-    ["pointer"] = "#e06c75",
-    ["hl"]      = "#98c379",
-    ["hl+"]     = "#98c379",
+    ["fg+"]     = colors.paynes_grey_2,
+    ["pointer"] = colors.red,
+    ["hl"]      = colors.green,
+    ["hl+"]     = colors.green,
   },
   file_icons = false,
   actions = {
