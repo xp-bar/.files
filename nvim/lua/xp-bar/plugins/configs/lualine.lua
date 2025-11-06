@@ -1,3 +1,4 @@
+local colors = require('xp-bar.modules.colors').colors
 local custom_onedark = require'lualine.themes.onedark'
 
 local modes = {'normal', 'insert', 'visual', 'replace', 'command', 'inactive'}
@@ -66,8 +67,8 @@ require('lualine').setup {
             return cond
           end,
           buffers_color = {
-            active = {bg = '#c678dd', fg = '#282c34'},
-            inactive = {bg = '#282c34', fg = '#abb2bf'},
+            active = {bg = colors.purple, fg = colors.gunmetal},
+            inactive = {bg = colors.gunmetal, fg = colors.french_grey},
           }
         }
     },
