@@ -3,26 +3,28 @@
 --
 -- My treesitter themeing configs.
 
+local colors = require('xp-bar.modules.colors').colors
+
 require("onedarkpro").setup({
   colors = {
-    bg = "#282c34",
-    fg = "#abb2bf",
-    red = "#e06c75",
-    darkred = "#be5046",
-    orange = "#d19a66",
-    yellow = "#e5c07b",
-    green = "#98c379",
-    cyan = "#56b6c2",
-    blue = "#61afef",
-    purple = "#c678dd",
-    white = "#abb2bf",
-    lightblack = "#3E4451",
-    black = "#282c34",
-    lightgray = "#4b5263",
-    gray = "#5c6370",
-    darkgray = "#828997",
-    highlight = "#e2be7d",
-    comment = "#7f848e",
+    bg = colors.gunmetal,
+    fg = colors.french_grey,
+    red = colors.red,
+    darkred = colors.dark_red,
+    orange = colors.orange,
+    yellow = colors.yellow,
+    green = colors.green,
+    cyan = colors.cyan,
+    blue = colors.blue,
+    purple = colors.purple,
+    white = colors.french_grey,
+    lightblack = colors.charcoal_1,
+    black = colors.gunmetal,
+    lightgray = colors.charcoal_2,
+    gray = colors.paynes_grey_1,
+    darkgray = colors.slate_grey_1,
+    highlight = colors.pale_yellow,
+    comment = colors.slate_grey_2,
     none = "NONE",
   },
   highlights = {
