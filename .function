@@ -251,6 +251,8 @@ function mg() {
                 return 1;
                 ;;
         esac
+    elif [[ $* = *"--last"* ]]; then
+        git merge @{-1}
     else
         git merge $@
     fi
