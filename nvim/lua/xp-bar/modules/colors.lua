@@ -20,5 +20,21 @@ M.colors = {
     pale_yellow   = '#e2be7d',
 };
 
+M.hues = {
+    mono_background = M.colors.gunmetal,
+    mono_0          = M.colors.paynes_grey_2,
+    mono_1          = M.colors.french_grey,
+    mono_2          = M.colors.slate_grey_1,
+    mono_3          = M.colors.paynes_grey_1,
+    mono_4          = M.colors.charcoal_2,
+    hue_1           = M.colors.cyan,
+    hue_2           = M.colors.blue,
+    hue_3           = M.colors.purple,
+    hue_4           = M.colors.green,
+    hue_5           = M.colors.red,
+    hue_5_2         = M.colors.dark_red,
+    hue_6           = M.colors.orange,
+    hue_6_2         = M.colors.yellow,
+}
 
 return M;
