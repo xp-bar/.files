@@ -161,8 +161,8 @@ local cmd_map = {
  {'document symbols',         '^d[ocument]*[ ]*s[ymbols]*',      fzfLua.lsp_document_symbols,       {}},
  {'workspace symbols (live)', '^w[orkspace]*[ ]*s[ymbols]*',     fzfLua.lsp_live_workspace_symbols, {}},
  {'code actions',             '^c[ode actions]*',                fzfLua.lsp_code_actions,           {}},
- {'document diagnostics',     '^d[ocument]*[ ]*d[iagnostics]*',  fzfLua.lsp_document_diagnostics,   {}},
- {'workspace diagnostics',    '^w[orkspace]*[ ]*d[iagnostics]*', fzfLua.lsp_workspace_diagnostics,  {}},
+ {'document diagnostics',     '^d[ocument]*[ ]*d[iagnostics]*',  fzfLua.lsp_document_diagnostics,   {winopts = {preview = {layout = 'vertical'}}}},
+ {'workspace diagnostics',    '^w[orkspace]*[ ]*d[iagnostics]*', fzfLua.lsp_workspace_diagnostics,  {winopts = {preview = {layout = 'vertical'}}}},
 }
 
 local completions = map(cmd_map, function (l) return l[1] end);
