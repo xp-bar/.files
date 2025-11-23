@@ -6,6 +6,8 @@ local lsp_engines = {
     'somesass_ls',
     'solargraph',
     'intelephense',
+    'gdscript',
+    'gdshader_lsp',
 }
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
