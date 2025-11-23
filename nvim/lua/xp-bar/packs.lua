@@ -7,7 +7,6 @@ local packs = {
     'xp-changed',
     'xp-hidden',
     'xp-unjoin',
-    'xp-typewriter-toggle',
 }
 
 for index, pack in ipairs(packs) do
