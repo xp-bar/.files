@@ -33,6 +33,7 @@ require'nvim-treesitter.configs'.setup {
       "erb",
       "html",
       "blade",
+      "gdscript",
       "javascript",
       "lua",
       "markdown",
