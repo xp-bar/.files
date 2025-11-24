@@ -27,9 +27,9 @@ sub_cmd="${(q+)^@[2]}"
 
 if [[ $cmd == "status" ]]; then
     if (( $#verbose )); then
-        print "Running: osascript $script_dir/current_track.scpt"
+        print "Running: osascript $script_dir/current_track.applescript"
     fi
-    local s_status="$(osascript $script_dir/current_track.scpt)"
+    local s_status="$(osascript $script_dir/current_track.applescript)"
     local s_status_arr=("${(@s[|])s_status}")
 
     local s_state="${s_status_arr[1]}"
