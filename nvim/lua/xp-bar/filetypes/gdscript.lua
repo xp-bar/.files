@@ -1,7 +1,7 @@
 local aug = require('xp-bar.autocommands.helpers').aug
 
 -- gdscript
-aug('filetypes.c', function (au)
+aug('filetypes.gdscript', function (au)
     au({'BufNewFile', 'BufRead'}, {'*.gd', '*.gdscript', '*.gdscript3'}, function()
         -- vim.o.makeprg = p .. ' -m ' .. vim.fn.expand('%')
         vim.api.nvim_create_user_command('Godot', function ()
