@@ -120,3 +120,4 @@ alias dkce="docker-compose exec"
 # yarn
 alias y="yarn"
 alias yd="yarn && yarn dev"
+alias yf="yarn format"
