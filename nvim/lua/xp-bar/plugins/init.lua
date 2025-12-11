@@ -21,6 +21,7 @@ Plugins.install('fuyedong/vim-zephir') -- syntax for zephir
 Plugins.install('dynamotn/tree-sitter-dbml') -- syntax for DBML
 Plugins.install('prettier/vim-prettier', {['on'] = 'Prettier', ['for'] = {'javascript', 'vue', 'typescript'}}) -- formatters
 Plugins.install('heavenshell/vim-jsdoc') -- JSDoc generation
+-- Note: this plugin should be removed in favour of conform.nvim
 Plugins.install('stephpy/vim-php-cs-fixer', {['for'] = 'php', ['on'] = 'PhpCsFixerFixFile'}) -- phpcs fixing
 Plugins.install('neovim/nvim-lspconfig')
 Plugins.install('hrsh7th/nvim-cmp')
@@ -48,6 +49,7 @@ Plugins.install('tobyS/pdv') -- documentation stubs
 Plugins.install('olimorris/onedarkpro.nvim') -- theme
 Plugins.install('nvim-lualine/lualine.nvim') -- bottom line and bufferline
 Plugins.install('hat0uma/csvview.nvim') -- CSV / TSV viewer and editor mode
+Plugins.install('stevearc/conform.nvim') -- Formatter plugin
 
 Plugins.finish()
 
