@@ -2,6 +2,7 @@ local lsp_engines = {
     'lua_ls',
     'ts_ls',
     'vue_ls',
+    'eslint',
     'html',
     'somesass_ls',
     'solargraph',
