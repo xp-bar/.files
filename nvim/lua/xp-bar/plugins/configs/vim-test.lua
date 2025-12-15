@@ -4,7 +4,6 @@
 local flatten = require('xp-bar.plugins.helpers').flatten
 
 local docker_transform = function (cmd)
-    print('here!')
     local fpath = vim.fn.findfile("Dockerfile.dev", ";~/Code/")
     fpath = fpath:gsub("Dockerfile%.dev", '')
 
