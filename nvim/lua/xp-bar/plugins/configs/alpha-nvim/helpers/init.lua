@@ -1,5 +1,26 @@
 local M = {}
+
 M.ascii = require('xp-bar.plugins.configs.alpha-nvim.helpers.ascii')
+
+M.logo = function ()
+    return M.text(M.ascii.logo, {hl = {
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpRed', 0, 1000}},
+        {{'xpWhite', 0, 1000}},
+        {{'xpWhite', 0, 1000}},
+    }});
+end
 
 local table_with_default = function(opts, defaults)
     local result = defaults or {}
