@@ -8,7 +8,8 @@ local padding = helpers.padding
 local hr = helpers.hr
 
 local header = group({
-    text(ascii.hydra_small, { hl = 'xpLightGray' }),
+    padding(1),
+    text(ascii.hydra_small, { hl = 'xpDarkGray'}),
     text(ascii.xp_bar, { hl = 'xpCyan' }),
     text(ascii.neovim, { hl = 'xpRed' }),
 })
@@ -41,18 +42,19 @@ require('alpha').setup({
         hr('_.-~-._', 45),
         padding(2),
         text({
-        "     -~'‾‾‾'~-",
-        '   -           -',
-        '--     ( o )     --',
-        '   -           -',
-        '      ~-._.-~',
-        }, {hl = 'xpLightGray'}),
-        padding(1),
-        text('{{ BEWARE OF HYDRA }}', {hl = {
-            {'xpLightBlack', 0, #'{{ '},
-            {'xpDarkGray', #'{{ ', #'{{ beware of hydra'},
-            {'xpLightBlack', #'{{ beware of hydra', #'{{ beware of hydra }}'},
+            'In the beginning the Universe was created.',
+            'This has made a lot of people very angry',
+            'and been widely regarded as a bad move.',
+            '',
+            '                         -- Douglas Adams'
+        }, {hl = {
+            {{'xpLightGray', 0, 100}},
+            {{'xpLightGray', 0, 100}},
+            {{'xpLightGray', 0, 100}},
+            {},
+            {{'xpLightGray', 0, 100}},
         }}),
+        text('~-._.-~', {hl = 'xpLightGray'}),
     },
     ['opts'] = {
         ['margin'] = 5,
