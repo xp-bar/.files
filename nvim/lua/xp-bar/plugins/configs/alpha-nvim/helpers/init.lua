@@ -47,6 +47,14 @@ M.text = function (value, opts)
     }
 end
 
+local default_button_hl_shortcut = function (sc)
+    return {
+        { 'xpLightBlack', 0, 1 },
+        { 'xpOrange', 1, #sc + 1 },
+        { 'xpLightBlack', #sc + 1, #sc + 2 }
+    }
+end
+
 -- adapted from require('alpha.themes.startify').button
 M.button = function (sc, txt, keybind, opts, keybind_opts)
     local sc_ = sc:gsub("%s", ""):gsub('SPC', "<leader>")
@@ -57,11 +65,7 @@ M.button = function (sc, txt, keybind, opts, keybind_opts)
         cursor = 1,
         width = 50,
         align_shortcut = 'left',
-        hl_shortcut = {
-            { 'xpBlue', 0, 1 },
-            { 'xpOrange', 1, #sc + 1 },
-            { 'xpBlue', #sc + 1, #sc + 2 }
-        },
+        hl_shortcut = default_button_hl_shortcut(sc),
         shrink_margin = false,
     })
 
@@ -83,8 +87,27 @@ M.button = function (sc, txt, keybind, opts, keybind_opts)
     }
 end
 
+M.native_button = function(sc, txt, keybind)
+    local hl = default_button_hl_shortcut(sc)
+    table.insert(hl, { 'xpDarkGray', #sc + 2, 1000 })
+    return M.button(sc, txt, keybind, {
+        hl_shortcut = hl
+    })
+end
+
 M.edit_file_button = function(sc, filepath)
-    return M.button(sc, filepath, ':e '.. filepath .. '<CR>')
+    local path = string.match(filepath, ".*[/\\]")
+
+    if path ~= nil then
+        return M.button(sc, filepath, ':e '.. filepath .. '<CR>', {
+            hl = {
+                {'xpBlue', 0, #path},
+                {'xpRed', #path, 100},
+            }
+        })
+    end
+
+    return M.button(sc, filepath, ':e '.. filepath .. '<CR>', {hl = 'xpBlue'})
 end
 
 M.padding = function (height)

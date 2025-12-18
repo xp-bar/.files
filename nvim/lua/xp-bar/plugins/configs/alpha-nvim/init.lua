@@ -1,7 +1,7 @@
 local helpers = require('xp-bar.plugins.configs.alpha-nvim.helpers')
 local ascii = helpers.ascii
 local text = helpers.text
-local button = helpers.button
+local native_button = helpers.native_button
 local file = helpers.edit_file_button
 local group = helpers.group
 local padding = helpers.padding
@@ -15,14 +15,7 @@ local header = group({
 }, {spacing = 1})
 
 local buttons = group({
-    button('e', ' <empty buffer>', ':enew<cr>', {
-        hl_shortcut = {
-            { 'xpBlue', 0, 1 },
-            { 'xpOrange', 1, #'e' + 1 },
-            { 'xpBlue', #'e' + 1, #'e' + 2 },
-            { 'xpDarkGray', #'e' + 2, 100 }
-        },
-    }),
+    native_button('e', ' <empty buffer>', ':enew<cr>')
 })
 
 local bookmarks = group({
@@ -33,7 +26,7 @@ local bookmarks = group({
     file('.t', '~/.tmux.conf'),
     file('.z', '~/.zshrc'),
     file('.d', '~/.antidote'),
-    file('.h', '.git/hooks/'),
+    file('.h', '.git/hooks'),
 })
 
 require('alpha').setup({
@@ -47,14 +40,7 @@ require('alpha').setup({
         padding(1),
         bookmarks,
         padding(1),
-        button('q', ' <quit>', ':q<cr>', {
-            hl_shortcut = {
-                { 'xpBlue', 0, 1 },
-                { 'xpOrange', 1, #'q' + 1 },
-                { 'xpBlue', #'q' + 1, #'q' + 2 },
-                { 'xpDarkGray', #'q' + 2, 100 }
-            }
-        }),
+        native_button('q', ' <quit>', ':q<cr>'),
         padding(1),
         hr('_.-~-._', 45),
         padding(2),
