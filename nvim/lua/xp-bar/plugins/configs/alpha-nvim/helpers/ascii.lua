@@ -1,11 +1,6 @@
-local config = require('alpha.themes.dashboard').config;
-local alpha = require('alpha')
--- require('alpha').setup(config)
--- local tostring = require('xp-bar.plugins.helpers').tostring;
--- vim.fn.setreg('a', tostring(config))
+local M = {};
 
-
-local hydra_big = {
+M.hydra_big = {
 '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠠⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
 '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣀⣀⡀⠀⠙⢶⣄⠀⠀⣧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
 '⠀⠀⠀⠀⢠⣶⣦⣤⣀⣀⣤⣤⣄⣀⠀⢀⣀⣴⠂⠀⠀⠀⠀⠀⠀⠀⠐⠉⠉⣉⣉⣽⣿⣿⣷⣾⣿⣷⣄⡸⣷⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
@@ -32,7 +27,7 @@ local hydra_big = {
 '⣾⣥⣤⣼⣿⣶⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣶⣾⣵⣾⡿',
 }
 
-local hydra_small = {
+M.hydra_small = {
     '                                   ',
     '                                   ',
     '                                   ',
@@ -49,7 +44,7 @@ local hydra_small = {
     '       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ',
 }
 
-local xp_bar = {
+M.xp_bar = {
     '██   ██ ██████      ██████   █████  ██████  ██ ███████',
     ' ██ ██  ██   ██     ██   ██ ██   ██ ██   ██ █  ██     ',
     '  ███   ██████  ███ ██████  ███████ ██████     ███████',
@@ -57,65 +52,11 @@ local xp_bar = {
     '██   ██ ██          ██████  ██   ██ ██   ██    ███████',
 }
 
-local neovim = {
+M.neovim = {
     '░█▀█░█▀▀░█▀█░█░█░▀█▀░█▄█',
     '░█░█░█▀▀░█░█░▀▄▀░░█░░█░█',
     '░▀░▀░▀▀▀░▀▀▀░░▀░░▀▀▀░▀░▀',
 }
 
-local header = {
-    ['val'] = {
-        {
-            ['val'] = hydra_big,
-            -- ['val'] = hydra_small,
-            ['opts'] = {
-                ['position'] = 'center',
-                ['hl'] = '@variable',
-            } ,
-            ['type'] = 'text',
-        },
-        {
-            ['val'] = xp_bar,
-            ['opts'] = {
-                ['position'] = 'center',
-                ['hl'] = '@function',
-            } ,
-            ['type'] = 'text',
-        },
-        {
-            ['val'] = neovim,
-            ['opts'] = {
-                ['position'] = 'center',
-                ['hl'] = '@variable.builtin',
-            } ,
-            ['type'] = 'text',
-        },
-    },
-    ['opts'] = {
-        ['spacing'] = 1,
-    },
-    ['type'] = 'group',
-}
 
-local buttons = {
-    ['val'] = {
-    },
-    ['opts'] = {
-        ['spacing'] = 1,
-    },
-    ['type'] = 'group',
-}
-
-local one_line_padding = { ['type'] = 'padding', ['val'] = 1 };
-
-
-require('alpha').setup({
-    ['layout'] = {
-        one_line_padding,
-        header,
-        buttons,
-    },
-    ['opts'] = {
-        ['margin'] = 5,
-    },
-})
+return M;
