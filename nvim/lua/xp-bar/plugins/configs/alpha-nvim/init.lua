@@ -54,7 +54,8 @@ require('alpha').setup({
             {},
             {{'xpLightGray', 0, 100}},
         }}),
-        text('~-._.-~', {hl = 'xpLightGray'}),
+        padding(1),
+        text('~-._.-~', {hl = 'xpDarkGray'}),
     },
     ['opts'] = {
         ['margin'] = 5,
