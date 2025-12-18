@@ -15,7 +15,14 @@ local header = group({
 })
 
 local buttons = group({
-    button('e', '   New file', ':enew<cr>'),
+    button('e', ' <empty buffer>', ':enew<cr>', {
+        hl_shortcut = {
+            { 'xpBlue', 0, 1 },
+            { 'xpOrange', 1, #'e' + 1 },
+            { 'xpBlue', #'e' + 1, #'e' + 2 },
+            { 'xpDarkGray', #'e' + 2, 100 }
+        },
+    }),
 })
 
 local bookmarks = group({
@@ -26,8 +33,8 @@ local bookmarks = group({
     file('.t', '~/.tmux.conf'),
     file('.z', '~/.zshrc'),
     file('.d', '~/.antidote'),
-    file('.h', ' .git/hooks/'),
-}, {spacing = 0})
+    file('.h', '.git/hooks/'),
+})
 
 require('alpha').setup({
     ['layout'] = {
@@ -37,7 +44,17 @@ require('alpha').setup({
         hr('~-._.-~', 45),
         padding(2),
         buttons,
+        padding(1),
         bookmarks,
+        padding(1),
+        button('q', ' <quit>', ':q<cr>', {
+            hl_shortcut = {
+                { 'xpBlue', 0, 1 },
+                { 'xpOrange', 1, #'q' + 1 },
+                { 'xpBlue', #'q' + 1, #'q' + 2 },
+                { 'xpDarkGray', #'q' + 2, 100 }
+            }
+        }),
         padding(1),
         hr('_.-~-._', 45),
         padding(2),
