@@ -35,7 +35,7 @@ M.group = function (fields, opts)
     return {
         type = 'group',
         val = fields,
-        opts = table_with_default(opts, {spacing = 1})
+        opts = table_with_default(opts, {spacing = 0})
     }
 end
 
@@ -48,18 +48,23 @@ M.text = function (value, opts)
 end
 
 -- adapted from require('alpha.themes.startify').button
-M.button = function (sc, txt, keybind, keybind_opts)
+M.button = function (sc, txt, keybind, opts, keybind_opts)
     local sc_ = sc:gsub("%s", ""):gsub('SPC', "<leader>")
 
-    local opts = {
+    opts = table_with_default(opts, {
         position = 'center',
         shortcut = '[' .. sc .. '] ',
         cursor = 1,
         width = 50,
         align_shortcut = 'left',
-        hl_shortcut = { { 'Operator', 0, 1 }, { 'Number', 1, #sc + 1 }, { 'Operator', #sc + 1, #sc + 2 } },
+        hl_shortcut = {
+            { 'xpBlue', 0, 1 },
+            { 'xpOrange', 1, #sc + 1 },
+            { 'xpBlue', #sc + 1, #sc + 2 }
+        },
         shrink_margin = false,
-    }
+    })
+
     if keybind then
         keybind_opts = table_with_default(keybind_opts, { noremap = true, silent = true, nowait = true })
         opts.keymap = { 'n', sc_, keybind, keybind_opts }
