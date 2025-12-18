@@ -12,6 +12,7 @@ local map = require('xp-bar.plugins.helpers').map
 
 require('fzf-lua').setup({'default',
   winopts = {
+    backdrop = 100,
     preview = {
       default = "bat",
       vertical = "up:70%"
