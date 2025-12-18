@@ -12,7 +12,7 @@ local header = group({
     text(ascii.hydra_small, { hl = 'xpDarkGray'}),
     text(ascii.xp_bar, { hl = 'xpCyan' }),
     text(ascii.neovim, { hl = 'xpRed' }),
-})
+}, {spacing = 1})
 
 local buttons = group({
     button('e', ' <empty buffer>', ':enew<cr>', {
