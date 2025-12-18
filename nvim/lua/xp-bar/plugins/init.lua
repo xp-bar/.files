@@ -20,8 +20,6 @@ Plugins.install('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate'}) -- tr
 Plugins.install('fuyedong/vim-zephir') -- syntax for zephir
 Plugins.install('dynamotn/tree-sitter-dbml') -- syntax for DBML
 Plugins.install('heavenshell/vim-jsdoc') -- JSDoc generation
--- Note: this plugin should be removed in favour of conform.nvim
-Plugins.install('stephpy/vim-php-cs-fixer', {['for'] = 'php', ['on'] = 'PhpCsFixerFixFile'}) -- phpcs fixing
 Plugins.install('neovim/nvim-lspconfig')
 Plugins.install('hrsh7th/nvim-cmp')
 Plugins.install('hrsh7th/cmp-nvim-lsp')
