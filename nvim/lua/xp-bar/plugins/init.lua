@@ -5,7 +5,7 @@ Plugins.install('junegunn/vim-plug') -- plugin docs
 Plugins.install('moll/vim-bbye') -- easier buffer closing
 Plugins.install('junegunn/vim-easy-align') -- align around chars
 Plugins.install('numToStr/Navigator.nvim') -- navigate panes tmux / nvim
-Plugins.install('mhinz/vim-startify') -- start screen
+-- Plugins.install('mhinz/vim-startify') -- start screen
 Plugins.install('jeffkreeftmeijer/vim-numbertoggle') -- switch to abs numbering when losing focus
 Plugins.install('kshenoy/vim-signature') -- visual mark helper
 Plugins.install('ibhagwan/fzf-lua', {['branch'] = 'main'})
@@ -48,6 +48,7 @@ Plugins.install('olimorris/onedarkpro.nvim') -- theme
 Plugins.install('nvim-lualine/lualine.nvim') -- bottom line and bufferline
 Plugins.install('hat0uma/csvview.nvim') -- CSV / TSV viewer and editor mode
 Plugins.install('stevearc/conform.nvim') -- Formatter plugin
+Plugins.install('goolord/alpha-nvim') -- startup screen
 
 Plugins.finish()
 
