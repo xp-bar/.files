@@ -3,6 +3,7 @@
 --
 vim.g.NERDTreeHijackNetrw = true
 vim.g.NERDTreeQuitOnOpen = true
+vim.g.NERDTreeWinSize = 60
 vim.g.NERDTreeIgnore = {
     '.png$',
     '.jpg$',
