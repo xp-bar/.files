@@ -47,9 +47,6 @@ M.hydra_big = {
 }
 
 M.hydra_small = {
-    '                                   ',
-    '                                   ',
-    '                                   ',
     '   ⣴⣶⣤⡤⠦⣤⣀⣤⠆     ⣈⣭⣿⣶⣿⣦⣼⣆          ',
     '    ⠉⠻⢿⣿⠿⣿⣿⣶⣦⠤⠄⡠⢾⣿⣿⡿⠋⠉⠉⠻⣿⣿⡛⣦       ',
     '          ⠈⢿⣿⣟⠦ ⣾⣿⣿⣷    ⠻⠿⢿⣿⣧⣄     ',
@@ -62,6 +59,22 @@ M.hydra_small = {
     '      ⢻⣿⣿⣄   ⠈⠻⣿⣿⣿⣷⣿⣿⣿⣿⣿⡟ ⠫⢿⣿⡆     ',
     '       ⠻⣿⣿⣿⣿⣶⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⡟⢀⣀⣤⣾⡿⠃     ',
 }
+
+M.hydra_hl = function ()
+    return {
+        {{'xpWhite', 0, 1000}},
+        {{'xpWhite', 0, 1000}},
+        {{'xpWhite', 0, 1000}},
+        {{'xpWhite', 0, 23},{'xpWhite', 23, 40},{'xpDarkGray', 40, 55}, {'xpWhite', 55, 1000}},
+        {{'xpWhite', 0, 42}, {'xpDarkGray', 42, 1000}},
+        {{'xpDarkGray', 0, 20},{'xpWhite', 20, 38}, {'xpDarkGray', 38, 52}, {'xpWhite', 54, 62}, {'xpDarkGray', 62, 1000}},
+        {{'xpDarkGray', 0, 24},{'xpWhite', 24, 32}, {'xpDarkGray', 38, 52}, {'xpWhite', 52, 64}, {'xpWhite', 64, 1000}},
+        {{'xpDarkGray', 0, 26},{'xpWhite', 26, 36}, {'xpDarkGray', 40, 56}, {'xpWhite', 56, 70}, {'xpWhite', 70, 1000}},
+        {{'xpDarkGray', 0, 24},{'xpWhite', 24, 34}, {'xpDarkGray', 38, 54}, {'xpWhite', 54, 64}, {'xpWhite', 64, 1000}},
+        {{'xpDarkGray', 0, 21},{'xpWhite', 21, 58},{'xpWhite', 58, 1000}},
+        {{'xpDarkGray', 0, 29},{'xpWhite', 29, 58},{'xpWhite', 58, 1000}},
+    };
+end
 
 M.xp_bar = {
     '██   ██ ██████      ██████   █████  ██████  ██ ███████',
