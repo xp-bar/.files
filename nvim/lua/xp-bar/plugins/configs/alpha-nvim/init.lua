@@ -9,7 +9,7 @@ local hr = helpers.hr
 
 local header = group({
     padding(1),
-    text(ascii.hydra_small, { hl = 'xpDarkGray'}),
+    text(ascii.hydra_small, { hl = ascii.hydra_hl()}),
     text(ascii.xp_bar, { hl = 'xpCyan' }),
     text(ascii.neovim, { hl = 'xpRed' }),
 }, {spacing = 1})
