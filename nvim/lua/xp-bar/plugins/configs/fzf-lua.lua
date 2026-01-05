@@ -12,9 +12,15 @@ local map = require('xp-bar.plugins.helpers').map
 
 require('fzf-lua').setup({'default',
   winopts = {
+    treesitter = true,
+    border = 'rounded',
+    backdrop = 100,
     preview = {
       default = "bat",
-      vertical = "up:70%"
+      vertical = "up:70%",
+      winopts = {
+        signcolumn = true
+      },
     }
   },
   fzf_opts = {
