@@ -96,6 +96,8 @@ require("onedarkpro").setup({
       FzfLuaCursor = { fg = 'NONE'},
       FzfLuaCursorLine = { bg = '${lightblack}'},
       FzfLuaSearch = { fg = '${red}', underline = true },
+      FzfLuaBorder = {fg = '${blue}'},
+      FzfLuaPreviewBorder = {fg = '${red}'},
 
       GitGutterAdd = { fg = '${green}' },
       GitGutterAddLine = { fg = '${green}', bg = '${gray}' },
