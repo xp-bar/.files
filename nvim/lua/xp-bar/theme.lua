@@ -134,17 +134,6 @@ require("onedarkpro").setup({
 
       LeapLabel = { fg = '${bg}', bg = '${fg}'},
 
-      StartifyBracket = { fg = '${blue}' },
-      StartifyFile = { fg = '${red}' },
-      StartifyFooter = { fg = '${fg}' },
-      StartifyHeader = { fg = '${fg}' },
-      StartifyNumber = { fg = '${orange}' },
-      StartifyPath = { fg = '${blue}' },
-      StartifySection = { fg = '${purple}' },
-      StartifySelect = { fg = '${cyan}' },
-      StartifySlash = { fg = '${blue}' },
-      StartifySpecial = { fg = '${gray}' },
-
       ZenBg = { bg = '' },
 
       zshDeref = { fg = '${red}'},
@@ -157,6 +146,22 @@ require("onedarkpro").setup({
       zshSubstQuoted = { fg = 'gray' },
       zshTypes = { fg = '${purple}' },
       zshVariableDef = { fg = '${orange}' },
+
+      -- custom for startup page
+      xpRed = {fg = '${red}'},
+      xpDarkRed = {fg = '${darkred}'},
+      xpOrange = {fg = '${orange}'},
+      xpYellow = {fg = '${yellow}'},
+      xpGreen = {fg = '${green}'},
+      xpCyan = {fg = '${cyan}'},
+      xpBlue = {fg = '${blue}'},
+      xpPurple = {fg = '${purple}'},
+      xpWhite = {fg = '${white}'},
+      xpLightBlack = {fg = '${lightblack}'},
+      xpBlack = {fg = '${black}'},
+      xpLightGray = {fg = '${lightgray}'},
+      xpGray = {fg = '${gray}'},
+      xpDarkGray = {fg = '${darkgray}'},
   },
 })
 

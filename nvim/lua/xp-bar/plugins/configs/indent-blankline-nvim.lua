@@ -22,7 +22,7 @@ require('ibl').setup({
       'TelescopePrompt',
       'TelescopeResults',
       -- additions
-      'startify',
+      'alpha',
       'markdown',
       'xxx'
     }
