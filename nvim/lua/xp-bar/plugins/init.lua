@@ -48,6 +48,7 @@ Plugins.install('nvim-lualine/lualine.nvim') -- bottom line and bufferline
 Plugins.install('hat0uma/csvview.nvim') -- CSV / TSV viewer and editor mode
 Plugins.install('stevearc/conform.nvim') -- Formatter plugin
 Plugins.install('goolord/alpha-nvim') -- startup screen
+Plugins.install('Vigemus/iron.nvim') -- REPL engine
 
 Plugins.finish()
 
