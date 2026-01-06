@@ -134,17 +134,6 @@ require("onedarkpro").setup({
 
       LeapLabel = { fg = '${bg}', bg = '${fg}'},
 
-      StartifyBracket = { fg = '${blue}' },
-      StartifyFile = { fg = '${red}' },
-      StartifyFooter = { fg = '${fg}' },
-      StartifyHeader = { fg = '${fg}' },
-      StartifyNumber = { fg = '${orange}' },
-      StartifyPath = { fg = '${blue}' },
-      StartifySection = { fg = '${purple}' },
-      StartifySelect = { fg = '${cyan}' },
-      StartifySlash = { fg = '${blue}' },
-      StartifySpecial = { fg = '${gray}' },
-
       ZenBg = { bg = '' },
 
       zshDeref = { fg = '${red}'},
