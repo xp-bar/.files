@@ -4,7 +4,9 @@ require('conform').setup({
         javascript = {'prettier', stop_after_first = true},
         typescript = {'prettier', stop_after_first = true},
         typescriptreact = {'prettier', stop_after_first = true},
-        php = {'php_cs_fixer', stop_after_first = true}
+        php = {'php_cs_fixer', stop_after_first = true},
+        json = {'prettier', 'deno_fmt', stop_after_first = true},
+        html = {'prettier', stop_after_first = true},
     },
     formatters = {
         php_cs_fixer = function (bufnr)
