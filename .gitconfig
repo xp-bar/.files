@@ -46,5 +46,9 @@
 [diff]
 	tool = vimdiff
 	algorithm = histogram
+[diff "csv"]
+    wordRegex = [^,\n]+[,\n]|[,]
+[diff "tsv"]
+    wordRegex = [^\t\n]+[\t\n]|[\t]
 [init]
 	defaultBranch = main
