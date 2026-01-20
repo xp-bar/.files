@@ -30,6 +30,14 @@ function dash(){
     fi
 }
 
+ci() {
+    if [[ $* ]]; then
+        git commit -m $* && return 0 || return 1;
+    fi
+
+    git commit && return 0 || return 1;
+}
+
 st() {
     if [[ $1 = *"--long"* || $1 = *"-l"* || $1 = *"-v"* ]]; then
         git status;
