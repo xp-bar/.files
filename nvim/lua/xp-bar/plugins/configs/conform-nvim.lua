@@ -26,6 +26,6 @@ aug('prettierfix', function (au)
     end)
 
     au({'BufWritePre'}, '*.php,*.blade.php', function (args)
-        require("conform").format({ bufnr = args.buf })
+        pcall(require("conform").format, { bufnr = args.buf })
     end)
 end)
