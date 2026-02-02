@@ -75,3 +75,5 @@ vim.keymap.set('n', '<leader>k', function()
         vim.lsp.buf.hover()
     end
 end)
+
+vim.keymap.set('v', 'gy', '"*y"<esc>', {silent = true})
