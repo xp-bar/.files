@@ -22,6 +22,8 @@ ln -sv $PWD/custom-php-cs-fixers/index.php ~/.php-cs-fixer.php
 touch ~/.ignored-stuff
 touch ~/.env
 
+[ -d ~/.config/pgcli/ ] || mkdir -p ~/.config/pgcli/
+ln -sv $PWD/.config/pgcli/config ~/.config/pgcli/config
 
 # NVIM stuff
 [ -d ~/.config/nvim/ ] || mkdir -p ~/.config/nvim/
