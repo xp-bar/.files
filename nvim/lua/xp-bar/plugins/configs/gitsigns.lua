@@ -25,3 +25,11 @@ require('gitsigns').setup({
   word_diff  = false,
   -- current_line_blame = true
 })
+
+vim.keymap.set({'n'}, 'gso', function ()
+  require('gitsigns').nav_hunk('next')
+end, {silent = true})
+
+vim.keymap.set({'n'}, 'gsi', function ()
+  require('gitsigns').nav_hunk('prev')
+end, {silent = true})
