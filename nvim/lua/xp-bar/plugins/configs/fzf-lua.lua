@@ -10,6 +10,16 @@ local git_diff = require"fzf-lua.providers.git".diff
 local grep_project = require"fzf-lua.providers.grep".grep_project
 local map = require('xp-bar.plugins.helpers').map
 
+local file_edit_and_qf = function (selected, opts)
+    -- open all the files first
+    actions.file_edit(selected, opts)
+
+    -- if more than one file selected, also set qf and open
+    if #selected > 1 then
+      actions.file_sel_to_qf(selected, opts)
+    end
+end
+
 require('fzf-lua').setup({'default',
   winopts = {
     treesitter = true,
@@ -38,7 +48,7 @@ require('fzf-lua').setup({'default',
   file_icons = false,
   actions = {
     files = {
-      ["default"]     = actions.file_edit, -- file_edit_or_qf
+      ["default"]     = file_edit_and_qf, -- file_edit_or_qf
       ["ctrl-s"]      = actions.file_split,
       ["ctrl-v"]      = actions.file_vsplit,
       ["ctrl-t"]      = actions.file_tabedit,
