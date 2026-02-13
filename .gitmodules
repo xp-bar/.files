@@ -10,9 +10,6 @@
 [submodule "nvim/packs/neovim-xp"]
 	path = nvim/packs/neovim-xp
 	url = git@github.com:xp-bar/neovim-xp.git
-[submodule "custom-php-cs-fixers"]
-	path = custom-php-cs-fixers
-	url = git@github.com:xp-bar/Custom-PHP-CS-Fixers.git
 [submodule ".config/figlet/fonts"]
 	path = .config/figlet/fonts
 	url = git@github.com:xero/figlet-fonts.git
@@ -25,3 +22,6 @@
 [submodule ".files-work"]
 	path = .files-work
 	url = git@github.com:xp-bar/.files-work.git
+[submodule ".phpcs-config"]
+	path = .phpcs-config
+	url = git@github.com:xp-bar/.phpcs-config.git
