@@ -10,7 +10,6 @@ ln -sv $PWD/.function ~
 ln -sv $PWD/.path ~
 ln -sv $PWD/.editorconfig ~
 ln -sv $PWD/.tmux.conf ~
-ln -sv $PWD/.tmux.remote.conf ~
 ln -sv $PWD/.zle ~
 ln -sv $PWD/z/z.sh ~
 ln -sv $PWD/.zshrc ~
