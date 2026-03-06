@@ -31,8 +31,8 @@ local config = {
             ['phpunit'] = {
                 ['executable'] = './vendor/bin/phpunit',
                 ['__options'] = {
-                    ['nearest'] = '-d memory_limit=2G --colors=always --testdox',
-                    ['file']    = '-d memory_limit=2G --colors=always --testdox',
+                    ['nearest'] = '-d memory_limit=2G --testdox',
+                    ['file']    = '-d memory_limit=2G --testdox',
                     ['suite']   = '-d memory_limit=2G --testdox',
                 }
             }
