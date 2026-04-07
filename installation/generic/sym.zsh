@@ -9,7 +9,6 @@ ln -sv $PWD/.zsh_plugins.txt ~
 ln -sv $PWD/.function ~
 ln -sv $PWD/.path ~
 ln -sv $PWD/.editorconfig ~
-ln -sv $PWD/.tmux.conf ~
 ln -sv $PWD/.zle ~
 ln -sv $PWD/z/z.sh ~
 ln -sv $PWD/.zshrc ~
@@ -42,3 +41,10 @@ ln -sv $PWD/.batconfig ~/.config/bat/config
 [ -d ~/.config/wtf/ ] || mkdir -p ~/.config/wtf/
 ln -sv $PWD/.config/wtf/config.yml ~/.config/wtf/config.yml
 ln -sv $PWD/.config/wtf/scripts/ ~/.config/wtf/
+
+[ -d ~/.config/tmux/ ] || mkdir -p ~/.config/tmux/
+ln -sv $PWD/.config/tmux/tmux.conf ~/.config/tmux/tmux.conf
+ln -sv $PWD/.config/tmux/general.conf ~/.config/tmux/general.conf
+ln -sv $PWD/.config/tmux/plugins.conf ~/.config/tmux/plugins.conf
+ln -sv $PWD/.config/tmux/ui.conf ~/.config/tmux/ui.conf
+ln -sv $PWD/.config/tmux/keybindings.conf ~/.config/tmux/keybindings.conf
