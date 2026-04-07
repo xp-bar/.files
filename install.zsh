@@ -76,7 +76,8 @@ sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.
 # -- }}}
 
 # -- Install TPM -- {{{
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+mkdir -p ~/.config/tmux/plugins/
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 # -- }}}
 
 # -- SYMLINKS -- {{{
