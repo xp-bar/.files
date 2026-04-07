@@ -29,7 +29,7 @@ require('fzf-lua').setup({'default',
       default = "bat",
       vertical = "up:70%",
       winopts = {
-        signcolumn = true
+        signcolumn = 'yes'
       },
     }
   },
