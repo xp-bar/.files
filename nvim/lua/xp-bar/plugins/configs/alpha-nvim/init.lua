@@ -23,7 +23,7 @@ local bookmarks = group({
     file('.f', '~/.function'),
     file('.v', '~/.config/nvim/init.lua'),
     file('.x', '~/.config/nvim/lua/xp-bar'),
-    file('.t', '~/.tmux.conf'),
+    file('.t', '~/.config/tmux/tmux.conf'),
     file('.z', '~/.zshrc'),
     file('.d', '~/.antidote'),
     file('.h', '.git/hooks'),
