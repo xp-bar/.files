@@ -16,7 +16,7 @@ ln -sv $PWD/.valias ~
 ln -sv $PWD/.alacritty.toml ~
 ln -sv $PWD/.ackrc ~
 ln -sv $PWD/.rgrc ~
-ln -sv $PWD/custom-php-cs-fixers/index.php ~/.php-cs-fixer.php
+ln -sv $PWD/.phpcs-config/index.php ~/.php-cs-fixer.php
 touch ~/.ignored-stuff
 touch ~/.env
 
