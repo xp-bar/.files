@@ -92,7 +92,7 @@ git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
 read response\?"Install custom PHP-CS-Fixers? [y/n] "
     case "$response" in
         [yY][eE][sS]|[yY])
-        cd ./custom-php-cs-fixers && composer install && cd ../
+        cd .phpcs-config && composer install && cd ../
             ;;
         *)
             ;;
