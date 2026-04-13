@@ -17,14 +17,22 @@ local docker_transform = function (cmd)
         .. cmd
 end
 
+local test_transform = function (cmd)
+  if cmd:find('phpunit') then
+    return docker_transform(cmd)
+  else
+    return cmd
+  end
+end
+
 local config = {
     ['neovim'] = {
         ['term_position'] = 'vert botright',
     },
     ['test'] = {
-        ['transformation'] = 'docker',
+        ['transformation'] = 'transformer',
         ['__custom_transformations'] = {
-            ['docker'] = docker_transform
+            ['transformer'] = test_transform
         },
         ['strategy'] = 'neovim',
         ['php'] = {
