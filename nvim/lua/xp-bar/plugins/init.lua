@@ -37,9 +37,9 @@ Plugins.install('junegunn/gv.vim') -- git log browser
 Plugins.install('nvim-mini/mini.surround') -- handle surround of text, lsp, treesitter objects w/ chars
 Plugins.install('ggandor/leap.nvim') -- extra movement motions
 Plugins.install('airblade/vim-rooter') -- find project root
-Plugins.install('mattn/emmet-vim', {['for'] = {'html', 'vue', 'eruby', 'blade.php', 'typescriptreact'}})
+Plugins.install('mattn/emmet-vim', {['for'] = {'html', 'vue', 'eruby', 'blade.php', 'php', 'typescriptreact'}})
 Plugins.install('numToStr/Comment.nvim') -- comments
-Plugins.install('vim-test/vim-test', {['for'] = { 'php', 'ruby' } }) -- testing
+Plugins.install('vim-test/vim-test', {['for'] = { 'php', 'ruby', 'typescript' } }) -- testing
 Plugins.install('iamcco/markdown-preview.nvim', {['for'] = 'markdown', ['do'] = function() vim.fn['mkdp#util#install']() end})
 Plugins.install('tobyS/vmustache') -- documentation stubs
 Plugins.install('tobyS/pdv') -- documentation stubs
