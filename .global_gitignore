@@ -7,6 +7,7 @@ tags.*
 .token
 .mock/*
 *.lock
+!composer.lock
 __*
 _ackrc
 .php-cs-fixer.php

@@ -9,8 +9,6 @@ ln -sv $PWD/.zsh_plugins.txt ~
 ln -sv $PWD/.function ~
 ln -sv $PWD/.path ~
 ln -sv $PWD/.editorconfig ~
-ln -sv $PWD/.tmux.conf ~
-ln -sv $PWD/.tmux.remote.conf ~
 ln -sv $PWD/.zle ~
 ln -sv $PWD/z/z.sh ~
 ln -sv $PWD/.zshrc ~
@@ -18,7 +16,7 @@ ln -sv $PWD/.valias ~
 ln -sv $PWD/.alacritty.toml ~
 ln -sv $PWD/.ackrc ~
 ln -sv $PWD/.rgrc ~
-ln -sv $PWD/custom-php-cs-fixers/index.php ~/.php-cs-fixer.php
+ln -sv $PWD/.phpcs-config/index.php ~/.php-cs-fixer.php
 touch ~/.ignored-stuff
 touch ~/.env
 
@@ -43,3 +41,10 @@ ln -sv $PWD/.batconfig ~/.config/bat/config
 [ -d ~/.config/wtf/ ] || mkdir -p ~/.config/wtf/
 ln -sv $PWD/.config/wtf/config.yml ~/.config/wtf/config.yml
 ln -sv $PWD/.config/wtf/scripts/ ~/.config/wtf/
+
+[ -d ~/.config/tmux/ ] || mkdir -p ~/.config/tmux/
+ln -sv $PWD/.config/tmux/tmux.conf ~/.config/tmux/tmux.conf
+ln -sv $PWD/.config/tmux/general.conf ~/.config/tmux/general.conf
+ln -sv $PWD/.config/tmux/plugins.conf ~/.config/tmux/plugins.conf
+ln -sv $PWD/.config/tmux/ui.conf ~/.config/tmux/ui.conf
+ln -sv $PWD/.config/tmux/keybindings.conf ~/.config/tmux/keybindings.conf

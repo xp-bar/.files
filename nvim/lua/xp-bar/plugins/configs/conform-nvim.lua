@@ -15,7 +15,7 @@ require('conform').setup({
                 return {append_args = {'--config', config_file}}
             end
 
-            return {}
+            return {append_args = {'--config', vim.fn.expand('$HOME/.php-cs-fixer.php')}}
         end
     }
 });
