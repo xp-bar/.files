@@ -7,7 +7,15 @@ local docker_transform = function (cmd)
     local fpath = vim.fn.findfile("Dockerfile.dev", ";~/Code/")
     fpath = fpath:gsub("Dockerfile%.dev", '')
 
+    if fpath == '' then
+      return cmd
+    end
+
     local app = os.getenv('DOCKER_DEFAULT_APP') or error('DOCKER_DEFAULT_APP must be set!')
+
+    if fpath == '' or app == '' then
+      return cmd
+    end
 
     return 'docker-compose --project-directory="'
         .. fpath
