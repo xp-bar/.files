@@ -118,6 +118,7 @@ require("onedarkpro").setup({
       LspReferenceWrite = { bg = '${gray}', underline = true},
 
       GitSignsAdd = { fg = '${green}', bg = '' },
+      GitSignsAddLn = { fg = '${green}', bg = '${lightblack}' },
       GitSignsStagedAdd = { fg = '', bg = '${green}'},
 
       GitSignsChange = { fg = '${orange}', bg = '' },
