@@ -1,8 +1,11 @@
 local lint = require('lint')
 
 lint.linters_by_ft = {
-    php = {'dphpstan'}
 }
+
+if vim.fn.executable('docker-compose') then
+    lint.linters_by_ft.php = {'dphpstan'}
+end
 
 lint.linters.dphpstan = {
   cmd = 'docker-compose',

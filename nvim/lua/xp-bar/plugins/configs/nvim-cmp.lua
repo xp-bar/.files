@@ -8,22 +8,15 @@ cmp.setup {
     end,
   },
   mapping = cmp.mapping.preset.insert({
-    ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
-    ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
-    -- C-b (back) C-f (forward) for snippet placeholder navigation.
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
-    },
-    ['<Tab>'] = cmp.mapping(function(fallback)
+    ['<CR>'] = cmp.mapping.confirm {select = true},
+    ['<S-J>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       else
         fallback()
       end
     end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
+    ['<S-K>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       else
@@ -34,5 +27,12 @@ cmp.setup {
   sources = {
     { name = 'nvim_lsp' },
     { name = 'nvim_lsp_signature_help' },
+    { name = 'spell', option = {
+        keep_all_entries = false,
+        enable_in_context = function()
+            return require('cmp.config.context').in_treesitter_capture('spell')
+        end,
+        preselect_correct_word = true,
+    }},
   },
 }

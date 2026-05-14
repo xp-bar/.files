@@ -126,9 +126,11 @@ vim.api.nvim_create_user_command('Rg', function (args)
     end
   end
 
-  local opts = {
-    search_paths = paths
-  }
+  local opts = {}
+
+  if #paths > 0 then
+    opts.search_paths = paths
+  end
 
   grep_project(opts)
 end, {
