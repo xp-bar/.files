@@ -40,5 +40,5 @@ vim.o.softtabstop    = 4
 vim.o.tabstop        = 4
 
 -- spelling
-vim.opt.spell = true
+vim.opt.spell = false
 vim.opt.spelllang = { "en_ca" }
