@@ -175,7 +175,7 @@ function co() {
     local branch=""
 
     if [[ $@ == "" ]]; then
-        branch="$(echo "$recent_branches" | fzf --height 25%)"
+        branch="$(echo "$recent_branches" | fzf --height 25% --layout=reverse)"
     elif [[ $* = *"--all"* ]]; then
         branch="$(echo "$all_branches" | sort -fdu | fzf --layout=reverse)"
     else
