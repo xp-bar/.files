@@ -25,6 +25,7 @@ Plugins.install('heavenshell/vim-jsdoc') -- JSDoc generation
 Plugins.install('neovim/nvim-lspconfig')
 Plugins.install('hrsh7th/nvim-cmp')
 Plugins.install('hrsh7th/cmp-nvim-lsp')
+Plugins.install('hrsh7th/cmp-buffer')
 Plugins.install('hrsh7th/cmp-nvim-lsp-signature-help')
 Plugins.install('f3fora/cmp-spell')
 Plugins.install('mfussenegger/nvim-lint') -- ALE-style, diagnostic-based linting
