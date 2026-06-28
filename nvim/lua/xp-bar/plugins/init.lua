@@ -36,7 +36,7 @@ Plugins.install('Raimondi/delimitMate') -- delimiter assistance
 Plugins.install('tpope/vim-fugitive') -- git
 Plugins.install('junegunn/gv.vim') -- git log browser
 Plugins.install('nvim-mini/mini.surround') -- handle surround of text, lsp, treesitter objects w/ chars
-Plugins.install('ggandor/leap.nvim') -- extra movement motions
+Plugins.install('https://codeberg.org/andyg/leap.nvim') -- extra movement motions
 Plugins.install('airblade/vim-rooter') -- find project root
 Plugins.install('mattn/emmet-vim', {['for'] = {'html', 'vue', 'eruby', 'blade.php', 'php', 'typescriptreact'}})
 Plugins.install('numToStr/Comment.nvim') -- comments
