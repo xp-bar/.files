@@ -15,7 +15,9 @@ Plugins.install('nvim-tree/nvim-web-devicons') -- dependency for some plugins
 Plugins.install('folke/zen-mode.nvim') -- focus mode
 Plugins.install('folke/twilight.nvim') -- dim inactive portions of code
 Plugins.install('lukas-reineke/indent-blankline.nvim') -- indentation markers
--- frozen at master - need to upgrade at some point; see https://github.com/nvim-treesitter/nvim-treesitter/pull/8344
+-- Frozen at master - need to upgrade at some point; see https://github.com/nvim-treesitter/nvim-treesitter/pull/8344
+-- Another update here - repository is now archived. Will need to roll alternative, native solution at some point:
+--  - something like: https://stevedylan.dev/now/native-treesitter-in-neovim
 Plugins.install('nvim-treesitter/nvim-treesitter', {['do'] = ':TSUpdate', branch = 'master'}) -- treesitter
 Plugins.install('fuyedong/vim-zephir') -- syntax for zephir
 Plugins.install('dynamotn/tree-sitter-dbml') -- syntax for DBML
