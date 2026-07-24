@@ -4,13 +4,7 @@
 local flatten = require('xp-bar.plugins.helpers').flatten
 
 local docker_transform = function (cmd)
-    local fpath = vim.fn.findfile("Dockerfile.dev", ";~/Code/")
-    fpath = fpath:gsub("Dockerfile%.dev", '')
-
-    if fpath == '' then
-      return cmd
-    end
-
+    local fpath = os.getenv('DOCKER_DEFAULT_APP_PATH') or error('DOCKER_DEFAULT_APP_PATH must be set!')
     local app = os.getenv('DOCKER_DEFAULT_APP') or error('DOCKER_DEFAULT_APP must be set!')
 
     if fpath == '' or app == '' then
