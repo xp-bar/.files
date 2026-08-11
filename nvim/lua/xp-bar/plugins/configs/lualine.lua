@@ -66,6 +66,7 @@ require('lualine').setup {
             vim.opt.showtabline = cond and 2 or 1
             return cond
           end,
+          max_length = vim.o.columns,
           buffers_color = {
             active = {bg = colors.purple, fg = colors.gunmetal},
             inactive = {bg = colors.gunmetal, fg = colors.french_grey},
