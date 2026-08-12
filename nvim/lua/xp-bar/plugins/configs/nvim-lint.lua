@@ -3,8 +3,11 @@ local lint = require('lint')
 lint.linters_by_ft = {
 }
 
-if vim.fn.executable('docker-compose') then
+
+if vim.fn.findfile("Dockerfile.dev", ";~/Code/") ~= '' and vim.fn.executable('docker-compose') then
     lint.linters_by_ft.php = {'dphpstan'}
+else
+    lint.linters_by_ft.php = {}
 end
 
 lint.linters.dphpstan = {
@@ -16,9 +19,7 @@ lint.linters.dphpstan = {
     'ERROR',
     '--project-directory',
     function()
-        local fpath = vim.fn.findfile("Dockerfile.dev", ";~/Code/")
-        fpath = fpath:gsub("Dockerfile%.dev", '')
-        return fpath
+        return os.getenv('DOCKER_DEFAULT_APP_PATH') or error('DOCKER_DEFAULT_APP_PATH must be set!')
     end,
     'exec',
     function()
