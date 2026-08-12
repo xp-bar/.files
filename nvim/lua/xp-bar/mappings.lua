@@ -77,3 +77,7 @@ vim.keymap.set('n', '<leader>k', function()
 end)
 
 vim.keymap.set('v', 'gy', '"*y"<esc>', {silent = true})
+
+-- treesitter
+vim.keymap.set('n', '<leader>i', '<cmd>Inspect<cr>', {silent = true})
+vim.keymap.set('n', '<leader>I', '<cmd>InspectTree<cr>', {silent = true})
