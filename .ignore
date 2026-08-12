@@ -1,0 +1,9 @@
+# git submodules
+.config/figlet/fonts
+.files-work
+.phpcs-config
+nvim/dependencies/tree-sitter-embedded-template
+nvim/dependencies/vscode-php-debug
+nvim/packs/neovim-xp
+z
+zsh-bar-theme
