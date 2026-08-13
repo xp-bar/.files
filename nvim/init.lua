@@ -21,7 +21,6 @@ require('xp-bar.plugins')
 require('xp-bar.lsp')
 
 -- -- Set up treesitter.
-require('xp-bar.treesitter')
 require('xp-bar.theme')
 
 -- -- autocommands

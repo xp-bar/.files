@@ -2,4 +2,4 @@
 ; vim: set ts=2 sw=2:
 
 (array_creation_expression) @fold
-
+(member_call_expression (arguments) @fold)
