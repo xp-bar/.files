@@ -5,6 +5,8 @@ aug("Treesitter", function (au)
     au("FileType", "*",  function(ev)
         pcall(vim.treesitter.start, ev.buf)
     end)
+
+    au('User', 'TSUpdate', require('xp-bar.plugins.configs.nvim-treesitter').update_callback)
 end)
 
 -- Pop references when holding the cursor

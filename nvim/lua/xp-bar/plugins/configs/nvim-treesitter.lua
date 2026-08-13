@@ -6,6 +6,7 @@ require('nvim-treesitter').setup {
 require('nvim-treesitter').install {
   "css",
   "diff",
+  "erb",
   "html",
   "blade",
   "gdscript",
@@ -24,3 +25,19 @@ require('nvim-treesitter').install {
   "vimdoc",
   "vue",
 }
+
+local M = {}
+M.update_callback = function ()
+    require('nvim-treesitter.parsers').erb = {
+        install_info = {
+            path = "~/.config/nvim/dependencies/tree-sitter-embedded-template/", -- local path or git repo
+            -- url = "git@github.com:tree-sitter/tree-sitter-embedded-template.git", -- git URL
+            generate = false, -- repo contains src/parser.c, no need to generate
+            generate_from_json = false, -- repo contains src/grammar.json, no need to generate
+            queries = 'queries/neovim', -- symlink queries from given directory
+        },
+    }
+
+    vim.treesitter.language.register('erb', { 'eruby' })
+end
+return M
