@@ -28,6 +28,8 @@ vim.o.updatetime     = 300
 vim.o.wildmenu       = true
 vim.o.wrap           = false
 vim.wo.foldexpr      = 'v:lua.vim.treesitter.foldexpr()'
+vim.o.foldtext = ''
+vim.o.fillchars = 'fold:-'
 
 -- set list-style options
 vim.opt.path:append('./**')
