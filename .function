@@ -38,6 +38,29 @@ ci() {
     git commit && return 0 || return 1;
 }
 
+ca() {
+    local last_search=""
+    if [[ $1 = *"--last"* || $1 = *"-l"* ]]; then
+        last_search="$LAST_COAUTHOR_SEARCH"
+    fi
+
+    local author=""
+    author=$(git log --since="3 months ago" \
+        | grep -i "Author:\|Co-Authored-By" \
+        | sed -E 's/^[ ]*(Co-Authored-By|Autho[u]*r):[ ]*//gi' \
+        | sort -u \
+        | fzf -i --query "$last_search"
+    )
+
+    if [[ $? -gt 0 ]]; then
+        return
+    fi
+
+    export LAST_COAUTHOR_SEARCH="$author"
+    echo "Co-Authored-By: $author"
+    return 0
+}
+
 st() {
     if [[ $1 = *"--long"* || $1 = *"-l"* || $1 = *"-v"* ]]; then
         git status;
