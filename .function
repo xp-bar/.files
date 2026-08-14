@@ -39,25 +39,20 @@ ci() {
 }
 
 ca() {
-    local last_search=""
-    if [[ $1 = *"--last"* || $1 = *"-l"* ]]; then
-        last_search="$LAST_COAUTHOR_SEARCH"
-    fi
-
     local author=""
     author=$(git log --since="3 months ago" \
         | grep -i "Author:\|Co-Authored-By" \
         | sed -E 's/^[ ]*(Co-Authored-By|Autho[u]*r):[ ]*//gi' \
         | sort -u \
-        | fzf -i --query "$last_search"
+        | fzf -i $*
     )
 
     if [[ $? -gt 0 ]]; then
         return
     fi
 
-    export LAST_COAUTHOR_SEARCH="$author"
-    echo "Co-Authored-By: $author"
+    echo $author | sed 's/^\(.*\)$/Co-Authored-By: \1/g'
+
     return 0
 }
 
