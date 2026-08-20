@@ -71,6 +71,8 @@ require("onedarkpro").setup({
 
       ['@text.diff.delete.diff'] = { fg = '${red}'},
       ['@text.diff.add.diff'] = { fg = '${green}'},
+      diffAdded = { fg = '${green}'},
+      diffRemoved = { fg = '${red}'},
 
       CocCursorRange = { fg = '${gray}'},
       CocErrorFloat = { fg = '${red}'},
