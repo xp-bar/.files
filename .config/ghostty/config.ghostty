@@ -1,0 +1,12 @@
+theme                     = xp-bar
+window-colorspace         = display-p3
+font-family               = "DroidSansM Nerd Font"
+macos-option-as-alt       = true
+# https://unsplash.com/photos/aurora-borealis-over-snow-capped-mountains-and-starry-sky-2vVhfhbj5-s
+background-image          = "/Users/nick/Downloads/jonny-gios-2vVhfhbj5-s-unsplash.jpg"
+background-image-opacity  = 0.4
+background-image-position = top-left
+background-image-fit      = cover
+
+# disable ligatures
+font-feature = -calt, -liga, -dlig
