@@ -1,12 +1,8 @@
-require('nvim-treesitter').setup {
-  -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
-  install_dir = vim.fn.stdpath('data') .. '/site'
-}
+local M = {}
 
-require('nvim-treesitter').install {
+M.languages = {
   "css",
   "diff",
-  "erb",
   "html",
   "blade",
   "gdscript",
@@ -26,7 +22,10 @@ require('nvim-treesitter').install {
   "vue",
 }
 
-local M = {}
+M.custom_languages = {
+  "erb",
+}
+
 M.update_callback = function ()
     require('nvim-treesitter.parsers').erb = {
         install_info = {
@@ -40,4 +39,12 @@ M.update_callback = function ()
 
     vim.treesitter.language.register('erb', { 'eruby' })
 end
+
+require('nvim-treesitter').setup {
+  -- Directory to install parsers and queries to (prepended to `runtimepath` to have priority)
+  install_dir = vim.fn.stdpath('data') .. '/site'
+}
+
+require('nvim-treesitter').install(M.languages);
+
 return M

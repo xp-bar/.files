@@ -2,11 +2,15 @@ local aug = require('xp-bar.autocommands.helpers').aug
 
 -- Enable treesitter
 aug("Treesitter", function (au)
-    au("FileType", "*",  function(ev)
-        pcall(vim.treesitter.start, ev.buf)
+    local config = require('xp-bar.plugins.configs.nvim-treesitter')
+    au({'FileType'}, config.languages,  function()
+        vim.treesitter.start()
+    end)
+    au({'FileType'}, config.custom_languages,  function()
+        vim.treesitter.start()
     end)
 
-    au('User', 'TSUpdate', require('xp-bar.plugins.configs.nvim-treesitter').update_callback)
+    au('User', 'TSUpdate', config.update_callback)
 end)
 
 -- Pop references when holding the cursor
