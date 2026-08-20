@@ -6,6 +6,10 @@
 local colors = require('xp-bar.modules.colors').colors
 
 require("onedarkpro").setup({
+  options = {
+    transparency = true,
+    lualine_transparency = true,
+  },
   colors = {
     bg = colors.gunmetal,
     fg = colors.french_grey,
@@ -30,7 +34,6 @@ require("onedarkpro").setup({
   highlights = {
       Operator = { fg = '${red}' },
       MatchParen = { fg = '${red}', bg = '${black}', italic = true },
-      NormalFloat = { bg = '${black}' },
 
       ['@variable.builtin'] = { fg = '${red}'},
       ['@punctuation.bracket'] = { fg = '${white}'},
@@ -135,7 +138,7 @@ require("onedarkpro").setup({
       GitSignsTopDelete = { fg = '${red}', bg = '' },
       GitSignsStagedTopDelete = { fg = '', bg = '${red}' },
 
-      LeapLabel = { fg = '${bg}', bg = '${fg}'},
+      LeapLabel = { fg = '', bg = '${fg}'},
 
       ZenBg = { bg = '' },
 
