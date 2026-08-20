@@ -48,3 +48,6 @@ ln -sv $PWD/.config/tmux/general.conf ~/.config/tmux/general.conf
 ln -sv $PWD/.config/tmux/plugins.conf ~/.config/tmux/plugins.conf
 ln -sv $PWD/.config/tmux/ui.conf ~/.config/tmux/ui.conf
 ln -sv $PWD/.config/tmux/keybindings.conf ~/.config/tmux/keybindings.conf
+
+# Be lazy: link entire ghostty config folder
+ln -sv $PWD/.config/ghostty/ ~/.config/ghostty

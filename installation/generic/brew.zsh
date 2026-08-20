@@ -199,6 +199,9 @@ brew install --cask font-droid-sans-mono-for-powerline
 # -- cask installs -- {{{
 
 # Unnatural Scroll Wheels
+brew install --cask ghostty
+
+# Unnatural Scroll Wheels
 brew install --cask unnaturalscrollwheels
 
 read response\?"Install Slack? [y/n] "
