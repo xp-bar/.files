@@ -49,6 +49,7 @@ Plugins.install('nvim-lualine/lualine.nvim') -- bottom line and bufferline
 Plugins.install('hat0uma/csvview.nvim') -- CSV / TSV viewer and editor mode
 Plugins.install('stevearc/conform.nvim') -- Formatter plugin
 Plugins.install('goolord/alpha-nvim') -- startup screen
+Plugins.install('stevearc/oil.nvim') -- manage directories as buffers
 
 Plugins.finish()
 
