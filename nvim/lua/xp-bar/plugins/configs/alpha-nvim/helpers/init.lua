@@ -112,4 +112,12 @@ M.hr = function (characters, width, opts)
     }
 end
 
+M.breakpoint = function (bp, contents, fallback)
+    if vim.fn.winheight(0) >= bp then
+        return contents
+    else
+        return fallback or nil
+    end
+end
+
 return M;

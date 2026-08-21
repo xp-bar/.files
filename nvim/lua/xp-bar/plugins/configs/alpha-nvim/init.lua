@@ -6,10 +6,18 @@ local file = helpers.edit_file_button
 local group = helpers.group
 local padding = helpers.padding
 local hr = helpers.hr
+local breakpoint = helpers.breakpoint
+
+local breakpoints = {
+    xs = 39,
+    sm = 43,
+    md = 47,
+    lg = 52,
+}
 
 local header = group({
     padding(1),
-    text(ascii.hydra_small, { hl = ascii.hydra_hl()}),
+    breakpoint(breakpoints.xs, text(ascii.hydra_small, { hl = ascii.hydra_hl()})),
     text(ascii.xp_bar, { hl = 'xpCyan' }),
     text(ascii.neovim, { hl = 'xpRed' }),
 }, {spacing = 1})
@@ -31,34 +39,46 @@ local bookmarks = group({
 
 require('alpha').setup({
     ['layout'] = {
-        padding(1),
-        header,
-        padding(1),
-        hr('~-._.-~', 45),
-        padding(2),
-        buttons,
-        padding(1),
-        bookmarks,
-        padding(1),
-        native_button('q', ' <quit>', ':q<cr>'),
-        padding(1),
-        hr('_.-~-._', 45),
-        padding(2),
-        text({
-            '"In the beginning the Universe was created.',
-            ' This has made a lot of people very angry',
-            ' and been widely regarded as a bad move."',
-            '',
-            '                         -- Douglas Adams'
-        }, {hl = {
-            {{'xpLightGray', 0, 100}},
-            {{'xpLightGray', 0, 100}},
-            {{'xpLightGray', 0, 100}},
-            {},
-            {{'xpLightGray', 0, 100}},
-        }}),
-        padding(1),
-        text('~-._.-~', {hl = 'xpDarkGray'}),
+        group({
+            padding(1),
+            header,
+            padding(1),
+            breakpoint(breakpoints.sm, group({
+                hr('~-._.-~', 45),
+                padding(2)
+            })),
+            buttons,
+            padding(1),
+            bookmarks,
+            padding(1),
+            native_button('q', ' <quit>', ':q<cr>'),
+            breakpoint(breakpoints.sm, group({
+                padding(1),
+                hr('_.-~-._', 45),
+            })),
+            breakpoint(breakpoints.lg, group({
+                padding(2),
+                text({
+                    '"In the beginning the Universe was created.',
+                    ' This has made a lot of people very angry',
+                    ' and been widely regarded as a bad move."',
+                    '',
+                    '                         -- Douglas Adams'
+                }, {hl = {
+                    {{'xpLightGray', 0, 100}},
+                    {{'xpLightGray', 0, 100}},
+                    {{'xpLightGray', 0, 100}},
+                    {},
+                    {{'xpLightGray', 0, 100}},
+                }}),
+            })),
+            breakpoint(breakpoints.md, group({
+                padding(1),
+                text('~-._.-~', {hl = 'xpDarkGray'}),
+            })),
+        }, {
+            position = 'v_center'
+        })
     },
     ['opts'] = {
         ['margin'] = 5,
