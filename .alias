@@ -113,8 +113,10 @@ alias godot="/Applications/Godot.app/Contents/MacOS/Godot"
 # Docker-Compose
 alias dk="docker"
 alias dke="docker exec"
-alias dkc="docker-compose"
-alias dkce="docker-compose exec"
+alias dkc="docker compose"
+alias dkce="docker compose exec"
+alias dup="docker compose up -d"
+alias ddown="docker compose down"
 
 # yarn
 alias y="yarn"
