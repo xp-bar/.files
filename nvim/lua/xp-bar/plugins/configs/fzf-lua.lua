@@ -119,14 +119,21 @@ end, {})
 
 vim.api.nvim_create_user_command('Rg', function (args)
   local paths = {}
+  local rg_opts = {}
 
   for k, a in pairs(args.fargs) do
     if not a:find('^%-') then
       table.insert(paths, a)
+    else
+      table.insert(rg_opts, a)
     end
   end
 
   local opts = {}
+
+  if #rg_opts > 0 then
+    opts.rg_opts = table.concat(rg_opts, ' ') .. ' --column --line-number --no-heading --color=always --smart-case --max-columns=4096 -e'
+  end
 
   if #paths > 0 then
     opts.search_paths = paths
