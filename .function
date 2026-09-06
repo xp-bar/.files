@@ -189,7 +189,7 @@ function co() {
     [[ $* = *"--last"* ]] && git checkout @{-1} && return 0;
 
     local all_branches="$(git branch | grep -v "\*")";
-    local recent_branches="$(git reflog | grep checkout: | sed 's,^.*from \([\.A-z0-9_/\-]*\) to \([\.A-z0-9_/\-]*\),\2,g' | awk '!a[$0]++')"
+    local recent_branches="$(git reflog | grep checkout: | sed 's,^.*from \([\.A-Za-z0-9_/\-]*\) to \([\.A-Za-z0-9_/\-]*\),\2,g' | awk '!a[$0]++')"
     local branch=""
 
     if [[ $@ == "" ]]; then
