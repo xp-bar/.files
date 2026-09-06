@@ -25,3 +25,6 @@
 [submodule ".phpcs-config"]
 	path = .phpcs-config
 	url = git@github.com:xp-bar/.phpcs-config.git
+[submodule "nvim/vim-plug"]
+	path = nvim/vim-plug
+	url = git@github.com:junegunn/vim-plug.git
