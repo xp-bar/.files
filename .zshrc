@@ -16,7 +16,7 @@ setopt LOCAL_TRAPS # allow functions to have local traps
 setopt COMPLETE_ALIASES # completion for aliases
 
 # aliases, functions, etc. {{{
-[[ -e ~/.antidote ]] && source ~/.antidote || echo "Plugins not loaded."
+[[ -e ~/.zsh-antidote ]] && source ~/.zsh-antidote || echo "Plugins not loaded."
 [[ -e ~/.env ]] && source ~/.env
 [[ -e ~/.path ]] && source ~/.path
 [[ -e ~/.colors ]] && source ~/.colors

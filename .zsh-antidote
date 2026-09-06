@@ -1,0 +1,17 @@
+#! /bin/zsh
+
+# Load the plugin manager itself
+export ANTIDOTE_DIR=""
+[ -d /home/linuxbrew/ ] && export ANTIDOTE_DIR="/home/linuxbrew/.linuxbrew/opt/antidote/share/antidote/"
+[ -d /usr/local/opt/antidote/ ] && export ANTIDOTE_DIR="/usr/local/opt/antidote/share/antidote/"
+[ -d /opt/homebrew/opt/antidote/ ] && export ANTIDOTE_DIR="/opt/homebrew/opt/antidote/share/antidote/"
+[ -d $HOME/.antidote ] && export ANTIDOTE_DIR="$HOME/.antidote"
+
+source "$ANTIDOTE_DIR/antidote.zsh"
+
+# oh-my-zsh plugins
+plugins=(
+    vi-mode
+)
+
+antidote load
