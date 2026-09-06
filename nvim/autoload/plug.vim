@@ -1,0 +1,1 @@
+/home/nick/.files/nvim/vim-plug/plug.vim
