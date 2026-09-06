@@ -9,8 +9,6 @@ pip3 install neovim
 # vim sessions directory
 mkdir -p ~/vim-sessions
 
-# Coc.nvim setup
-
 # pdv directory
 if [ -d $HOME/.vim/bundle/pdv/templates ]
 then
