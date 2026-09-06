@@ -29,7 +29,9 @@ Plugins.install('mfussenegger/nvim-lint') -- ALE-style, diagnostic-based linting
 Plugins.install('mfussenegger/nvim-dap') -- debug adapter
 Plugins.install('nvim-neotest/nvim-nio') -- debug adapter dependency
 Plugins.install('rcarriga/nvim-dap-ui')  -- debug adapter viewer
-Plugins.install('stevearc/aerial.nvim') -- symbols window and fzf search
+if vim.fn.has("nvim-0.12") == 1 then
+    Plugins.install('stevearc/aerial.nvim') -- symbols window and fzf search
+end
 Plugins.install('vim-scripts/BufOnly.vim') -- close all buffers except one
 Plugins.install('dhruvasagar/vim-zoom') -- tmux-style pane zoom
 Plugins.install('Raimondi/delimitMate') -- delimiter assistance

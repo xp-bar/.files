@@ -1,6 +1,8 @@
 -- init.lua
 -- vim: set ts=2 sw=2:
-require('xp-bar.plugins.configs.aerial-nvim')
+if vim.fn.has("nvim-0.12") == 1 then
+  require('xp-bar.plugins.configs.aerial-nvim')
+end
 require('xp-bar.plugins.configs.nvim-treesitter')
 require('xp-bar.plugins.configs.nvim-lint')
 require('xp-bar.plugins.configs.nvim-cmp')
