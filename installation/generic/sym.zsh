@@ -28,7 +28,7 @@ ln -sv $PWD/.config/pgcli/config ~/.config/pgcli/config
 ln -sv $PWD/nvim/init.lua ~/.config/nvim/init.lua
 [ -d ~/.config/nvim/lua/ ] || ln -sv $PWD/nvim/lua ~/.config/nvim/lua
 ln -sv $PWD/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
-ln -sv $PWD/nvim/packs $HOME/.config/nvim/pack
+ln -sv $PWD/nvim/packs/ $HOME/.config/nvim/pack
 ln -sv $PWD/nvim/autoload/ ~/.config/nvim/autoload
 [ -e ~/.config/nvim/dependencies/ ] || ln -sv $PWD/nvim/dependencies/ ~/.config/nvim/dependencies
 
