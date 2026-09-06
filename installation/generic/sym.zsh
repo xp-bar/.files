@@ -4,7 +4,7 @@ ln -sv $PWD/.global_gitignore ~/.gitignore
 ln -sv $PWD/.gitconfig ~
 ln -sv $PWD/.colors ~
 ln -sv $PWD/.alias ~
-ln -sv $PWD/.antidote ~
+ln -sv $PWD/.zsh-antidote ~
 ln -sv $PWD/.zsh_plugins.txt ~
 ln -sv $PWD/.function ~
 ln -sv $PWD/.path ~
