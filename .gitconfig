@@ -51,3 +51,5 @@
     wordRegex = [^\t\n]+[\t\n]|[\t]
 [init]
 	defaultBranch = main
+[credential "https://git.heroku.com"]
+	helper = !heroku git:credentials
