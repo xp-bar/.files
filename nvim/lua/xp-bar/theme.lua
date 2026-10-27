@@ -39,6 +39,12 @@ require("onedarkpro").setup({
       ['@punctuation.bracket'] = { fg = '${white}'},
       ['@operator'] = { fg = '${white}'},
 
+      ['@fenced.delimiter'] = { fg = '${gray}'},
+      ['@injection.language'] = { fg = '${lightgray}'},
+      ['@markup.strikethrough'] = { fg = '${darkgray}', strikethrough = true},
+      ['@markup.raw'] = { fg = '${green}' },
+      ['@markup.link'] = { fg = '${gray}' },
+
       ['@variable.builtin.vim'] = { fg = '${red}'},
       ['@function.macro.vim'] = { fg = '${orange}'},
       ['@function.macro.call.vim'] = { fg = '${yellow}'},
