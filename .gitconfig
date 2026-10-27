@@ -24,8 +24,7 @@
     last = "rev-parse --abbrev-ref @{-1}"
     tag-archived = "! f() { git tag archive/$1 $1; }; f"
     checkout-archived = "! f() { git checkout -b $1 archive/$1; }; f"
-	base = "!git config repo.base-branch || echo \"\""
-    ; stat = "! f() { git --no-pager diff --stat \"$(git merge-base HEAD \"${1:-HEAD^}\")\"; }; f"
+	base = "!git config repo.base-branch || echo \"main\""
     stat = "! f() { \
         git --no-pager diff --stat $(\
         [[ $1 = \"-f\" ]] \
