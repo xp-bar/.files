@@ -154,10 +154,11 @@ end, {
     bang = true,
     nargs = '?',
     complete  = function (arglead, cmdline, cursorpos)
-      local cmd = 'git branch'
+      local cmd = 'git branch --sort=-committerdate'
       if string.len(arglead) > 0 then
-        cmd = cmd .. ' -l ' .. arglead
+        cmd = cmd .. ' -l \'' .. arglead .. '*\''
       end
+      cmd = cmd .. '| head -n 20 | sed "s:^[ \\*]*::g"'
 
       local output = vim.fn.system(cmd)
       local branches = {}
@@ -167,6 +168,8 @@ end, {
           table.insert(branches, branch)
         end
       end
+      table.insert(branches, 'HEAD')
+      table.insert(branches, 'HEAD^')
 
       return branches
     end
