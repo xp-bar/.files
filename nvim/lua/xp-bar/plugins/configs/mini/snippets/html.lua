@@ -29,4 +29,20 @@ return {
             '<script src="main.js"></script>'
         }
     },
+    php = {
+        prefix = 'xphp',
+        body = {
+            '<?php',
+            '',
+            '?>',
+        }
+    },
+    short_php_echo = {
+        prefix = 'xee',
+        body = '<?= \\$var; ?>'
+    },
+    long_php_echo = {
+        prefix = 'xeee',
+        body = '<?php echo \\$var; ?>'
+    }
 }

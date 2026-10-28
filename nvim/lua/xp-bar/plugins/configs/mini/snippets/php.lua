@@ -4,7 +4,7 @@ return {
     html = html.html,
     -- script = html.script,
     -- stylesheet = html.stylesheet,
-    ['Standalone PHP'] = {
+    php = {
         prefix = 'php',
         body = {
             '<?php',
@@ -14,12 +14,4 @@ return {
             '',
         }
     },
-    ['Short Echo'] = {
-        prefix = 'ee',
-        body = '<?= \\$var; ?>'
-    },
-    ['Long Echo'] = {
-        prefix = 'eee',
-        body = '<?php echo \\$var; ?>'
-    }
 }
