@@ -7,7 +7,6 @@
 
 # oh-my-zsh plugins
 plugins=(
-    vi-mode
 )
 
 antidote load

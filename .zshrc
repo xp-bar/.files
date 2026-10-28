@@ -1,11 +1,9 @@
 export ZSH="$HOME/.oh-my-zsh"
-
 # Resolves issue around git-promt-info not working correctly;
 # See: https://github.com/ohmyzsh/ohmyzsh/issues/12328#issuecomment-2400576507
-zstyle ':omz:alpha:lib:git' async-prompt force
+zstyle ':omz:alpha:lib:git' async-prompt no
 
 source $ZSH/oh-my-zsh.sh
-
 
 # Prevent nice calls on windows
 unsetopt BG_NICE

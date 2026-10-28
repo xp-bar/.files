@@ -1,18 +1,16 @@
-robbyrussell/oh-my-zsh
-robbyrussell/oh-my-zsh folder:plugins/dotenv
-robbyrussell/oh-my-zsh folder:plugins/dash
-robbyrussell/oh-my-zsh folder:plugins/thefuck
-robbyrussell/oh-my-zsh folder:plugins/osx
-robbyrussell/oh-my-zsh folder:plugins/vi-mode
-robbyrussell/oh-my-zsh folder:plugins/command-not-found
-robbyrussell/oh-my-zsh folder:plugins/httpie
-robbyrussell/oh-my-zsh folder:plugins/npm
-robbyrussell/oh-my-zsh folder:plugins/pod
+# vim: ft=config:
+
+# Theme
+git@github.com:xp-bar/zsh-bar-theme.git
+
+# ohmyzsh plugins
+git@github.com:ohmyzsh/ohmyzsh.git path:plugins/vi-mode
+git@github.com:ohmyzsh/ohmyzsh.git path:plugins/dotenv
+git@github.com:ohmyzsh/ohmyzsh.git path:plugins/osx
+git@github.com:ohmyzsh/ohmyzsh.git path:plugins/shrink-path
+git@github.com:ohmyzsh/ohmyzsh.git path:plugins/git-prompt
 # ascii-soup/zsh-url-highlighter folder:url
-zsh-users/zsh-completions
-zsh-users/zsh-autosuggestions
-mafredri/zsh-async
-MichaelAquilina/zsh-emojis
-xp-bar/zsh-bar-theme
-fcambus/ansiweather
-zsh-users/zsh-syntax-highlighting
+
+git@github.com:zsh-users/zsh-completions.git
+git@github.com:zsh-users/zsh-autosuggestions.git
+git@github.com:zsh-users/zsh-syntax-highlighting.git
