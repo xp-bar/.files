@@ -444,6 +444,14 @@ gpr() {
 
 compdef _git_branch_completion gpr
 
+gac() {
+    local repo=$1
+    local author=$(echo $repo | sed -E 's/git@github.com:([^\/]*).*\.git/\1/g')
+    mkdir -p $author
+
+    (cd $author && git clone $repo)
+}
+
 function fromroman () {
   local max=0 sum i j
   local -A conv
