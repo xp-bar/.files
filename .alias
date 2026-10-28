@@ -122,3 +122,7 @@ alias ddown="docker compose down"
 alias y="yarn"
 alias yd="yarn && yarn dev"
 alias yf="yarn format"
+
+# PHP Testing
+alias up="open http://localhost:8080 && php -S localhost:8080"
+alias mobileup="php -S 0.0.0.0:8080"
