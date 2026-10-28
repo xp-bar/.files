@@ -9,3 +9,6 @@ background-image-fit      = cover
 
 # disable ligatures
 font-feature = -calt, -liga, -dlig
+cursor-style = bar
+
+fullscreen = true
