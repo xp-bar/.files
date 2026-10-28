@@ -24,6 +24,7 @@ Plugins.install('hrsh7th/nvim-cmp')
 Plugins.install('hrsh7th/cmp-nvim-lsp')
 Plugins.install('hrsh7th/cmp-buffer')
 Plugins.install('hrsh7th/cmp-nvim-lsp-signature-help')
+Plugins.install('abeldekat/cmp-mini-snippets') -- completion source for mini.snippets: https://www.reddit.com/r/neovim/comments/1hrc7tl/cmpminisnippets_a_minisnippets_completion_source/
 Plugins.install('f3fora/cmp-spell')
 Plugins.install('mfussenegger/nvim-lint') -- ALE-style, diagnostic-based linting
 Plugins.install('mfussenegger/nvim-dap') -- debug adapter
@@ -36,6 +37,7 @@ Plugins.install('Raimondi/delimitMate') -- delimiter assistance
 Plugins.install('tpope/vim-fugitive') -- git
 Plugins.install('junegunn/gv.vim') -- git log browser
 Plugins.install('nvim-mini/mini.surround') -- handle surround of text, lsp, treesitter objects w/ chars
+Plugins.install('nvim-mini/mini.snippets') -- text snippet manager
 Plugins.install('https://codeberg.org/andyg/leap.nvim') -- extra movement motions
 Plugins.install('airblade/vim-rooter') -- find project root
 Plugins.install('mattn/emmet-vim', {['for'] = {'html', 'vue', 'eruby', 'blade.php', 'php', 'typescriptreact'}})
