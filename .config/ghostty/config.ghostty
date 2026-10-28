@@ -1,0 +1,14 @@
+theme                     = xp-bar
+window-colorspace         = display-p3
+font-family               = "DroidSansM Nerd Font"
+macos-option-as-alt       = true
+background-image          = "~/.config/ghostty/background.jpg"
+background-image-opacity  = 0.4
+background-image-position = top-left
+background-image-fit      = cover
+
+# disable ligatures
+font-feature = -calt, -liga, -dlig
+cursor-style = bar
+
+fullscreen = true

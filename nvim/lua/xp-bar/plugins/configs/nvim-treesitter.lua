@@ -1,12 +1,15 @@
 local M = {}
 
 M.languages = {
+  "bash",
+  "zsh",
   "css",
   "diff",
   "html",
   "blade",
   "gdscript",
   "javascript",
+  "json",
   "lua",
   "markdown",
   "markdown_inline",

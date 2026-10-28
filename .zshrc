@@ -1,11 +1,9 @@
 export ZSH="$HOME/.oh-my-zsh"
-
 # Resolves issue around git-promt-info not working correctly;
 # See: https://github.com/ohmyzsh/ohmyzsh/issues/12328#issuecomment-2400576507
-zstyle ':omz:alpha:lib:git' async-prompt force
+zstyle ':omz:alpha:lib:git' async-prompt no
 
 source $ZSH/oh-my-zsh.sh
-
 
 # Prevent nice calls on windows
 unsetopt BG_NICE
@@ -35,12 +33,6 @@ if [[ "$(uname 2> /dev/null)" != "Linux" ]]; then
     # OSX
     export EDITOR="nvim"
     export PAGER="nvim -R"
-
-    # older versions of nvim
-    # export MANPAGER="nvim -c 'set ft=man' -"
-    # export MANPAGER="nvim -c 'set ft=man' -c 'set ft=man.php' -"
-
-    # new versions of nvim
     export MANPAGER="nvim +Man\!"
 else
     # LINUX
@@ -58,7 +50,6 @@ export FZF_DEFAULT_COMMAND='rg --files --smart-case'
 [[ -e ~/.github-token ]] && export GITHUB_TOKEN=$(<~/.github-token)
 [[ -e ~/.work ]] && source ~/.work
 
-# >>>> Vagrant command completion (start)
-# fpath=(/opt/vagrant/embedded/gems/2.3.4/gems/vagrant-2.3.4/contrib/zsh $fpath)
-compinit
-# <<<<  Vagrant command completion (end)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

@@ -5,9 +5,4 @@
 [ -d /usr/local/opt/antidote/ ] && source /usr/local/opt/antidote/share/antidote/antidote.zsh
 [ -d /opt/homebrew/opt/antidote/ ] && source /opt/homebrew/opt/antidote/share/antidote/antidote.zsh
 
-# oh-my-zsh plugins
-plugins=(
-    vi-mode
-)
-
 antidote load

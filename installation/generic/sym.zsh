@@ -13,7 +13,6 @@ ln -sv $PWD/.zle ~
 ln -sv $PWD/z/z.sh ~
 ln -sv $PWD/.zshrc ~
 ln -sv $PWD/.valias ~
-ln -sv $PWD/.alacritty.toml ~
 ln -sv $PWD/.ackrc ~
 ln -sv $PWD/.rgrc ~
 ln -sv $PWD/.phpcs-config/index.php ~/.php-cs-fixer.php
@@ -48,3 +47,6 @@ ln -sv $PWD/.config/tmux/general.conf ~/.config/tmux/general.conf
 ln -sv $PWD/.config/tmux/plugins.conf ~/.config/tmux/plugins.conf
 ln -sv $PWD/.config/tmux/ui.conf ~/.config/tmux/ui.conf
 ln -sv $PWD/.config/tmux/keybindings.conf ~/.config/tmux/keybindings.conf
+
+# Be lazy: link entire ghostty config folder
+ln -sv $PWD/.config/ghostty/ ~/.config/ghostty

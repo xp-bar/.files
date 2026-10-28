@@ -10,12 +10,6 @@ pip3 install neovim
 mkdir -p ~/vim-sessions
 
 # Coc.nvim setup
-mkdir -p ~/.config/coc/extensions
-cd ~/.config/coc/extensions
-if [ ! -f package.json ]
-then
-  echo '{"dependencies":{}}'> package.json
-fi
 
 # pdv directory
 if [ -d $HOME/.vim/bundle/pdv/templates ]

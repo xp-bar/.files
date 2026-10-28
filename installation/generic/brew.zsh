@@ -29,6 +29,7 @@ brew install --cask gwerbin/tap/sqlcheck
 # -- cli tools installation -- {{{
 read response\?"Install CLI tools (ack, rg, etc.)? [y/n] "
     case "$response" in
+        #NOTE TO SELF: collapse into single install line
         [yY][eE][sS]|[yY])
             brew install ack
             brew install bat
@@ -197,6 +198,9 @@ brew install --cask font-droid-sans-mono-for-powerline
 # --- }}}
 
 # -- cask installs -- {{{
+
+# Unnatural Scroll Wheels
+brew install --cask ghostty
 
 # Unnatural Scroll Wheels
 brew install --cask unnaturalscrollwheels
