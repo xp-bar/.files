@@ -29,6 +29,7 @@ brew install --cask gwerbin/tap/sqlcheck
 # -- cli tools installation -- {{{
 read response\?"Install CLI tools (ack, rg, etc.)? [y/n] "
     case "$response" in
+        #NOTE TO SELF: collapse into single install line
         [yY][eE][sS]|[yY])
             brew install ack
             brew install bat
