@@ -50,6 +50,25 @@ export FZF_DEFAULT_COMMAND='rg --files --smart-case'
 [[ -e ~/.github-token ]] && export GITHUB_TOKEN=$(<~/.github-token)
 [[ -e ~/.work ]] && source ~/.work
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Lazy-load NVM
+load_nvm() {
+    unset -f load_nvm
+
+    # List of commands which require NVM to be loaded
+    local requires_nvm=(nvm node npm pnpm nvim)
+    for cmd in "${requires_nvm[@]}"
+    do
+        "$cmd"() {
+            # Remove this shim function
+            unset -f "$0"
+            # echo "$0 called by: $funcstack"
+
+            # Load NVM
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+            [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+            # Run the now-loaded command
+            "$0" "$@"
+        }
+    done
+}; load_nvm
