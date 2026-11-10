@@ -9,6 +9,8 @@
 	editor = nvim
 	excludesfile = ~/.gitignore
 	page = nvim -R
+	fsmonitor = true
+	untrackedCache = true
 [oh-my-zsh]
 	hide-status = 0
 	hide-dirty-status = 0
