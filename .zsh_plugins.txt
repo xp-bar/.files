@@ -1,16 +1,61 @@
 # vim: ft=config:
 
-# Theme
-git@github.com:xp-bar/zsh-bar-theme.git
 
 # ohmyzsh plugins
+git@github.com:getantidote/use-omz.git
+git@github.com:ohmyzsh/ohmyzsh.git path:lib
+
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/async_prompt.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/bzr.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/cli.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/clipboard.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/compfix.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/completion.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/correction.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/diagnostics.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/directories.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/functions.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/git.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/grep.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/history.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/key-bindings.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/misc.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/nvm.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/prompt_info_functions.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/spectrum.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/termsupport.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/theme-and-appearance.zsh
+# git@github.com:ohmyzsh/ohmyzsh.git path:lib/vcs_info.zsh
+
 git@github.com:ohmyzsh/ohmyzsh.git path:plugins/vi-mode
-git@github.com:ohmyzsh/ohmyzsh.git path:plugins/dotenv
-git@github.com:ohmyzsh/ohmyzsh.git path:plugins/osx
 git@github.com:ohmyzsh/ohmyzsh.git path:plugins/shrink-path
-git@github.com:ohmyzsh/ohmyzsh.git path:plugins/git-prompt
+
+# git@github.com:ohmyzsh/ohmyzsh.git path:plugins/dotenv
+# git@github.com:ohmyzsh/ohmyzsh.git path:plugins/osx
+# git@github.com:ohmyzsh/ohmyzsh.git path:plugins/git-prompt
+# git@github.com:ohmyzsh/ohmyzsh.git
+# git@github.com:ohmyzsh/ohmyzsh.git folder:plugins/dash
+# git@github.com:ohmyzsh/ohmyzsh.git folder:plugins/thefuck
+# git@github.com:ohmyzsh/ohmyzsh.git folder:plugins/command-not-found
+# git@github.com:ohmyzsh/ohmyzsh.git folder:plugins/httpie
+# git@github.com:ohmyzsh/ohmyzsh.git folder:plugins/npm
+# git@github.com:ohmyzsh/ohmyzsh.git folder:plugins/pod
 # ascii-soup/zsh-url-highlighter folder:url
 
-git@github.com:zsh-users/zsh-completions.git
-git@github.com:zsh-users/zsh-autosuggestions.git
-git@github.com:zsh-users/zsh-syntax-highlighting.git
+# zsh-users/zsh-completions
+# zsh-users/zsh-autosuggestions
+# zsh-users/zsh-syntax-highlighting
+
+# git@github.com:zsh-users/zsh-completions.git
+# git@github.com:zsh-users/zsh-autosuggestions.git
+# git@github.com:zsh-users/zsh-syntax-highlighting.git
+
+# mafredri/zsh-async
+# MichaelAquilina/zsh-emojis
+
+# ln -sv $PWD/zsh-bar-theme/ ~/Library/Caches/antidote/https-COLON--SLASH--SLASH-github.com-SLASH-xp-bar-SLASH-zsh-bar-theme
+# xp-bar/zsh-bar-theme
+# fcambus/ansiweather
+
+# Theme
+git@github.com:xp-bar/zsh-bar-theme.git
