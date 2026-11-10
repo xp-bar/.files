@@ -1,4 +1,10 @@
 export ZSH="$HOME/.oh-my-zsh"
+
+# profile startup if ZSH_PROFILE_STARTUP=1
+if [ -n "${ZSH_PROFILE_STARTUP:+x}" ]; then
+    zmodload zsh/zprof
+fi
+
 # Resolves issue around git-promt-info not working correctly;
 # See: https://github.com/ohmyzsh/ohmyzsh/issues/12328#issuecomment-2400576507
 zstyle ':omz:alpha:lib:git' async-prompt no
@@ -72,3 +78,8 @@ load_nvm() {
         }
     done
 }; load_nvm
+
+# call w/ loader above to profile startup
+if [ -n "${ZSH_PROFILE_STARTUP:+x}" ]; then
+    zprof
+fi

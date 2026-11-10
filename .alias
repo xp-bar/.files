@@ -1,6 +1,8 @@
 alias azu="antibody update && source ~/.zshrc"
 alias zu="source ~/.zshrc"
 
+alias zprofile="ZSH_PROFILE_STARTUP=1 zsh -i -c exit"
+
 #antigen
 alias itheme="antigen theme $1; antigen cleanup -f > /dev/null"
 
