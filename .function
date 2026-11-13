@@ -447,9 +447,11 @@ compdef _git_branch_completion gpr
 gac() {
     local repo=$1
     local author=$(echo $repo | sed -E 's/git@github.com:([^\/]*).*\.git/\1/g')
+    local reponame=$(echo $repo | sed -E 's/git@github.com:([^\/]*)(.*)\.git/\2/g')
     mkdir -p $author
 
     (cd $author && git clone $repo)
+    cd "$author/$reponame"
 }
 
 function fromroman () {
