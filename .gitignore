@@ -2,3 +2,4 @@
 *.lock
 .DS_Store
 .myclirc-e
+.config/tmux/plugins

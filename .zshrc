@@ -9,15 +9,13 @@ fi
 # See: https://github.com/ohmyzsh/ohmyzsh/issues/12328#issuecomment-2400576507
 zstyle ':omz:alpha:lib:git' async-prompt no
 
-source $ZSH/oh-my-zsh.sh
-
-# Prevent nice calls on windows
-unsetopt BG_NICE
+unsetopt BG_NICE # Prevent nice calls on windows
 
 setopt NO_BG_NICE # don't nice background tasks
 setopt LOCAL_OPTIONS # allow functions to have local options
 setopt LOCAL_TRAPS # allow functions to have local traps
 setopt COMPLETE_ALIASES # completion for aliases
+setopt PROMPT_SUBST # enable prompt substitution for theme
 
 # aliases, functions, etc. {{{
 [[ -e ~/.zsh-antidote ]] && source ~/.zsh-antidote || echo "Plugins not loaded."

@@ -58,8 +58,6 @@ alias tink="clear; php artisan tinker"
 alias c="clear"
 alias bc='bc -l'
 alias now="date '+%I:%M%p, %Y-%m-%d'"
-alias vi="nvim"
-alias vim="nvim"
 
 # GIT
 alias main="git checkout main"

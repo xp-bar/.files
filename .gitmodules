@@ -28,3 +28,9 @@
 [submodule "nvim/vim-plug"]
 	path = nvim/vim-plug
 	url = git@github.com:junegunn/vim-plug.git
+[submodule ".antidote"]
+	path = .antidote
+	url = git@github.com:mattmc3/antidote.git
+[submodule "tpm"]
+	path = tpm
+	url = git@github.com:tmux-plugins/tpm.git

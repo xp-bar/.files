@@ -19,18 +19,28 @@ ln -sv $PWD/.phpcs-config/index.php ~/.php-cs-fixer.php
 touch ~/.ignored-stuff
 touch ~/.env
 
-[ -d ~/.config/pgcli/ ] || mkdir -p ~/.config/pgcli/
-ln -sv $PWD/.config/pgcli/config ~/.config/pgcli/config
+exit
+
+# [ -d ~/.config/pgcli/ ] || mkdir -p ~/.config/pgcli/
+# ln -sv $PWD/.config/pgcli/config ~/.config/pgcli/config
 
 # NVIM stuff
-[ -d ~/.config/nvim/ ] || mkdir -p ~/.config/nvim/
-ln -sv $PWD/nvim/init.lua ~/.config/nvim/init.lua
-[ -d ~/.config/nvim/lua/ ] || ln -sv $PWD/nvim/lua ~/.config/nvim/lua
-[ -d ~/.config/nvim/snippets/ ] || ln -s $PWD/nvim/lua/xp-bar/plugins/configs/mini/snippets ~/.config/nvim/snippets
-ln -sv $PWD/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
-ln -sv $PWD/nvim/packs/ $HOME/.config/nvim/pack
-ln -sv $PWD/nvim/autoload/ ~/.config/nvim/autoload
-[ -e ~/.config/nvim/dependencies/ ] || ln -sv $PWD/nvim/dependencies/ ~/.config/nvim/dependencies
+[ -d ~/.config/nvim/ ] && mv ~/.config/nvim/ ~/.config/nvim.bak/
+ln -sv $PWD/nvim/ ~/.config/
+
+# tmux
+[ -d ~/.config/tmux/ ] && mv ~/.config/tmux/ ~/.config/tmux.bak/
+ln -sv $PWD/.config/tmux/ ~/.config/
+# tmux source-file ~/.config/tmux/tmux.conf
+
+# [ -d ~/.config/nvim/ ] || mkdir -p ~/.config/nvim/
+# ln -sv $PWD/nvim/init.lua ~/.config/nvim/init.lua
+# [ -d ~/.config/nvim/lua/ ] || ln -sv $PWD/nvim/lua ~/.config/nvim/lua
+# [ -d ~/.config/nvim/snippets/ ] || ln -s $PWD/nvim/lua/xp-bar/plugins/configs/mini/snippets ~/.config/nvim/snippets
+# ln -sv $PWD/nvim/coc-settings.json ~/.config/nvim/coc-settings.json
+# ln -sv $PWD/nvim/packs/ $HOME/.config/nvim/pack
+# ln -sv $PWD/nvim/autoload/ ~/.config/nvim/autoload
+# [ -e ~/.config/nvim/dependencies/ ] || ln -sv $PWD/nvim/dependencies/ ~/.config/nvim/dependencies
 
 [ -d ~/.config/figlet/ ] || mkdir -p ~/.config/figlet/
 # no trailing slash since we're symlinking a folder

@@ -48,7 +48,8 @@ require('fzf-lua').setup({'default',
   file_icons = false,
   actions = {
     files = {
-      ["default"]     = file_edit_and_qf, -- file_edit_or_qf
+      -- ["default"]     = file_edit_and_qf, -- file_edit_or_qf
+      ["default"]     = file_edit_or_qf,
       ["ctrl-s"]      = actions.file_split,
       ["ctrl-v"]      = actions.file_vsplit,
       ["ctrl-t"]      = actions.file_tabedit,
