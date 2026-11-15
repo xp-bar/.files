@@ -8,7 +8,7 @@
 	path = nvim/ftplugin/php
 	url = git@github.com:xp-bar/vim-php-folding.git
 [submodule "nvim/packs/neovim-xp"]
-	path = nvim/packs/neovim-xp
+	path = nvim/pack/neovim-xp
 	url = git@github.com:xp-bar/neovim-xp.git
 [submodule ".config/figlet/fonts"]
 	path = .config/figlet/fonts
