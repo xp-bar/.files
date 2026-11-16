@@ -19,8 +19,7 @@ hl.bind(mainMod .. " + Q",           hl.dsp.window.close())
 -- hl.bind(mainMod .. " + ALT + Space", hl.dsp.window.float({ action = "toggle" }))
 -- hl.bind(mainMod .. " + D",           hl.dsp.window.fullscreen({ mode = 1 }))
 -- hl.bind(mainMod .. " + F",           hl.dsp.window.fullscreen())
--- hl.bind(mainMod .. " + J",           hl.dsp.layout("togglesplit"))
-hl.bind(mainMod .. " + SHIFT + Space",           hl.dsp.layout("togglesplit"))
+hl.bind(mainMod .. " + Equal",           hl.dsp.layout("togglesplit"))
 
 -- Change focus
 -- hl.bind(mainMod .. " + Left",  hl.dsp.focus({ direction = "left" }))
