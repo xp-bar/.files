@@ -44,3 +44,6 @@ vim.o.tabstop        = 4
 -- spelling
 vim.opt.spell = false
 vim.opt.spelllang = { "en_ca" }
+
+-- clipboard only works in tmux
+vim.g.clipboard = 'tmux'

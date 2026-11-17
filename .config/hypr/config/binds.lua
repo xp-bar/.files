@@ -17,24 +17,23 @@ end
 -- hl.bind(mainMod .. " + Escape",      hl.dsp.exec_cmd("hyprctl kill"))
 hl.bind(mainMod .. " + Q",           hl.dsp.window.close())
 -- hl.bind(mainMod .. " + ALT + Space", hl.dsp.window.float({ action = "toggle" }))
--- hl.bind(mainMod .. " + D",           hl.dsp.window.fullscreen({ mode = 1 }))
+hl.bind(mainMod .. " + D",           hl.dsp.window.fullscreen({ mode = 1 }))
 -- hl.bind(mainMod .. " + F",           hl.dsp.window.fullscreen())
 hl.bind(mainMod .. " + Equal",           hl.dsp.layout("togglesplit"))
 
 -- Change focus
--- hl.bind(mainMod .. " + Left",  hl.dsp.focus({ direction = "left" }))
--- hl.bind(mainMod .. " + Right", hl.dsp.focus({ direction = "right" }))
--- hl.bind(mainMod .. " + Up",    hl.dsp.focus({ direction = "up" }))
--- hl.bind(mainMod .. " + Down",  hl.dsp.focus({ direction = "down" }))
 hl.bind("ALT + Tab",           hl.dsp.window.cycle_next())
 hl.bind(mainMod .. " + Tab",   hl.dsp.exec_cmd(noctCall .. "window-switcher"))
 
--- Change focus - VIM Keybinds -- Nick
-hl.bind(mainMod .. " + h",  hl.dsp.focus({ direction = "left" }))
-hl.bind(mainMod .. " + j", hl.dsp.focus({ direction = "right" }))
-hl.bind(mainMod .. " + k",    hl.dsp.focus({ direction = "up" }))
-hl.bind(mainMod .. " + l",  hl.dsp.focus({ direction = "down" }))
-
+-- Change focus
+hl.bind(mainMod .. " + h",     hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + Left",  hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + j",     hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + Right", hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + k",     hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + Up",    hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + l",     hl.dsp.focus({ direction = "down" }))
+hl.bind(mainMod .. " + Down",  hl.dsp.focus({ direction = "down" }))
 
 -- Move active window around workspaces & monitors
 hl.bind(mainMod .. " + SHIFT + Up",                   hl.dsp.window.move({ direction = "u" }))
@@ -96,7 +95,8 @@ hl.bind(mainMod .. " + Return",     hl.dsp.exec_cmd(launchPrefix .. 'ghostty'))
 -- hl.bind("CONTROL + SHIFT + Escape", hl.dsp.exec_cmd(launchPrefix .. TERMINAL .. " -e btop"))
 -- hl.bind(mainMod .. " + Z",          hl.dsp.exec_cmd(noctCall .. "settings-toggle"))
 -- hl.bind(mainMod .. " + X",          hl.dsp.exec_cmd(noctCall .. "panel-toggle control-center"))
-hl.bind(mainMod .. " + Space",      hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher"))
+-- hl.bind(mainMod .. " + Space",      hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher"))
+hl.bind(mainMod .. " + Space",      hl.dsp.exec_cmd("wofi --show=drun"))
 -- hl.bind(mainMod .. " + period",     hl.dsp.exec_cmd(noctCall .. "panel-toggle launcher /emo"))
 -- hl.bind(mainMod .. " + L",          hl.dsp.exec_cmd(noctCall .. "session lock"))
 -- hl.bind(mainMod .. " + ALT + C",    hl.dsp.exec_cmd(noctCall .. "panel-toggle session"))
@@ -161,9 +161,9 @@ for i = 1, NUM_WPM do
 end
 
 -- Move to adjacent workspaces and next empty on a given monitor
-hl.bind(mainMod .. " + CONTROL + Right",       hl.dsp.focus({ workspace = "m+1" }))
-hl.bind(mainMod .. " + CONTROL + Left",        hl.dsp.focus({ workspace = "m-1" }))
-hl.bind(mainMod .. " + CONTROL + Down",        hl.dsp.focus({ workspace = "emptym" }))
+hl.bind("CONTROL + Right",       hl.dsp.focus({ workspace = "m+1" }))
+hl.bind("CONTROL + Left",        hl.dsp.focus({ workspace = "m-1" }))
+hl.bind("CONTROL + Down",        hl.dsp.focus({ workspace = "emptym" }))
 
 -- Scroll through existing workspaces & monitors
 hl.bind(mainMod .. " + mouse_down",           hl.dsp.focus({ workspace = "m-1" }))

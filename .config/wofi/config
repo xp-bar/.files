@@ -1,0 +1,9 @@
+# vim: ft=config:
+term=ghostty
+location=center
+width=500
+prompt=Search
+show_all=true
+hide_scroll=true
+no_actions=true
+normal_window=true

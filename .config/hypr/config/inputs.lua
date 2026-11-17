@@ -2,9 +2,9 @@
 
 hl.config({
     input = {
-        -- accel_profile = "flat",
-        accel_profile = "adaptive",
-        sensitivity = 0.3,
+        accel_profile = "flat",
+        force_no_accel = false,
+        sensitivity = 0.2,
         repeat_delay = 240,
         repeat_rate = 40,
 
@@ -20,6 +20,12 @@ hl.config({
     -- cursor = {
     --     no_hardware_cursors = 1,
     -- },
+})
+
+hl.device({
+    name = "apple-inc.-apple-internal-keyboard-/-trackpad-1",
+    sensitivity = 0.1,
+    accel_profile = "adaptive"
 })
 
 hl.gesture({ fingers = 3, direction = "horizontal", action = "workspace" })

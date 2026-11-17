@@ -1,0 +1,77 @@
+@define-color gunmetal #282c34;
+@define-color charcoal_1 #3E4451;
+@define-color charcoal_2 #4b5263;
+@define-color paynes_grey_1 #5c6370;
+@define-color paynes_grey_2 #636d83;
+@define-color slate_grey_1 #828997;
+@define-color slate_grey_2 #7f848e;
+@define-color french_grey #abb2bf;
+@define-color cyan #56b6c2;
+@define-color blue #61afef;
+@define-color purple #c678dd;
+@define-color green #98c379;
+@define-color red #e06c75;
+@define-color dark_red #be5046;
+@define-color orange #d19a66;
+@define-color yellow #e5c07b;
+@define-color pale_yellow #e2be7d;
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  color: @french_grey;
+  font-size: 18px;
+}
+
+#window {
+  border: 3px solid @cyan;
+  background: @gunmetal;
+}
+
+#input {
+  margin: 1.5em;
+  margin-bottom: 0em;
+  padding: 1em;
+  /* border: none; */
+  font-weight: bold;
+  background: #1e2030;
+  color: #c4d3da;
+  border-radius: 0;
+  /* border-radius: 15px; */
+  /* border: 1px solid #90cdfa; */
+}
+
+#input:focus {
+  border: 1px solid @cyan;
+}
+
+#inner-box {
+  margin: 1.5em;
+  margin-top: 0.5em;
+}
+
+#outer-box {
+  margin-bottom: 0.5em;
+}
+
+#scroll {
+  margin-top: 5px 0;
+  display: none;
+}
+
+#text {
+  margin-left: 0.5em;
+  color: @french_grey;
+}
+
+#text:selected {
+  color: @gunmetal;
+}
+
+#entry {
+  margin-top: 0.5em;
+}
+
+#entry:selected {
+  background: linear-gradient(90deg, @cyan 0%, @gunmetal 80%);
+}
+

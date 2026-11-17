@@ -10,9 +10,15 @@ hl.config({
         col = {
             active_border = {
                 colors = { XP_PURPLE, XP_CYAN, XP_PURPLE, XP_CYAN, XP_PURPLE },
+                -- colors = { XP_CYAN, XP_DARK_RED },
+                -- colors = { XP_CHARCOAL_1, XP_CYAN },
                 angle = 45,
             },
             inactive_border = XP_CHARCOAL_2,
+            -- inactive_border = {
+                -- angle = 45,
+                -- colors = { XP_CHARCOAL_1, XP_RED },
+            -- },
         },
     },
     group = {
@@ -32,15 +38,18 @@ hl.config({
         },
     },
     decoration = {
-        dim_special = 0.3,
+        dim_special = 0.0, -- don't dim other workspaces
         rounding = 0,
         active_opacity = 0.95,
-        inactive_opacity = 0.55,
+        inactive_opacity = 0.95,
+        -- active_opacity = 1,
+        -- inactive_opacity = 1,
         fullscreen_opacity = 1,
         blur = {
-            size = 5,
-            passes = 5,
+            size = 10,
+            passes = 3,
             special = true,
+            vibrancy = 0.3
         },
     },
 })

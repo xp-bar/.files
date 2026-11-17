@@ -1,10 +1,9 @@
-theme                     = xp-bar
-window-colorspace         = display-p3
-font-family               = "DroidSansM Nerd Font"
-macos-option-as-alt       = true
-background-opacity  = 0.9
-background-image-position = top-left
-background-image-fit      = cover
+theme               = xp-bar
+window-colorspace   = srgb
+font-family         = "DroidSansM Nerd Font"
+macos-option-as-alt = true
+background-opacity  = 0.94
+background-blur  = true
 
 window-padding-x = 4
 window-padding-y = 4
@@ -14,4 +13,3 @@ window-padding-balance = true
 # disable ligatures
 font-feature = -calt, -liga, -dlig
 cursor-style = bar
-

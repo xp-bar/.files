@@ -32,6 +32,14 @@ ln -sv $PWD/.config/ghostty ~/.config
 mkdir -p ~/.config/hypr
 ln -sv $PWD/.config/hypr/hyprland.lua ~/.config/hypr
 
+[ -d ~/.config/wofi/ ] && mv ~/.config/wofi/ ~/.config/wofi.bak/
+ln -sv $PWD/.config/wofi ~/.config
+
+[ -d ~/.config/noctalia/ ] && mv ~/.config/noctalia/ ~/.config/noctalia.bak/
+ln -sv $PWD/.config/noctalia ~/.config
+
+[ -d ~/.config/waybar/ ] && mv ~/.config/waybar/ ~/.config/waybar.bak/
+ln -sv $PWD/.config/waybar ~/.config
 
 # Install neovim plugins - we already have vim-plug as a submodule
 nvim +'PlugInstall --sync' +qall &> /dev/null < /dev/tty

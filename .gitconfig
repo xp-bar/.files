@@ -55,3 +55,5 @@
 	defaultBranch = main
 [credential "https://git.heroku.com"]
 	helper = !heroku git:credentials
+[maintenance]
+	repo = /home/nick/.files
